@@ -1,25 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect, useReducer }from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import axios from 'axios';
 import './App.css';
+import AppRouter from './routes/AppRouter';
+import Header from './header/Header';
+import UserContext from './context/userContext';
+import userReducer from './reducers/user';
+import LoadingCard from './components/loadingCard/LoadingCard';
 
 function App() {
+  const [user, dispatch] = useReducer(userReducer, {});
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    async function fetchUser() {
+      let user = undefined;
+      try {
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/users/me`, {withCredentials: true});
+        user = data.user;
+      } catch (error) {
+        console.log(error);
+      }
+      if (user) {
+        dispatch({
+          type: 'USER_LOGIN',
+          user,
+        });
+      }
+      setLoaded(true)
+    }
+    fetchUser();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={{ user, dispatch }}>
+      <main>
+        <BrowserRouter>
+          <Header/>
+          {loaded ? <AppRouter/> : <LoadingCard/>}
+        </BrowserRouter>
+      </main>
+    </UserContext.Provider>
   );
 }
 

@@ -1,0 +1,39 @@
+.trialName {
+  margin: 0;
+  margin-bottom: 16px;
+  padding: 0;
+  font-weight: normal;
+  font-size: 1.5rem;
+  line-height: 28px;
+  color: #000000;
+}
+
+.trialDescription {
+  margin: 0;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 24px;
+  color: #808080;
+}
+
+.list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list li {
+  margin-bottom: 16px;
+}
+
+.list .completion {
+  color: #6D99B1;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.list .trialLength {
+  color: #808080;
+  font-size: 1rem;
+  font-weight: 400;
+}
