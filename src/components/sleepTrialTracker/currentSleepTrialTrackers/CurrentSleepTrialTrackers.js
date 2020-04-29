@@ -1,11 +1,11 @@
 import React from 'react';
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box'
-import SleepTrialTracker from '../SleepTrialTracker';
+import Typograph from '@material-ui/core/Typography';
 import TypeList from '../typeList/TypeList';
 import styles from './CurrentSleepTrialTrackers.module.css';
+import Typography from '@material-ui/core/Typography';
 
 const CurrentSleepTrialTrackers = ({ trialTrackers }) => {
   const trialTypes = {
@@ -32,7 +32,9 @@ const CurrentSleepTrialTrackers = ({ trialTrackers }) => {
           spacing={3}
         >
           <Grid item xs={12} sm={6}>
-            <h2 className={styles.heroText}>Your current sleep trials</h2>
+            <Typography variant='h5'>
+              Your current sleep trials
+            </Typography>
             <p className={styles.heroSubText}>This is where you can track your progress towards completing sleep trials.</p>
           </Grid>
           <Grid item xs={12} sm={3}>View all check-ins</Grid>

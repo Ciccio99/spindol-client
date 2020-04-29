@@ -1,0 +1,23 @@
+.card {
+  border-radius: 10px !important;
+  height: 100%;
+}
+
+.description {
+  padding: 0;
+  margin: 0;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.75rem;
+  line-height: 21px;
+  color: #000000;
+}
+
+.stat {
+  padding: 0;
+  margin: 0;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 56px;
+  color: #6D99B1;
+}
