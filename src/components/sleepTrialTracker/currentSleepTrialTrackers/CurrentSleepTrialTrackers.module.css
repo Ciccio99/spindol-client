@@ -19,6 +19,13 @@
   color: #808080;
 }
 
+.modal {
+  overflow: scroll;
+}
+
+.button {
+  color: #9072BA !important;
+}
 
 
 

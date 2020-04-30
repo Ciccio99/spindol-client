@@ -1,0 +1,12 @@
+.paper {
+  border-radius: 10px !important;
+}
+
+.closeButton {
+  position: absolute;
+  right: 35px;
+  top: 35px;
+  cursor: pointer;
+  font-size: 2rem !important;
+  color: #9072BA;
+}

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useReducer }from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 import AppRouter from './routes/AppRouter';
-import Header from './header/Header';
+import Header from './views/header/Header';
 import UserContext from './context/userContext';
 import userReducer from './reducers/user';
 import LoadingCard from './components/loadingCard/LoadingCard';

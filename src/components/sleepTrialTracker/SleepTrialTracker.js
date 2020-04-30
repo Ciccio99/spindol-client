@@ -29,33 +29,35 @@ const SleepTrialTracker = ({ trialTracker }) => {
   const completionProgress = Math.ceil((completedCheckIns.length / trialTracker.trialLength) * 100);
 
   return (
-    <Grid container justify='space-between'>
-      <Grid item xs={12}>
-        <LinearProgress
-          variant='determinate'
-          value={completionProgress}
-          classes={{
-            root: classes.root,
-            colorPrimary: classes.colorPrimary,
-            barColorPrimary: classes.barColorPrimary,
-          }}
-          />
+    <Box mt={8}>
+      <Grid container justify='space-between'>
+        <Grid item xs={12}>
+          <LinearProgress
+            variant='determinate'
+            value={completionProgress}
+            classes={{
+              root: classes.root,
+              colorPrimary: classes.colorPrimary,
+              barColorPrimary: classes.barColorPrimary,
+            }}
+            />
+        </Grid>
+        <Grid item xs={12} sm={8}>
+          <Box pt={3}>
+            <h3 className={styles.trialName}>{trialTracker.sleepTrial.name}</h3>
+            <p className={styles.trialDescription}>{trialTracker.sleepTrial.description}</p>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <Box pt={3}>
+            <ul className={styles.list}>
+              <li className={styles.completion}>{completionProgress}% complete</li>
+              <li className={styles.trialLength}>{trialTracker.trialLength} day trial period</li>
+            </ul>
+          </Box>
+        </Grid>
       </Grid>
-      <Grid item xs={12} sm={6}>
-        <Box pt={2}>
-          <h3 className={styles.trialName}>{trialTracker.sleepTrial.name}</h3>
-          <p className={styles.trialDescription}>{trialTracker.sleepTrial.description}</p>
-        </Box>
-      </Grid>
-      <Grid item xs={12} sm={3}>
-        <Box pt={2}>
-          <ul className={styles.list}>
-            <li className={styles.completion}>{completionProgress}% complete</li>
-            <li className={styles.trialLength}>{trialTracker.trialLength} day trial period</li>
-          </ul>
-        </Box>
-      </Grid>
-    </Grid>
+    </Box>
   );
 };
 

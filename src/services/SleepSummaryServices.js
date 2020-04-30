@@ -70,17 +70,17 @@ const getSleepSummaryStats = (sleepSummaries) => {
   const stats = [
     {
       stat: avgSleepDuration,
-      units: 'Hrs',
+      units: 'hrs',
       description: 'Weekly average sleep duration'
     },
     {
       stat: avgRemDuration,
-      units: 'Hrs',
+      units: 'hrs',
       description: 'Weekly average REM duration'
     },
     {
       stat: avgDeepDuration,
-      units: 'Hrs',
+      units: 'hrs',
       description: 'Weekly average Deep duration'
     },{
       stat: `${avgBedtime.hours() % 12}:${avgBedtime.minutes()}`,

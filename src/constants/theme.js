@@ -20,11 +20,18 @@ let theme = {
     htmlFontSize: 16,
     fontSize: 16,
     h3: {
-      fontWeight: 800,
+      fontWeight: 700,
     },
     h5: {
       fontWeight: 700,
       fontSize: 32,
+    },
+    h6: {
+      fontWeight: 500,
+      fontSize: '1.5rem',
+    },
+    button: {
+      fontWeight: 700,
     }
   },
   palette: {

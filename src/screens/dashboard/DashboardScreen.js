@@ -24,7 +24,6 @@ const DashboardScreen = () => {
       }
     }
     fetchData();
-    // Get Trial Trackers
   }, [user]);
 
   return (
@@ -35,9 +34,8 @@ const DashboardScreen = () => {
               Welcome{userFirstName ? ' ' + userFirstName : ''}, let's get you some better sleep!
           </Typography>
         </Box>
-        {/* <h1 className={styles.welcome}>Welcome{userFirstName ? ' ' + userFirstName : ''}, let's get you some better sleep!</h1> */}
         <StatsDisplay/>
-        {trialTrackers.length > 0 ? <CurrentSleepTrialTrackers trialTrackers={trialTrackers}/> : null}
+        <CurrentSleepTrialTrackers trialTrackers={trialTrackers}/>
       </Container>
     </Box>
   );

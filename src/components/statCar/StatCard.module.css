@@ -14,10 +14,6 @@
 }
 
 .stat {
-  padding: 0;
-  margin: 0;
-  font-weight: 700;
-  font-size: 2rem;
-  line-height: 56px;
+  font-weight: 700 !important;
   color: #6D99B1;
 }
