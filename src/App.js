@@ -5,10 +5,14 @@ import AppRouter from './routes/AppRouter';
 import Header from './views/header/Header';
 import UserContext from './context/userContext';
 import userReducer from './reducers/user';
+import SleepTrialTrackersContext from './context/sleepTrialTrackersContext';
+import sleepTrialTrackersReducer from './reducers/sleepTrialTrackersReducer';
+
 import LoadingCard from './components/loadingCard/LoadingCard';
 
 function App() {
-  const [user, dispatch] = useReducer(userReducer, {});
+  const [user, dispatchUser] = useReducer(userReducer, {});
+  const [sleepTrialTrackers, dispatchSleepTrialTrackers] = useReducer(sleepTrialTrackersReducer, []);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -20,7 +24,7 @@ function App() {
       } catch (error) {
       }
       if (user) {
-        dispatch({
+        dispatchUser({
           type: 'USER_LOGIN',
           user,
         });
@@ -31,13 +35,15 @@ function App() {
   }, []);
 
   return (
-      <UserContext.Provider value={{ user, dispatch }}>
-        <main>
-          <BrowserRouter>
-            <Header/>
-            {loaded ? <AppRouter/> : <LoadingCard/>}
-          </BrowserRouter>
-        </main>
+      <UserContext.Provider value={{ user, dispatchUser }}>
+        <SleepTrialTrackersContext.Provider value={{ sleepTrialTrackers, dispatchSleepTrialTrackers}}>
+          <main>
+            <BrowserRouter>
+              <Header/>
+              {loaded ? <AppRouter/> : <LoadingCard/>}
+            </BrowserRouter>
+          </main>
+        </SleepTrialTrackersContext.Provider>
       </UserContext.Provider>
   );
 }

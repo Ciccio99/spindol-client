@@ -1,0 +1,17 @@
+
+.button {
+  border-radius: 20px !important;
+}
+
+.buttonText {
+  font-weight: 600 !important;
+}
+
+.buttonActive {
+  background-color: #FF7D4B !important;
+  color: #FFFFFF !important;
+}
+
+.buttonInactive {
+  background-color: #FFFFFF !important;
+}

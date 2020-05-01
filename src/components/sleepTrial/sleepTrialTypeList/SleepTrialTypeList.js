@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Box,
   Divider,
-  Typography
 } from '@material-ui/core';
 import SleepTrialCard from '../SleepTrialCard';
 import styles from './SleepTrialTypeList.module.css';

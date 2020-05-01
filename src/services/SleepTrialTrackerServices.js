@@ -28,7 +28,27 @@ const create = async (user, sleepTrial) => {
     return data;
   } catch (error) {
     console.log(error);
-    return {};
+    return null;
+  }
+}
+
+const addCheckIn = async (_id, date, completed) => {
+  const body = {
+    _id,
+    checkIn: {
+      date,
+      completed,
+    }
+  };
+  try {
+    const { data } = await axios.post(`${process.env.REACT_APP_API_URI}/sleepTrialTracker/add/checkIn`,
+      body,
+      { useCredentials: true},
+    );
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 }
 
@@ -36,4 +56,5 @@ const create = async (user, sleepTrial) => {
 export default {
   querySleepTrialTracker,
   create,
+  addCheckIn,
 };

@@ -15,7 +15,6 @@ const StatsDisplay = () => {
       const sort = { date: 'desc'};
       const limit = 7;
       const sleepSummaries = await SleepSummaryServices.query(match, sort, limit);
-      console.log(sleepSummaries);
       if (sleepSummaries.length === 0) {
         setStats([]);
         return;

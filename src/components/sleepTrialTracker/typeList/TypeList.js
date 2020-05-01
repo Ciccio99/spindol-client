@@ -12,7 +12,10 @@ const TypeList = ({ type, trialTrackers}) => {
       <Box p={3}>
         <h4 className={styles.typeHeader}>{type} Objectives</h4>
         {trialTrackers.map((trialTracker) =>
-          <SleepTrialTracker key={trialTracker._id} trialTracker={trialTracker}/>)}
+          trialTracker.completed
+          ? null
+          : <SleepTrialTracker key={trialTracker._id} trialTracker={trialTracker}/>)
+        }
       </Box>
 
     </React.Fragment>

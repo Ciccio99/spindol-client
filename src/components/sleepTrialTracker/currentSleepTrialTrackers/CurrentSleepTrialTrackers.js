@@ -24,6 +24,7 @@ const CurrentSleepTrialTrackers = ({ trialTrackers }) => {
       Environment: [],
       Hardware: [],
     };
+
     trialTrackers.forEach(trialTracker => {
       trialObj[trialTracker.sleepTrial.type].push(trialTracker);
     });
@@ -72,7 +73,7 @@ const CurrentSleepTrialTrackers = ({ trialTrackers }) => {
         open={showSleepTrials}
         onClose={() => {setShowSleepTrials(false)}}
       >
-        <Box>
+        <Box display='flex' justifyContent='center'>
           <SleepTrialsView handleCloseClick={() => {setShowSleepTrials(false)}}/>
         </Box>
       </Modal>

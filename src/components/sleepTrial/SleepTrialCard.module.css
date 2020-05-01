@@ -4,4 +4,14 @@
 
 .startTrialButton {
   color: #9072BA !important;
+  border-color: #9072BA !important;
+}
+
+.startTrialButton:hover {
+  background-color: rgba(144, 114, 186, 0.05) !important;
+}
+
+.startTrialButton:disabled {
+  color: rgb(129, 144, 151) !important;
+  border-color: rgb(129, 144, 151) !important;
 }

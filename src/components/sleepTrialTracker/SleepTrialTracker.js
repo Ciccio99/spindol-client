@@ -1,7 +1,11 @@
-import React from 'react';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  Grid,
+  LinearProgress,
+  Typography
+} from '@material-ui/core';
+import TrialTrackerCheckIn from './trialTrackerCheckIn/TrialTrackerCheckIn';
 import styles from './SleepTrialTracker.module.css';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -21,12 +25,16 @@ const useStyles = makeStyles({
 });
 
 const SleepTrialTracker = ({ trialTracker }) => {
+  const [completionProgress, setCompletionProgress] = useState(0);
   const classes = useStyles();
-  const completedCheckIns = trialTracker.checkIns.filter((checkIn) => {
-    return checkIn.completed !== false;
-  });
 
-  const completionProgress = Math.ceil((completedCheckIns.length / trialTracker.trialLength) * 100);
+  useEffect(() => {
+    const completedCheckIns = trialTracker.checkIns.filter((checkIn) => {
+      return checkIn.completed !== false;
+    });
+
+    setCompletionProgress(Math.ceil((completedCheckIns.length / trialTracker.trialLength) * 100));
+  }, [trialTracker])
 
   return (
     <Box mt={8}>
@@ -45,7 +53,8 @@ const SleepTrialTracker = ({ trialTracker }) => {
         <Grid item xs={12} sm={8}>
           <Box pt={3}>
             <h3 className={styles.trialName}>{trialTracker.sleepTrial.name}</h3>
-            <p className={styles.trialDescription}>{trialTracker.sleepTrial.description}</p>
+            <p className={styles.trialDescription}>{trialTracker.sleepTrial.shortDescription}</p>
+            <Typography></Typography>
           </Box>
         </Grid>
         <Grid item xs={12} sm={3}>
@@ -55,6 +64,11 @@ const SleepTrialTracker = ({ trialTracker }) => {
               <li className={styles.trialLength}>{trialTracker.trialLength} day trial period</li>
             </ul>
           </Box>
+        </Grid>
+        <Grid item xs={12}>
+            <Box mt={2}>
+              <TrialTrackerCheckIn trialTracker={trialTracker}/>
+            </Box>
         </Grid>
       </Grid>
     </Box>

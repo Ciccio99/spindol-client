@@ -1,15 +1,19 @@
-import React, { useState, useEffect, useContext } from 'react';
-import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import React, { useEffect, useContext } from 'react';
+import {
+  Container,
+  Box,
+  Typography,
+} from '@material-ui/core';
 import UserContext from '../../context/userContext';
+import SleepTrialTrackersContext from '../../context/sleepTrialTrackersContext';
 import SleepTrialTrackerServices from '../../services/SleepTrialTrackerServices';
 import CurrentSleepTrialTrackers from '../../components/sleepTrialTracker/currentSleepTrialTrackers/CurrentSleepTrialTrackers';
 import StatsDisplay from '../../components/statsDisplay/StatsDisplay';
+import DailyDiaryPanel from '../../components/dailyDiaryPanel/DailyDiaryPanel';
 
 const DashboardScreen = () => {
   const { user } = useContext(UserContext);
-  const [trialTrackers, setTrialTrackers] = useState([]);
+  const { sleepTrialTrackers, dispatchSleepTrialTrackers} = useContext(SleepTrialTrackersContext);
   const userFirstName = user.name.split(' ')[0];
 
   useEffect(() => {
@@ -18,13 +22,16 @@ const DashboardScreen = () => {
         const trialTrackersData = await SleepTrialTrackerServices.querySleepTrialTracker({
           match: { owner: user._id},
         });
-        setTrialTrackers(trialTrackersData);
+        dispatchSleepTrialTrackers({
+          type: 'POPULATE',
+          sleepTrialTrackers: trialTrackersData,
+        });
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
-  }, [user]);
+  }, [dispatchSleepTrialTrackers, user._id]);
 
   return (
     <Box mb={4}>
@@ -34,8 +41,9 @@ const DashboardScreen = () => {
               Welcome{userFirstName ? ' ' + userFirstName : ''}, let's get you some better sleep!
           </Typography>
         </Box>
+        <DailyDiaryPanel/>
         <StatsDisplay/>
-        <CurrentSleepTrialTrackers trialTrackers={trialTrackers}/>
+        <CurrentSleepTrialTrackers trialTrackers={sleepTrialTrackers}/>
       </Container>
     </Box>
   );

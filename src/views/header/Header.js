@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
-  Typography,
   Grid,
   Box,
   Menu,
