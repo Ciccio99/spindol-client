@@ -48,12 +48,9 @@ const DeviceSettingsItem = ({ user, device, trackerType, userFirstName}) => {
           {
             connected
             ? <LinkText to=''>Disconnect</LinkText>
-            : <LinkText to='http://localhost:3001/api/devices/auth/oura' external>Connect</LinkText>
-
+            : <LinkText to={redirectUri} external>Connect</LinkText>
           }
-
         </Grid>
-
       </Grid>
     </Box>
   );
