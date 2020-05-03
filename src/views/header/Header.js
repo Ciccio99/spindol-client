@@ -55,13 +55,13 @@ const Header = () => {
                     onClose={handleClose}
                   >
                     <MenuItem onClick={handleClose}>
-                      <LinkText to='/nothing'>Menu-Item</LinkText>
+                      <LinkText to='/dashboard'>Dashboard</LinkText>
                     </MenuItem>
                     <MenuItem onClick={handleClose}>
-                      <LinkText to='/nothing'>Menu-Item</LinkText>
+                      <LinkText to='/checkins'>Check-Ins</LinkText>
                     </MenuItem>
                     <MenuItem onClick={handleClose}>
-                      <LinkText to='/nothing'>Menu-Item</LinkText>
+                      <LinkText to='/settings'>Account</LinkText>
                     </MenuItem>
                   </Menu>
                 </Box></Grid>

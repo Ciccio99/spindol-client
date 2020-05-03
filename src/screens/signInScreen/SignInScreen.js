@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SignIn = () => {
   const classes = useStyles();
-  const { dispatch } = useContext(UserContext);
+  const { dispatchUser } = useContext(UserContext);
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ errorMessage, setErrorMessage] = useState('');
@@ -80,7 +80,7 @@ const SignIn = () => {
       setLoading(false);
     }
     if (user) {
-      dispatch({
+      dispatchUser({
         type: 'USER_LOGIN',
         user,
       });

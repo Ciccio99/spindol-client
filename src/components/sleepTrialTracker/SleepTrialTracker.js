@@ -33,7 +33,7 @@ const SleepTrialTracker = ({ trialTracker }) => {
       return checkIn.completed !== false;
     });
 
-    setCompletionProgress(Math.ceil((completedCheckIns.length / trialTracker.trialLength) * 100));
+    setCompletionProgress(Math.round((completedCheckIns.length / trialTracker.trialLength) * 100));
   }, [trialTracker])
 
   return (

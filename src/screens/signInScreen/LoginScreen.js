@@ -4,7 +4,7 @@ import axios from 'axios';
 import UserContext from '../../context/userContext';
 
 const LoginScreen = (props) => {
-  const { dispatch } = useContext(UserContext);
+  const { dispatchUser } = useContext(UserContext);
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ errorMessage, setErrorMessage] = useState('');
@@ -29,7 +29,7 @@ const LoginScreen = (props) => {
       setLoading(false);
     }
     if (user) {
-      dispatch({
+      dispatchUser({
         type: 'USER_LOGIN',
         user,
       });
