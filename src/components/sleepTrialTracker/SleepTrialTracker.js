@@ -37,7 +37,7 @@ const SleepTrialTracker = ({ trialTracker }) => {
   }, [trialTracker])
 
   return (
-    <Box mt={8}>
+    <Box mt={6}>
       <Grid container justify='space-between'>
         <Grid item xs={12}>
           <LinearProgress

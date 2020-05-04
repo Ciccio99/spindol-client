@@ -4,9 +4,12 @@ const queryOne = async (match={}, sort={}, limit=0, skip=0) => {
   const queryString = JSON.stringify({ match, sort, limit, skip });
   try {
     const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/devices`,
-      { params: { query: queryString }  },
-      { useCredentials: true }
+      {
+        params: { query: queryString },
+        withCredentials: true,
+      }
     );
+
     return data;
   } catch (error) {
     console.log(error);
@@ -16,16 +19,34 @@ const queryOne = async (match={}, sort={}, limit=0, skip=0) => {
 
 const getRedirectUri = async (device) => {
   try {
-    const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/devices/redirectUri/${device}`, )
+    const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/devices/redirectUri/${device}`,
+      { withCredentials: true },
+    );
     console.log(data);
     return data;
   } catch (error) {
     console.log(error);
     return '';
   }
-}
+};
+
+const revokeDeviceAccess = async (device) => {
+  try {
+    if (!device) {
+      throw new Error('Must include a device to disconnect from!');
+    }
+    await axios.get(`${process.env.REACT_APP_API_URI}/devices/auth/${device}/revoke`,
+      { withCredentials: true },
+    );
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
 
 export default {
   queryOne,
   getRedirectUri,
+  revokeDeviceAccess,
 }

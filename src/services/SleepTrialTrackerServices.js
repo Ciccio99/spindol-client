@@ -1,11 +1,13 @@
 import axios from 'axios';
 
 const querySleepTrialTracker = async (match={}, sort={}, limit=0, skip=0) => {
-  const body = { match, sort, limit, skip };
+  const queryString = JSON.stringify({ match, sort, limit, skip });
   try {
-    const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/sleepTrialTracker`
-      , body
-      , { useCredentials: true }
+    const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/sleepTrialTracker`,
+      {
+        params: { query: queryString },
+        withCredentials: true
+      },
     );
     return data;
   } catch (error) {
@@ -23,7 +25,7 @@ const create = async (user, sleepTrial) => {
   try {
     const { data } = await axios.post(`${process.env.REACT_APP_API_URI}/sleepTrialTracker/create`,
       body,
-      { useCredentials: true},
+      { withCredentials: true},
     );
     return data;
   } catch (error) {
@@ -43,7 +45,7 @@ const addCheckIn = async (_id, date, completed) => {
   try {
     const { data } = await axios.post(`${process.env.REACT_APP_API_URI}/sleepTrialTracker/add/checkIn`,
       body,
-      { useCredentials: true},
+      { withCredentials: true},
     );
     return data;
   } catch (error) {

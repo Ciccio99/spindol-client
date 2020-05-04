@@ -4,6 +4,7 @@ import ProtectedRoute from '../routes/ProtectedRoute';
 import SignInScreen from '../screens/signInScreen/SignInScreen';
 import DashboardScreen from '../screens/dashboard/DashboardScreen';
 import AccountSettings from '../views/accountSettings/AccountSettings';
+
 const HomePage = () => (
   <h1>Home</h1>
 );

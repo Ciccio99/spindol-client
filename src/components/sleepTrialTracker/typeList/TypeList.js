@@ -10,7 +10,7 @@ const TypeList = ({ type, trialTrackers}) => {
     <React.Fragment>
       <Divider/>
       <Box p={3}>
-        <h4 className={styles.typeHeader}>{type} Objectives</h4>
+        <h4 className={styles.typeHeader}>{type} Trials</h4>
         {trialTrackers.map((trialTracker) =>
           trialTracker.completed
           ? null
