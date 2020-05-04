@@ -42,6 +42,7 @@ const DailyDiaryPanel = () => {
       <Grid container justify='space-between' alignItems='center'>
         <Grid item xs={12} sm={5}>
           <Typography variant='h6'><span role='img' aria-label='Thinking Face Emoji'>🤔</span> How are you feeling today?</Typography>
+          <Typography variant='caption'>{todayDate.format('MMM D, YYYY')}</Typography>
         </Grid>
         <Grid item container xs={12} sm={7} spacing={1} justify='space-around' alignItems='center'>
           <Grid item className={styles.buttonContainer}>
@@ -53,9 +54,6 @@ const DailyDiaryPanel = () => {
               <ToggleButton value='excellent'>Excellent</ToggleButton>
             </ToggleButtonGroup>
           </Grid>
-        </Grid>
-        <Grid item>
-          <Typography variant='caption'>{todayDate.format('MMM D, YYYY')}</Typography>
         </Grid>
       </Grid>
     </Box>

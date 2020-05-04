@@ -50,10 +50,10 @@ const Header = () => {
     <AppBar position='sticky' elevation={0} color='default'>
       <Box mt={1}>
         <Toolbar>
-          <Grid container alignContent='center' justify='space-between'>
+          <Grid container alignItems='center' justify='space-between'>
             <Grid item>
               <NavLink exact to='/'>
-                <img src={logo} alt='SleepWell Logo' height='50px'/>
+                <img src={logo} alt='SleepWell Logo' height='60px'/>
               </NavLink>
             </Grid>
             <Grid item>
@@ -96,8 +96,8 @@ const Header = () => {
                           <MenuItem key='settings' onClick={handleClose}>
                             <LinkText to='/settings'>Account</LinkText>
                           </MenuItem>,
-                          <MenuItem key='logout'>
-                            <LinkOnClick onClick={handleLogoutClick}>Logout</LinkOnClick>
+                          <MenuItem key='logout' onClick={handleLogoutClick}>
+                            <LinkOnClick >Logout</LinkOnClick>
                           </MenuItem>,
                       ]
                     }
