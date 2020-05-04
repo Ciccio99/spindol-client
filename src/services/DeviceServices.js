@@ -56,6 +56,7 @@ const revokeDeviceAccess = async (device) => {
     return true;
   } catch (error) {
     // Todo add failed to sync banner/warning w/e
+    console.error(error);
     return false;
   }
  }
