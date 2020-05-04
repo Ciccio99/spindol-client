@@ -36,14 +36,14 @@ const Header = () => {
             </Grid>
             <Grid item>
               <Grid container alignItems='center' justify='space-around'>
-                <Grid item>
+                {/* <Grid item>
                   <Box m={1.5}>
                     <LinkText to='/dashboard'>Dashboard</LinkText>
                   </Box>
                 </Grid>
                 <Grid item><Box m={1.5}>
                   <LinkText to='/checkins'>Check-Ins</LinkText>
-                </Box></Grid>
+                </Box></Grid> */}
                 <Grid item><Box m={1.5}>
                   <Link onClick={handleClick}>
                     <MenuRoundedIcon/>

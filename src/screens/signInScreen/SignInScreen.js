@@ -60,7 +60,7 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   let history = useHistory();
   let location = useLocation();
-  const { from } = location.state || { from: { pathname: '/' }};
+  const { from } = location.state || { from: { pathname: '/dashboard' }};
 
   const login = async (e) => {
     e.preventDefault();
