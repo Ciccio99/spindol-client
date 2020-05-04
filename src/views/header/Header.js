@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   AppBar,
@@ -7,22 +7,44 @@ import {
   Box,
   Menu,
   MenuItem,
-  Link
+  Button,
+  Fade,
+  Collapse
 } from '@material-ui/core';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 import LinkText from '../../components/linkText/LinkText';
+import LinkOnClick from '../../components/linkOnClick/LinkOnClick';
 import logo from '../../assets/sleepwell-logo.png'
+import UserContext from './../../context/userContext';
+import UserServices from '../../services/UserServices';
 
 const Header = () => {
+  const { user, dispatchUser } = useContext(UserContext);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
   };
 
-  const handleClose = (e) => {
+  const handleClose = () => {
     setAnchorEl(null);
   }
+
+  const handleLogoutClick = () => {
+    async function logout() {
+      try {
+        await UserServices.logout();
+        dispatchUser({
+          type: 'USER_LOGOUT',
+        });
+        handleClose();
+      } catch (error) {
+        // TODO WArning popup
+        console.error(error);
+      }
+    }
+    logout();
+  };
 
   return (
     <AppBar position='sticky' elevation={0} color='default'>
@@ -45,24 +67,40 @@ const Header = () => {
                   <LinkText to='/checkins'>Check-Ins</LinkText>
                 </Box></Grid> */}
                 <Grid item><Box m={1.5}>
-                  <Link onClick={handleClick}>
-                    <MenuRoundedIcon/>
-                  </Link>
+                  <Button aria-controls='header-menu' aria-haspopup='true' onClick={handleClick}>
+                    <MenuRoundedIcon fontSize='large'/>
+                  </Button>
                   <Menu
+                    id='header-menu'
                     anchorEl={anchorEl}
                     keepMounted
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
+                    transitionDuration={250}
+                    variant='selectedMenu'
+                    elevation={2}
+                    transformOrigin={{ vertical: 'top', horizontal: 'center',}}
                   >
-                    <MenuItem onClick={handleClose}>
-                      <LinkText to='/dashboard'>Dashboard</LinkText>
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                      <LinkText to='/checkins'>Check-Ins</LinkText>
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                      <LinkText to='/settings'>Account</LinkText>
-                    </MenuItem>
+                    {
+                      !user._id
+                      ? <MenuItem onClick={handleClose}>
+                          <LinkText to='/login'>Login</LinkText>
+                        </MenuItem>
+                      :[
+                          <MenuItem key='dashboard' onClick={handleClose}>
+                            <LinkText to='/dashboard'>Dashboard</LinkText>
+                          </MenuItem>,
+                          <MenuItem key='checkins' onClick={handleClose}>
+                            <LinkText to='/checkins'>Check-Ins</LinkText>
+                          </MenuItem>,
+                          <MenuItem key='settings' onClick={handleClose}>
+                            <LinkText to='/settings'>Account</LinkText>
+                          </MenuItem>,
+                          <MenuItem key='logout'>
+                            <LinkOnClick onClick={handleLogoutClick}>Logout</LinkOnClick>
+                          </MenuItem>,
+                      ]
+                    }
                   </Menu>
                 </Box></Grid>
               </Grid>

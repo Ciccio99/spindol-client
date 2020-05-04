@@ -54,6 +54,9 @@ const DailyDiaryPanel = () => {
             </ToggleButtonGroup>
           </Grid>
         </Grid>
+        <Grid item>
+          <Typography variant='caption'>{todayDate.format('MMM D, YYYY')}</Typography>
+        </Grid>
       </Grid>
     </Box>
   );

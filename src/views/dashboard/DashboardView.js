@@ -12,7 +12,7 @@ import StatsDisplay from '../../components/statsDisplay/StatsDisplay';
 import DailyDiaryPanel from '../../components/dailyDiaryPanel/DailyDiaryPanel';
 
 
-const DashboardScreen = () => {
+const DashboardView = () => {
   const { user } = useContext(UserContext);
   const { sleepTrialTrackers, dispatchSleepTrialTrackers} = useContext(SleepTrialTrackersContext);
   const userFirstName = user.name ? user.name.split(' ')[0] : '';
@@ -50,4 +50,4 @@ const DashboardScreen = () => {
   );
 }
 
-export default DashboardScreen;
+export default DashboardView;

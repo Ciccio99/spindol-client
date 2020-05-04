@@ -3,7 +3,6 @@ const userReducer = (state, action) => {
     case 'USER_LOGIN':
       return action.user ;
     case 'USER_LOGOUT':
-      // Clear cookie in future?
       return {};
     default:
       return state;

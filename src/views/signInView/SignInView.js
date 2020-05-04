@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignIn = () => {
+const SignInView = () => {
   const classes = useStyles();
   const { dispatchUser } = useContext(UserContext);
   const [ email, setEmail ] = useState('');
@@ -162,4 +162,4 @@ const SignIn = () => {
   );
 }
 
-export default SignIn;
+export default SignInView;
