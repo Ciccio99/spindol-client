@@ -17,7 +17,6 @@ const LoginScreen = (props) => {
     let user = undefined;
     try {
       let { data } = await axios.post(`${process.env.REACT_APP_API_URI}/users/login`, { email, password }, { withCredentials: true });
-      console.log('Cookies:' + document.cookie);
       if (data.user) {
         user = data.user;
       }

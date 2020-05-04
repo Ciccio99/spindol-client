@@ -15,14 +15,17 @@ const StatsDisplay = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (!user.accounts.connected) {
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     async function fetchData() {
-      console.log('syncing')
       await DeviceServices.syncDeviceData('oura');
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [user.accounts.connected]);
 
 
   useEffect(() => {
