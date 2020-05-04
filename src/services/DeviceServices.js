@@ -45,8 +45,24 @@ const revokeDeviceAccess = async (device) => {
   }
 };
 
+ const syncDeviceData = async (device) => {
+  if (!device) {
+    throw new Error('Must provide device to sync. [oura, fitbit, withings]');
+  }
+  try {
+    await axios.get(`${process.env.REACT_APP_API_URI}/devices/sync/${device}`,
+      { withCredentials: true },
+    );
+    return true;
+  } catch (error) {
+    // Todo add failed to sync banner/warning w/e
+    return false;
+  }
+ }
+
 export default {
   queryOne,
   getRedirectUri,
   revokeDeviceAccess,
+  syncDeviceData,
 }

@@ -1,13 +1,29 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
+import {
+  Box,
+  Grid,
+  CircularProgress,
+} from '@material-ui/core';
 import StatCard from '../statCar/StatCard';
 import UserContext from '../../context/userContext';
 import SleepSummaryServices from '../../services/SleepSummaryServices';
+import DeviceServices from '../../services/DeviceServices';
 
 const StatsDisplay = () => {
   const { user } = useContext(UserContext);
   const [stats, setStats] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    async function fetchData() {
+      console.log('syncing')
+      await DeviceServices.syncDeviceData('oura');
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
 
   useEffect(() => {
     async function fetchData () {
@@ -23,12 +39,15 @@ const StatsDisplay = () => {
       setStats(stats);
     }
     fetchData();
-    // setStats(testStats);
+
   }, [user]);
 
   return (
     <Box mb={2}>
-      <Grid container spacing={2}>
+    {
+      loading
+      ? <CircularProgress color="secondary"/>
+      : <Grid container spacing={2}>
         {stats.map((statObj, index) => {
           return (
             <Grid key={index} item xs={6} sm={4} md={3}>
@@ -41,6 +60,8 @@ const StatsDisplay = () => {
           );
         })}
       </Grid>
+    }
+
     </Box>
   );
 };
