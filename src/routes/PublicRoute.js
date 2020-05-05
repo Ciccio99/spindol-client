@@ -2,13 +2,13 @@ import React, { useContext }from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import UserContext from '../context/userContext';
 
-const ProtectedRoute = (props) => {
+const PublicRoute = (props) => {
   const { user } = useContext(UserContext);
   const isAuthenticated = user._id ? true : false;
 
   return isAuthenticated
-   ? <Route {...props}/>
-   : <Redirect to='/login'/>;
+    ? <Redirect to='/dashboard'/>
+    : <Route {...props}/>;
 };
 
-export default ProtectedRoute;
+export default PublicRoute;
