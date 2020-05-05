@@ -8,7 +8,6 @@ const query = async (match={}, sort={}, limit=0, skip=0) => {
     const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/sleepSummary`,
       {
         params: { query: queryString },
-        withCredentials: true,
       },
     );
     return data;

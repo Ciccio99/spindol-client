@@ -69,7 +69,7 @@ const SignInView = () => {
     setErrorMessage('');
     let user = undefined;
     try {
-      let { data } = await axios.post(`${process.env.REACT_APP_API_URI}/users/login`, { email, password }, { withCredentials: true });
+      let { data } = await axios.post(`${process.env.REACT_APP_API_URI}/users/login`, { email, password });
       if (data.user && data.token) {
         user = data.user;
         // document.cookie = `HypnosAuthJWT=${data.token}`;

@@ -6,7 +6,6 @@ const queryOne = async (match={}, sort={}, limit=0, skip=0) => {
     const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/devices`,
       {
         params: { query: queryString },
-        withCredentials: true,
       }
     );
 
@@ -19,9 +18,7 @@ const queryOne = async (match={}, sort={}, limit=0, skip=0) => {
 
 const getRedirectUri = async (device) => {
   try {
-    const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/devices/redirectUri/${device}`,
-      { withCredentials: true },
-    );
+    const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/devices/redirectUri/${device}`);
     console.log(data);
     return data;
   } catch (error) {
@@ -35,9 +32,7 @@ const revokeDeviceAccess = async (device) => {
     if (!device) {
       throw new Error('Must include a device to disconnect from!');
     }
-    await axios.get(`${process.env.REACT_APP_API_URI}/devices/auth/${device}/revoke`,
-      { withCredentials: true },
-    );
+    await axios.get(`${process.env.REACT_APP_API_URI}/devices/auth/${device}/revoke`);
     return true;
   } catch (error) {
     console.log(error);
@@ -50,9 +45,7 @@ const revokeDeviceAccess = async (device) => {
     throw new Error('Must provide device to sync. [oura, fitbit, withings]');
   }
   try {
-    await axios.get(`${process.env.REACT_APP_API_URI}/devices/sync/${device}`,
-      { withCredentials: true },
-    );
+    await axios.get(`${process.env.REACT_APP_API_URI}/devices/sync/${device}`);
     return true;
   } catch (error) {
     // Todo add failed to sync banner/warning w/e
