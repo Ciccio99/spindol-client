@@ -10,7 +10,7 @@ const ToggleButtonGroup = (props) => {
 
   useEffect(() => {
     const onToggle = async (val) => {
-      const success = await props.onChange(val);
+      const success = await props.onChange(val) ;
 
       if (success) {
         setValue(val);

@@ -38,7 +38,9 @@ const TrialTrackerCheckIn = ({ trialTracker }) => {
         type: 'UPDATE',
         sleepTrialTracker,
       });
+      return true;
     }
+    return false;
   }
 
   return (
