@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../loaders/axios';
 
 const query = async (match={}, sort={}, limit=0, skip=0) => {
   const queryString = JSON.stringify({ match, sort, limit, skip });

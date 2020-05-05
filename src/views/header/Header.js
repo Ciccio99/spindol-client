@@ -17,10 +17,12 @@ import LinkOnClick from '../../components/linkOnClick/LinkOnClick';
 import logo from '../../assets/sleepwell-logo.png'
 import UserContext from './../../context/userContext';
 import UserServices from '../../services/UserServices';
+import { useHistory } from 'react-router-dom';
 
 const Header = () => {
   const { user, dispatchUser } = useContext(UserContext);
   const [anchorEl, setAnchorEl] = useState(null);
+  const history = useHistory();
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -44,6 +46,7 @@ const Header = () => {
       }
     }
     logout();
+    history.push('/login');
   };
 
   return (
