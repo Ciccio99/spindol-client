@@ -34,7 +34,9 @@ const DailyDiaryPanel = () => {
     const data = await DailyDiaryServices.upsert(user, todayDate.format('YYYY-MM-DD'), mood);
     if (data) {
       setDailyDiary(data);
+      return true;
     }
+    return false;
   }
 
   return (
