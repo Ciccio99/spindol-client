@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import LinearProgress from '@material-ui/core/LinearProgress'
 import { useHistory, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../../loaders/axios';
 import UserContext from '../../context/userContext';
 import Cookies from 'js-cookie';
 

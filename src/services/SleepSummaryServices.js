@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../loaders/axios';
 import moment from 'moment-timezone';
 
 const query = async (match={}, sort={}, limit=0, skip=0) => {
