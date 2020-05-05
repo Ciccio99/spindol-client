@@ -2,10 +2,7 @@ import axios from '../loaders/axios';
 import Cookies from 'js-cookie';
 
 const logout = async () => {
-  await axios.post(`${process.env.REACT_APP_API_URI}/users/logout`,
-    null,
-    { withCredentials: true }
-  );
+  await axios.post(`${process.env.REACT_APP_API_URI}/users/logout`);
   Cookies.remove('HypnosAuthJWT');
 }
 
