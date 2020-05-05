@@ -35,6 +35,16 @@ let theme = {
     }
   },
   palette: {
+    primary: {
+      light: '#c1a1ed',
+      main: '#9072ba',
+      dark: '#61468a',
+    },
+    secondary: {
+      light: '#ffae83',
+      main: '#e67e56',
+      dark: '#af502b',
+    },
     background: {
       default: '#F5F5F5',
     },

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Container,
   Box,
@@ -11,17 +11,18 @@ import CurrentSleepTrialTrackers from '../../components/sleepTrialTracker/curren
 import StatsDisplay from '../../components/statsDisplay/StatsDisplay';
 import DailyDiaryPanel from '../../components/dailyDiaryPanel/DailyDiaryPanel';
 
-const DashboardScreen = () => {
+
+const DashboardView = () => {
   const { user } = useContext(UserContext);
   const { sleepTrialTrackers, dispatchSleepTrialTrackers} = useContext(SleepTrialTrackersContext);
-  const userFirstName = user.name.split(' ')[0];
+  const userFirstName = user.name ? user.name.split(' ')[0] : '';
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const trialTrackersData = await SleepTrialTrackerServices.querySleepTrialTracker({
-          match: { owner: user._id},
-        });
+        const match = { owner: user._id };
+        const trialTrackersData = await SleepTrialTrackerServices.querySleepTrialTracker(match);
+
         dispatchSleepTrialTrackers({
           type: 'POPULATE',
           sleepTrialTrackers: trialTrackersData,
@@ -49,4 +50,4 @@ const DashboardScreen = () => {
   );
 }
 
-export default DashboardScreen;
+export default DashboardView;

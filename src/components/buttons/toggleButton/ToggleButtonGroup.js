@@ -9,9 +9,12 @@ const ToggleButtonGroup = (props) => {
   }, [props.value]);
 
   useEffect(() => {
-    const onToggle = (val) => {
-      props.onChange(val);
-      setValue(val);
+    const onToggle = async (val) => {
+      const success = await props.onChange(val) ;
+
+      if (success) {
+        setValue(val);
+      }
     }
 
     const elems = React.Children.map(props.children, (child) => {

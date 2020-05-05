@@ -10,8 +10,7 @@ import UserContext from '../../context/userContext';
 import styles from './AccountDevicesPanel.module.css'
 const AccountDevicesPanel = () => {
   const { user } = useContext(UserContext);
-  const userFirstName = user.name.split(' ')[0];
-  console.log(user);
+  const userFirstName = user.name ? user.name.split(' ')[0] : '';
   return (
     <Box mt={4} mb={4} borderRadius={30}>
       <Paper className={styles.paper} elevation={0}>

@@ -5,7 +5,9 @@ import {
   Typography,
 } from '@material-ui/core';
 import LinkText from '../../linkText/LinkText';
+import LinkOnClick from '../../linkOnClick/LinkOnClick';
 import DeviceServices from '../../../services/DeviceServices';
+
 const capFirst = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -16,7 +18,6 @@ const DeviceSettingsItem = ({ user, device, trackerType, userFirstName}) => {
 
   useEffect(() => {
     async function fetchData() {
-      // Get redirectURI
       const data = await DeviceServices.getRedirectUri(device);
       if (data) {
         setRedirectUri(data);
@@ -26,12 +27,21 @@ const DeviceSettingsItem = ({ user, device, trackerType, userFirstName}) => {
   }, [device]);
 
   useEffect(() => {
-    if (user.accounts[device].userId) {
+    if (user.accounts[device].connected) {
       setConnected(true);
     } else {
       setConnected(false);
     }
   }, [user, device])
+
+  const disconnectDevice = async () => {
+    const success = await DeviceServices.revokeDeviceAccess(device);
+    if (success) {
+      setConnected(false);
+    } else {
+      console.log('Failed to disconnect device');
+    }
+  };
 
   return (
     <Box p={1}>
@@ -47,13 +57,10 @@ const DeviceSettingsItem = ({ user, device, trackerType, userFirstName}) => {
         <Grid item>
           {
             connected
-            ? <LinkText to=''>Disconnect</LinkText>
-            : <LinkText to='http://localhost:3001/api/devices/auth/oura' external>Connect</LinkText>
-
+            ? <LinkOnClick onClick={disconnectDevice}>Disconnect</LinkOnClick>
+            : <LinkText to={redirectUri} external>Connect</LinkText>
           }
-
         </Grid>
-
       </Grid>
     </Box>
   );

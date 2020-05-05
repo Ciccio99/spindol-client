@@ -17,12 +17,13 @@ import LinearProgress from '@material-ui/core/LinearProgress'
 import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../../context/userContext';
+import Cookies from 'js-cookie';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="https://sleepwell.ai/">
         Sleepwell.ai
       </Link>{' '}
       {new Date().getFullYear()}
@@ -51,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignIn = () => {
+const SignInView = () => {
   const classes = useStyles();
   const { dispatchUser } = useContext(UserContext);
   const [ email, setEmail ] = useState('');
@@ -60,7 +61,7 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   let history = useHistory();
   let location = useLocation();
-  const { from } = location.state || { from: { pathname: '/' }};
+  const { from } = location.state || { from: { pathname: '/dashboard' }};
 
   const login = async (e) => {
     e.preventDefault();
@@ -69,9 +70,12 @@ const SignIn = () => {
     let user = undefined;
     try {
       let { data } = await axios.post(`${process.env.REACT_APP_API_URI}/users/login`, { email, password }, { withCredentials: true });
-      if (data.user) {
+      if (data.user && data.token) {
         user = data.user;
+        // document.cookie = `HypnosAuthJWT=${data.token}`;
+        Cookies.set('HypnosAuthJWT', data.token, { expires: 30 })
       }
+
     } catch (error) {
       if ([401, 403].indexOf(error?.response?.status) !== -1) {
         setErrorMessage(error.response.data.message);
@@ -162,4 +166,4 @@ const SignIn = () => {
   );
 }
 
-export default SignIn;
+export default SignInView;

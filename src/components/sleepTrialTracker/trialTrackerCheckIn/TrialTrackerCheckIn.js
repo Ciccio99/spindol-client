@@ -38,11 +38,13 @@ const TrialTrackerCheckIn = ({ trialTracker }) => {
         type: 'UPDATE',
         sleepTrialTracker,
       });
+      return true;
     }
+    return false;
   }
 
   return (
-    <Box boxShadow={3} borderRadius={10} p={2}>
+    <Box boxShadow={2} borderRadius={10} p={2}>
       <Grid container justify='space-between' alignItems='center'>
         <Grid item xs={12} sm={6}>
           <Typography variant='subtitle1'>Did you perform this trial yesterday?</Typography>

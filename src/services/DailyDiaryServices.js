@@ -1,13 +1,13 @@
 import axios from 'axios';
-import moment from 'moment-timezone';
 
 const query = async (match={}, sort={}, limit=0, skip=0) => {
   const queryString = JSON.stringify({ match, sort, limit, skip });
 
   try {
     const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/dailyDiary`,
-      { params: { query: queryString }  },
-      { useCredentials: true }
+      { params: { query: queryString },
+        withCredentials: true
+      }
     );
     return data;
   } catch (error) {
@@ -25,7 +25,7 @@ const create = async (user, date, mood) => {
   try {
     const { data } = await axios.post(`${process.env.REACT_APP_API_URI}/dailyDiary/create`,
       body,
-      { useCredentials: true},
+      { withCredentials: true},
     );
     return data;
   } catch (error) {
@@ -43,7 +43,7 @@ const upsert = async (user, date, mood) => {
   try {
     const { data } = await axios.post(`${process.env.REACT_APP_API_URI}/dailyDiary/upsert`,
       body,
-      { useCredentials: true},
+      { withCredentials: true},
     );
     return data;
   } catch (error) {
@@ -57,7 +57,7 @@ const update = async () => {
   try {
     const { data } = await axios.post(`${process.env.REACT_APP_API_URI}/dailyDiary/update`,
       body,
-      { useCredentials: true }
+      { withCredentials: true }
     );
     return data;
   } catch (error) {

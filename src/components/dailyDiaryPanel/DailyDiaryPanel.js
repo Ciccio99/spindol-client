@@ -34,7 +34,9 @@ const DailyDiaryPanel = () => {
     const data = await DailyDiaryServices.upsert(user, todayDate.format('YYYY-MM-DD'), mood);
     if (data) {
       setDailyDiary(data);
+      return true;
     }
+    return false;
   }
 
   return (
@@ -42,6 +44,7 @@ const DailyDiaryPanel = () => {
       <Grid container justify='space-between' alignItems='center'>
         <Grid item xs={12} sm={5}>
           <Typography variant='h6'><span role='img' aria-label='Thinking Face Emoji'>🤔</span> How are you feeling today?</Typography>
+          <Typography variant='caption'>{todayDate.format('MMM D, YYYY')}</Typography>
         </Grid>
         <Grid item container xs={12} sm={7} spacing={1} justify='space-around' alignItems='center'>
           <Grid item className={styles.buttonContainer}>
