@@ -38,7 +38,7 @@ const SleepTrialTracker = ({ trialTracker }) => {
 
   return (
     <Box mt={6}>
-      <Grid container justify='space-between'>
+      <Grid container justify='space-between' spacing={1}>
         <Grid item xs={12}>
           <LinearProgress
             variant='determinate'
@@ -64,6 +64,10 @@ const SleepTrialTracker = ({ trialTracker }) => {
               <li className={styles.trialLength}>{trialTracker.trialLength} day trial period</li>
             </ul>
           </Box>
+        </Grid>
+        <Grid item container xs={12} spacing={1}>
+          <Grid item><Typography variant='body1'>Directions:</Typography></Grid>
+          <Grid item><Typography variant='body1'><strong>{trialTracker.sleepTrial.directions}</strong></Typography></Grid>
         </Grid>
         <Grid item xs={12}>
             <Box mt={2}>

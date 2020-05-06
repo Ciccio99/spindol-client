@@ -10,6 +10,7 @@
 .buttonActive {
   background-color: #e67e56 !important;
   color: #FFFFFF !important;
+  transition: all 0.20s linear !important;
 }
 
 .buttonInactive {

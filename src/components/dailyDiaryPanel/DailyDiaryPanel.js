@@ -41,22 +41,22 @@ const DailyDiaryPanel = () => {
 
   return (
     <Box className={styles.panel} boxShadow={0} borderRadius={10} mb={3} p={3}>
-      <Grid container justify='space-between' alignItems='center'>
-        <Grid item xs={12} sm={5}>
-          <Typography variant='h6'><span role='img' aria-label='Thinking Face Emoji'>🤔</span> How are you feeling today?</Typography>
-          <Typography variant='caption'>{todayDate.format('MMM D, YYYY')}</Typography>
-        </Grid>
-        <Grid item container xs={12} sm={7} spacing={1} justify='space-around' alignItems='center'>
-          <Grid item className={styles.buttonContainer}>
-            <ToggleButtonGroup onChange={submitDailyDiary} value={dailyDiary ? dailyDiary.mood : null}>
-              <ToggleButton value='awful'>Awful</ToggleButton>
-              <ToggleButton value='bad'>Bad</ToggleButton>
-              <ToggleButton value='meh'>Meh</ToggleButton>
-              <ToggleButton value='good'>Good</ToggleButton>
-              <ToggleButton value='excellent'>Excellent</ToggleButton>
-            </ToggleButtonGroup>
+      <Grid container justify='space-between' alignItems='center' spacing={2}>
+        <Grid item container xs={12} sm={12} alignItems='baseline' spacing={2}>
+          <Grid item>
+            <Typography variant='h6'>How are you feeling today?</Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant='caption'>{todayDate.format('MMM D, YYYY')}</Typography>
           </Grid>
         </Grid>
+        <ToggleButtonGroup item container xs={12} sm={12} spacing={1} alignItems='center' justify='space-between' onChange={submitDailyDiary} value={dailyDiary ? dailyDiary.mood : null}>
+          <ToggleButton value='awful' xs={6} sm={2}>Awful</ToggleButton>
+          <ToggleButton value='bad' xs={6} sm={2}>Bad</ToggleButton>
+          <ToggleButton value='meh' xs={6} sm={2}>Meh</ToggleButton>
+          <ToggleButton value='good' xs={6} sm={2}>Good</ToggleButton>
+          <ToggleButton value='excellent' xs={6} sm={2}>Excellent</ToggleButton>
+        </ToggleButtonGroup>
       </Grid>
     </Box>
   );

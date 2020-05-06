@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import {
+  Grid,
+} from '@material-ui/core';
 
 const ToggleButtonGroup = (props) => {
   const [value, setValue] = useState();
@@ -20,7 +23,7 @@ const ToggleButtonGroup = (props) => {
     const elems = React.Children.map(props.children, (child) => {
       return React.cloneElement(child, {
         activebutton: child.props.value === value ? 1 : 0,
-        onClick: (() => {onToggle(child.props.value)}),
+        onInteraction: (() => {onToggle(child.props.value)}),
       }
       );
     });
@@ -28,7 +31,9 @@ const ToggleButtonGroup = (props) => {
   }, [value, props]);
 
   return (
-    elements
+    <Grid {...props}>
+      {elements}
+    </Grid>
   );
 }
 

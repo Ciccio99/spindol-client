@@ -45,7 +45,7 @@ const TrialTrackerCheckIn = ({ trialTracker }) => {
 
   return (
     <Box boxShadow={2} borderRadius={10} p={2}>
-      <Grid container justify='space-between' alignItems='center'>
+      <Grid container spacing={2} justify='space-between' alignItems='center'>
         <Grid item xs={12} sm={6}>
           <Typography variant='subtitle1'>Did you perform this trial yesterday?</Typography>
           <Grid container spacing={1}>
@@ -53,14 +53,10 @@ const TrialTrackerCheckIn = ({ trialTracker }) => {
             <Grid item><Typography variant='caption'>{trialTracker.sleepTrial.type} Trial</Typography></Grid>
           </Grid>
         </Grid>
-        <Grid item container xs={12} sm={4} spacing={1} justify='space-around' alignItems='center'>
-          <Grid item className={styles.buttonContainer}>
-            <ToggleButtonGroup onChange={submitCheckIn} value={completed}>
-              <ToggleButton value={true}>Yes, I did</ToggleButton>
-              <ToggleButton value={false}>No, I didn't</ToggleButton>
-            </ToggleButtonGroup>
-          </Grid>
-        </Grid>
+        <ToggleButtonGroup item container xs={12} sm={6} spacing={2} justify='space-around' alignItems='center' onChange={submitCheckIn} value={completed}>
+          <ToggleButton xs={6} sm={5} value={true}>Yes, I did</ToggleButton>
+          <ToggleButton xs={6} sm={5} value={false}>No, I didn't</ToggleButton>
+        </ToggleButtonGroup>
       </Grid>
     </Box>
   );

@@ -1,6 +1,9 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
+import {
+  Box,
+  Divider,
+  Typography,
+} from '@material-ui/core';
 import SleepTrialTracker from '../SleepTrialTracker';
 import styles from './TypeList.module.css';
 
@@ -10,7 +13,8 @@ const TypeList = ({ type, trialTrackers}) => {
     <React.Fragment>
       <Divider/>
       <Box p={3}>
-        <h4 className={styles.typeHeader}>{type} Trials</h4>
+        <Typography className={styles.typeHeader} variant='h6'>{type} Trials</Typography>
+        {/* <h4 className={styles.typeHeader}>{type} Trials</h4> */}
         {trialTrackers.map((trialTracker) =>
           trialTracker.completed
           ? null

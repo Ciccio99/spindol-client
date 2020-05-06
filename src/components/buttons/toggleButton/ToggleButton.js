@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
   Button,
-  Typography
+  Typography,
+  Grid
 } from '@material-ui/core';
 import styles from './ToggleButton.module.css';
 
@@ -13,9 +14,11 @@ const ToggleButton = (props) => {
   }, [props.activebutton]);
 
   return (
-    <Button className={classes} variant='outlined' size='large' disableElevation {...props}>
-      <Typography className={styles.buttonText} variant='caption'>{props.children}</Typography>
-    </Button>
+    <Grid item {...props}>
+      <Button className={classes} variant='outlined' size='medium' fullWidth disableElevation onClick={props.onInteraction}>
+        <Typography className={styles.buttonText} variant='caption'>{props.children}</Typography>
+      </Button>
+    </Grid>
   );
 }
 
