@@ -7,7 +7,6 @@ import {
 import moment from 'moment';
 import ToggleButtonGroup from '../../buttons/toggleButton/ToggleButtonGroup';
 import ToggleButton from '../../buttons/toggleButton/ToggleButton';
-import styles from './TrialTrackerCheckIn.module.css';
 import SleepTrialTrackerServices from '../../../services/SleepTrialTrackerServices'
 import SleepTrialTrackersContext from '../../../context/sleepTrialTrackersContext';
 

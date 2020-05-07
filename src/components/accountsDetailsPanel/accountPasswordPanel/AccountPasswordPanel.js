@@ -13,7 +13,7 @@ import UserServices from '../../../services/UserServices';
 
 const AccountPasswordPanel = () => {
   const initFormState = { password: '', confirmPassword: '', currentPassword: '' };
-  const { user, dispatchUser } = useContext(UserContext);
+  const { dispatchUser } = useContext(UserContext);
   const [formState, setFormState] = useState(initFormState);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');

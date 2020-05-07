@@ -57,12 +57,13 @@ const AccountInfoPanel = () => {
 
   return (
     <Box mt={1} mb={5}>
-        <form onSubmit={handleOnSubmit} autoComplete='off' noValidate>
+        <form onSubmit={handleOnSubmit} autoComplete='off'>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
               <TextField
                 value={formState.email}
                 name='email'
+                type='email'
                 placeholder={user.email}
                 label='Email'
                 onChange={handleInputChange}

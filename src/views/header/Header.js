@@ -8,8 +8,6 @@ import {
   Menu,
   MenuItem,
   Button,
-  Fade,
-  Collapse
 } from '@material-ui/core';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 import LinkText from '../../components/linkText/LinkText';
