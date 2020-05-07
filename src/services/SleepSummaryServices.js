@@ -54,7 +54,7 @@ const getAvgBedtime = (sleepSummaries) => {
   sleepSummaries.forEach(ss => {
     let startDate = moment(ss.startDateTime).utc();
     startDate.add(ss.timezoneOffset, 'minutes');
-
+    console.log(startDate);
     totalHours += startDate.hours();
     totalMins += startDate.minutes();
   });
