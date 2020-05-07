@@ -15,7 +15,7 @@ const ToggleButton = (props) => {
 
   return (
     <Grid item {...props}>
-      <Button className={classes} variant='outlined' size='medium' fullWidth disableElevation onClick={props.onInteraction}>
+      <Button className={classes} variant='outlined' size='medium' fullWidth disableElevation onClick={props.onInteractionHandle}>
         <Typography className={styles.buttonText} variant='caption'>{props.children}</Typography>
       </Button>
     </Grid>

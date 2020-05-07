@@ -39,11 +39,13 @@ let theme = {
       light: '#c1a1ed',
       main: '#9072ba',
       dark: '#61468a',
+      contrastText: '#fff'
     },
     secondary: {
       light: '#ffae83',
       main: '#e67e56',
       dark: '#af502b',
+      contrastText: '#fff'
     },
     background: {
       default: '#F5F5F5',

@@ -23,9 +23,8 @@ const ToggleButtonGroup = (props) => {
     const elems = React.Children.map(props.children, (child) => {
       return React.cloneElement(child, {
         activebutton: child.props.value === value ? 1 : 0,
-        onInteraction: (() => {onToggle(child.props.value)}),
-      }
-      );
+        onInteractionHandle: (() => {onToggle(child.props.value)}),
+      });
     });
     setElements(elems);
   }, [value, props]);

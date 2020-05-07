@@ -6,6 +6,12 @@ const logout = async () => {
   Cookies.remove('HypnosAuthJWT');
 }
 
+const update = async (userDTO) => {
+  const { data } = await axios.patch(`${process.env.REACT_APP_API_URI}/users/me`, userDTO);
+  return data.user;
+};
+
 export default {
   logout,
+  update,
 }

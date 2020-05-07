@@ -3,7 +3,6 @@ import {
   Box,
   Paper,
   Typography,
-  Divider
 } from '@material-ui/core';
 import DeviceSettingsItem from '../accountDevicesPanel/deviceSettingsItem/DeviceSettingsItem';
 import UserContext from '../../context/userContext';
@@ -12,7 +11,7 @@ const AccountDevicesPanel = () => {
   const { user } = useContext(UserContext);
   const userFirstName = user.name ? user.name.split(' ')[0] : '';
   return (
-    <Box mt={4} mb={4} borderRadius={30}>
+    <Box mt={4} mb={4} borderRadius={10}>
       <Paper className={styles.paper} elevation={0}>
         <Box p={3} pt={4}>
           <Box mb={5}>

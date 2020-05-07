@@ -8,9 +8,7 @@ import UserContext from './context/userContext';
 import userReducer from './reducers/user';
 import SleepTrialTrackersContext from './context/sleepTrialTrackersContext';
 import sleepTrialTrackersReducer from './reducers/sleepTrialTrackersReducer';
-
 import LoadingCard from './components/loadingCard/LoadingCard';
-import Cookies from 'js-cookie';
 
 function App() {
   const [user, dispatchUser] = useReducer(userReducer, {});
