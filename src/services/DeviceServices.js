@@ -19,10 +19,8 @@ const queryOne = async (match={}, sort={}, limit=0, skip=0) => {
 const getRedirectUri = async (device) => {
   try {
     const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/devices/redirectUri/${device}`);
-    console.log(data);
     return data;
   } catch (error) {
-    console.log(error);
     return '';
   }
 };
@@ -48,8 +46,6 @@ const revokeDeviceAccess = async (device) => {
     await axios.get(`${process.env.REACT_APP_API_URI}/devices/sync/${device}`);
     return true;
   } catch (error) {
-    // Todo add failed to sync banner/warning w/e
-    console.error(error);
     return false;
   }
  }

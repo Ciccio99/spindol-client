@@ -16,9 +16,11 @@ import logo from '../../assets/sleepwell-logo.png'
 import UserContext from './../../context/userContext';
 import UserServices from '../../services/UserServices';
 import { useHistory } from 'react-router-dom';
+import AlertSystemContext from '../../context/alertSystemContext';
 
 const Header = () => {
   const { user, dispatchUser } = useContext(UserContext);
+  const { dispatchAlertSystem } = useContext(AlertSystemContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
 
@@ -39,8 +41,10 @@ const Header = () => {
         });
         handleClose();
       } catch (error) {
-        // TODO WArning popup
-        console.error(error);
+        dispatchAlertSystem({
+          type: 'ERROR',
+          message: error.response.data.message,
+        })
       }
     }
     logout();

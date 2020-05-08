@@ -54,8 +54,6 @@ const AccountPasswordPanel = () => {
         });
         setFormState(initFormState);
       } catch (error) {
-        // TODO: Set warning popup for Errors
-        console.log(error);
         setErrorMessage(error.response.data.message);
       }
     };

@@ -6,6 +6,7 @@ import {
 } from '@material-ui/core';
 import styles from './ToggleButton.module.css';
 
+// https://github.com/mui-org/material-ui/issues/13394
 const ToggleButton = (props) => {
   const [classes, setClasses] = useState(`${styles.button} ${styles.buttonInactive}`);
 

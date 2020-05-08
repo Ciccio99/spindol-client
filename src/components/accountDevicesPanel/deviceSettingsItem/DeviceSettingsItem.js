@@ -45,7 +45,7 @@ const DeviceSettingsItem = ({ user, device, trackerType, userFirstName}) => {
 
   return (
     <Box p={1}>
-      <Grid container justify='space-between' alignItems='center'>
+      <Grid container justify='space-between' alignItems='center' spacing={2}>
         <Grid item>
           {
             connected
@@ -57,7 +57,7 @@ const DeviceSettingsItem = ({ user, device, trackerType, userFirstName}) => {
         <Grid item>
           {
             connected
-            ? <LinkOnClick onClick={disconnectDevice}>Disconnect</LinkOnClick>
+            ? <LinkOnClick onClick={disconnectDevice} errorColor>Disconnect</LinkOnClick>
             : <LinkText to={redirectUri} external>Connect</LinkText>
           }
         </Grid>

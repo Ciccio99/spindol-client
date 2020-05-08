@@ -52,7 +52,7 @@ const TrialTrackerCheckIn = ({ trialTracker }) => {
             <Grid item><Typography variant='caption'>{trialTracker.sleepTrial.type} Trial</Typography></Grid>
           </Grid>
         </Grid>
-        <ToggleButtonGroup item container xs={12} sm={6} spacing={2} justify='space-around' alignItems='center' onChange={submitCheckIn} value={completed}>
+        <ToggleButtonGroup item container xs={12} sm={6} spacing={1} justify='space-around' alignItems='center' onChange={submitCheckIn} value={completed}>
           <ToggleButton xs={6} sm={5} value={true}>Yes, I did</ToggleButton>
           <ToggleButton xs={6} sm={5} value={false}>No, I didn't</ToggleButton>
         </ToggleButtonGroup>

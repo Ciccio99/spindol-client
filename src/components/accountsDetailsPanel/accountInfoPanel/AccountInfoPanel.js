@@ -9,10 +9,12 @@ import {
 
 import UserContext from '../../../context/userContext';
 import UserServices from '../../../services/UserServices';
+import AlertSystemContext from '../../../context/alertSystemContext';
 
 const AccountInfoPanel = () => {
   const initFormState = { email: '', name: '' };
   const { user, dispatchUser } = useContext(UserContext);
+  const { dispatchAlertSystem } = useContext(AlertSystemContext);
   const [formState, setFormState] = useState(initFormState);
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
@@ -47,8 +49,10 @@ const AccountInfoPanel = () => {
         });
         setFormState(initFormState);
       } catch (error) {
-        // TODO: Set warning popup for Errors
-        console.log(error);
+        dispatchAlertSystem({
+          type: 'ERROR',
+          message: error.response.data.message,
+        })
       }
 
     };

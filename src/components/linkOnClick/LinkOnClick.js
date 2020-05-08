@@ -4,7 +4,7 @@ import styles from './LinkOnClick.module.css';
 
 const LinkOnClick = (props) => {
   return (
-      <Typography {...props} variant='subtitle2' className={styles.navLink}>
+      <Typography {...props} variant='subtitle2' className={`${styles.navLink} ${props.errorColor ? styles.warning : ''}`}>
         {props.children}
       </Typography>
   );
