@@ -15,34 +15,52 @@ const StatsDisplay = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    let didCancel = false;
     if (!user.accounts.connected) {
+      if (didCancel) {
+        return;
+      }
       setLoading(false);
+      return;
+    }
+    if (didCancel) {
       return;
     }
     setLoading(true);
     async function fetchData() {
       await DeviceServices.syncDeviceData('oura');
+      if (didCancel) {
+        return;
+      }
       setLoading(false);
     };
     fetchData();
+    return () => { didCancel = true; };
   }, [user.accounts.connected]);
 
 
   useEffect(() => {
+    let didCancel = false;
     async function fetchData () {
       const match = { owner: user._id };
       const sort = { date: 'desc'};
       const limit = 7;
       const sleepSummaries = await SleepSummaryServices.query(match, sort, limit);
       if (sleepSummaries.length === 0) {
+        if (didCancel) {
+          return;
+        }
         setStats([]);
         return;
       }
       const stats = SleepSummaryServices.getSleepSummaryStats(sleepSummaries);
+      if (didCancel) {
+        return;
+      }
       setStats(stats);
     }
     fetchData();
-
+    return () => { didCancel = true; };
   }, [user]);
 
   return (

@@ -49,18 +49,15 @@ const getAvgDeepHoursDuration = (sleepSummaries) => {
 };
 
 const getAvgBedtime = (sleepSummaries) => {
-  let totalHours = 0;
-  let totalMins = 0;
+  let diffMins = 0;
   sleepSummaries.forEach(ss => {
-    let startDate = moment(ss.startDateTime).utc();
-    startDate.add(ss.timezoneOffset, 'minutes');
-    console.log(startDate);
-    totalHours += startDate.hours();
-    totalMins += startDate.minutes();
+    let startDate = moment(ss.startDateTime).utc().utcOffset(ss.timezoneOffset);
+    const initDay = moment(ss.date, 'YYYY-MM-DD').utc().utcOffset(ss.timezoneOffset)
+    diffMins += startDate.diff(initDay, 'minutes');
   });
-  const avgHours = Math.round(totalHours / sleepSummaries.length);
-  const avgMins = Math.round(totalMins / sleepSummaries.length);
-  const bedTime = moment('2020-4-20', 'YYYY-MM-DD').add(avgHours, 'hours').add(avgMins, 'minutes');
+
+  diffMins = Math.floor(diffMins / sleepSummaries.length);
+  const bedTime = moment('2020-4-20', 'YYYY-MM-DD').add(diffMins, 'minutes');
   return bedTime;
 };
 
@@ -86,8 +83,8 @@ const getSleepSummaryStats = (sleepSummaries) => {
       units: 'hrs',
       description: 'Weekly average Deep duration'
     },{
-      stat: `${avgBedtime.hours() % 12}:${avgBedtime.minutes()}`,
-      units: `${avgBedtime.hours() > 12 ? 'pm' : 'am'}`,
+      stat: avgBedtime.format('h:mm a'),
+      units: null,
       description: 'Weekly average bedtime'
     }
   ];
