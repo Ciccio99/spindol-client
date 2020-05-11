@@ -12,6 +12,7 @@ import alertSystemReducer from './reducers/alertSystem';
 import SleepTrialTrackersContext from './context/sleepTrialTrackersContext';
 import sleepTrialTrackersReducer from './reducers/sleepTrialTrackersReducer';
 import LoadingCard from './components/loadingCard/LoadingCard';
+import DeviceServices from './services/DeviceServices';
 
 function App() {
   const [user, dispatchUser] = useReducer(userReducer, {});
@@ -32,6 +33,7 @@ function App() {
           type: 'USER_LOGIN',
           user,
         });
+        await DeviceServices.syncDeviceData('oura');
       }
       setLoaded(true)
     }

@@ -3,6 +3,7 @@ import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
 let theme = {
   typography: {
     fontFamily: [
+      // "'Exo 2'",
       'Work Sans',
       '-apple-system',
       'BlinkMacSystemFont',

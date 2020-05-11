@@ -73,6 +73,7 @@ const CurrentSleepTrialTrackers = ({ trialTrackers }) => {
         open={showSleepTrials}
         onClose={() => {setShowSleepTrials(false)}}
         onBackdropClick={() => {setShowSleepTrials(false)}}
+        keepMounted={true}
       >
         <Box display='flex' justifyContent='center'>
           <SleepTrialsView handleCloseClick={() => {setShowSleepTrials(false)}}/>

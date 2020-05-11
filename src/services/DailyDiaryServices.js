@@ -14,6 +14,27 @@ const query = async (match={}, sort={}, limit=0, skip=0) => {
   }
 };
 
+const getAllDailyDiary = async () => {
+  const query = {
+    match: {},
+    sort: {
+      date: -1,
+    },
+    limit: 30,
+    skip:0,
+  };
+  const queryString = JSON.stringify(query);
+  try {
+    const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/dailyDiary`,
+      { params: { query: queryString }}
+    );
+    console.log(data);
+    return data;
+  } catch (error) {
+    return [];
+  }
+};
+
 const create = async (user, date, mood) => {
   const body = {
     date,
@@ -60,4 +81,5 @@ export default {
   create,
   update,
   upsert,
+  getAllDailyDiary,
 };
