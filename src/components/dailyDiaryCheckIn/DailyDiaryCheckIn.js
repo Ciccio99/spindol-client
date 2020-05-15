@@ -49,8 +49,16 @@ const DailyDiaryCheckIn = ({ dailyDiary }) => {
     <Box boxShadow={0} className={styles.panel} borderRadius={10} p={1} mb={3}>
       <Typography variant='subtitle2'>{moment(dailyDiary.date).utc().format('dddd MMM D, YYYY')}</Typography>
       <Grid container alignItems='center' spacing={2}>
-        <Grid item>
+        <Grid item xs={12}>
           <Typography variant='h6'>You felt <span className={MOOD_COLOR[dailyDiary.mood]}>{dailyDiary.mood}</span> on this day.</Typography>
+        </Grid>
+        <Grid item container xs={12} justify='space-between'>
+          <Grid item><Typography>SleepTrial One</Typography></Grid>
+          <Grid item>Button1 Button2</Grid>
+        </Grid>
+        <Grid item container xs={12} justify='space-between'>
+          <Grid item><Typography>SleepTrial Two</Typography></Grid>
+          <Grid item>Button1 Button2</Grid>
         </Grid>
       </Grid>
 

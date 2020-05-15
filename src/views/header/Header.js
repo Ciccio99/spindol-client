@@ -95,8 +95,8 @@ const Header = () => {
                           <MenuItem key='dashboard' onClick={handleClose}>
                             <LinkText to='/dashboard'>Dashboard</LinkText>
                           </MenuItem>,
-                          <MenuItem key='checkins' onClick={handleClose}>
-                            <LinkText to='/checkins'>Check-Ins</LinkText>
+                          <MenuItem key='dailydiary' onClick={handleClose}>
+                            <LinkText to='/dailydiary'>Daily Diary</LinkText>
                           </MenuItem>,
                           <MenuItem key='settings' onClick={handleClose}>
                             <LinkText to='/settings'>Account</LinkText>

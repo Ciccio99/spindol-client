@@ -17,13 +17,18 @@ const query = async (match={}, sort={}, limit=0, skip=0) => {
   }
 };
 
+const getSleepHoursDuration = (sleepSummary) => {
+  const startDate = new Date(sleepSummary.startDateTime);
+  const endDate = new Date(sleepSummary.endDateTime);
+  const diffTime = Math.abs(endDate - startDate);
+  const diffHours = diffTime / (1000 * 3600);
+  return diffHours;
+}
+
 const getAvgSleepHoursDuration = (sleepSummaries) => {
   let totalHours = 0;
   sleepSummaries.forEach(ss => {
-    const startDate = new Date(ss.startDateTime);
-    const endDate = new Date(ss.endDateTime);
-    const diffTime = Math.abs(endDate - startDate);
-    const diffHours = diffTime / (1000 * 3600);
+    const diffHours = getSleepHoursDuration(ss);
     totalHours += diffHours;
   });
   const avgSleepTime = totalHours / sleepSummaries.length;
@@ -51,9 +56,10 @@ const getAvgDeepHoursDuration = (sleepSummaries) => {
 const getAvgBedtime = (sleepSummaries) => {
   let diffMins = 0;
   sleepSummaries.forEach(ss => {
-    let startDate = moment(ss.startDateTime).utc().utcOffset(ss.timezoneOffset);
-    const initDay = moment(ss.date, 'YYYY-MM-DD').utc().utcOffset(ss.timezoneOffset)
-    diffMins += startDate.diff(initDay, 'minutes');
+    let startDate = moment.utc(ss.startDateTime);
+    const initDay = moment.utc(ss.date, 'YYYY-MM-DD').subtract(1, 'day');
+
+    diffMins += startDate.diff(initDay, 'minutes') + ss.timezoneOffset;
   });
 
   diffMins = Math.floor(diffMins / sleepSummaries.length);
@@ -61,7 +67,7 @@ const getAvgBedtime = (sleepSummaries) => {
   return bedTime;
 };
 
-const getSleepSummaryStats = (sleepSummaries) => {
+const getSleepSummaryAvgStats = (sleepSummaries) => {
   let avgSleepDuration = getAvgSleepHoursDuration(sleepSummaries).toFixed(1);
   let avgRemDuration = getAvgRemHoursDuration(sleepSummaries).toFixed(1);
   let avgDeepDuration = getAvgDeepHoursDuration(sleepSummaries).toFixed(1);
@@ -92,8 +98,41 @@ const getSleepSummaryStats = (sleepSummaries) => {
   return stats;
 };
 
+
+const getSleepSummaryStats = (sleepSummary) => {
+  let sleepDuration = getSleepHoursDuration(sleepSummary).toFixed(1);
+  let remDuration = (sleepSummary.remSleepDuration / 3600).toFixed(1);
+  let deepDuration = (sleepSummary.deepSleepDuration / 3600).toFixed(1);
+  let bedtime = moment.utc(sleepSummary.startDateTime).utcOffset(sleepSummary.timezoneOffset);
+
+  const stats = [
+    {
+      stat: sleepDuration,
+      units: 'hrs',
+      description: 'Total Sleep'
+    },
+    {
+      stat: remDuration,
+      units: 'hrs',
+      description: 'REM'
+    },
+    {
+      stat: deepDuration,
+      units: 'hrs',
+      description: 'Deep'
+    },{
+      stat: bedtime.format('h:mm a'),
+      units: null,
+      description: 'Bedtime'
+    }
+  ];
+
+  return stats;
+};
+
 export default {
   query,
   getAvgSleepHoursDuration,
+  getSleepSummaryAvgStats,
   getSleepSummaryStats,
 };

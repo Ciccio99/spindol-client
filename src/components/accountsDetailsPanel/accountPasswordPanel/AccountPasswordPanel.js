@@ -10,10 +10,12 @@ import {
 
 import UserContext from '../../../context/userContext';
 import UserServices from '../../../services/UserServices';
+import AlertSystemContext from '../../../context/alertSystemContext';
 
 const AccountPasswordPanel = () => {
   const initFormState = { password: '', confirmPassword: '', currentPassword: '' };
   const { dispatchUser } = useContext(UserContext);
+  const { dispatchAlertSystem } = useContext(AlertSystemContext);
   const [formState, setFormState] = useState(initFormState);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
@@ -53,8 +55,16 @@ const AccountPasswordPanel = () => {
           user,
         });
         setFormState(initFormState);
+        dispatchAlertSystem({
+          type: 'SUCCESS',
+          message: 'Password successfully updated!',
+        });
       } catch (error) {
         setErrorMessage(error.response.data.message);
+        dispatchAlertSystem({
+          type: 'ERROR',
+          message: error.response.data.message,
+        });
       }
     };
     update();

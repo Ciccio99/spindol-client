@@ -2,37 +2,36 @@ import React, { useState, useEffect, useContext } from 'react';
 import {
   Box,
   Grid,
-  Typography,
+  Typography
 } from '@material-ui/core';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import ToggleButtonGroup from '../../buttons/toggleButton/ToggleButtonGroup';
 import ToggleButton from '../../buttons/toggleButton/ToggleButton';
-import SleepTrialTrackerServices from '../../../services/SleepTrialTrackerServices'
+import SleepTrialTrackerServices from '../../../services/SleepTrialTrackerServices';
 import SleepTrialTrackersContext from '../../../context/sleepTrialTrackersContext';
 
-const TrialTrackerCheckIn = ({ trialTracker }) => {
+const SleepTrialTrackerMin = ({ sleepTrialTracker, date }) => {
   const { dispatchSleepTrialTrackers } = useContext(SleepTrialTrackersContext);
   const [completed, setCompleted] = useState(null);
-  const yesterdayDate = moment().subtract(1, 'day');
+  const [yesterdayDate] = useState(moment.utc(date).subtract(1, 'day'));
 
   useEffect(() => {
-    const existingCheckIn = trialTracker.checkIns.find((checkIn) => {
-      const checkInDate = moment(checkIn.date);
-      return moment(checkInDate.utc().format('YYYY-MM-DD')).isSame(moment(yesterdayDate.format('YYYY-MM-DD')), 'day');
-    });
-
+    const existingCheckIn = sleepTrialTracker.checkIns.find((checkIn) => {
+      const checkInDate = moment.utc(checkIn.date);
+      return checkInDate.isSame(yesterdayDate, 'day');
+    })
     if (existingCheckIn) {
       setCompleted(existingCheckIn.completed);
     }
-  }, [trialTracker, yesterdayDate]);
+  }, [sleepTrialTracker, yesterdayDate]);
 
   const submitCheckIn = async (completed) => {
-    const sleepTrialTracker = await SleepTrialTrackerServices.addCheckIn(
-      trialTracker._id,
+    const updateStt = await SleepTrialTrackerServices.addCheckIn(
+      sleepTrialTracker._id,
       yesterdayDate.format('YYYY-MM-DD'),
       completed
     );
-    if (sleepTrialTracker) {
+    if (updateStt) {
       dispatchSleepTrialTrackers({
         type: 'UPDATE',
         sleepTrialTracker,
@@ -43,13 +42,13 @@ const TrialTrackerCheckIn = ({ trialTracker }) => {
   }
 
   return (
-    <Box boxShadow={2} borderRadius={10} p={2}>
+    <Box boxShadow={2} borderRadius={10} p={2} mt={3}>
       <Grid container spacing={2} justify='space-between' alignItems='center'>
         <Grid item xs={12} sm={6}>
-          <Typography variant='subtitle1'>Did you perform this trial yesterday?</Typography>
+          <Typography variant='subtitle1'>{sleepTrialTracker.sleepTrial.name}</Typography>
+          {/* <Typography variant='subtitle2' display='inline'>Did you perform this trial?</Typography> */}
           <Grid container spacing={1} alignItems='center'>
-            <Grid item><Typography variant='subtitle2'>The night of <strong>{yesterdayDate.format('MMM D, YYYY')}</strong></Typography></Grid>
-            {/* <Grid item><Typography variant='caption'>{trialTracker.sleepTrial.type} Trial</Typography></Grid> */}
+            <Grid item><Typography variant='caption'>The night of <strong>{yesterdayDate.format('MMM D, YYYY')}</strong></Typography></Grid>
           </Grid>
         </Grid>
         <ToggleButtonGroup item container xs={12} sm={6} spacing={1} justify='space-around' alignItems='center' onChange={submitCheckIn} value={completed}>
@@ -61,4 +60,4 @@ const TrialTrackerCheckIn = ({ trialTracker }) => {
   );
 };
 
-export default TrialTrackerCheckIn;
+export default SleepTrialTrackerMin;

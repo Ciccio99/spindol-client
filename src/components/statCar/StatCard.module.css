@@ -3,6 +3,10 @@
   height: 100%;
 }
 
+.desc {
+  font-weight: 600 !important;
+}
+
 .description {
   padding: 0;
   margin: 0;

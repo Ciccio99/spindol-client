@@ -20,7 +20,7 @@ const StatsDisplay = () => {
     let didCancel = false;
     async function fetchData () {
       setLoading(true);
-      const match = { owner: user._id };
+      const match = { };
       const sort = { date: 'desc'};
       const limit = 7;
       const sleepSummaries = await SleepSummaryServices.query(match, sort, limit);
@@ -37,7 +37,7 @@ const StatsDisplay = () => {
         setLoading(false);
         return;
       }
-      const stats = SleepSummaryServices.getSleepSummaryStats(sleepSummaries);
+      const stats = SleepSummaryServices.getSleepSummaryAvgStats(sleepSummaries);
       if (didCancel) {
         setLoading(false);
         return;

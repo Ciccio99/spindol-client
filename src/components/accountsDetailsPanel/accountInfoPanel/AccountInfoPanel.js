@@ -52,7 +52,7 @@ const AccountInfoPanel = () => {
         dispatchAlertSystem({
           type: 'ERROR',
           message: error.response.data.message,
-        })
+        });
       }
 
     };

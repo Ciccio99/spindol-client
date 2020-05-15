@@ -20,7 +20,7 @@ const DashboardView = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const match = { owner: user._id };
+        const match = { };
         const trialTrackersData = await SleepTrialTrackerServices.querySleepTrialTracker(match);
 
         dispatchSleepTrialTrackers({
@@ -39,7 +39,7 @@ const DashboardView = () => {
       <Container>
         <Box mt={4} mb={4}>
           <Typography variant='h3'>
-              Welcome{userFirstName ? ' ' + userFirstName : ''}, let's get you some better sleep!
+              Welcome{userFirstName ? ' ' + userFirstName : ''}!
           </Typography>
         </Box>
         <DailyDiaryPanel/>

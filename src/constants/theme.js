@@ -20,8 +20,12 @@ let theme = {
     fontStyle: 'normal',
     htmlFontSize: 16,
     fontSize: 16,
+    h2: {
+      fontWeight: 600,
+    },
     h3: {
       fontWeight: 700,
+      fontSize: '3rem',
     },
     h5: {
       fontWeight: 700,

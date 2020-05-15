@@ -19,7 +19,6 @@ const create = async (user, sleepTrial) => {
   const body = {
     sleepTrial: sleepTrial._id,
     trialLength: sleepTrial.trialLength,
-    owner: user._id,
   };
   try {
     const { data } = await axios.post(`${process.env.REACT_APP_API_URI}/sleepTrialTracker/create`,

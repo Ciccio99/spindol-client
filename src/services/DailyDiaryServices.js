@@ -1,3 +1,4 @@
+import moment from 'moment-timezone';
 import axios from '../loaders/axios';
 
 const query = async (match={}, sort={}, limit=0, skip=0) => {
@@ -13,6 +14,38 @@ const query = async (match={}, sort={}, limit=0, skip=0) => {
     return [];
   }
 };
+
+// const getByDate = async (searchDate) => {
+//   const date = moment.utc(searchDate, 'YYYY-MM-DD');
+//   const match = { date: searchDate };
+//   // const match = { date: date.startOf('day') };
+//   const queryString = JSON.stringify({ match });
+//   try {
+//     const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/dailyDiary`,
+//       { params: { query: queryString } }
+//     );
+//     if (data.length > 0) {
+//       return data[0];
+//     }
+//     return null;
+//   } catch (error) {
+//     return null;
+//   }
+// }
+
+const getByDate = async (searchDate) => {
+  const date = moment.utc(searchDate, 'YYYY-MM-DD');
+  const queryString = JSON.stringify({ date });
+  try {
+    const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/dailyDiary/getByDate`,
+      { params: { query: queryString } }
+    );
+    return data;
+  } catch (error) {
+    return null;
+  }
+}
+
 
 const getAllDailyDiary = async () => {
   const query = {
@@ -39,7 +72,6 @@ const create = async (user, date, mood) => {
   const body = {
     date,
     mood,
-    owner: user._id,
   };
   try {
     const { data } = await axios.post(`${process.env.REACT_APP_API_URI}/dailyDiary/create`, body);
@@ -50,19 +82,13 @@ const create = async (user, date, mood) => {
   }
 }
 
-const upsert = async (user, date, mood) => {
+const upsert = async (date, mood) => {
   const body = {
     date,
     mood,
-    owner: user._id,
   };
-  try {
     const { data } = await axios.post(`${process.env.REACT_APP_API_URI}/dailyDiary/upsert`, body);
     return data;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
 }
 
 const update = async () => {
@@ -82,4 +108,5 @@ export default {
   update,
   upsert,
   getAllDailyDiary,
+  getByDate,
 };

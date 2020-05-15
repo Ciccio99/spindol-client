@@ -17,7 +17,7 @@ const AppRouter = () => (
       <Route exact path='/' component={HomePage} />
       <PublicRoute exact path='/login' component={SignInView} />
       <ProtectedRoute path='/dashboard' component={DashboardView} />
-      <ProtectedRoute path='/checkins' component={CheckInsView} />
+      <ProtectedRoute path='/dailydiary' component={CheckInsView} />
       <ProtectedRoute path='/settings' component={AccountSettings} />
       <Route render={() => <h1>404</h1>}/>
     </Switch>

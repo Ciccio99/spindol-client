@@ -10,28 +10,36 @@ import ToggleButton from '../buttons/toggleButton/ToggleButton';
 import DailyDiaryServices from '../../services/DailyDiaryServices';
 import UserContext from '../../context/userContext';
 import styles from './DailyDiaryPanel.module.css';
+import AlertSystemContext from '../../context/alertSystemContext';
 
 const DailyDiaryPanel = () => {
   const { user } = useContext(UserContext);
+  const { dispatchAlertSystem } = useContext(AlertSystemContext);
   const [dailyDiary, setDailyDiary] = useState();
   const todayDate = moment().startOf('day');
 
   useEffect(() => {
     async function fetchData() {
       const todayDate = moment().startOf('day');
-      const data = await DailyDiaryServices.query({
-        date: todayDate.format('YYYY-MM-DD'),
-        owner: user._id,
-      }, { date: 'desc' }, 1);
-      if (data.length > 0) {
-        setDailyDiary(data[0]);
+      try {
+        const data = await DailyDiaryServices.query({
+          date: todayDate.format('YYYY-MM-DD'),
+        }, { date: 'desc' }, 1);
+        if (data.length > 0) {
+          setDailyDiary(data[0]);
+        }
+      } catch (error) {
+        dispatchAlertSystem({
+          type:'WARNING',
+          message: error.response.data.message,
+        })
       }
     }
     fetchData();
-  }, [user]);
+  }, [dispatchAlertSystem, user]);
 
   const submitDailyDiary = async (mood) => {
-    const data = await DailyDiaryServices.upsert(user, todayDate.format('YYYY-MM-DD'), mood);
+    const data = await DailyDiaryServices.upsert(todayDate.format('YYYY-MM-DD'), mood);
     if (data) {
       setDailyDiary(data);
       return true;
@@ -47,15 +55,15 @@ const DailyDiaryPanel = () => {
             <Typography variant='h6'>How are you feeling today?</Typography>
           </Grid>
           <Grid item>
-            <Typography variant='caption'>{todayDate.format('MMM D, YYYY')}</Typography>
+            <Typography variant='subtitle1'>{todayDate.format('MMM D, YYYY')}</Typography>
           </Grid>
         </Grid>
         <ToggleButtonGroup item container xs={12} sm={12} spacing={1} alignItems='center' justify='space-between' onChange={submitDailyDiary} value={dailyDiary ? dailyDiary.mood : null}>
-          <ToggleButton value='awful' xs={6} sm={2}>Awful</ToggleButton>
-          <ToggleButton value='bad' xs={6} sm={2}>Bad</ToggleButton>
-          <ToggleButton value='meh' xs={6} sm={2}>Meh</ToggleButton>
-          <ToggleButton value='good' xs={6} sm={2}>Good</ToggleButton>
           <ToggleButton value='excellent' xs={6} sm={2}>Excellent</ToggleButton>
+          <ToggleButton value='good' xs={6} sm={2}>Good</ToggleButton>
+          <ToggleButton value='meh' xs={6} sm={2}>Meh</ToggleButton>
+          <ToggleButton value='bad' xs={6} sm={2}>Bad</ToggleButton>
+          <ToggleButton value='awful' xs={6} sm={2}>Awful</ToggleButton>
         </ToggleButtonGroup>
       </Grid>
     </Box>
