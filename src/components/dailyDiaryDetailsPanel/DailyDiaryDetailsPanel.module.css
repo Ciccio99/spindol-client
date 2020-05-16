@@ -2,6 +2,10 @@
   background-color: #FFFFFF;
 }
 
+.root {
+  border-radius: 10px;
+}
+
 .excellent {
   color: #5EBC88;
 }

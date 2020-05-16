@@ -56,6 +56,9 @@ let theme = {
       default: '#F5F5F5',
     },
   },
+  shape: {
+    borderRadius: 10,
+  },
 };
 
 theme = createMuiTheme(theme);

@@ -8,15 +8,16 @@ import {
   Menu,
   MenuItem,
   Button,
+  Typography,
 } from '@material-ui/core';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 import LinkText from '../../components/linkText/LinkText';
-import LinkOnClick from '../../components/linkOnClick/LinkOnClick';
 import logo from '../../assets/sleepwell-logo.png'
 import UserContext from './../../context/userContext';
 import UserServices from '../../services/UserServices';
 import { useHistory } from 'react-router-dom';
 import AlertSystemContext from '../../context/alertSystemContext';
+import styles from './Header.module.css'
 
 const Header = () => {
   const { user, dispatchUser } = useContext(UserContext);
@@ -63,16 +64,8 @@ const Header = () => {
             </Grid>
             <Grid item>
               <Grid container alignItems='center' justify='space-around'>
-                {/* <Grid item>
-                  <Box m={1.5}>
-                    <LinkText to='/dashboard'>Dashboard</LinkText>
-                  </Box>
-                </Grid>
                 <Grid item><Box m={1.5}>
-                  <LinkText to='/checkins'>Check-Ins</LinkText>
-                </Box></Grid> */}
-                <Grid item><Box m={1.5}>
-                  <Button aria-controls='header-menu' aria-haspopup='true' onClick={handleClick}>
+                  <Button aria-controls='header-menu' aria-haspopup='true' onClick={handleClick} disableRipple>
                     <MenuRoundedIcon fontSize='large'/>
                   </Button>
                   <Menu
@@ -92,17 +85,23 @@ const Header = () => {
                           <LinkText to='/login'>Login</LinkText>
                         </MenuItem>
                       :[
-                          <MenuItem key='dashboard' onClick={handleClose}>
-                            <LinkText to='/dashboard'>Dashboard</LinkText>
-                          </MenuItem>,
-                          <MenuItem key='dailydiary' onClick={handleClose}>
-                            <LinkText to='/dailydiary'>Daily Diary</LinkText>
-                          </MenuItem>,
-                          <MenuItem key='settings' onClick={handleClose}>
-                            <LinkText to='/settings'>Account</LinkText>
-                          </MenuItem>,
+                          <NavLink key='dashboard' to='/dashboard' className={styles.navLink} activeClassName={styles.navLinkActive}>
+                            <MenuItem key='dashboard' onClick={handleClose}>
+                              <Typography variant='h6'>Dashboard</Typography>
+                            </MenuItem>
+                          </NavLink>,
+                          <NavLink key='dailyDiary' to='/dailydiary' className={styles.navLink} activeClassName={styles.navLinkActive}>
+                            <MenuItem key='dailydiary' onClick={handleClose}>
+                              <Typography variant='h6'>Daily Diary</Typography>
+                            </MenuItem>
+                          </NavLink>,
+                          <NavLink key='settings' to='/settings' className={styles.navLink} activeClassName={styles.navLinkActive}>
+                            <MenuItem key='settings' onClick={handleClose}>
+                              <Typography variant='h6'>Account</Typography>
+                            </MenuItem>
+                          </NavLink>,
                           <MenuItem key='logout' onClick={handleLogoutClick}>
-                            <LinkOnClick >Logout</LinkOnClick>
+                            <Typography variant='h6' className={styles.navLink}>Logout</Typography>
                           </MenuItem>,
                       ]
                     }

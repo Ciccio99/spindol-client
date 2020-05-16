@@ -2,3 +2,8 @@
   text-decoration: none;
   color: #9072BA;
 }
+
+.navLinkActive {
+  text-decoration: none;
+  color: #e67e56;
+}

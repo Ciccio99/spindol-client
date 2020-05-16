@@ -73,7 +73,7 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
         <Typography variant='h5' color='secondary'>{moment.utc(dailyDiary.date).format('dddd - MMM DD, YYYY')}</Typography>
       </Box>
       <Typography variant='h6'>Mood</Typography>
-      <Box className={styles.panel} p={2} mt={2} mb={5} boxShadow={2} borderRadius={10}>
+      <Box className={styles.panel} p={2} mt={2} mb={6} boxShadow={2} borderRadius={10}>
         <Grid container spacing={2} justify='space-between' alignItems='center'>
           <Grid item>
             {
@@ -90,6 +90,7 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
                 value={dailyDiary.mood}
                 label='Edit Mood'
                 onChange={handleUpdateMood}
+                classes={ {root: styles.root }}
               >
                 <MenuItem value='excellent'>Excellent</MenuItem>
                 <MenuItem value='good'>Good</MenuItem>
@@ -104,7 +105,7 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
 
       </Box>
       <Typography variant='h6'>Sleep Details</Typography>
-      <Box mt={2} mb={5}>
+      <Box mt={2} mb={6}>
       {
         !dailyDiary.sleepSummary
         ? <Typography>No sleep data available for this day...</Typography>
@@ -115,7 +116,7 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
       </Box>
 
       <Typography variant='h6'>Sleep Trial Trackers</Typography>
-      <Box mt={2} mb={5}>
+      <Box mt={2} mb={6}>
       {
         dailyDiary.sleepTrialTrackers.length === 0
         ? <Typography>No Sleep Trials were being tracked for this day...</Typography>
