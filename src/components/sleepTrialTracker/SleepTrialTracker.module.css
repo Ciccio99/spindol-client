@@ -37,3 +37,45 @@
   font-size: 1rem;
   font-weight: 400;
 }
+
+/* Type List */
+.typeListHeader {
+  color: #E67E56;
+  font-weight: 700;
+}
+
+/* Sleep Trial Tracker Panel */
+.paper {
+  border-radius: 10px !important;
+}
+
+.heroText {
+  font-weight: 800;
+  font-size: 2rem;
+  line-height: 38px;
+  color: #000000;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 16px;
+}
+
+.heroSubText {
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 24px;
+  color: #808080;
+}
+
+.modal {
+  overflow: scroll;
+}
+
+.button {
+  color: #9072BA !important;
+}
+
+
+
+
+
+

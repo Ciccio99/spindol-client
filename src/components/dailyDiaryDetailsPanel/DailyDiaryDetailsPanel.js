@@ -34,7 +34,6 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      console.log(selectedDate);
       const dd = await DailyDiaryServices.getByDate(selectedDate);
       if (!dd) {
         dispatchAlertSystem({
@@ -45,7 +44,6 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
         setDailyDiary();
         return;
       }
-      console.log(dd);
       setDailyDiary(dd);
       setLoading(false);
     })();
@@ -70,7 +68,7 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
   return (
     <Box borderRadius={10} className={styles.panel}  p={2} pt={1}>
       <Box mt={3} mb={3}>
-        <Typography variant='h5' color='secondary'>{moment.utc(dailyDiary.date).format('dddd - MMM DD, YYYY')}</Typography>
+        <Typography variant='h4' color='secondary'>{moment.utc(dailyDiary.date).format('dddd - MMM DD, YYYY')}</Typography>
       </Box>
       <Typography variant='h6'>Mood</Typography>
       <Box className={styles.panel} p={2} mt={2} mb={6} boxShadow={2} borderRadius={10}>

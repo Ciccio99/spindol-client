@@ -5,10 +5,10 @@ import {
   Typography,
 } from '@material-ui/core';
 import moment from 'moment';
-import ToggleButtonGroup from '../../buttons/toggleButton/ToggleButtonGroup';
-import ToggleButton from '../../buttons/toggleButton/ToggleButton';
-import SleepTrialTrackerServices from '../../../services/SleepTrialTrackerServices'
-import SleepTrialTrackersContext from '../../../context/sleepTrialTrackersContext';
+import ToggleButtonGroup from 'components/buttons/toggleButton/ToggleButtonGroup';
+import ToggleButton from 'components/buttons/toggleButton/ToggleButton';
+import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices'
+import SleepTrialTrackersContext from 'context/sleepTrialTrackersContext';
 
 const TrialTrackerCheckIn = ({ trialTracker }) => {
   const { dispatchSleepTrialTrackers } = useContext(SleepTrialTrackersContext);

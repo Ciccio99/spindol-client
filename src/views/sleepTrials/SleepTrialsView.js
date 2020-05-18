@@ -48,7 +48,7 @@ const SleepTrialsView = ({ handleCloseClick }) => {
           <CancelOutlinedIcon className={styles.closeButton} onClick={handleCloseClick}/>
         </Box>
         <Box m={2} mt={0}>
-          <Box p={3} pb={0} pt={0}>
+          <Box p={3} pb={0} pt={0} mb={2}>
             <Typography variant='h4'>Sleep Trials</Typography>
             { trialsCount === 0 ? null : <Typography variant='subtitle2'>{trialsCount} sleep trials available</Typography>}
           </Box>

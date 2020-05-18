@@ -4,12 +4,12 @@ import {
   Box,
   Typography,
 } from '@material-ui/core';
-import UserContext from '../../context/userContext';
-import SleepTrialTrackersContext from '../../context/sleepTrialTrackersContext';
-import SleepTrialTrackerServices from '../../services/SleepTrialTrackerServices';
-import CurrentSleepTrialTrackers from '../../components/sleepTrialTracker/currentSleepTrialTrackers/CurrentSleepTrialTrackers';
-import StatsDisplay from '../../components/statsDisplay/StatsDisplay';
-import DailyDiaryPanel from '../../components/dailyDiaryPanel/DailyDiaryPanel';
+import UserContext from 'context/userContext';
+import SleepTrialTrackersContext from 'context/sleepTrialTrackersContext';
+import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
+import CurrentSleepTrialTrackers from 'components/sleepTrialTracker/SleepTrialTrackerPanel';
+import StatsDisplay from 'components/statsDisplay/StatsDisplay';
+import DailyDiaryPanel from 'components/dailyDiaryPanel/DailyDiaryPanel';
 
 
 const DashboardView = () => {
@@ -22,7 +22,6 @@ const DashboardView = () => {
       try {
         const match = { };
         const trialTrackersData = await SleepTrialTrackerServices.querySleepTrialTracker(match);
-
         dispatchSleepTrialTrackers({
           type: 'POPULATE',
           sleepTrialTrackers: trialTrackersData,

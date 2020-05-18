@@ -5,7 +5,7 @@ import {
   LinearProgress,
   Typography
 } from '@material-ui/core';
-import TrialTrackerCheckIn from './trialTrackerCheckIn/TrialTrackerCheckIn';
+import TrialTrackerCheckIn from './TrialTrackerCheckIn';
 import styles from './SleepTrialTracker.module.css';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -37,7 +37,7 @@ const SleepTrialTracker = ({ trialTracker }) => {
   }, [trialTracker])
 
   return (
-    <Box mt={6}>
+    <Box mt={8}>
       <Grid container justify='space-between' spacing={1}>
         <Grid item xs={12}>
           <LinearProgress
