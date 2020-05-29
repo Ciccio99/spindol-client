@@ -4,7 +4,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import TypeList from 'components/sleepTrialTracker/TypeList';
-import SleepTrialTracker from 'components/sleepTrialTracker/SleepTrialTracker'
+import SleepTrialTracker from 'components/sleepTrialTracker/SleepTrialTracker';
 import utils from 'utils/SleepTrialTracker';
 
 const CurrentSleepTrialsSubPanel = ({ trialTrackers }) => {
@@ -21,8 +21,8 @@ const CurrentSleepTrialsSubPanel = ({ trialTrackers }) => {
   if (trialTrackers.length === 0) {
     return (
       <Box pl={3} pt={4} pr={3} pb={3}>
-        <Typography variant='h4'>
-          You haven't started tracking any sleep trials! Select a sleep trial to start tracking your progress!
+        <Typography variant="h6">
+          No sleep trials started yet...
         </Typography>
       </Box>
     );
@@ -34,7 +34,14 @@ const CurrentSleepTrialsSubPanel = ({ trialTrackers }) => {
         Object.keys(trialTypes).map((key) => {
           const sleepTrialTrackers = trialTypes[key];
           return sleepTrialTrackers.length > 0
-            ? <TypeList key={key} type={key} trialTrackers={trialTypes[key]} component={SleepTrialTracker}/>
+            ? (
+              <TypeList
+                key={key}
+                type={key}
+                trialTrackers={trialTypes[key]}
+                component={SleepTrialTracker}
+              />
+            )
             : null;
         })
       }

@@ -1,11 +1,12 @@
 import moment from 'moment-timezone';
 import DailyDiaryServices from '../services/DailyDiaryServices';
+
 const MOOD_NUM_MAP = {
-  'excellent': 4,
-  'good': 3,
-  'meh': 2,
-  'bad': 1,
-  'awful': 0,
+  excellent: 4,
+  good: 3,
+  meh: 2,
+  bad: 1,
+  awful: 0,
 };
 
 const NUM_MOOD_MAP = {
@@ -18,11 +19,13 @@ const NUM_MOOD_MAP = {
 
 
 const formatCurrentTrials = (sleepTrialTrackers) => {
-  const today = moment.utc().startOf('day');
+  const today = moment();
+
   const formattedTrials = {};
 
   sleepTrialTrackers.forEach((stt) => {
-    if (!stt.completed || today.isSame(moment.utc(stt.date), 'day')) {
+    const trialEndDate = moment(moment.utc(stt.endDate).format('YYYY-MM-DD'));
+    if (!stt.completed || today.diff(trialEndDate, 'days') === 0) {
       formattedTrials[stt.sleepTrial.type] = formattedTrials[stt.sleepTrial.type] || [];
       formattedTrials[stt.sleepTrial.type].push(stt);
     }
@@ -45,7 +48,6 @@ const formatCompletedTrials = (sleepTrialTrackers) => {
 };
 
 const getAvgCompleteMood = async (stt) => {
-  const totalMood = 0;
   const completedDates = stt.checkIns
     .filter((checkIn) => checkIn.completed )
     .map((checkIn) => checkIn.date);
@@ -53,13 +55,11 @@ const getAvgCompleteMood = async (stt) => {
     date: { $in: completedDates },
     mood: { $exists: true },
   };
-  console.log(completedDates);
   const dailyDiaries = await DailyDiaryServices.query(match);
   const avgMoodNum = dailyDiaries
     .reduce((accumulator, dd) => accumulator + (MOOD_NUM_MAP[dd.mood] / dailyDiaries.length), 0)
-  console.log(dailyDiaries);
-  console.log(`Avg Mood Num: ${avgMoodNum}`)
-  return NUM_MOOD_MAP[Math.round(avgMoodNum)]
+
+  return NUM_MOOD_MAP[Math.round(avgMoodNum)];
 };
 
 export default {

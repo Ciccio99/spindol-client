@@ -16,39 +16,43 @@ const useStyles = makeStyles({
     position: 'relative',
     'border-radius': '50px',
   },
-  colorPrimary :{
+  colorPrimary: {
     'background-color': '#EBEBEB',
   },
   barColorPrimary: {
-    'background': 'linear-gradient(90deg, rgba(250,200,86,1) 0%, rgba(215,70,78,1) 100%)'
-  }
+    background: 'linear-gradient(90deg, rgba(250,200,86,1) 0%, rgba(215,70,78,1) 100%)',
+  },
 });
 
 const SleepTrialTracker = ({ trialTracker }) => {
   const [completionProgress, setCompletionProgress] = useState(0);
+  const [completedDays, setCompletedDays] = useState(0);
   const classes = useStyles();
 
   useEffect(() => {
-    const completedCheckIns = trialTracker.checkIns.filter((checkIn) => {
-      return checkIn.completed !== false;
-    });
+    const completedCheckIns = trialTracker.checkIns.filter((checkIn) => checkIn.completed !== false);
 
-    setCompletionProgress(Math.round((completedCheckIns.length / trialTracker.trialLength) * 100));
-  }, [trialTracker])
+    setCompletedDays(completedCheckIns.length);
+    let progress = Math.round((completedCheckIns.length / trialTracker.trialLength) * 100);
+    if (progress > 100) {
+      progress = 100;
+    }
+    setCompletionProgress(progress);
+  }, [trialTracker]);
 
   return (
     <Box mt={8}>
-      <Grid container justify='space-between' spacing={1}>
+      <Grid container justify="space-between" spacing={1}>
         <Grid item xs={12}>
           <LinearProgress
-            variant='determinate'
+            variant="determinate"
             value={completionProgress}
             classes={{
               root: classes.root,
               colorPrimary: classes.colorPrimary,
               barColorPrimary: classes.barColorPrimary,
             }}
-            />
+          />
         </Grid>
         <Grid item xs={12} sm={8}>
           <Box pt={3}>
@@ -60,19 +64,21 @@ const SleepTrialTracker = ({ trialTracker }) => {
         <Grid item xs={12} sm={3}>
           <Box pt={3}>
             <ul className={styles.list}>
-              <li className={styles.completion}>{completionProgress}% complete</li>
+              <li className={styles.completion}>
+                {`${completedDays}/${trialTracker.trialLength} days complete`}
+              </li>
               <li className={styles.trialLength}>{trialTracker.trialLength} day trial period</li>
             </ul>
           </Box>
         </Grid>
         <Grid item container xs={12} spacing={1}>
-          <Grid item><Typography variant='body1'>Directions:</Typography></Grid>
-          <Grid item><Typography variant='body1'><strong>{trialTracker.sleepTrial.directions}</strong></Typography></Grid>
+          <Grid item><Typography variant="body1">Directions:</Typography></Grid>
+          <Grid item><Typography variant="body1"><strong>{trialTracker.sleepTrial.directions}</strong></Typography></Grid>
         </Grid>
         <Grid item xs={12}>
-            <Box mt={2}>
-              <TrialTrackerCheckIn trialTracker={trialTracker}/>
-            </Box>
+          <Box mt={2}>
+            <TrialTrackerCheckIn trialTracker={trialTracker} />
+          </Box>
         </Grid>
       </Grid>
     </Box>

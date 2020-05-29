@@ -1,5 +1,6 @@
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
 
+// eslint-disable-next-line import/no-mutable-exports
 let theme = {
   typography: {
     fontFamily: [
@@ -15,7 +16,7 @@ let theme = {
       'Fira Sans',
       'Droid Sans',
       'Helvetica Neue',
-      'sans-serif'
+      'sans-serif',
     ],
     fontStyle: 'normal',
     htmlFontSize: 16,
@@ -37,23 +38,26 @@ let theme = {
     },
     button: {
       fontWeight: 700,
-    }
+    },
   },
   palette: {
     primary: {
       light: '#c1a1ed',
       main: '#9072ba',
       dark: '#61468a',
-      contrastText: '#fff'
+      contrastText: '#fff',
     },
     secondary: {
       light: '#ffae83',
       main: '#e67e56',
       dark: '#af502b',
-      contrastText: '#fff'
+      contrastText: '#fff',
     },
     background: {
       default: '#F5F5F5',
+    },
+    action: {
+      focusOpacity: 0,
     },
   },
   shape: {

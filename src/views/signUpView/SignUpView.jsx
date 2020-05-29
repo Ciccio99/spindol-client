@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,8 +20,7 @@ import axios from '../../loaders/axios';
 import UserContext from '../../context/userContext';
 import Cookies from 'js-cookie';
 
-function Copyright() {
-  return (
+const Copyright = () => (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://sleepwell.ai/">
@@ -29,8 +29,7 @@ function Copyright() {
       {new Date().getFullYear()}
       {'.'}
     </Typography>
-  );
-}
+);
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -52,31 +51,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignInView = () => {
+const SignUpView = () => {
   const classes = useStyles();
   const { dispatchUser } = useContext(UserContext);
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
+  const [ name, setName] = useState('');
+  const [ confirmPassword, setConfirmPassword] = useState('');
   const [ errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   let history = useHistory();
   let location = useLocation();
-  const { from } = location.state || { from: { pathname: '/dashboard' }};
+  const { from } = { from: { pathname: '/dashboard' }};
 
   const login = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage('');
+
+    if (password !== confirmPassword) {
+      setErrorMessage('Passwords must match.');
+      return;
+    }
+
+    if (name.length === 0) {
+      setErrorMessage('Full name required.');
+      return;
+    }
+
     let user = undefined;
     try {
-      let { data } = await axios.post(`${process.env.REACT_APP_API_URI}/users/login`, { email, password });
+      let { data } = await axios.post(`${process.env.REACT_APP_API_URI}/users/register`, { email, name, password, confirmPassword });
       if (data.user && data.token) {
         user = data.user;
         Cookies.set('HypnosAuthJWT', data.token, { expires: 30 })
       }
 
     } catch (error) {
-      if ([401, 403].indexOf(error?.response?.status) !== -1) {
+      if ([400, 402, 401, 403].indexOf(error?.response?.status) !== -1) {
         setErrorMessage(error.response.data.message);
       };
     } finally {
@@ -88,7 +100,7 @@ const SignInView = () => {
         user,
       });
 
-      history.replace(from);
+      history.push('/dashboard');
     }
   }
 
@@ -100,7 +112,7 @@ const SignInView = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign up
         </Typography>
         {errorMessage ? <FormHelperText error={true}>{errorMessage}</FormHelperText> : null}
         <form className={classes.form} onSubmit={login}>
@@ -122,13 +134,36 @@ const SignInView = () => {
             margin="normal"
             required
             fullWidth
+            id="name"
+            label="Full Name"
+            name="name"
+            autoComplete="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
             name="password"
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="confirmPassword"
+            label="Confirm Password"
+            type="password"
+            id="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
           {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -142,20 +177,20 @@ const SignInView = () => {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Sign Up
           </Button>
-          {/* <Grid container>
-            <Grid item xs>
+          <Grid container>
+            {/* <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
-            </Grid>
+            </Grid> */}
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
+              <Link to='/login' component={RouterLink} variant="body2">
+                {"Already have an account? Sign In"}
               </Link>
             </Grid>
-          </Grid> */}
+          </Grid>
         </form>
       </div>
       <Box mt={8}>
@@ -165,4 +200,4 @@ const SignInView = () => {
   );
 }
 
-export default SignInView;
+export default SignUpView;

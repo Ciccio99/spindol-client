@@ -44,8 +44,16 @@ const getByDate = async (searchDate) => {
   } catch (error) {
     return null;
   }
-}
+};
 
+const getReportingStreak = async () => {
+  try {
+    const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/dailyDiary/reportingStreak`);
+    return data.streak;
+  } catch (error) {
+    return 0;
+  }
+};
 
 const getAllDailyDiary = async () => {
   const query = {
@@ -109,4 +117,5 @@ export default {
   upsert,
   getAllDailyDiary,
   getByDate,
+  getReportingStreak,
 };

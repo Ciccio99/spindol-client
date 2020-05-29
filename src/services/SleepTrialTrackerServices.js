@@ -1,17 +1,26 @@
 import axios from '../loaders/axios';
 
-const querySleepTrialTracker = async (match={}, sort={}, limit=0, skip=0) => {
-  const queryString = JSON.stringify({ match, sort, limit, skip });
+const querySleepTrialTracker = async (match = {}, sort = {}, limit = 0, skip = 0) => {
+  const queryString = JSON.stringify({
+    match, sort, limit, skip,
+  });
   try {
     const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/sleepTrialTracker`,
       {
         params: { query: queryString },
-      },
-    );
+      });
     return data;
   } catch (error) {
-    console.log(error);
     return [];
+  }
+};
+
+const getById = async (id) => {
+  try {
+    const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/sleepTrialTracker/${id}`);
+    return data;
+  } catch (error) {
+    return null;
   }
 };
 
@@ -22,14 +31,13 @@ const create = async (user, sleepTrial) => {
   };
   try {
     const { data } = await axios.post(`${process.env.REACT_APP_API_URI}/sleepTrialTracker/create`,
-      body,
-    );
+      body);
     return data;
   } catch (error) {
     console.log(error);
     return null;
   }
-}
+};
 
 const addCheckIn = async (_id, date, completed) => {
   const body = {
@@ -37,22 +45,22 @@ const addCheckIn = async (_id, date, completed) => {
     checkIn: {
       date,
       completed,
-    }
+    },
   };
   try {
     const { data } = await axios.post(`${process.env.REACT_APP_API_URI}/sleepTrialTracker/add/checkIn`,
-      body,
-    );
+      body);
     return data;
   } catch (error) {
     console.log(error);
     return null;
   }
-}
+};
 
 
 export default {
   querySleepTrialTracker,
   create,
   addCheckIn,
+  getById,
 };

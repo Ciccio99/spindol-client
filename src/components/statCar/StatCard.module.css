@@ -21,3 +21,11 @@
   font-weight: 700 !important;
   color: #6D99B1;
 }
+
+.positiveTicker {
+  color: #6FCF8D;
+}
+
+.negativeTicker {
+  color: #FF433E;
+}

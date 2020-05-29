@@ -74,7 +74,7 @@ const Header = () => {
                     keepMounted
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
-                    transitionDuration={250}
+                    transitionDuration={200}
                     variant='selectedMenu'
                     elevation={2}
                     transformOrigin={{ vertical: 'top', horizontal: 'center',}}
@@ -90,7 +90,7 @@ const Header = () => {
                               <Typography variant='h6'>Dashboard</Typography>
                             </MenuItem>
                           </NavLink>,
-                          <NavLink key='dailyDiary' to='/dailydiary' className={styles.navLink} activeClassName={styles.navLinkActive}>
+                          <NavLink key='dailyDiary' to='/daily-diary' className={styles.navLink} activeClassName={styles.navLinkActive}>
                             <MenuItem key='dailydiary' onClick={handleClose}>
                               <Typography variant='h6'>Daily Diary</Typography>
                             </MenuItem>

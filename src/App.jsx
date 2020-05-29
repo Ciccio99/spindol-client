@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useReducer }from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { Snackbar } from '@material-ui/core';
+import {
+  Snackbar,
+  Box,
+} from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import axios from './loaders/axios';
 import AppRouter from './routes/AppRouter';

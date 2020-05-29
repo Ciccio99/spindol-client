@@ -18,11 +18,11 @@ import SleepSummaryPanel from './sleepSummaryPanel/SleepSummaryPanel';
 import SleepTrialTrackerMin from './sleepTrialTrackerMin/SleepTrialTrackerMin';
 
 const MOOD_COLOR = {
-  'excellent': styles.excellent,
-  'good': styles.good,
-  'meh': styles.meh,
-  'bad': styles.bad,
-  'awful': styles.awful,
+  excellent: styles.excellent,
+  good: styles.good,
+  meh: styles.meh,
+  bad: styles.bad,
+  awful: styles.awful,
 };
 
 // TODO: add warnings
@@ -68,33 +68,33 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
   return (
     <Box borderRadius={10} className={styles.panel}  p={2} pt={1}>
       <Box mt={3} mb={3}>
-        <Typography variant='h4' color='secondary'>{moment.utc(dailyDiary.date).format('dddd - MMM DD, YYYY')}</Typography>
+        <Typography variant="h4" color="secondary">{moment.utc(dailyDiary.date).format('dddd - MMM DD, YYYY')}</Typography>
       </Box>
-      <Typography variant='h6'>Mood</Typography>
-      <Box className={styles.panel} p={2} mt={2} mb={6} boxShadow={2} borderRadius={10}>
-        <Grid container spacing={2} justify='space-between' alignItems='center'>
+      <Typography variant="h6">Mood</Typography>
+      <Box className={styles.panel} p={3} mt={2} mb={6} border={1} borderColor="#CCC" borderRadius={10}>
+        <Grid container spacing={2} justify="space-between" alignItems="center">
           <Grid item>
             {
               dailyDiary.mood
-              ? <Typography variant='h5'>You felt <span className={MOOD_COLOR[dailyDiary.mood]}>{dailyDiary.mood}</span> on this day.</Typography>
-              : <Typography variant='h6'>No mood set for this day...</Typography>
+              ? <Typography variant="h5">You felt <span className={MOOD_COLOR[dailyDiary.mood]}>{dailyDiary.mood}</span> on this day.</Typography>
+              : <Typography variant="h6">No mood set for this day...</Typography>
             }
           </Grid>
           <Grid item xs={12} sm={3}>
-            <FormControl variant='outlined' fullWidth color='secondary' size='small'>
-              <InputLabel htmlFor='mood-select'>Edit Mood</InputLabel>
+            <FormControl variant="outlined" fullWidth color="secondary" size="small">
+              <InputLabel htmlFor="mood-select">Edit Mood</InputLabel>
               <Select
-                labelId='mood-select'
-                value={dailyDiary.mood}
-                label='Edit Mood'
+                labelId="mood-select"
+                value={dailyDiary.mood || ''}
+                label="Edit Mood"
                 onChange={handleUpdateMood}
-                classes={ {root: styles.root }}
+                classes={{ root: styles.root }}
               >
-                <MenuItem value='excellent'>Excellent</MenuItem>
-                <MenuItem value='good'>Good</MenuItem>
-                <MenuItem value='meh'>Meh</MenuItem>
-                <MenuItem value='bad'>Bad</MenuItem>
-                <MenuItem value='awful'>Awful</MenuItem>
+                <MenuItem value="excellent">Excellent</MenuItem>
+                <MenuItem value="good">Good</MenuItem>
+                <MenuItem value="meh">Meh</MenuItem>
+                <MenuItem value="bad">Bad</MenuItem>
+                <MenuItem value="awful">Awful</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -102,7 +102,7 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
 
 
       </Box>
-      <Typography variant='h6'>Sleep Details</Typography>
+      <Typography variant="h6">Sleep Details</Typography>
       <Box mt={2} mb={6}>
       {
         !dailyDiary.sleepSummary
@@ -113,7 +113,7 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
       }
       </Box>
 
-      <Typography variant='h6'>Sleep Trial Trackers</Typography>
+      <Typography variant="h6">Sleep Trial Trackers</Typography>
       <Box mt={2} mb={6}>
       {
         dailyDiary.sleepTrialTrackers.length === 0

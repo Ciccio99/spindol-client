@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Paper,
   Box,
-  Typography
+  Typography,
 } from '@material-ui/core';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import styles from './SleepTrialsView.module.css';
@@ -22,7 +22,7 @@ const SleepTrialsView = ({ handleCloseClick }) => {
       Environment: [],
       Hardware: [],
     };
-    async function fetchData() {
+    (async () => {
       try {
         const data = await SleepTrialServices.query();
         data.forEach((sleepTrial) => {
@@ -35,38 +35,41 @@ const SleepTrialsView = ({ handleCloseClick }) => {
       } finally {
         setLoading(false);
       }
-    }
-
-    fetchData();
+    })();
   }, []);
 
 
   return (
     <Box m={2} maxWidth={1000}>
       <Paper elevation={0} className={styles.paper}>
-        <Box display='flex' justifyContent='flex-end' pr={1} pt={1}>
-          <CancelOutlinedIcon className={styles.closeButton} onClick={handleCloseClick}/>
+        <Box display="flex" justifyContent="flex-end" pr={1} pt={1}>
+          <CancelOutlinedIcon className={styles.closeButton} onClick={handleCloseClick} />
         </Box>
         <Box m={2} mt={0}>
           <Box p={3} pb={0} pt={0} mb={2}>
-            <Typography variant='h4'>Sleep Trials</Typography>
-            { trialsCount === 0 ? null : <Typography variant='subtitle2'>{trialsCount} sleep trials available</Typography>}
+            <Typography variant="h4">Sleep Trials</Typography>
+            { trialsCount === 0
+              ? null
+              : (
+                <Typography variant="subtitle2">
+                  {`${trialsCount} sleep trials available`}
+                </Typography>
+              )}
           </Box>
           { loading
             ? null
-            : <Box>
-              {
-                Object.keys(sleepTrialTypes).length === 0
-                ? <Typography variant='h3'>No Sleep Trials Found</Typography>
-                : Object.keys(sleepTrialTypes).map((key, index) => {
+            : (
+              <Box>
+                { Object.keys(sleepTrialTypes).length === 0
+                  ? <Typography variant="h3">No Sleep Trials Found</Typography>
+                  : Object.keys(sleepTrialTypes).map((key) => {
                     const sleepTrials = sleepTrialTypes[key];
                     return sleepTrials.length > 0
-                      ? <SleepTrialTypeList key={key} type={key} sleepTrials={sleepTrials}/>
+                      ? <SleepTrialTypeList key={key} type={key} sleepTrials={sleepTrials} />
                       : null;
-                  })
-              }
+                  })}
               </Box>
-          }
+            )}
         </Box>
       </Paper>
     </Box>
