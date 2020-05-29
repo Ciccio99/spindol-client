@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useReducer }from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import {
   Snackbar,
   Box,
 } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
+import Cookies from 'js-cookie';
 import axios from './loaders/axios';
 import AppRouter from './routes/AppRouter';
 import Header from './views/header/Header';
@@ -19,28 +20,33 @@ import DeviceServices from './services/DeviceServices';
 
 function App() {
   const [user, dispatchUser] = useReducer(userReducer, {});
-  const [sleepTrialTrackers, dispatchSleepTrialTrackers] = useReducer(sleepTrialTrackersReducer, []);
+  const [sleepTrialTrackers, dispatchSleepTrialTrackers] = useReducer(
+    sleepTrialTrackersReducer, [],
+  );
   const [alertSystem, dispatchAlertSystem] = useReducer(alertSystemReducer, { open: false });
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    async function fetchUser() {
-      let user = undefined;
-      try {
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/users/me`);
-        user = data.user;
-      } catch (error) {
+    (async () => {
+      let currentUser;
+
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/users/me`);
+      if (data.user && data.token) {
+        currentUser = data.user;
+        Cookies.set('HypnosAuthJWT', data.token, { expires: 30 });
       }
-      if (user) {
+
+      if (currentUser) {
         dispatchUser({
           type: 'USER_LOGIN',
-          user,
+          user: currentUser,
         });
-        await DeviceServices.syncDeviceData('oura');
+        if (user.accounts.oura.connected) {
+          await DeviceServices.syncDeviceData('oura');
+        }
       }
-      setLoaded(true)
-    }
-    fetchUser();
+      setLoaded(true);
+    })();
   }, []);
 
   const handleAlertClose = () => {
@@ -50,23 +56,29 @@ function App() {
   };
 
   return (
-      <UserContext.Provider value={{ user, dispatchUser }}>
-        <AlertSystemContext.Provider value={{ alertSystem, dispatchAlertSystem }}>
-          <SleepTrialTrackersContext.Provider value={{ sleepTrialTrackers, dispatchSleepTrialTrackers}}>
-            <main>
-              <BrowserRouter>
-                <Header/>
-                {loaded ? <AppRouter/> : <LoadingCard/>}
-              </BrowserRouter>
-            </main>
-          </SleepTrialTrackersContext.Provider>
-          <Snackbar open={alertSystem.open} autoHideDuration={5000} onClose={handleAlertClose}>
-            <MuiAlert severity={alertSystem.severity} onClose={handleAlertClose} elevation={1} variant='filled'>
-              {alertSystem.message}
-            </MuiAlert>
-          </Snackbar>
-        </AlertSystemContext.Provider>
-      </UserContext.Provider>
+    <UserContext.Provider
+      value={{ user, dispatchUser }}
+    >
+      <AlertSystemContext.Provider
+        value={{ alertSystem, dispatchAlertSystem }}
+      >
+        <SleepTrialTrackersContext.Provider
+          value={{ sleepTrialTrackers, dispatchSleepTrialTrackers }}
+        >
+          <main>
+            <BrowserRouter>
+              <Header />
+              {loaded ? <AppRouter /> : <LoadingCard />}
+            </BrowserRouter>
+          </main>
+        </SleepTrialTrackersContext.Provider>
+        <Snackbar open={alertSystem.open} autoHideDuration={5000} onClose={handleAlertClose}>
+          <MuiAlert severity={alertSystem.severity} onClose={handleAlertClose} elevation={1} variant="filled">
+            {alertSystem.message}
+          </MuiAlert>
+        </Snackbar>
+      </AlertSystemContext.Provider>
+    </UserContext.Provider>
   );
 }
 

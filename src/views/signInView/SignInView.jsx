@@ -72,7 +72,7 @@ const SignInView = () => {
       let { data } = await axios.post(`${process.env.REACT_APP_API_URI}/users/login`, { email, password });
       if (data.user && data.token) {
         user = data.user;
-        Cookies.set('HypnosAuthJWT', data.token, { expires: 30 })
+        Cookies.set('HypnosAuthJWT', data.token, { expires: 30 });
       }
 
     } catch (error) {
