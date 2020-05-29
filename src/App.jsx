@@ -5,7 +5,6 @@ import {
   Box,
 } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
-import Cookies from 'js-cookie';
 import axios from './loaders/axios';
 import AppRouter from './routes/AppRouter';
 import Header from './views/header/Header';
@@ -29,12 +28,13 @@ function App() {
   useEffect(() => {
     (async () => {
       let currentUser;
+      try {
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/users/me`);
+        if (data.user) {
+          currentUser = data.user;
+        }
+      } catch (error) {}
 
-      const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/users/me`);
-      if (data.user && data.token) {
-        currentUser = data.user;
-        Cookies.set('HypnosAuthJWT', data.token, { expires: 30 });
-      }
 
       if (currentUser) {
         dispatchUser({
