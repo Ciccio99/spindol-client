@@ -7,3 +7,7 @@
   text-decoration: none;
   color: #e67e56;
 }
+
+.logoName {
+  font-weight: 500 !important;
+}

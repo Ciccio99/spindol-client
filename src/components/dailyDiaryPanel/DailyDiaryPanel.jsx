@@ -4,6 +4,7 @@ import {
   Paper,
   Grid,
   Typography,
+  Divider,
 } from '@material-ui/core';
 import moment from 'moment-timezone';
 import DailyDiaryServices from 'services/DailyDiaryServices';
@@ -11,14 +12,13 @@ import ToggleButtonGroup from 'components/buttons/toggleButton/ToggleButtonGroup
 import ToggleButton from 'components/buttons/toggleButton/ToggleButton';
 import UserContext from 'context/userContext';
 import AlertSystemContext from 'context/alertSystemContext';
-import styles from './DailyDiaryPanel.module.css';
 
 const DailyDiaryPanel = () => {
   const { user } = useContext(UserContext);
   const { dispatchAlertSystem } = useContext(AlertSystemContext);
   const [dailyDiary, setDailyDiary] = useState();
   const [reportingStreak, setReportingStreak] = useState(0);
-  const todayDate = moment().startOf('day');
+  const [todayDate] = useState(moment().startOf('day'));
 
   useEffect(() => {
     (async () => {
@@ -36,7 +36,7 @@ const DailyDiaryPanel = () => {
         });
       }
     })();
-  }, [dispatchAlertSystem, user]);
+  }, [dispatchAlertSystem, user, todayDate]);
 
   useEffect(() => {
     (async () => {
@@ -63,8 +63,12 @@ const DailyDiaryPanel = () => {
   };
 
   return (
-    <Paper elevation={0}>
-      <Box mb={3} p={3} overflow="none">
+    <Paper elevation={24}>
+      <Box p={4} py={3}>
+        <Typography variant="h5">Mood</Typography>
+      </Box>
+      <Divider />
+      <Box p={4} overflow="none">
         <Grid container justify="space-between" alignItems="center" spacing={2}>
           <Grid item container xs={12} sm={9} alignItems="baseline" spacing={2}>
             <Grid item>
@@ -75,7 +79,7 @@ const DailyDiaryPanel = () => {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="subtitle2">Logging Streak: {reportingStreak}</Typography>
+            <Typography variant="subtitle2">{`Logging Streak: ${reportingStreak}`}</Typography>
           </Grid>
           <ToggleButtonGroup item container xs={12} sm={12} spacing={1} alignItems="center" justify="space-between" onChange={submitDailyDiary} value={dailyDiary ? dailyDiary.mood : null}>
             <ToggleButton value="excellent" xs={6} sm={2}>Excellent</ToggleButton>

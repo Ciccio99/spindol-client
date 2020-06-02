@@ -17,7 +17,11 @@ const CompletedSTTModal = ({ trialTracker, handleCloseClick }) => (
         <CancelOutlinedIcon color="action" className={styles.closeButton} onClick={handleCloseClick} />
       </Box>
       <Box p={3} pt={4} pb={4} minWidth="50vw" display="flex" flexDirection="column" alignItems="center">
-        <Typography variant="h5">🎉  Congratulations!  🎉</Typography>
+        <Typography variant="h5">
+          <span role="img" aria-label="Celebration Emoji">🎉</span>
+          {' Congratulations! '}
+          <span role="img" aria-label="Celebration Emoji">🎉</span>
+        </Typography>
         <Typography variant="subtitle1">
           You completed your trial!
         </Typography>
@@ -52,7 +56,12 @@ const CompletedSTTModal = ({ trialTracker, handleCloseClick }) => (
             </Link>
           </Box>
           <Box mb={1}>
-            <Typography variant="caption" color="textSecondary">You can view all your completed trials under the "Completed" <br/> tab in your Dashboard</Typography>
+            <Typography variant="caption" color="textSecondary">
+              You can view all your completed trials under the "Completed"
+              <br />
+              {' '}
+              tab in your Dashboard
+            </Typography>
           </Box>
         </Box>
       </Box>

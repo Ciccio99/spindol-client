@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import {
   Box,
   Grid,
   Typography,
   Modal,
-  Paper,
-  Button,
+
 } from '@material-ui/core';
 import moment from 'moment';
 import ToggleButtonGroup from 'components/buttons/toggleButton/ToggleButtonGroup';
@@ -15,7 +13,6 @@ import CompletedSTTModal from 'components/modals/CompletedSTTModal';
 import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
 import SleepTrialTrackersContext from 'context/sleepTrialTrackersContext';
 import AlertSystemContext from 'context/alertSystemContext';
-import styles from './SleepTrialTracker.module.css';
 
 const TrialTrackerCheckIn = ({ trialTracker }) => {
   const { dispatchSleepTrialTrackers } = useContext(SleepTrialTrackersContext);
@@ -64,7 +61,7 @@ const TrialTrackerCheckIn = ({ trialTracker }) => {
 
   return (
     <>
-      <Box border={1} borderColor="#DBDBDB" borderRadius={10} p={2}>
+      <Box border={1} borderColor="#DBDBDB" borderRadius={25} p={3}>
         <Grid container spacing={2} justify="space-between" alignItems="center">
           <Grid item xs={12} sm={6}>
             <Typography variant="subtitle1">Did you perform this trial yesterday?</Typography>
@@ -76,8 +73,8 @@ const TrialTrackerCheckIn = ({ trialTracker }) => {
             </Grid>
           </Grid>
           <ToggleButtonGroup item container xs={12} sm={6} spacing={1} justify="space-around" alignItems="center" onChange={submitCheckIn} value={completed}>
-            <ToggleButton xs={6} sm={5} value>Yes, I did</ToggleButton>
-            <ToggleButton xs={6} sm={5} value={false}>No, I didn't</ToggleButton>
+            <ToggleButton xs={12} sm={5} value>Yes, I did</ToggleButton>
+            <ToggleButton xs={12} sm={5} value={false}>No, I didn't</ToggleButton>
           </ToggleButtonGroup>
         </Grid>
       </Box>

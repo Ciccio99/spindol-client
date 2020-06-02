@@ -32,8 +32,8 @@ const CurrentSleepTrialTrackers = ({ trialTrackers }) => {
   };
 
   return (
-    <Paper className={styles.paper} elevation={0} style={{ minHeight: '100vh' }}>
-      <Box pl={3} pt={4} pr={3} pb={1}>
+    <Paper elevation={24} style={{ minHeight: '100vh' }}>
+      <Box p={4} py={3}>
         <Grid
           container
           direction="row"
@@ -54,7 +54,7 @@ const CurrentSleepTrialTrackers = ({ trialTrackers }) => {
           </Grid>
         </Grid>
       </Box>
-      <Box pt={2}>
+      <Box>
         <Tabs value={tabValue} onChange={handleTabSelect}>
           <Tab label="Current" disableRipple />
           <Tab label="Completed" disableRipple />

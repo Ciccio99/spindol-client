@@ -2,16 +2,17 @@ import moment from 'moment-timezone';
 import axios from '../loaders/axios';
 
 const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
-  const queryString = JSON.stringify({ match, sort, limit, skip });
+  const queryString = JSON.stringify({
+    match, sort, limit, skip,
+  });
 
   try {
-    const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/sleepSummary`,
+    const { data } = await axios.get(`/sleepSummary`,
       {
         params: { query: queryString },
       });
     return data;
   } catch (error) {
-    console.log(error);
     return [];
   }
 };
@@ -76,7 +77,7 @@ const getAvgBedtime = (sleepSummaries) => {
   });
 
   diffMins = Math.floor(diffMins / sleepSummaries.length);
-  const bedTime = moment('2020-4-20', 'YYYY-MM-DD').add(diffMins, 'minutes');
+  // const bedTime = moment('2020-4-20', 'YYYY-MM-DD').add(diffMins, 'minutes');
   return diffMins;
 };
 

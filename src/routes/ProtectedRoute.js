@@ -8,7 +8,7 @@ const ProtectedRoute = (props) => {
 
   return isAuthenticated
    ? <Route {...props}/>
-   : <Redirect to='/login'/>;
+   : <Redirect to='/signin'/>;
 };
 
 export default ProtectedRoute;

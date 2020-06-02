@@ -46,7 +46,7 @@ const DailyDiaryCheckIn = ({ dailyDiary }) => {
 
 
   return (
-    <Box boxShadow={0} className={styles.panel} borderRadius={10} p={1} mb={3}>
+    <Box boxShadow={0} className={styles.panel} borderRadius={25} p={1} mb={3}>
       <Typography variant='subtitle2'>{moment(dailyDiary.date).utc().format('dddd MMM D, YYYY')}</Typography>
       <Grid container alignItems='center' spacing={2}>
         <Grid item xs={12}>
@@ -62,7 +62,7 @@ const DailyDiaryCheckIn = ({ dailyDiary }) => {
         </Grid>
       </Grid>
 
-          {/* <Box className={styles.panel} p={1} borderRadius={10}>
+          {/* <Box className={styles.panel} p={1} borderRadius={25}>
           <Grid  container alignContent='center' alignItems='center'>
             <Grid item>{MOOD_ICON[dailyDiary.mood]}</Grid>
             <Grid item>

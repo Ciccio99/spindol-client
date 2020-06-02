@@ -43,49 +43,47 @@ const SleepCheckInStats = ({ sleepSummaries, sleepTrialTracker }) => {
   }, [sleepSummaries, sleepTrialTracker]);
 
   return (
-    <Box mt={3}>
-      <Grid container direction="column" alignItems="center" spacing={2}>
-        <Grid item container xs={12} spacing={2}>
-          <Grid item xs={6}>
-            <Box pb={1}>
-              <Typography variant="h6">During Trial</Typography>
-              <Divider />
-            </Box>
-          </Grid>
-          <Grid item xs={6}>
-            <Box pb={1}>
-              <Typography variant="h6">Before Trial</Typography>
-              <Divider />
-            </Box>
-          </Grid>
+    <Grid container direction="column" alignItems="center" spacing={2}>
+      <Grid item container xs={12} spacing={2} justify="space-between">
+        <Grid item xs={6} sm={5}>
+          <Box pb={1}>
+            <Typography variant="h6">Sleep During Trial</Typography>
+            <Divider />
+          </Box>
         </Grid>
-        { sleepStats.length === incompleteSleepStats.length
-          && sleepStats.map((statObj, index) => (
-            <Grid key={index} item container xs={12} spacing={2}>
-              <Grid item xs={6}>
-                <Box border={1} borderColor="#CCC" borderRadius={10} minHeight="100%">
-                  <StatCard
-                    stat={statObj.stat}
-                    units={statObj.units}
-                    description={statObj.description}
-                    tickerPercent={statObj.diffPercent}
-                  />
-                </Box>
-              </Grid>
-              <Grid item xs={6}>
-                <Box border={1} borderColor="#CCC" borderRadius={10} minHeight="100%">
-                  <StatCard
-                    stat={incompleteSleepStats[index].stat}
-                    units={incompleteSleepStats[index].units}
-                    description={incompleteSleepStats[index].description}
-                    tickerPercent={incompleteSleepStats[index].diffPercent}
-                  />
-                </Box>
-              </Grid>
-            </Grid>
-          ))}
+        <Grid item xs={6} sm={5}>
+          <Box pb={1}>
+            <Typography variant="h6">Sleep Before Trial</Typography>
+            <Divider />
+          </Box>
+        </Grid>
       </Grid>
-    </Box>
+      { sleepStats.length === incompleteSleepStats.length
+        && sleepStats.map((statObj, index) => (
+          <Grid key={index} item container xs={12} justify="space-between" spacing={1}>
+            <Grid item xs={6} sm={5}>
+              <Box border={1} borderColor="#CCC" borderRadius={25} minHeight="100%">
+                <StatCard
+                  stat={statObj.stat}
+                  units={statObj.units}
+                  description={statObj.description}
+                  tickerPercent={statObj.diffPercent}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={6} sm={5}>
+              <Box border={1} borderColor="#CCC" borderRadius={25} minHeight="100%">
+                <StatCard
+                  stat={incompleteSleepStats[index].stat}
+                  units={incompleteSleepStats[index].units}
+                  description={incompleteSleepStats[index].description}
+                  tickerPercent={incompleteSleepStats[index].diffPercent}
+                />
+              </Box>
+            </Grid>
+          </Grid>
+        ))}
+    </Grid>
   );
 };
 

@@ -8,11 +8,11 @@ import LinkText from '../../linkText/LinkText';
 import LinkOnClick from '../../linkOnClick/LinkOnClick';
 import DeviceServices from '../../../services/DeviceServices';
 
-const capFirst = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
+const capFirst = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
-const DeviceSettingsItem = ({ user, device, trackerType, userFirstName}) => {
+const DeviceSettingsItem = ({
+  user, device, trackerType, userFirstName,
+}) => {
   const [connected, setConnected] = useState(false);
   const [redirectUri, setRedirectUri] = useState('');
 
@@ -32,7 +32,7 @@ const DeviceSettingsItem = ({ user, device, trackerType, userFirstName}) => {
     } else {
       setConnected(false);
     }
-  }, [user, device])
+  }, [user, device]);
 
   const disconnectDevice = async () => {
     const success = await DeviceServices.revokeDeviceAccess(device);
@@ -45,20 +45,33 @@ const DeviceSettingsItem = ({ user, device, trackerType, userFirstName}) => {
 
   return (
     <Box p={1}>
-      <Grid container justify='space-between' alignItems='center' spacing={2}>
+      <Grid container justify="space-between" alignItems="center" spacing={2}>
         <Grid item>
           {
             connected
-            ? <Typography variant='h6'>{userFirstName ? userFirstName + "'s " : ''}{capFirst(device)} {capFirst(trackerType)}</Typography>
-            : <Typography variant='h6'>{capFirst(device)} {capFirst(trackerType)}</Typography>
+              ? (
+                <Typography variant="h6">
+                  {userFirstName ? `${userFirstName}'s ` : ''}
+                  {capFirst(device)}
+                  {' '}
+                  {capFirst(trackerType)}
+                </Typography>
+              )
+              : (
+                <Typography variant="h6">
+                  {capFirst(device)}
+                  {' '}
+                  {capFirst(trackerType)}
+                </Typography>
+              )
           }
-          {connected && <Typography variant='caption'>Connected</Typography>}
+          {connected && <Typography variant="caption">Connected</Typography>}
         </Grid>
         <Grid item>
           {
             connected
-            ? <LinkOnClick onClick={disconnectDevice} errorColor>Disconnect</LinkOnClick>
-            : <LinkText to={redirectUri} external>Connect</LinkText>
+              ? <LinkOnClick onClick={disconnectDevice} errorColor>Disconnect</LinkOnClick>
+              : <LinkText to={redirectUri} external>Connect</LinkText>
           }
         </Grid>
       </Grid>

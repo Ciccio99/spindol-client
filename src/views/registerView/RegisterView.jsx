@@ -1,35 +1,23 @@
 import React, { useState, useContext } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useHistory, useParams } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+// import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import LinearProgress from '@material-ui/core/LinearProgress'
-import { useHistory, useLocation } from 'react-router-dom';
-import axios from '../../loaders/axios';
-import UserContext from '../../context/userContext';
-import Cookies from 'js-cookie';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
-const Copyright = () => (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://sleepwell.ai/">
-        Sleepwell.ai
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-);
+import UserServices from 'services/UserServices';
+import UserContext from '../../context/userContext';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -51,50 +39,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUpView = () => {
+const RegisterView = () => {
+  const history = useHistory();
+  const { token } = useParams();
   const classes = useStyles();
   const { dispatchUser } = useContext(UserContext);
-  const [ email, setEmail ] = useState('');
-  const [ password, setPassword ] = useState('');
-  const [ name, setName] = useState('');
-  const [ confirmPassword, setConfirmPassword] = useState('');
-  const [ errorMessage, setErrorMessage] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  let history = useHistory();
-  let location = useLocation();
-  const { from } = { from: { pathname: '/dashboard' }};
 
-  const login = async (e) => {
+  const signUp = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage('');
-
-    if (password !== confirmPassword) {
-      setErrorMessage('Passwords must match.');
-      return;
-    }
-
-    if (name.length === 0) {
-      setErrorMessage('Full name required.');
-      return;
-    }
-
-    let user = undefined;
-    try {
-      let { data } = await axios.post(`${process.env.REACT_APP_API_URI}/users/register`, { email, name, password, confirmPassword });
-      if (data.user && data.token) {
-        user = data.user;
-        Cookies.set('HypnosAuthJWT', data.token, { expires: 30 })
-      }
-
-    } catch (error) {
-      if ([400, 402, 401, 403].indexOf(error?.response?.status) !== -1) {
-        setErrorMessage(error.response.data.message);
-      };
-    } finally {
+    const { user, error } = await UserServices.signUp(email, name, password, confirmPassword, token);
+    if (error) {
+      setErrorMessage(error.message);
       setLoading(false);
-    }
-    if (user) {
+    } else if (user) {
       dispatchUser({
         type: 'USER_LOGIN',
         user,
@@ -102,7 +67,7 @@ const SignUpView = () => {
 
       history.push('/dashboard');
     }
-  }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -112,10 +77,10 @@ const SignUpView = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Register
         </Typography>
-        {errorMessage ? <FormHelperText error={true}>{errorMessage}</FormHelperText> : null}
-        <form className={classes.form} onSubmit={login}>
+        {errorMessage ? <FormHelperText error>{errorMessage}</FormHelperText> : null}
+        <form className={classes.form} onSubmit={signUp}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -169,7 +134,7 @@ const SignUpView = () => {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           /> */}
-          {loading ? <LinearProgress color='secondary'/> : null}
+          {loading ? <LinearProgress color="secondary" /> : null}
           <Button
             type="submit"
             fullWidth
@@ -186,18 +151,15 @@ const SignUpView = () => {
               </Link>
             </Grid> */}
             <Grid item>
-              <Link to='/login' component={RouterLink} variant="body2">
-                {"Already have an account? Sign In"}
+              <Link to="/signin" component={RouterLink} variant="body2">
+                Already have an account? Sign In
               </Link>
             </Grid>
           </Grid>
         </form>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
     </Container>
   );
-}
+};
 
-export default SignUpView;
+export default RegisterView;

@@ -6,6 +6,7 @@ import Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import moment from 'moment-timezone';
 import SleepSummaryServices from 'services/SleepSummaryServices';
+import useMobile from 'hooks/useMobile';
 
 Chart.plugins.unregister(ChartDataLabels);
 // moment.tz.setDefault('UTC');
@@ -20,15 +21,7 @@ const SLEEP_STATE_COLOR = {
 const SleepQualityBar = ({ sleepSummaries }) => {
   const chartRef = useRef(null);
   const [chart, setChart] = useState(null);
-  const [aspectRatio, setAspectRatio] = useState(3);
-
-  useEffect(() => {
-    if (window.innerWidth <= 600) {
-      setAspectRatio(1.25);
-      return;
-    }
-    setAspectRatio(3);
-  }, []);
+  const { isMobile } = useMobile();
 
   useEffect(() => {
     if (!sleepSummaries || sleepSummaries.length === 0) {
@@ -90,7 +83,7 @@ const SleepQualityBar = ({ sleepSummaries }) => {
         ],
       },
       options: {
-        aspectRatio,
+        aspectRatio: isMobile ? 1.25 : 3,
         scales: {
           xAxes: [
             {
@@ -154,9 +147,8 @@ const SleepQualityBar = ({ sleepSummaries }) => {
       },
       // plugins: [ChartDataLabels],
     });
-
     setChart(newChart);
-  }, [sleepSummaries, aspectRatio]);
+  }, [sleepSummaries, isMobile]);
 
 
   return (

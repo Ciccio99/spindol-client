@@ -4,7 +4,7 @@ const query = async (match={}, sort={}, limit=0, skip=0) => {
   const queryString = JSON.stringify({ match, sort, limit, skip });
 
   try {
-    const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/sleepTrial`,
+    const { data } = await axios.get(`/sleepTrial`,
       {
         params: { query: queryString },
       },

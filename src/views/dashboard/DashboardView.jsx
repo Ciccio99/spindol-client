@@ -10,6 +10,7 @@ import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
 import SleepTrialTrackerPanel from 'components/sleepTrialTracker/SleepTrialTrackerPanel';
 import StatsDisplay from 'components/statsDisplay/StatsDisplay';
 import DailyDiaryPanel from 'components/dailyDiaryPanel/DailyDiaryPanel';
+import Section from 'components/organizers/Section';
 
 const DashboardView = () => {
   const { user } = useContext(UserContext);
@@ -19,9 +20,7 @@ const DashboardView = () => {
   useEffect(() => {
     (async () => {
       const trialTrackersData = await SleepTrialTrackerServices.querySleepTrialTracker();
-      if (trialTrackersData.length === 0) {
-        return;
-      }
+
       dispatchSleepTrialTrackers({
         type: 'POPULATE',
         sleepTrialTrackers: trialTrackersData,
@@ -32,14 +31,20 @@ const DashboardView = () => {
   return (
     <Box mb={4}>
       <Container>
-        <Box mt={4} mb={4}>
+        <Box mt={5}>
           <Typography variant="h3">
             {`Welcome${userFirstName ? ` ${userFirstName}` : ''}!`}
           </Typography>
         </Box>
-        <DailyDiaryPanel />
-        <StatsDisplay />
-        <SleepTrialTrackerPanel trialTrackers={sleepTrialTrackers} />
+        <Section>
+          <DailyDiaryPanel />
+        </Section>
+        <Section>
+          <StatsDisplay />
+        </Section>
+        <Section>
+          <SleepTrialTrackerPanel trialTrackers={sleepTrialTrackers} />
+        </Section>
       </Container>
     </Box>
   );

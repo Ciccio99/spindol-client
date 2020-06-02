@@ -10,7 +10,7 @@ import moment from 'moment-timezone';
 import styles from './SleepTrialTracker.module.css';
 
 const CompletedSTT = ({ trialTracker }) => (
-  <Box mt={6} p={2} border={1} borderColor="#DBDBDB" borderRadius={10}>
+  <Box mt={6} p={3} border={1} borderColor="#DBDBDB" borderRadius={25}>
     <Grid container justify="space-between" alignItems="center" spacing={2}>
       <Grid item xs={12} sm={8}>
         <Box>

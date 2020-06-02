@@ -62,7 +62,7 @@ const SleepTrialTrackerMin = ({ sleepTrialTracker, date }) => {
   };
 
   return (
-    <Box border={1} borderColor="#ccc" borderRadius={10} p={2} mt={3}>
+    <Box border={1} borderColor="#ccc" borderRadius={25} p={3} mt={3}>
       <Grid container spacing={2} justify="space-between" alignItems="center">
         <Grid item xs={12} sm={6}>
           <Typography variant="subtitle1">{sleepTrialTracker.sleepTrial.name}</Typography>
@@ -70,7 +70,7 @@ const SleepTrialTrackerMin = ({ sleepTrialTracker, date }) => {
           <Grid container spacing={1} alignItems="center">
             <Grid item xs={12}>
               <Typography variant="caption">
-                The night of <strong>{yesterdayDate.format('MMM D, YYYY')}</strong>
+                Did you complete this trial the night of <strong>{yesterdayDate.format('MMM D, YYYY')}</strong>?
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -81,8 +81,8 @@ const SleepTrialTrackerMin = ({ sleepTrialTracker, date }) => {
           </Grid>
         </Grid>
         <ToggleButtonGroup item container xs={12} sm={6} spacing={1} justify="space-around" alignItems="center" onChange={submitCheckIn} value={completed}>
-          <ToggleButton xs={6} sm={5} value>Yes, I did</ToggleButton>
-          <ToggleButton xs={6} sm={5} value={false}>No, I didn't</ToggleButton>
+          <ToggleButton xs={12} sm={5} value>Yes, I did</ToggleButton>
+          <ToggleButton xs={12} sm={5} value={false}>No, I didn't</ToggleButton>
         </ToggleButtonGroup>
       </Grid>
     </Box>

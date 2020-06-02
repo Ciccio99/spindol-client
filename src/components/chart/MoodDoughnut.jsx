@@ -12,7 +12,6 @@ const MoodDoughnut = ({ dailyDiaries }) => {
   const chartRef = useRef(null);
   const [chart, setChart] = useState(null);
 
-
   useEffect(() => {
     if (!dailyDiaries) {
       return;
@@ -64,7 +63,7 @@ const MoodDoughnut = ({ dailyDiaries }) => {
       },
     });
     setChart(newChart);
-  }, []);
+  }, [dailyDiaries]);
 
   return (
     <Box width="100%">

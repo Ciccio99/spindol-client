@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   LinearProgress,
   Typography,
   Divider,
+  Paper,
 } from '@material-ui/core';
 import SleepQualityBar from 'components/chart/SleepQualityBar';
 import SleepCheckInStats from './SleepCheckInStats';
@@ -36,22 +36,23 @@ const SleepReport = ({ dailyDiaries, sleepTrialTracker }) => {
   }
 
   return (
-    <Box className={styles.panel} mt={5} pb={2} borderRadius={10}>
-      <Box p={2}>
-        <Typography variant="h6">Sleep</Typography>
-      </Box>
-      <Divider />
-      <Box mt={1} p={1}>
-        <Box p={1} mt={2}>
-          <SleepQualityBar sleepSummaries={sleepSummaries} />
+    <Paper elevation={24}>
+      <Box>
+        <Box p={4} py={3}>
+          <Typography variant="h6">Sleep</Typography>
         </Box>
-        <SleepCheckInStats
-          sleepSummaries={sleepSummaries}
-          sleepTrialTracker={sleepTrialTracker}
-        />
+        <Divider />
+        <Box p={4}>
+          <SleepQualityBar sleepSummaries={sleepSummaries} />
+          <Box mt={8}>
+            <SleepCheckInStats
+              sleepSummaries={sleepSummaries}
+              sleepTrialTracker={sleepTrialTracker}
+            />
+          </Box>
+        </Box>
       </Box>
-    </Box>
-
+    </Paper>
   );
 };
 

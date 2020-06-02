@@ -65,6 +65,7 @@ const MoodLine = ({ dailyDiaries, checkIns }) => {
         ],
       },
       options: {
+        aspectRatio: 2,
         hover: {
           mode: 'x-axis',
         },

@@ -5,7 +5,7 @@ const querySleepTrialTracker = async (match = {}, sort = {}, limit = 0, skip = 0
     match, sort, limit, skip,
   });
   try {
-    const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/sleepTrialTracker`,
+    const { data } = await axios.get(`/sleepTrialTracker`,
       {
         params: { query: queryString },
       });
@@ -17,20 +17,20 @@ const querySleepTrialTracker = async (match = {}, sort = {}, limit = 0, skip = 0
 
 const getById = async (id) => {
   try {
-    const { data } = await axios.get(`${process.env.REACT_APP_API_URI}/sleepTrialTracker/${id}`);
+    const { data } = await axios.get(`/sleepTrialTracker/${id}`);
     return data;
   } catch (error) {
     return null;
   }
 };
 
-const create = async (user, sleepTrial) => {
+const create = async (sleepTrial) => {
   const body = {
     sleepTrial: sleepTrial._id,
     trialLength: sleepTrial.trialLength,
   };
   try {
-    const { data } = await axios.post(`${process.env.REACT_APP_API_URI}/sleepTrialTracker/create`,
+    const { data } = await axios.post(`/sleepTrialTracker/create`,
       body);
     return data;
   } catch (error) {
@@ -48,7 +48,7 @@ const addCheckIn = async (_id, date, completed) => {
     },
   };
   try {
-    const { data } = await axios.post(`${process.env.REACT_APP_API_URI}/sleepTrialTracker/add/checkIn`,
+    const { data } = await axios.post(`/sleepTrialTracker/add/checkIn`,
       body);
     return data;
   } catch (error) {

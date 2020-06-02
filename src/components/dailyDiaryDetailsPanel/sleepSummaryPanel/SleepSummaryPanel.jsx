@@ -19,7 +19,7 @@ const SleepSummaryPanel = ({ sleepSummary }) => {
     <Grid container spacing={2}>
       {stats.map((stat, index) => (
         <Grid key={index} item xs={6} sm={4} md={3}>
-          <Box boxShadow={2} borderRadius={10}>
+          <Box border={1} borderColor="#CCC" borderRadius={25} height="100%">
             <StatCard
               stat={stat.stat}
               units={stat.units}

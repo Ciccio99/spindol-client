@@ -57,7 +57,7 @@ const AccountPasswordPanel = () => {
         setFormState(initFormState);
         dispatchAlertSystem({
           type: 'SUCCESS',
-          message: 'Password successfully updated!',
+          message: 'Password updated!',
         });
       } catch (error) {
         setErrorMessage(error.response.data.message);

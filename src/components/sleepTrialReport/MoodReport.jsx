@@ -4,19 +4,20 @@ import {
   Typography,
   Grid,
   Divider,
+  Paper,
 } from '@material-ui/core';
 import MoodDoughnut from 'components/chart/MoodDoughnut';
 import MoodLine from 'components/chart/MoodLine';
 import styles from './SleepTrialReport.module.css';
 
 const MoodReport = ({ dailyDiaries, checkIns }) => (
-  <Box className={styles.panel} mt={5} pb={2} borderRadius={10}>
-    <Box p={2}>
+  <Paper elevation={24}>
+    <Box p={4} py={3}>
       <Typography variant="h6">Mood</Typography>
     </Box>
     <Divider />
-    <Box p={2}>
-      <Grid container spacing={2}>
+    <Box p={4}>
+      <Grid container spacing={2} justify="center">
         <Grid item sm={12} md={6}>
           <Box display="flex" flexDirection="column" alignItems="center" p={2} pt={1}>
             <Box mb={1}>
@@ -36,7 +37,7 @@ const MoodReport = ({ dailyDiaries, checkIns }) => (
 
       </Grid>
     </Box>
-  </Box>
+  </Paper>
 );
 
 export default MoodReport;

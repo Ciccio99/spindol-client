@@ -1,4 +1,5 @@
 export default {
+  api_uri: process.env.REACT_APP_API_URI,
   oauth2: {
     api_uri: process.env.REACT_APP_API_URI,
     oura: {

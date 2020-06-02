@@ -14,7 +14,7 @@ const TypeList = ({ type, trialTrackers, component}) => {
   return (
     <React.Fragment>
       <Divider/>
-      <Box p={3} mt={2}>
+      <Box p={4} mt={2}>
         <Typography className={styles.typeListHeader} variant='h6'>{type} Trials</Typography>
         {/* <h4 className={styles.typeHeader}>{type} Trials</h4> */}
         {trialTrackers.map((trialTracker) =>

@@ -40,12 +40,16 @@ const AccountInfoPanel = () => {
         updateBody[key] = formState[key];
       }
     });
-    async function update() {
+    (async () => {
       try {
         const user = await UserServices.update(updateBody);
         dispatchUser({
           type: 'USER_UPDATE',
           user,
+        });
+        dispatchAlertSystem({
+          type: 'SUCCESS',
+          message: 'Update successful!',
         });
         setFormState(initFormState);
       } catch (error) {
@@ -55,8 +59,7 @@ const AccountInfoPanel = () => {
         });
       }
 
-    };
-    update();
+    })();
   }
 
   return (

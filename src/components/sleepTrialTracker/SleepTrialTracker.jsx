@@ -3,11 +3,11 @@ import {
   Box,
   Grid,
   LinearProgress,
-  Typography
+  Typography,
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import TrialTrackerCheckIn from './TrialTrackerCheckIn';
 import styles from './SleepTrialTracker.module.css';
-import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   root: {
@@ -30,7 +30,8 @@ const SleepTrialTracker = ({ trialTracker }) => {
   const classes = useStyles();
 
   useEffect(() => {
-    const completedCheckIns = trialTracker.checkIns.filter((checkIn) => checkIn.completed !== false);
+    const completedCheckIns = trialTracker.checkIns
+      .filter((checkIn) => checkIn.completed !== false);
 
     setCompletedDays(completedCheckIns.length);
     let progress = Math.round((completedCheckIns.length / trialTracker.trialLength) * 100);
@@ -41,7 +42,7 @@ const SleepTrialTracker = ({ trialTracker }) => {
   }, [trialTracker]);
 
   return (
-    <Box mt={8}>
+    <Box mt={6}>
       <Grid container justify="space-between" spacing={1}>
         <Grid item xs={12}>
           <LinearProgress
@@ -58,7 +59,7 @@ const SleepTrialTracker = ({ trialTracker }) => {
           <Box pt={3}>
             <h3 className={styles.trialName}>{trialTracker.sleepTrial.name}</h3>
             <p className={styles.trialDescription}>{trialTracker.sleepTrial.shortDescription}</p>
-            <Typography></Typography>
+            <Typography />
           </Box>
         </Grid>
         <Grid item xs={12} sm={3}>
@@ -67,7 +68,11 @@ const SleepTrialTracker = ({ trialTracker }) => {
               <li className={styles.completion}>
                 {`${completedDays}/${trialTracker.trialLength} days complete`}
               </li>
-              <li className={styles.trialLength}>{trialTracker.trialLength} day trial period</li>
+              <li className={styles.trialLength}>
+                {trialTracker.trialLength}
+                {' '}
+                day trial period
+              </li>
             </ul>
           </Box>
         </Grid>

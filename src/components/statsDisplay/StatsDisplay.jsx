@@ -79,7 +79,7 @@ const StatsDisplay = () => {
       <Box mb={3}>
         <Paper elevation={0}>
           <Box pb={2}>
-            <Box p={2}>
+            <Box p={4}>
               <Typography variant="h5">Sleep</Typography>
             </Box>
             <Divider />
@@ -93,24 +93,23 @@ const StatsDisplay = () => {
   }
 
   return (
-    <Box mb={3}>
-      <Paper elevation={0}>
-        <Box pb={2}>
-          <Box p={2}>
-            <Typography variant="h5">Sleep</Typography>
-          </Box>
-          <Divider />
-          {
+    <Paper elevation={24}>
+      <Box pb={2}>
+        <Box p={4} py={3}>
+          <Typography variant="h5">Sleep</Typography>
+        </Box>
+        <Divider />
+        {
             stats.length !== 0
             && (
-            <Box mt={1} p={2}>
+            <Box p={4}>
               <Box mb={2}>
                 <Typography variant="h6" color="textSecondary">Weekly Average</Typography>
               </Box>
               <Grid container spacing={2}>
                 {stats.map((statObj, index) => (
                   <Grid key={index} item xs={6} sm={4} md={3}>
-                    <Box border={1} borderColor="#CCC" borderRadius={10} height="100%">
+                    <Box border={1} borderColor="#CCC" borderRadius={25} height="100%">
                       <StatCard
                         stat={statObj.stat}
                         units={statObj.units}
@@ -123,17 +122,17 @@ const StatsDisplay = () => {
             </Box>
             )
           }
-          {
+        {
             todayStats.length !== 0
             && (
-            <Box p={2}>
+            <Box p={4}>
               <Box mb={2}>
                 <Typography variant="h6" color="textSecondary">Last Night</Typography>
               </Box>
               <Grid container spacing={2}>
                 {todayStats.map((statObj, index) => (
                   <Grid key={index} item xs={6} sm={4} md={3}>
-                    <Box border={1} borderColor="#CCC" borderRadius={10} height="100%">
+                    <Box border={1} borderColor="#CCC" borderRadius={25} height="100%">
                       <StatCard
                         stat={statObj.stat}
                         units={statObj.units}
@@ -146,9 +145,8 @@ const StatsDisplay = () => {
             </Box>
             )
             }
-        </Box>
-      </Paper>
-    </Box>
+      </Box>
+    </Paper>
   );
 };
 

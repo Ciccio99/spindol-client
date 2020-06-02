@@ -12,6 +12,7 @@ import LinkOnClick from 'components/linkOnClick/LinkOnClick';
 import InformationReport from 'components/sleepTrialReport/InformationReport';
 import SleepReport from 'components/sleepTrialReport/SleepReport';
 import MoodReport from 'components/sleepTrialReport/MoodReport';
+import Section from 'components/organizers/Section';
 
 const SleepTrialReportView = () => {
   const { id } = useParams();
@@ -60,23 +61,29 @@ const SleepTrialReportView = () => {
   }
   return (
     <Container>
-      <Box mb={2}>
-        <Box mt={2} mb={2}>
+      <Box mb={4}>
+        <Box mt={5}>
           <Typography variant="h3">
             Sleep Trial Report
           </Typography>
         </Box>
-        <InformationReport
-          sleepTrialTracker={sleepTrialTracker}
-        />
-        <MoodReport
-          dailyDiaries={dailyDiaries}
-          checkIns={sleepTrialTracker.checkIns}
-        />
-        <SleepReport
-          dailyDiaries={dailyDiaries}
-          sleepTrialTracker={sleepTrialTracker}
-        />
+        <Section>
+          <InformationReport
+            sleepTrialTracker={sleepTrialTracker}
+          />
+        </Section>
+        <Section>
+          <MoodReport
+            dailyDiaries={dailyDiaries}
+            checkIns={sleepTrialTracker.checkIns}
+          />
+        </Section>
+        <Section>
+          <SleepReport
+            dailyDiaries={dailyDiaries}
+            sleepTrialTracker={sleepTrialTracker}
+          />
+        </Section>
       </Box>
     </Container>
   );
