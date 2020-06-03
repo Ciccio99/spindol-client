@@ -94,8 +94,17 @@ const upsert = async (date, mood) => {
     date,
     mood,
   };
-  const { data } = await axios.post('/dailyDiary/upsert', body);
-  return data;
+  try {
+    const { data } = await axios.post('/dailyDiary/upsert', body);
+    return { data };
+  } catch (e) {
+    const error = {};
+    error.message = e.message || 'Something went wrong... ';
+    if ([400, 402, 401, 403].indexOf(e?.response?.status) !== -1) {
+      error.message = e.response.data.message;
+    };
+    return { error };
+  }
 };
 
 const update = async () => {

@@ -5,6 +5,7 @@ import {
   Box,
 } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
+import ReactGA from 'react-ga';
 import DeviceServices from 'services/DeviceServices';
 import UserServices from 'services/UserServices';
 import AppRouter from 'routes/AppRouter';
@@ -18,7 +19,6 @@ import alertSystemReducer from './reducers/alertSystem';
 import SleepTrialTrackersContext from './context/sleepTrialTrackersContext';
 import sleepTrialTrackersReducer from './reducers/sleepTrialTrackersReducer';
 import LoadingCard from './components/loadingCard/LoadingCard';
-
 // TODO: Upgrade to cleaner context system store https://kentcdodds.com/blog/how-to-use-react-context-effectively
 
 function App() {
@@ -45,6 +45,10 @@ function App() {
         if (currentUser.accounts.oura.connected) {
           await DeviceServices.syncDeviceData('oura');
         }
+        ReactGA.set({
+          userId: currentUser._id,
+          userEmail: currentUser.email,
+        });
       }
       setLoaded(true);
     })();

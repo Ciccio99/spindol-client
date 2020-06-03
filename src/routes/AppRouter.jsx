@@ -11,23 +11,28 @@ import SleepTrialReportView from 'views/sleepTrialReport/SleepTrialReportView';
 import NotFound from 'views/notFound/NotFound';
 import TermsOfService from 'views/legal/TermsOfService';
 import PrivacyPolicy from 'views/legal/PrivacyPolicy';
+import usePageTracker from 'hooks/usePageTracker';
 
-const AppRouter = () => (
-  <div>
-    <Switch>
-      <ProtectedRoute exact path="/" component={DashboardView} />
-      <PublicRoute path="/signin" authRedirectTo="/dashboard" component={SignInView} />
-      <PublicRoute path="/register/:token" authRedirectTo="/dashboard" component={RegisterView} />
-      <PublicRoute path="/register" authRedirectTo="/dashboard" component={RegisterView} />
-      <PublicRoute path="/terms-of-service" component={TermsOfService} />
-      <PublicRoute path="/privacy-policy" component={PrivacyPolicy} />
-      <ProtectedRoute path="/dashboard" component={DashboardView} />
-      <ProtectedRoute path="/daily-diary" component={CheckInsView} />
-      <ProtectedRoute path="/sleep-trial-report/:id" component={SleepTrialReportView} />
-      <ProtectedRoute path="/settings" component={AccountSettings} />
-      <Route component={NotFound} />
-    </Switch>
-  </div>
-);
+const AppRouter = () => {
+  usePageTracker();
+
+  return (
+    <div>
+      <Switch>
+        <ProtectedRoute exact path="/" component={DashboardView} />
+        <PublicRoute path="/signin" authRedirectTo="/dashboard" component={SignInView} />
+        <PublicRoute path="/register/:token" authRedirectTo="/dashboard" component={RegisterView} />
+        <PublicRoute path="/register" authRedirectTo="/dashboard" component={RegisterView} />
+        <PublicRoute path="/terms-of-service" component={TermsOfService} />
+        <PublicRoute path="/privacy-policy" component={PrivacyPolicy} />
+        <ProtectedRoute path="/dashboard" component={DashboardView} />
+        <ProtectedRoute path="/daily-diary" component={CheckInsView} />
+        <ProtectedRoute path="/sleep-trial-report/:id" component={SleepTrialReportView} />
+        <ProtectedRoute path="/settings" component={AccountSettings} />
+        <Route component={NotFound} />
+      </Switch>
+    </div>
+  )
+};
 
 export default AppRouter;

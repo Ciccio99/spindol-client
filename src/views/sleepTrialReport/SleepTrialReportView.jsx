@@ -43,20 +43,36 @@ const SleepTrialReportView = () => {
 
   if (isLoading) {
     return (
-      <Box p={5}>
-        <LinearProgress />
-      </Box>
+      <Container>
+        <Box mb={4}>
+          <Box mt={5}>
+            <Typography variant="h3">
+              Sleep Trial Report
+            </Typography>
+          </Box>
+          <Box pt={8}>
+            <LinearProgress />
+          </Box>
+        </Box>
+      </Container>
     );
   }
 
   if (!sleepTrialTracker) {
     return (
-      <Box p={2} my={5} display="flex" flexDirection="column" alignItems="center">
-        <Typography variant="h6">
-          Could not find sleep trial tracker data...
-        </Typography>
-        <LinkOnClick onClick={() => { history.goBack(); }}>Go Back</LinkOnClick>
-      </Box>
+      <Container>
+        <Box mt={5}>
+          <Typography variant="h3">
+            Sleep Trial Report
+          </Typography>
+        </Box>
+        <Box p={2} my={5} display="flex" flexDirection="column" alignItems="center">
+          <Typography variant="h6">
+            Could not find sleep trial tracker data...
+          </Typography>
+          <LinkOnClick onClick={() => { history.goBack(); }}>Go Back</LinkOnClick>
+        </Box>
+      </Container>
     );
   }
   return (

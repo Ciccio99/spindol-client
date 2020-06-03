@@ -6,4 +6,10 @@ export default {
       client_id: process.env.OURA_CLIENT_ID,
     },
   },
+  ga: {
+    trackingId: process.env.GA_TRACKING_ID,
+  },
+  hotjar: {
+    trackingId: process.env.HOTJAR_TRACKING_ID,
+  },
 };

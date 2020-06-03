@@ -5,6 +5,16 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import HypnosTheme from './constants/HypnosTheme';
+import ReactGA from 'react-ga';
+import { hotjar } from 'react-hotjar';
+import config from 'config';
+
+if (config.ga.trackingId) {
+  ReactGA.initialize(config.ga.trackingId);
+}
+if (config.hotjar.trackingId) {
+  hotjar.initialize(config.hotjar.trackingId);
+}
 
 ReactDOM.render(
   <React.StrictMode>

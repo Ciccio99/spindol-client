@@ -45,21 +45,28 @@ const DailyDiaryPanel = () => {
     })();
   }, [dailyDiary]);
 
-  const submitDailyDiary = async (mood) => {
-    const data = await DailyDiaryServices.upsert(todayDate.format('YYYY-MM-DD'), mood);
-    if (data) {
-      setDailyDiary(data);
-      dispatchAlertSystem({
-        type: 'SUCCESS',
-        message: 'Mood Updated!',
-      });
-      return true;
-    }
-    dispatchAlertSystem({
-      type: 'WARNING',
-      message: 'Failed to update Mood. Please try again later.',
-    });
-    return false;
+  const submitDailyDiary = (mood) => {
+    const initMood = dailyDiary.mood;
+
+    // Optimistic Update
+    setDailyDiary((prevState) => ({ ...prevState, mood }));
+
+    (async () => {
+      const { data, error } = await DailyDiaryServices.upsert(todayDate.format('YYYY-MM-DD'), mood);
+      if (data) {
+        setDailyDiary(data);
+        dispatchAlertSystem({
+          type: 'SUCCESS',
+          message: 'Mood Updated!',
+        });
+      } else if (error) {
+        setDailyDiary((prevState) => ({ ...prevState, mood: initMood }));
+        dispatchAlertSystem({
+          type: 'WARNING',
+          message: error.message,
+        });
+      }
+    })();
   };
 
   return (

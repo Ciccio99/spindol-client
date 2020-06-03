@@ -150,4 +150,4 @@ const StatsDisplay = () => {
   );
 };
 
-export default StatsDisplay;
+export default React.memo(StatsDisplay);
