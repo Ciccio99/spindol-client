@@ -7,7 +7,6 @@ const ToggleButtonGroup = (props) => {
   const {
     value, onChange, children, ...rest
   } = props;
-  // const [value, setValue] = useState();
   const [elements, setElements] = useState(null);
 
   useEffect(() => {
@@ -16,7 +15,7 @@ const ToggleButtonGroup = (props) => {
       onInteractionHandler: (onChange),
     }));
     setElements(elems);
-  }, [value]);
+  }, [value, children, onChange]);
 
   return (
     <Grid {...rest}>

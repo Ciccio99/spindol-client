@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core';
 import MoodDoughnut from 'components/chart/MoodDoughnut';
 import MoodLine from 'components/chart/MoodLine';
-import styles from './SleepTrialReport.module.css';
 
 const MoodReport = ({ dailyDiaries, checkIns }) => (
   <Paper elevation={24}>

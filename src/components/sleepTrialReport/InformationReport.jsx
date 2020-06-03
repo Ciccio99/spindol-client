@@ -6,7 +6,6 @@ import {
   Paper,
 } from '@material-ui/core';
 import moment from 'moment-timezone';
-import styles from './SleepTrialReport.module.css';
 
 const InformationReport = ({ sleepTrialTracker }) => (
   <Paper elevation={24}>

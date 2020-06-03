@@ -31,6 +31,10 @@ const CurrentSleepTrialTrackers = ({ trialTrackers }) => {
     setTabValue(newValue);
   };
 
+  const closeSleepTrialsModal = () => {
+    setShowSleepTrials(false);
+  };
+
   return (
     <Paper elevation={24} style={{ minHeight: '100vh' }}>
       <Box p={4} py={3}>
@@ -72,14 +76,12 @@ const CurrentSleepTrialTrackers = ({ trialTrackers }) => {
       <Modal
         className={styles.modal}
         open={showSleepTrials}
-        onClose={() => { setShowSleepTrials(false); }}
-        onBackdropClick={() => { setShowSleepTrials(false); }}
+        style={{ display: showSleepTrials ? 'inline' : 'none' }}
+        onClose={closeSleepTrialsModal}
         keepMounted
       >
         <>
-          <Box display="flex" justifyContent="center">
-            <SleepTrialsView handleCloseClick={() => { setShowSleepTrials(false); }} />
-          </Box>
+          <SleepTrialsView handleCloseClick={() => { setShowSleepTrials(false); }} />
         </>
       </Modal>
     </Paper>

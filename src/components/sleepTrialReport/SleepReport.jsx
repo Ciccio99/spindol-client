@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core';
 import SleepQualityBar from 'components/chart/SleepQualityBar';
 import SleepCheckInStats from './SleepCheckInStats';
-import styles from './SleepTrialReport.module.css';
 
 const SleepReport = ({ dailyDiaries, sleepTrialTracker }) => {
   const [sleepSummaries, setSleepSummaries] = useState([]);

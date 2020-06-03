@@ -10,7 +10,10 @@ import { hotjar } from 'react-hotjar';
 import config from 'config';
 
 if (config.ga.trackingId) {
+  console.log(config.ga.trackingId);
   ReactGA.initialize(config.ga.trackingId);
+} else {
+  ReactGA.initialize('foo', { testMode: true });
 }
 if (config.hotjar.trackingId) {
   hotjar.initialize(config.hotjar.trackingId);

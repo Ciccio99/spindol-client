@@ -3,7 +3,7 @@ import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import useViewport from 'hooks/useViewport';
 
-let customTheme = {
+const customTheme = {
   typography: {
     fontFamily: [
       // "'Exo 2'",
@@ -90,7 +90,7 @@ const HypnosTheme = ({ children }) => {
     }
 
     setLastWidth(width);
-  }, [width]);
+  }, [width, lastWidth]);
 
 
   theme.shadows[24] = 'rgba(209, 230, 255, 0.57) 0px 2px 24px 1px;';

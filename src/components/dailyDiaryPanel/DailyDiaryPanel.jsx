@@ -46,7 +46,7 @@ const DailyDiaryPanel = () => {
   }, [dailyDiary]);
 
   const submitDailyDiary = (mood) => {
-    const initMood = dailyDiary.mood;
+    const initMood = dailyDiary?.mood;
 
     // Optimistic Update
     setDailyDiary((prevState) => ({ ...prevState, mood }));
