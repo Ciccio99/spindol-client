@@ -10,14 +10,17 @@ import styles from './SleepTrialTypeList.module.css';
 const SleepTrialTypeList = ({ type, sleepTrials }) => (
   <>
     <Box p={3}>
-      <Typography className={styles.typeHeader} variant="h6">
+      <Typography className={styles.typeHeader} variant="h5">
         {type}
         {' '}
         Trials
       </Typography>
       {
-        sleepTrials.map((sleepTrial) => (
-          <SleepTrialCard key={sleepTrial._id} sleepTrial={sleepTrial} />
+        sleepTrials.map((sleepTrial, index) => (
+          <Box key={sleepTrial._id}>
+            <SleepTrialCard key={sleepTrial._id} sleepTrial={sleepTrial} />
+            { index < sleepTrials.length - 1 && <Divider /> }
+          </Box>
         ))
       }
     </Box>

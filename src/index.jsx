@@ -1,16 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import HypnosTheme from './constants/HypnosTheme';
 import ReactGA from 'react-ga';
 import { hotjar } from 'react-hotjar';
 import config from 'config';
+import HypnosTheme from './constants/HypnosTheme';
+import * as serviceWorker from './serviceWorker';
+import App from './App';
 
 if (config.ga.trackingId) {
-  console.log(config.ga.trackingId);
   ReactGA.initialize(config.ga.trackingId);
 } else {
   ReactGA.initialize('foo', { testMode: true });
@@ -27,7 +26,7 @@ ReactDOM.render(
       </CssBaseline>
     </HypnosTheme>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change

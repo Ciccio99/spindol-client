@@ -67,14 +67,16 @@ const TrialTrackerCheckIn = ({ trialTracker }) => {
             <Typography variant="subtitle1">Did you perform this trial yesterday?</Typography>
             <Grid container spacing={1} alignItems="center">
               <Grid item>
-                <Typography variant="subtitle2">The night of <strong>{yesterdayDate.format('MMM D, YYYY')}</strong></Typography>
+                <Typography variant="subtitle2">
+                  {'The night of '}
+                  <strong>{yesterdayDate.format('MMM D, YYYY')}</strong>
+                </Typography>
               </Grid>
-              {/* <Grid item><Typography variant='caption'>{trialTracker.sleepTrial.type} Trial</Typography></Grid> */}
             </Grid>
           </Grid>
           <ToggleButtonGroup item container xs={12} sm={6} spacing={1} justify="space-around" alignItems="center" onChange={submitCheckIn} value={completed}>
             <ToggleButton xs={12} sm={5} value>Yes, I did</ToggleButton>
-            <ToggleButton xs={12} sm={5} value={false}>No, I didn't</ToggleButton>
+            <ToggleButton xs={12} sm={5} value={false}>{'No, I didn\'t'}</ToggleButton>
           </ToggleButtonGroup>
         </Grid>
       </Box>
