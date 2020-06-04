@@ -9,6 +9,7 @@ import HypnosTheme from './constants/HypnosTheme';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
 
+console.log(config);
 if (config.ga.trackingId) {
   ReactGA.initialize(config.ga.trackingId);
   console.log('GA enabled');
