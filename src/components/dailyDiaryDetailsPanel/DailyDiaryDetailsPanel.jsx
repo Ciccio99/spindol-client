@@ -52,17 +52,30 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
 
   const handleUpdateMood = async (e) => {
     const mood = e.target.value;
-    const data = await DailyDiaryServices.upsert(moment.utc(dailyDiary.date).format('YYYY-MM-DD'), mood);
+    const initMood = dailyDiary?.mood;
+
+    setDailyDiary((prevState) => ({ ...prevState, mood }));
+
+    const { data, error } = await DailyDiaryServices.upsert(moment.utc(dailyDiary.date).format('YYYY-MM-DD'), mood);
     if (data) {
       setDailyDiary(data);
-      return true;
+      dispatchAlertSystem({
+        type: 'SUCCESS',
+        message: 'Mood Updated!',
+      });
+    } else if (error) {
+      setDailyDiary((prevState) => ({ ...prevState, mood: initMood }));
+      dispatchAlertSystem({
+        type: 'WARNING',
+        message: error.message,
+      });
     }
-    return false;
   };
 
   if (loading) {
     return <LinearProgress color="primary" />;
-  } if (!dailyDiary) {
+  }
+  if (!dailyDiary) {
     return null;
   }
 
@@ -127,7 +140,7 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
         </Box>
         <Box mt={2} mb={6}>
           {
-        dailyDiary.sleepTrialTrackers.length === 0
+          !dailyDiary.sleepTrialTrackers || dailyDiary.sleepTrialTrackers.length === 0
           ? <Typography>No Sleep Trials were being tracked for this day...</Typography>
           : dailyDiary.sleepTrialTrackers.map((stt) => <SleepTrialTrackerMin key={stt._id} sleepTrialTracker={stt} date={selectedDate} />)
 
