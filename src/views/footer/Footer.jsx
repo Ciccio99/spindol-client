@@ -13,7 +13,7 @@ import styles from './Footer.module.css';
 const Footer = () => (
   <footer className={styles.footer}>
     <Container maxWidth="lg">
-      <Box mt={3} mb={3}>
+      <Box mt={8} mb={3}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm="auto">
             <Box display="flex" alignItems="center">

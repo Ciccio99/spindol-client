@@ -11,11 +11,14 @@ import App from './App';
 
 if (config.ga.trackingId) {
   ReactGA.initialize(config.ga.trackingId);
+  console.log('GA enabled');
 } else {
   ReactGA.initialize('foo', { testMode: true });
+  console.log('GA TEST enabled');
 }
 if (config.hotjar.trackingId) {
   hotjar.initialize(config.hotjar.trackingId);
+  console.log('hotjar enabled');
 }
 
 ReactDOM.render(

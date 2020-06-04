@@ -12,9 +12,9 @@ import {
 } from '@material-ui/core';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 import logo from 'assets/sleepwell-logo-transpbg.png';
-import UserContext from '../../context/userContext';
-import UserServices from '../../services/UserServices';
-import AlertSystemContext from '../../context/alertSystemContext';
+import UserContext from 'context/userContext';
+import UserServices from 'services/UserServices';
+import AlertSystemContext from 'context/alertSystemContext';
 import styles from './Header.module.css';
 
 const Header = () => {
@@ -56,7 +56,7 @@ const Header = () => {
         <Toolbar>
           <Grid container alignItems="center" justify="space-between">
             <Grid item>
-              <NavLink className={styles.navLink} exact to="/">
+              <NavLink className={styles.navLink} exact to="/dashboard">
                 <Box display="flex" alignItems="center">
                   <img src={logo} alt="SleepWell Logo" height="45px" />
                   <Typography className={styles.logoName} color="textPrimary" variant="h5" display="inline">Hypnos.ai</Typography>
