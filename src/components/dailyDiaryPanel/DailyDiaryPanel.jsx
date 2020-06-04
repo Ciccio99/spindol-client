@@ -5,6 +5,7 @@ import {
   Grid,
   Typography,
   Divider,
+  LinearProgress,
 } from '@material-ui/core';
 import moment from 'moment-timezone';
 import DailyDiaryServices from 'services/DailyDiaryServices';
@@ -19,9 +20,11 @@ const DailyDiaryPanel = () => {
   const [dailyDiary, setDailyDiary] = useState();
   const [reportingStreak, setReportingStreak] = useState(0);
   const [todayDate] = useState(moment().startOf('day'));
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
+      setIsLoading(true);
       try {
         const data = await DailyDiaryServices.query({
           date: todayDate.format('YYYY-MM-DD'),
@@ -34,6 +37,8 @@ const DailyDiaryPanel = () => {
           type: 'WARNING',
           message: error.response.data.message,
         });
+      } finally {
+        setIsLoading(false);
       }
     })();
   }, [dispatchAlertSystem, user, todayDate]);
@@ -68,6 +73,20 @@ const DailyDiaryPanel = () => {
       }
     })();
   };
+
+  if (isLoading) {
+    return (
+      <Paper elevation={24}>
+        <Box p={4} py={3}>
+          <Typography variant="h5">Mood</Typography>
+        </Box>
+        <Divider />
+        <Box p={4} overflow="none">
+          <LinearProgress color="secondary"/>
+        </Box>
+      </Paper>
+    );
+  }
 
   return (
     <Paper elevation={24}>

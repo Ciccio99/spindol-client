@@ -71,31 +71,41 @@ const StatsDisplay = () => {
   }, [dispatchAlertSystem, user]);
 
   if (loading) {
-    return <Box mb={3}><LinearProgress color="secondary" /></Box>;
+    return (
+      <Paper elevation={24}>
+        <Box pb={2}>
+          <Box px={4} py={3}>
+            <Typography variant="h5">Sleep</Typography>
+          </Box>
+          <Divider />
+          <Box p={4}>
+            <LinearProgress color="secondary" />
+          </Box>
+        </Box>
+      </Paper>
+    );
   }
 
   if (!todayStats.length && !stats.length) {
     return (
-      <Box mb={3}>
-        <Paper elevation={0}>
-          <Box pb={2}>
-            <Box p={4}>
-              <Typography variant="h5">Sleep</Typography>
-            </Box>
-            <Divider />
-            <Box mt={1} p={2}>
-              <Typography variant="h6">No sleep data available...</Typography>
-            </Box>
+      <Paper elevation={24}>
+        <Box pb={2}>
+          <Box px={4} py={3}>
+            <Typography variant="h5">Sleep</Typography>
           </Box>
-        </Paper>
-      </Box>
+          <Divider />
+          <Box p={4}>
+            <Typography variant="h6">No sleep data available...</Typography>
+          </Box>
+        </Box>
+      </Paper>
     );
   }
 
   return (
     <Paper elevation={24}>
       <Box pb={2}>
-        <Box p={4} py={3}>
+        <Box px={4} py={3}>
           <Typography variant="h5">Sleep</Typography>
         </Box>
         <Divider />
