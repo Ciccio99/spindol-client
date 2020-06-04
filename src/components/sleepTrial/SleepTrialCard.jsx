@@ -52,7 +52,7 @@ const SleepTrialCard = ({ sleepTrial }) => {
       );
     } else {
       setCta(
-        <Button onClick={startSleepTrial} className={styles.startTrialButton} fullWidth variant="outlined" size="large" disableElevation>
+        <Button onClick={startSleepTrial} fullWidth color="primary" variant="contained" size="large" disableElevation>
           Start sleep trial
         </Button>,
       );

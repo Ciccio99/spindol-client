@@ -15,10 +15,10 @@ const sleepTrialTrackersReducer = (state, action) => {
         return trialTracker;
       });
     case 'REMOVE':
-      return state.filter((trialTracker) => trialTracker._id !== action._id);
+      return state.filter((trialTracker) => trialTracker._id !== action.id);
     default:
       return state;
   }
-}
+};
 
 export default sleepTrialTrackersReducer;

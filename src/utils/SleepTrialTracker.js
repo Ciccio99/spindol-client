@@ -1,5 +1,5 @@
 import moment from 'moment-timezone';
-import DailyDiaryServices from '../services/DailyDiaryServices';
+import DailyDiaryServices from 'services/DailyDiaryServices';
 
 const MOOD_NUM_MAP = {
   excellent: 4,

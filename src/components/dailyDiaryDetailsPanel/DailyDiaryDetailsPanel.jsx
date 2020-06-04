@@ -13,8 +13,8 @@ import {
 } from '@material-ui/core';
 
 import moment from 'moment-timezone';
-import AlertSystemContext from '../../context/alertSystemContext';
-import DailyDiaryServices from '../../services/DailyDiaryServices';
+import AlertSystemContext from 'context/alertSystemContext';
+import DailyDiaryServices from 'services/DailyDiaryServices';
 import styles from './DailyDiaryDetailsPanel.module.css';
 import SleepSummaryPanel from './sleepSummaryPanel/SleepSummaryPanel';
 import SleepTrialTrackerMin from './sleepTrialTrackerMin/SleepTrialTrackerMin';

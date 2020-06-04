@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Box,
   Grid,
   LinearProgress,
   Typography,
+  Modal,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import LinkOnClick from 'components/linkOnClick/LinkOnClick';
+import CancelSTTModal from 'components/modals/CancelSTTModal';
 import TrialTrackerCheckIn from './TrialTrackerCheckIn';
+import SleepTrialTrackerContext from 'context/sleepTrialTrackersContext';
+import AlertSystemContext from 'context/alertSystemContext';
 import styles from './SleepTrialTracker.module.css';
+import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
 
 const useStyles = makeStyles({
   root: {
@@ -25,8 +31,11 @@ const useStyles = makeStyles({
 });
 
 const SleepTrialTracker = ({ trialTracker }) => {
+  const { dispatchSleepTrialTrackers } = useContext(SleepTrialTrackerContext);
+  const { dispatchAlertSystem } = useContext(AlertSystemContext);
   const [completionProgress, setCompletionProgress] = useState(0);
   const [completedDays, setCompletedDays] = useState(0);
+  const [showCancelModal, setShowCancelModal] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {
@@ -40,6 +49,27 @@ const SleepTrialTracker = ({ trialTracker }) => {
     }
     setCompletionProgress(progress);
   }, [trialTracker]);
+
+  const cancelSTT = async () => {
+    const { success, error } = await SleepTrialTrackerServices.removeById(trialTracker._id);
+    if (success) {
+      dispatchSleepTrialTrackers({
+        type: 'REMOVE',
+        id: trialTracker._id,
+      });
+      setShowCancelModal(false);
+      dispatchAlertSystem({
+        type: 'SUCCESS',
+        message: 'Sleep Trial Cancelled',
+      });
+    } else if (error) {
+      dispatchAlertSystem({
+        type: 'WARNING',
+        message: error.message,
+      });
+      setShowCancelModal(false);
+    }
+  };
 
   return (
     <Box mt={6}>
@@ -84,6 +114,29 @@ const SleepTrialTracker = ({ trialTracker }) => {
           <Box mt={2}>
             <TrialTrackerCheckIn trialTracker={trialTracker} />
           </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Box py={2} px={1} display="flex" justifyContent="flex-end">
+            <LinkOnClick onClick={() => { setShowCancelModal(true); }} errorColor>
+              Cancel Sleep Trial
+            </LinkOnClick>
+          </Box>
+          <Modal
+            open={showCancelModal}
+            onClose={() => { setShowCancelModal(false); }}
+            onBackdropClick={() => { setShowCancelModal(false); }}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            disableAutoFocus
+            disableEnforceFocus
+          >
+            <>
+              <CancelSTTModal
+                trialTrackerName={trialTracker.sleepTrial.name}
+                handleConfirmClick={cancelSTT}
+                handleCloseClick={() => { setShowCancelModal(false); }}
+              />
+            </>
+          </Modal>
         </Grid>
       </Grid>
     </Box>

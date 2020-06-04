@@ -57,10 +57,25 @@ const addCheckIn = async (_id, date, completed) => {
   }
 };
 
+const removeById = async (id) => {
+  try {
+    await axios.delete(`/sleepTrialTracker/${id}`);
+    return { success: true };
+  } catch (e) {
+    const error = {};
+    error.message = e.message || 'Something went wrong... ';
+    if ([404].indexOf(e?.response?.status) !== -1) {
+      error.message = e.response.data.message;
+    };
+    return { error };
+  }
+}
+
 
 export default {
   querySleepTrialTracker,
   create,
   addCheckIn,
   getById,
+  removeById,
 };

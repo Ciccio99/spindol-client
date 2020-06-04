@@ -53,7 +53,7 @@ const CurrentSleepTrialTrackers = ({ trialTrackers }) => {
           </Grid>
           <Grid item xs={12} sm={4}>
             <LinkOnClick onClick={() => { setShowSleepTrials(true); }}>
-              <Button className={styles.button} fullWidth variant="outlined" disableElevation>Start A Sleep Trial</Button>
+              <Button color="primary" fullWidth variant="contained" disableElevation>Start A Sleep Trial</Button>
             </LinkOnClick>
           </Grid>
         </Grid>

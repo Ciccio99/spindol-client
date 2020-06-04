@@ -6,4 +6,7 @@ export default {
   hotjar: {
     trackingId: process.env.REACT_APP_HOTJAR_TRACKING_ID,
   },
+  crisp: {
+    id: process.env.REACT_APP_CRISP_ID,
+  },
 };
