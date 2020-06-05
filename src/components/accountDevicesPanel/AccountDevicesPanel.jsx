@@ -14,7 +14,7 @@ const AccountDevicesPanel = () => {
   return (
     <Paper elevation={24}>
       <Box px={4} py={3}>
-        <Typography variant="h6">Your connected devices</Typography>
+        <Typography variant="h6">Your Sleep Trackers</Typography>
       </Box>
       <Divider />
       <Box p={4}>

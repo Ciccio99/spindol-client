@@ -11,6 +11,7 @@ import SleepTrialTrackerPanel from 'components/sleepTrialTracker/SleepTrialTrack
 import StatsDisplay from 'components/statsDisplay/StatsDisplay';
 import DailyDiaryPanel from 'components/dailyDiaryPanel/DailyDiaryPanel';
 import Section from 'components/organizers/Section';
+import ConnectDeviceCTA from 'components/cta/ConnectDevice';
 
 const DashboardView = () => {
   const { user } = useContext(UserContext);
@@ -36,6 +37,12 @@ const DashboardView = () => {
             {`Welcome${userFirstName ? ` ${userFirstName}` : ''}!`}
           </Typography>
         </Box>
+        {
+          !user.accounts.oura.connected &&
+          <Section>
+            <ConnectDeviceCTA />
+          </Section>
+        }
         <Section>
           <DailyDiaryPanel />
         </Section>

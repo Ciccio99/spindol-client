@@ -14,10 +14,10 @@ const AccountSettings = () => (
       <Typography variant="h3">Your Account</Typography>
     </Box>
     <Section>
-      <AccountDetailsPanel />
+      <AccountDevicesPanel />
     </Section>
     <Section>
-      <AccountDevicesPanel />
+      <AccountDetailsPanel />
     </Section>
   </Container>
 );

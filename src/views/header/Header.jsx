@@ -9,6 +9,7 @@ import {
   MenuItem,
   Button,
   Typography,
+  Chip,
 } from '@material-ui/core';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 import logo from 'assets/sleepwell-logo-transpbg.png';
@@ -60,6 +61,7 @@ const Header = () => {
                 <Box display="flex" alignItems="center">
                   <img src={logo} alt="SleepWell Logo" height="45px" />
                   <Typography className={styles.logoName} color="textPrimary" variant="h5" display="inline">Hypnos.ai</Typography>
+                  <Chip label="Beta" color="primary" variant="outlined" size="small" style={{ marginLeft: '0.5rem' }} />
                 </Box>
               </NavLink>
             </Grid>
