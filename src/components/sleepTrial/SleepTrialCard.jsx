@@ -10,14 +10,12 @@ import {
   Chip,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import UserContext from 'context/userContext';
 import SleepTrialTrackersContext from 'context/sleepTrialTrackersContext';
 import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
 import AlertSystemContext from 'context/alertSystemContext';
 import styles from './SleepTrialCard.module.css';
 
 const SleepTrialCard = ({ sleepTrial }) => {
-  const { user } = useContext(UserContext);
   const { sleepTrialTrackers, dispatchSleepTrialTrackers } = useContext(SleepTrialTrackersContext);
   const { dispatchAlertSystem } = useContext(AlertSystemContext);
   const [cta, setCta] = useState();
@@ -57,7 +55,7 @@ const SleepTrialCard = ({ sleepTrial }) => {
         </Button>,
       );
     }
-  }, [dispatchSleepTrialTrackers, dispatchAlertSystem, sleepTrial, sleepTrialTrackers, user]);
+  }, [dispatchSleepTrialTrackers, dispatchAlertSystem, sleepTrial, sleepTrialTrackers]);
 
   return (
     <Box my={5}>

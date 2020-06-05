@@ -29,4 +29,4 @@ const SleepTrialTypeList = ({ type, sleepTrials }) => (
 
 );
 
-export default SleepTrialTypeList;
+export default React.memo(SleepTrialTypeList);
