@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import config from 'config';
 
 const instance = axios.create({ baseURL: config.api_uri });
-console.log(config.api_uri);
+
 // Adding Auth Token to Headers
 instance.interceptors.request.use((reqConfig) => {
   const newConfig = reqConfig;
