@@ -4,7 +4,6 @@ import {
   Divider,
   Typography,
 } from '@material-ui/core';
-import SleepTrialCard from '../SleepTrialCard';
 import styles from './SleepTrialTypeList.module.css';
 
 const SleepTrialTypeList = ({ type, sleepTrials }) => (
@@ -15,14 +14,15 @@ const SleepTrialTypeList = ({ type, sleepTrials }) => (
         {' '}
         Trials
       </Typography>
-      {
+      {/* {
         sleepTrials.map((sleepTrial, index) => (
           <Box key={sleepTrial._id}>
             <SleepTrialCard key={sleepTrial._id} sleepTrial={sleepTrial} />
             { index < sleepTrials.length - 1 && <Divider /> }
           </Box>
         ))
-      }
+      } */}
+      { sleepTrials }
     </Box>
     <Divider />
   </>

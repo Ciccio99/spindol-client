@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+  useState, useEffect, useContext,
+} from 'react';
 import {
   Paper,
   Box,
@@ -7,31 +9,42 @@ import {
   Divider,
 } from '@material-ui/core';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
-import styles from './SleepTrialsView.module.css';
-import SleepTrialServices from '../../services/SleepTrialServices';
+import SleepTrialTrackersContext from 'context/sleepTrialTrackersContext';
+import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
+import AlertSystemContext from 'context/alertSystemContext';
+import SleepTrialCard from 'components/sleepTrial/SleepTrialCard';
 import SleepTrialTypeList from '../../components/sleepTrial/sleepTrialTypeList/SleepTrialTypeList';
+import SleepTrialServices from '../../services/SleepTrialServices';
+import styles from './SleepTrialsView.module.css';
 
 const SleepTrialsView = ({ handleCloseClick }) => {
+  const { sleepTrialTrackers, dispatchSleepTrialTrackers } = useContext(SleepTrialTrackersContext);
+  const { dispatchAlertSystem } = useContext(AlertSystemContext);
+  const [sleepTrials, setSleepTrials] = useState([]);
   const [sleepTrialTypes, setSleepTrialTypes] = useState({});
-  const [trialsCount, setTrialsCount] = useState(0);
   const [loading, setLoading] = useState(false);
+
+  const startSleepTrial = async (sleepTrial) => {
+    const sleepTrialTracker = await SleepTrialTrackerServices.create(sleepTrial);
+    if (sleepTrialTracker) {
+      dispatchSleepTrialTrackers({
+        type: 'ADD',
+        sleepTrialTracker,
+      });
+      dispatchAlertSystem({
+        type: 'SUCCESS',
+        message: 'Sleep trial started!',
+      });
+    }
+  };
 
   useEffect(() => {
     setLoading(true);
-    const trialsObj = {
-      Behavior: [],
-      Supplement: [],
-      Environment: [],
-      Hardware: [],
-    };
+
     (async () => {
       try {
         const data = await SleepTrialServices.query();
-        data.forEach((sleepTrial) => {
-          trialsObj[sleepTrial.type].push(sleepTrial);
-        });
-        setTrialsCount(data.length);
-        setSleepTrialTypes(trialsObj);
+        setSleepTrials(data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -40,6 +53,35 @@ const SleepTrialsView = ({ handleCloseClick }) => {
     })();
   }, []);
 
+  useEffect(() => {
+    if (sleepTrials.length === 0) {
+      return;
+    }
+    const trialsObj = {
+      Behavior: [],
+      Supplement: [],
+      Environment: [],
+      Hardware: [],
+    };
+
+    sleepTrials.forEach((sleepTrial) => {
+      const tracked = sleepTrialTrackers
+        .some((sleepTrialTracker) => (
+          sleepTrialTracker.sleepTrial._id === sleepTrial._id
+          && !sleepTrialTracker.completed
+        ));
+
+      trialsObj[sleepTrial.type].push(
+        <SleepTrialCard
+          key={sleepTrial._id}
+          sleepTrial={sleepTrial}
+          tracked={tracked}
+          onStartHandle={() => { startSleepTrial(sleepTrial); }}
+        />,
+      );
+    });
+    setSleepTrialTypes(trialsObj);
+  }, [sleepTrials, sleepTrialTrackers]);
 
   return (
     <Container maxWidth="md">
@@ -50,13 +92,9 @@ const SleepTrialsView = ({ handleCloseClick }) => {
           </Box>
           <Box px={4} py={2} pt={0}>
             <Typography variant="h4">Sleep Trials</Typography>
-            { trialsCount === 0
-              ? null
-              : (
-                <Typography variant="subtitle2" color="textSecondary">
-                  {`${trialsCount} sleep trials available`}
-                </Typography>
-              )}
+            <Typography variant="subtitle2" color="textSecondary">
+              {`${sleepTrials.length} sleep trials available`}
+            </Typography>
           </Box>
           <Divider />
           { loading
@@ -66,9 +104,9 @@ const SleepTrialsView = ({ handleCloseClick }) => {
                 { Object.keys(sleepTrialTypes).length === 0
                   ? <Typography variant="h3">No Sleep Trials Found</Typography>
                   : Object.keys(sleepTrialTypes).map((key) => {
-                    const sleepTrials = sleepTrialTypes[key];
+                    const sleepTrialCards = sleepTrialTypes[key];
                     return sleepTrials.length > 0
-                      ? <SleepTrialTypeList key={key} type={key} sleepTrials={sleepTrials} />
+                      ? <SleepTrialTypeList key={key} type={key} sleepTrials={sleepTrialCards} />
                       : null;
                   })}
               </Box>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import {
   Grid,
   Box,
@@ -15,47 +15,19 @@ import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
 import AlertSystemContext from 'context/alertSystemContext';
 import styles from './SleepTrialCard.module.css';
 
-const SleepTrialCard = ({ sleepTrial }) => {
-  const { sleepTrialTrackers, dispatchSleepTrialTrackers } = useContext(SleepTrialTrackersContext);
-  const { dispatchAlertSystem } = useContext(AlertSystemContext);
-  const [cta, setCta] = useState();
+const SleepTrialCard = ({ sleepTrial, tracked, onStartHandle }) => {
   const [expanded, setExpanded] = useState(false);
-
-  useEffect(() => {
-    const startSleepTrial = async () => {
-      const sleepTrialTracker = await SleepTrialTrackerServices.create(sleepTrial);
-      if (sleepTrialTracker) {
-        dispatchSleepTrialTrackers({
-          type: 'ADD',
-          sleepTrialTracker,
-        });
-        dispatchAlertSystem({
-          type: 'SUCCESS',
-          message: 'Sleep trial started!',
-        });
-      }
-    };
-
-    const tracked = sleepTrialTrackers
-      .some((sleepTrialTracker) => (
-        sleepTrialTracker.sleepTrial._id === sleepTrial._id
-        && !sleepTrialTracker.completed
-      ));
-
-    if (tracked) {
-      setCta(
-        <Button className={styles.startTrialButton} variant="outlined" fullWidth size="medium" disabled disableElevation>
-          Currently being tracked
-        </Button>,
-      );
-    } else {
-      setCta(
-        <Button onClick={startSleepTrial} fullWidth color="primary" variant="contained" size="large" disableElevation>
-          Start sleep trial
-        </Button>,
-      );
-    }
-  }, [dispatchSleepTrialTrackers, dispatchAlertSystem, sleepTrial, sleepTrialTrackers]);
+  const cta = tracked
+    ? (
+      <Button className={styles.startTrialButton} variant="outlined" fullWidth size="medium" disabled disableElevation>
+        Currently being tracked
+      </Button>
+    )
+    : (
+      <Button onClick={onStartHandle} fullWidth color="primary" variant="contained" size="large" disableElevation>
+        Start sleep trial
+      </Button>
+    );
 
   return (
     <Box my={5}>
@@ -119,4 +91,4 @@ const SleepTrialCard = ({ sleepTrial }) => {
   );
 };
 
-export default SleepTrialCard;
+export default React.memo(SleepTrialCard);
