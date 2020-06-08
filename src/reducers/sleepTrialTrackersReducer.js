@@ -1,11 +1,11 @@
 const sleepTrialTrackersReducer = (state, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'POPULATE':
       return action.sleepTrialTrackers;
     case 'ADD':
       return [
         ...state,
-        action.sleepTrialTracker
+        action.sleepTrialTracker,
       ];
     case 'UPDATE':
       return state.map((trialTracker) => {
@@ -15,10 +15,10 @@ const sleepTrialTrackersReducer = (state, action) => {
         return trialTracker;
       });
     case 'REMOVE':
-      return state.filter((trialTracker) => trialTracker._id !== action._id);
+      return state.filter((trialTracker) => trialTracker._id !== action.id);
     default:
       return state;
   }
-}
+};
 
 export default sleepTrialTrackersReducer;

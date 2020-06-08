@@ -1,0 +1,27 @@
+.panel {
+  background-color: #FFFFFF;
+}
+
+.root {
+  border-radius: 10px;
+}
+
+.excellent {
+  color: #5EBC88;
+}
+
+.good {
+  color: #B0D25A;
+}
+
+.meh {
+  color: #FFC929;
+}
+
+.bad {
+  color: #F68B3B;
+}
+
+.awful {
+  color: #DF1D3D;
+}

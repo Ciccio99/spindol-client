@@ -1,6 +1,10 @@
 .card {
-  border-radius: 10px !important;
+  /* border-radius: 10px !important; */
   height: 100%;
+}
+
+.desc {
+  font-weight: 600 !important;
 }
 
 .description {
@@ -16,4 +20,12 @@
 .stat {
   font-weight: 700 !important;
   color: #6D99B1;
+}
+
+.positiveTicker {
+  color: #6FCF8D;
+}
+
+.negativeTicker {
+  color: #FF433E;
 }
