@@ -1,4 +1,5 @@
 import axios from '../loaders/axios';
+import moment from 'moment-timezone';
 
 const querySleepTrialTracker = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   const queryString = JSON.stringify({
@@ -26,9 +27,11 @@ const getById = async (id) => {
 
 const create = async (sleepTrial) => {
   const body = {
+    startDate: moment().format('YYYY-MM-DD'),
     sleepTrial: sleepTrial._id,
     trialLength: sleepTrial.trialLength,
   };
+  console.log(body);
   try {
     const { data } = await axios.post(`/sleepTrialTracker/create`,
       body);
