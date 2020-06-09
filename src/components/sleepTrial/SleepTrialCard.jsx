@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState } from 'react';
 import {
   Grid,
   Box,
@@ -10,9 +10,6 @@ import {
   Chip,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import SleepTrialTrackersContext from 'context/sleepTrialTrackersContext';
-import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
-import AlertSystemContext from 'context/alertSystemContext';
 import styles from './SleepTrialCard.module.css';
 
 const SleepTrialCard = ({ sleepTrial, tracked, onStartHandle }) => {
@@ -47,19 +44,6 @@ const SleepTrialCard = ({ sleepTrial, tracked, onStartHandle }) => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="body2">{sleepTrial.shortDescription}</Typography>
-          <Box my={3}>
-            <ExpansionPanel expanded={expanded} onChange={() => { setExpanded(!expanded); }} elevation={0} classes={{ root: styles.expansionPanelRoot }}>
-              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="body2">View More Details</Typography>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
-                <Typography variant="body1">{sleepTrial.description}</Typography>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-          </Box>
-        </Grid>
-        <Grid item xs={12}>
           <Box mb={2}>
             <Typography variant="caption" display="block">
               <strong>Directions:</strong>
@@ -81,6 +65,19 @@ const SleepTrialCard = ({ sleepTrial, tracked, onStartHandle }) => {
             </Box>
           </Box>
         </Grid>
+        <Grid item xs={12}>
+          <Box my={3}>
+            <ExpansionPanel expanded={expanded} onChange={() => { setExpanded(!expanded); }} elevation={0} classes={{ root: styles.expansionPanelRoot }}>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant="body2">View Description Details</Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <Typography variant="body1">{sleepTrial.description}</Typography>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          </Box>
+        </Grid>
+
         <Grid item xs={12} sm={6}>
           <Box mb={3} my={2}>
             {cta}

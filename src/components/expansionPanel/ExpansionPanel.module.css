@@ -1,0 +1,8 @@
+.expansionPanelRoot {
+  border: 1px solid #CCC;
+  border-radius: 25px !important;
+}
+
+.expansionPanelRoot::before {
+  visibility: hidden !important;
+}

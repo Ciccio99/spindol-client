@@ -24,20 +24,6 @@ const SleepTrialsView = ({ handleCloseClick }) => {
   const [sleepTrialTypes, setSleepTrialTypes] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const startSleepTrial = async (sleepTrial) => {
-    const sleepTrialTracker = await SleepTrialTrackerServices.create(sleepTrial);
-    if (sleepTrialTracker) {
-      dispatchSleepTrialTrackers({
-        type: 'ADD',
-        sleepTrialTracker,
-      });
-      dispatchAlertSystem({
-        type: 'SUCCESS',
-        message: 'Sleep trial started!',
-      });
-    }
-  };
-
   useEffect(() => {
     setLoading(true);
 
@@ -54,6 +40,20 @@ const SleepTrialsView = ({ handleCloseClick }) => {
   }, []);
 
   useEffect(() => {
+    const startSleepTrial = async (sleepTrial) => {
+      const sleepTrialTracker = await SleepTrialTrackerServices.create(sleepTrial);
+      if (sleepTrialTracker) {
+        dispatchSleepTrialTrackers({
+          type: 'ADD',
+          sleepTrialTracker,
+        });
+        dispatchAlertSystem({
+          type: 'SUCCESS',
+          message: 'Sleep trial started!',
+        });
+      }
+    };
+
     if (sleepTrials.length === 0) {
       return;
     }
@@ -81,7 +81,7 @@ const SleepTrialsView = ({ handleCloseClick }) => {
       );
     });
     setSleepTrialTypes(trialsObj);
-  }, [sleepTrials, sleepTrialTrackers]);
+  }, [sleepTrials, sleepTrialTrackers, dispatchAlertSystem, dispatchSleepTrialTrackers]);
 
   return (
     <Container maxWidth="md">
@@ -102,7 +102,7 @@ const SleepTrialsView = ({ handleCloseClick }) => {
             : (
               <Box>
                 { Object.keys(sleepTrialTypes).length === 0
-                  ? <Typography variant="h3">No Sleep Trials Found</Typography>
+                  ? <Box p={4}><Typography variant="h6">No Sleep Trials Found</Typography></Box>
                   : Object.keys(sleepTrialTypes).map((key) => {
                     const sleepTrialCards = sleepTrialTypes[key];
                     return sleepTrials.length > 0
