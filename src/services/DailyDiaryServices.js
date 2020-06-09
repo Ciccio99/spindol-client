@@ -16,26 +16,8 @@ const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   }
 };
 
-// const getByDate = async (searchDate) => {
-//   const date = moment.utc(searchDate, 'YYYY-MM-DD');
-//   const match = { date: searchDate };
-//   // const match = { date: date.startOf('day') };
-//   const queryString = JSON.stringify({ match });
-//   try {
-//     const { data } = await axios.get(`/dailyDiary`,
-//       { params: { query: queryString } }
-//     );
-//     if (data.length > 0) {
-//       return data[0];
-//     }
-//     return null;
-//   } catch (error) {
-//     return null;
-//   }
-// }
-
 const getByDate = async (searchDate) => {
-  const date = moment.utc(searchDate, 'YYYY-MM-DD');
+  const date = moment(searchDate).format('YYYY-MM-DD');
   const queryString = JSON.stringify({ date });
   try {
     const { data } = await axios.get('/dailyDiary/getByDate',

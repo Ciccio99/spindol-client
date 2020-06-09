@@ -72,12 +72,14 @@ const SleepTrialsView = ({ handleCloseClick }) => {
         ));
 
       trialsObj[sleepTrial.type].push(
-        <SleepTrialCard
-          key={sleepTrial._id}
-          sleepTrial={sleepTrial}
-          tracked={tracked}
-          onStartHandle={() => { startSleepTrial(sleepTrial); }}
-        />,
+        <Box key={sleepTrial._id}>
+          <SleepTrialCard
+            sleepTrial={sleepTrial}
+            tracked={tracked}
+            onStartHandle={() => { startSleepTrial(sleepTrial); }}
+          />
+          <Divider />
+        </Box>,
       );
     });
     setSleepTrialTypes(trialsObj);
