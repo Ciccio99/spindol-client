@@ -31,7 +31,6 @@ const create = async (sleepTrial) => {
     sleepTrial: sleepTrial._id,
     trialLength: sleepTrial.trialLength,
   };
-  console.log(body);
   try {
     const { data } = await axios.post(`/sleepTrialTracker/create`,
       body);
