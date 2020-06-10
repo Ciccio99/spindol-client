@@ -50,6 +50,10 @@ const signIn = async (email, password) => {
 
 const tokenSignIn = async () => {
   try {
+    const token = Cookies.get('HypnosAuthJWT');
+    if (!token) {
+      throw new Error('No token');
+    }
     const { data } = await axios.post(`/users/token-login`);
     if (data.user && data.token) {
       Cookies.set('HypnosAuthJWT', data.token, { expires: 7 });

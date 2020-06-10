@@ -11,6 +11,7 @@ import SleepTrialReportView from 'views/sleepTrialReport/SleepTrialReportView';
 import NotFound from 'views/notFound/NotFound';
 import TermsOfService from 'views/legal/TermsOfService';
 import PrivacyPolicy from 'views/legal/PrivacyPolicy';
+import Home from 'views/home/Home';
 import usePageTracker from 'hooks/usePageTracker';
 
 const AppRouter = () => {
@@ -19,7 +20,7 @@ const AppRouter = () => {
   return (
     <div>
       <Switch>
-        <ProtectedRoute exact path="/" component={DashboardView} />
+        <PublicRoute exact path="/" component={Home} />
         <PublicRoute path="/signin" authRedirectTo="/dashboard" component={SignInView} />
         <PublicRoute path="/register/:token" authRedirectTo="/dashboard" component={RegisterView} />
         <PublicRoute path="/register" authRedirectTo="/dashboard" component={RegisterView} />

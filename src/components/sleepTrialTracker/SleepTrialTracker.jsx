@@ -9,11 +9,12 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import LinkOnClick from 'components/linkOnClick/LinkOnClick';
 import CancelSTTModal from 'components/modals/CancelSTTModal';
-import TrialTrackerCheckIn from './TrialTrackerCheckIn';
 import SleepTrialTrackerContext from 'context/sleepTrialTrackersContext';
 import AlertSystemContext from 'context/alertSystemContext';
-import styles from './SleepTrialTracker.module.css';
 import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
+import styles from './SleepTrialTracker.module.css';
+import TrialTrackerCheckIn from './TrialTrackerCheckIn';
+import ExpansionPanel from 'components/expansionPanel/ExpansionPanel';
 
 const useStyles = makeStyles({
   root: {
@@ -88,8 +89,15 @@ const SleepTrialTracker = ({ trialTracker }) => {
         <Grid item xs={12} sm={8}>
           <Box pt={3}>
             <h3 className={styles.trialName}>{trialTracker.sleepTrial.name}</h3>
-            <p className={styles.trialDescription}>{trialTracker.sleepTrial.shortDescription}</p>
-            <Typography />
+            {/* <p className={styles.trialDescription}>{trialTracker.sleepTrial.shortDescription}</p> */}
+            <Grid container spacing={1}>
+              <Grid item><Typography variant="body1">Directions:</Typography></Grid>
+              <Grid item>
+                <Typography variant="body1">
+                  <strong>{trialTracker.sleepTrial.directions}</strong>
+                </Typography>
+              </Grid>
+            </Grid>
           </Box>
         </Grid>
         <Grid item xs={12} sm={3}>
@@ -106,9 +114,14 @@ const SleepTrialTracker = ({ trialTracker }) => {
             </ul>
           </Box>
         </Grid>
-        <Grid item container xs={12} spacing={1}>
+        {/* <Grid item container xs={12} spacing={1}>
           <Grid item><Typography variant="body1">Directions:</Typography></Grid>
           <Grid item><Typography variant="body1"><strong>{trialTracker.sleepTrial.directions}</strong></Typography></Grid>
+        </Grid> */}
+        <Grid item xs={12}>
+          <Box mt={2}>
+            <ExpansionPanel summary="View More Details" details={trialTracker.sleepTrial.description} />
+          </Box>
         </Grid>
         <Grid item xs={12}>
           <Box mt={2}>
