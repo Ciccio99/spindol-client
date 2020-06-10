@@ -31,13 +31,8 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const { user: currentUser, error } = await UserServices.tokenSignIn();
-      if (error) {
-        dispatchAlertSystem({
-          type: 'WARNING',
-          message: error.message,
-        });
-      } else if (currentUser) {
+      const { user: currentUser } = await UserServices.tokenSignIn();
+      if (currentUser) {
         dispatchUser({
           type: 'USER_LOGIN',
           user: currentUser,
