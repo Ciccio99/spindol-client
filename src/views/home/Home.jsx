@@ -86,7 +86,6 @@ const Home = () => (
               </Box>
               <Divider />
               <Box mt={4}>
-
                 <Typography variant="subtitle1" gutterBottom display="block" color="textSecondary">
                   Combining data from your sleep tracker and your sleep habits, Hypnos.ai can reveal patterns in your sleep and help adjust your sleep routine.
                 </Typography>
