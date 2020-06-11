@@ -73,7 +73,7 @@ const DesktopMenu = () => {
               </a>
             </Grid>,
             <Grid item key="logout">
-              <Typography variant="subtitle1" className={styles.navLink} onClick={handleLogoutClick}>Logout</Typography>
+              <Typography variant="subtitle1" className={styles.navLink} onClick={handleLogoutClick} color="error">Logout</Typography>
             </Grid>,
           ]
       }

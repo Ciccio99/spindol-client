@@ -33,7 +33,7 @@ const Home = () => (
             </Grid>
             <Grid item xs={12} sm={6}>
               <Box display="flex" justifyContent="center">
-                <img alt="sleep analysis" width="100%" src={sleepImg} />
+                <img alt="sleep analysis" width="100%" height="100%" src={sleepImg} />
               </Box>
             </Grid>
           </Grid>
@@ -75,7 +75,7 @@ const Home = () => (
           <Grid container alignItems="center" spacing={6}>
             <Grid item xs={12} sm={6}>
               <Box display="flex" justifyContent="center">
-                <img alt="sleep data" width="100%" src={sleepTrackerImg} />
+                <img alt="sleep data" width="100%" height="100%" src={sleepTrackerImg} />
               </Box>
             </Grid>
             <Grid item xs={12} sm={6}>
