@@ -93,13 +93,13 @@ const MobileMenu = () => {
                   <Typography variant="h6">Account</Typography>
                 </MenuItem>
               </NavLink>,
-              <MenuItem key="logout" onClick={handleLogoutClick}>
-                <Typography variant="h6" className={styles.navLink}>Logout</Typography>
-              </MenuItem>,
               <MenuItem key="feedback">
                 <a className={styles.navLink} href={`https://sleepwell.typeform.com/to/zNgvJ7?email=${user.email}`} target="_blank" rel="noopener noreferrer">
                   <Typography variant="h6" className={styles.navLink}>Feedback</Typography>
                 </a>
+              </MenuItem>,
+              <MenuItem key="logout" onClick={handleLogoutClick}>
+                <Typography variant="h6" className={styles.navLink} color="error">Logout</Typography>
               </MenuItem>,
             ]
         }

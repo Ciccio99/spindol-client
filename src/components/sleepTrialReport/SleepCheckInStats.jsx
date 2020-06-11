@@ -47,13 +47,13 @@ const SleepCheckInStats = ({ sleepSummaries, sleepTrialTracker }) => {
       <Grid item container xs={12} spacing={2} justify="space-between">
         <Grid item xs={6} sm={5}>
           <Box pb={1}>
-            <Typography variant="h6">Sleep During Trial</Typography>
+            <Typography variant="h6">Trial</Typography>
             <Divider />
           </Box>
         </Grid>
         <Grid item xs={6} sm={5}>
           <Box pb={1}>
-            <Typography variant="h6">Sleep Before Trial</Typography>
+            <Typography variant="h6">Baseline</Typography>
             <Divider />
           </Box>
         </Grid>
