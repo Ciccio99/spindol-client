@@ -88,12 +88,11 @@ const SleepTrialTracker = ({ trialTracker }) => {
         </Grid>
         <Grid item xs={12} sm={8}>
           <Box pt={3}>
-            <h3 className={styles.trialName}>{trialTracker.sleepTrial.name}</h3>
-            {/* <p className={styles.trialDescription}>{trialTracker.sleepTrial.shortDescription}</p> */}
+            <Typography variant="h6" gutterBottom>{trialTracker.sleepTrial.name}</Typography>
             <Grid container spacing={1}>
               <Grid item><Typography variant="body1">Directions:</Typography></Grid>
               <Grid item>
-                <Typography variant="body1">
+                <Typography variant="body2">
                   <strong>{trialTracker.sleepTrial.directions}</strong>
                 </Typography>
               </Grid>

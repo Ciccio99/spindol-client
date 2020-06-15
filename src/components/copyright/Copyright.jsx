@@ -5,8 +5,8 @@ import {
 } from '@material-ui/core';
 
 const Copyright = () => (
-  <Typography variant="body2" color="textSecondary">
-    {'Copyright © '}
+  <Typography variant="caption" color="textSecondary">
+    {'© '}
     <Link color="inherit" href="https://sleepwell.ai/" target="_blank">
       Sleepwell.ai
     </Link>

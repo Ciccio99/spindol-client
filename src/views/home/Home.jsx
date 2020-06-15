@@ -6,6 +6,7 @@ import {
   Grid,
   Divider,
   Paper,
+  Button,
 } from '@material-ui/core';
 import Section from 'components/organizers/Section';
 import sleepImg from 'assets/sleep-analysis.svg';
@@ -19,16 +20,26 @@ const Home = () => (
         <Box p={4}>
           <Grid container alignItems="center" spacing={6}>
             <Grid item xs={12} sm={6}>
-              <Box mb={2}>
-                <Typography variant="h3">
-                  Sleep Habit Tracker
+              <Box mb={4}>
+                <Typography variant="h3" display="inline" color="primary">
+                  Discover which sleep habits
+                </Typography>
+                <Typography variant="h3" display="inline">
+                  {' actually affect your sleep.'}
                 </Typography>
               </Box>
               <Divider />
               <Box mt={4}>
                 <Typography variant="h6" color="textSecondary">
-                  Simple, informative system to improve your habits and sleep quality.
+                  A simple and better way to track your sleep habits and sleep quality.
                 </Typography>
+              </Box>
+              <Box mt={4}>
+                <a className={styles.navLink} href="https://sleepwell.typeform.com/to/FnZPZk" target="_blank" rel="noopener noreferrer">
+                  <Button variant="contained" size="large" color="secondary">
+                    <Typography variant="subtitle1">Request Beta Access</Typography>
+                  </Button>
+                </a>
               </Box>
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -66,6 +77,28 @@ const Home = () => (
             </Grid>
           </Box>
 
+        </Box>
+      </Paper>
+    </Section>
+    <Section>
+      <Paper elevation={24}>
+        <Box p={4}>
+          <Box mb={8} mt={4} display="flex" justifyContent="center">
+            <Typography variant="h3" align="center">Feel energized, with better sleep habits</Typography>
+          </Box>
+          <div style={{ position: 'relative', overflow: 'hidden', paddingTop: '56.25%' }}>
+            <iframe
+              title="Hypnos.ai Demo Video"
+              src="https://www.loom.com/embed/76f36e40f8f044068fc7456d650d82ab"
+              frameBorder="0"
+              webkitallowfullscreen
+              mozallowfullscreen
+              allowFullScreen
+              style={{
+                position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0, borderRadius: '25px',
+              }}
+            />
+          </div>
         </Box>
       </Paper>
     </Section>
@@ -119,13 +152,15 @@ const Home = () => (
     <Section>
       <Paper elevation={24}>
         <Box p={4}>
-          <Grid container spacing={2} alignItems="center">
+          <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} sm="auto">
               <Typography variant="h5" display="inline">Interested in joining the beta? </Typography>
             </Grid>
             <Grid item xs={12} sm="auto">
               <a className={styles.navLink} href="https://sleepwell.typeform.com/to/FnZPZk" target="_blank" rel="noopener noreferrer">
-                <Typography variant="h5" className={styles.navLink} display="inline">Request Access</Typography>
+                <Button variant="contained" fullWidth size="large" color="primary">
+                  <Typography variant="h6">Request Access</Typography>
+                </Button>
               </a>
             </Grid>
           </Grid>

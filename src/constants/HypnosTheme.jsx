@@ -71,6 +71,10 @@ const customTheme = {
   },
 };
 
+const fontSizesOptions = {
+  factor: 1.1,
+};
+
 const HypnosTheme = ({ children }) => {
   const [theme, setTheme] = useState(responsiveFontSizes(createMuiTheme(customTheme)));
   const [lastWidth, setLastWidth] = useState(window.innerWidth);
@@ -80,12 +84,12 @@ const HypnosTheme = ({ children }) => {
     if (width <= 600 && lastWidth > 600) {
       customTheme.spacing = 5;
       let newTheme = createMuiTheme(customTheme);
-      newTheme = responsiveFontSizes(newTheme);
+      newTheme = responsiveFontSizes(newTheme, fontSizesOptions);
       setTheme(newTheme);
     } else if (width > 600 && lastWidth <= 600) {
       customTheme.spacing = 8;
       let newTheme = createMuiTheme(customTheme);
-      newTheme = responsiveFontSizes(newTheme);
+      newTheme = responsiveFontSizes(newTheme, fontSizesOptions);
       setTheme(newTheme);
     }
 
