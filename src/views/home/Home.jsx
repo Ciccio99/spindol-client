@@ -4,7 +4,6 @@ import {
   Box,
   Typography,
   Grid,
-  Divider,
   Paper,
   Button,
 } from '@material-ui/core';
@@ -17,7 +16,7 @@ const Home = () => (
   <Container maxWidth="lg">
     <Section>
       <Paper elevation={24}>
-        <Box p={4}>
+        <Box p={4} pt={6}>
           <Grid container alignItems="center" spacing={6}>
             <Grid item xs={12} sm={6}>
               <Box mb={4}>
@@ -28,7 +27,6 @@ const Home = () => (
                   {' actually affect your sleep.'}
                 </Typography>
               </Box>
-              <Divider />
               <Box mt={4}>
                 <Typography variant="h6" color="textSecondary">
                   A simple and better way to track your sleep habits and sleep quality.
@@ -53,14 +51,13 @@ const Home = () => (
     </Section>
     <Section>
       <Paper elevation={24}>
-        <Box p={4}>
-          <Box mb={2}>
+        <Box p={4} pt={6}>
+          <Box>
             <Typography variant="h5" align="center">
               Hypnos.ai helps you...
             </Typography>
           </Box>
-          <Divider />
-          <Box mt={4}>
+          <Box mt={8}>
             <Grid container spacing={4} justify="center">
               <Grid item sm={6} md={4}>
                 <Typography variant="h6" gutterBottom>Commit to sleep habits</Typography>
@@ -82,17 +79,26 @@ const Home = () => (
     </Section>
     <Section>
       <Paper elevation={24}>
-        <Box p={4}>
-          <Box mb={8} mt={4} display="flex" justifyContent="center">
-            <Typography variant="h3" align="center">Feel energized, with better sleep habits</Typography>
+        <Box p={4} pt={6}>
+          <Box mb={8} display="flex" justifyContent="center">
+            <Box>
+              <Typography variant="h4" color="primary" display="inline" align="center">
+                <strong>Feel energized,</strong>
+              </Typography>
+              <Typography variant="h4" display="inline">
+                <strong>
+                  {' with better sleep habits.'}
+                </strong>
+              </Typography>
+            </Box>
           </Box>
           <div style={{ position: 'relative', overflow: 'hidden', paddingTop: '56.25%' }}>
             <iframe
               title="Hypnos.ai Demo Video"
               src="https://www.loom.com/embed/76f36e40f8f044068fc7456d650d82ab"
               frameBorder="0"
-              webkitallowfullscreen
-              mozallowfullscreen
+              webkitallowfullscreen="true"
+              mozallowfullscreen="true"
               allowFullScreen
               style={{
                 position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0, borderRadius: '25px',
@@ -104,7 +110,7 @@ const Home = () => (
     </Section>
     <Section>
       <Paper elevation={24}>
-        <Box p={4}>
+        <Box p={4} pt={6}>
           <Grid container alignItems="center" spacing={6}>
             <Grid item xs={12} sm={6}>
               <Box display="flex" justifyContent="center">
@@ -112,13 +118,12 @@ const Home = () => (
               </Box>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Box mb={2}>
+              <Box>
                 <Typography variant="h5">
                   Connect your favorite sleep trackers
                 </Typography>
               </Box>
-              <Divider />
-              <Box mt={4}>
+              <Box mt={8}>
                 <Typography variant="subtitle1" gutterBottom display="block" color="textSecondary">
                   Combining data from your sleep tracker and your sleep habits, Hypnos.ai can reveal patterns in your sleep and help adjust your sleep routine.
                 </Typography>

@@ -14,7 +14,7 @@ const Footer = () => (
   <footer className={styles.footer}>
     <Container maxWidth="lg">
       <Box mt={8} mb={3}>
-        <Grid container spacing={2} wrap="wrap-reverse">
+        <Grid container spacing={2}>
           <Grid item xs={6} md={3}>
             <Box pt={1} display="flex" flexDirection="column">
               <Box display="flex" alignItems="center">

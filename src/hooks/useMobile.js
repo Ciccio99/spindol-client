@@ -7,10 +7,8 @@ const useMobile = () => {
     const handleWindowResize = () => {
       if (window.innerWidth <= 600 && !isMobile) {
         setIsMobile(true);
-        console.log(true);
       } else if (window.innerWidth > 600 && isMobile) {
         setIsMobile(false);
-        console.log(false);
       }
     };
     window.addEventListener('resize', handleWindowResize);
