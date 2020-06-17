@@ -4,7 +4,11 @@
   cursor: pointer;
 }
 
+.navLink :hover {
+  text-decoration: underline;
+}
+
 .navLinkActive {
-  text-decoration: none;
+  text-decoration: underline;
   color: #e67e56;
 }

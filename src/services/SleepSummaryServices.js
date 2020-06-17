@@ -92,22 +92,22 @@ const getSleepSummaryAvgStats = (sleepSummaries, oldSleepSummaries = undefined) 
     {
       stat: avgSleepDuration.toFixed(1),
       units: 'hrs',
-      description: 'Weekly average sleep duration',
+      description: 'Total Sleep',
     },
     {
       stat: avgRemDuration.toFixed(1),
       units: 'hrs',
-      description: 'Weekly average REM duration',
+      description: 'REM',
     },
     {
       stat: avgDeepDuration.toFixed(1),
       units: 'hrs',
-      description: 'Weekly average Deep duration',
+      description: 'Deep',
     },
     {
       stat: avgBedtime.format('h:mm a'),
       units: null,
-      description: 'Weekly average bedtime',
+      description: 'Bedtime',
     },
   ];
 
