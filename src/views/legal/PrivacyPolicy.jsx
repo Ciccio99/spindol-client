@@ -5,9 +5,17 @@ import {
   Box,
   Typography,
 } from '@material-ui/core';
+import { Helmet } from 'react-helmet-async';
 
 const PrivacyPolicy = () => (
   <Container maxWidth="lg">
+    <Helmet>
+      <title>Hypnos.ai - Privacy Policy</title>
+      <meta
+        name="description"
+        content="Hypnos.ai helps you track and improve your sleep habits. Discover which sleep trial best improves your sleep and overall happiness. Here's our privacy policy."
+      />
+    </Helmet>
     <Paper elevation={0}>
       <Box p={3}>
         <Typography variant="h4" gutterBottom>SleepWell.ai & Hypnos.ai - Privacy Policy</Typography>

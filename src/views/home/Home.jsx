@@ -7,6 +7,7 @@ import {
   Paper,
   Button,
 } from '@material-ui/core';
+import { Helmet } from 'react-helmet-async';
 import Section from 'components/organizers/Section';
 import sleepImg from 'assets/sleep-analysis.svg';
 import sleepTrackerImg from 'assets/private-data.svg';
@@ -14,6 +15,13 @@ import styles from './Home.module.css';
 
 const Home = () => (
   <Container maxWidth="lg">
+    <Helmet>
+      <title>Hypnos.ai - Sleep Habit Tracker</title>
+      <meta
+        name="description"
+        content="Hypnos.ai helps you track and improve your sleep habits. Use sleep data from sleep trackers to correlate how different sleep habits affect your sleep. Discover which sleep trial best improves your sleep and overall happiness."
+      />
+    </Helmet>
     <Section>
       <Paper elevation={24}>
         <Box p={4} pt={6}>

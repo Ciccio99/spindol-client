@@ -4,6 +4,7 @@ import './index.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ReactGA from 'react-ga';
 import { hotjar } from 'react-hotjar';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import config from 'config';
 import HypnosTheme from './constants/HypnosTheme';
 import * as serviceWorker from './serviceWorker';
@@ -33,11 +34,13 @@ if (config?.crisp?.id) {
 
 ReactDOM.render(
   <React.StrictMode>
-    <HypnosTheme>
-      <CssBaseline>
-        <App />
-      </CssBaseline>
-    </HypnosTheme>
+    <HelmetProvider>
+      <HypnosTheme>
+        <CssBaseline>
+          <App />
+        </CssBaseline>
+      </HypnosTheme>
+    </HelmetProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

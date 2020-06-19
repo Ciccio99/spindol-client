@@ -6,6 +6,7 @@ import {
   Typography,
   LinearProgress,
 } from '@material-ui/core';
+import { Helmet } from 'react-helmet-async';
 import DailyDiaryServices from 'services/DailyDiaryServices';
 import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
 import LinkOnClick from 'components/linkOnClick/LinkOnClick';
@@ -77,6 +78,13 @@ const SleepTrialReportView = () => {
   }
   return (
     <Container>
+      <Helmet>
+        <title>Hypnos.ai - Sleep Trial Report</title>
+        <meta
+          name="description"
+          content="Hypnos.ai helps you track and improve your sleep habits. See how your sleep trial correlated with your mood and sleep data in your sleep trial report."
+        />
+      </Helmet>
       <Box mb={4}>
         <Box mt={5}>
           <Typography variant="h3">

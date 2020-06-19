@@ -5,9 +5,17 @@ import {
   Box,
   Typography,
 } from '@material-ui/core';
+import { Helmet } from 'react-helmet-async';
 
 const TermsOfService = () => (
   <Container maxWidth="lg">
+    <Helmet>
+      <title>Hypnos.ai - Terms of Service</title>
+      <meta
+        name="description"
+        content="Hypnos.ai helps you track and improve your sleep habits. Discover which sleep trial best improves your sleep and overall happiness. Here's our terms of service."
+      />
+    </Helmet>
     <Paper elevation={0}>
       <Box p={3}>
         <Typography variant="h4" paragraph>SleepWell.ai & Hypnos.ai - Terms of Service</Typography>
