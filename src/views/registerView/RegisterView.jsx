@@ -15,7 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import LinearProgress from '@material-ui/core/LinearProgress';
-
+import { Helmet } from 'react-helmet-async';
 import UserServices from 'services/UserServices';
 import UserContext from '../../context/userContext';
 
@@ -71,6 +71,13 @@ const RegisterView = () => {
 
   return (
     <Container component="main" maxWidth="xs">
+      <Helmet>
+        <title>Hypnos.ai - Account Registration</title>
+        <meta
+          name="description"
+          content="Hypnos.ai helps you track and improve your sleep habits. Discover which sleep trial best improves your sleep and overall happiness. Register an account with Hypnos.ai today, and start improving your sleep."
+        />
+      </Helmet>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>

@@ -17,6 +17,7 @@ import {
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
+import { Helmet } from 'react-helmet-async';
 import UserServices from 'services/UserServices';
 import UserContext from 'context/userContext';
 
@@ -71,6 +72,13 @@ const SignInView = () => {
 
   return (
     <Container component="main" maxWidth="xs">
+      <Helmet>
+        <title>Hypnos.ai - Sign In</title>
+        <meta
+          name="description"
+          content="Hypnos.ai helps you track and improve your sleep habits. Discover which sleep trial best improves your sleep and overall happiness. Sign in to you Hypnos.ai here."
+        />
+      </Helmet>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
