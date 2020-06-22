@@ -17,6 +17,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Helmet } from 'react-helmet-async';
 import UserServices from 'services/UserServices';
+import ReactGA from 'react-ga';
 import UserContext from '../../context/userContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -64,7 +65,15 @@ const RegisterView = () => {
         type: 'USER_LOGIN',
         user,
       });
-
+      ReactGA.set({
+        userId: user._id,
+        userEmail: user.email,
+      });
+      ReactGA.event({
+        category: 'User',
+        action: 'Created an account',
+        value: user._id,
+      });
       history.push('/dashboard');
     }
   };

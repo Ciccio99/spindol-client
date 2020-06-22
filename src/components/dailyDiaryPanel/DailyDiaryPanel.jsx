@@ -95,7 +95,7 @@ const DailyDiaryPanel = () => {
       </Box>
       <Divider />
       <Box p={4} overflow="none">
-        <Grid container justify="space-between" alignItems="center" spacing={2}>
+        <Grid container justify="space-between" alignItems="center" spacing={4}>
           <Grid item container xs={12} sm={9} alignItems="baseline" spacing={2}>
             <Grid item>
               <Typography variant="h6">How are you feeling today?</Typography>
@@ -104,9 +104,23 @@ const DailyDiaryPanel = () => {
               <Typography variant="subtitle1">{todayDate.format('MMM D, YYYY')}</Typography>
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Typography variant="subtitle2">{`Logging Streak: ${reportingStreak}`}</Typography>
-          </Grid>
+          {
+            reportingStreak > 0
+            && (
+              <Grid item xs={12}>
+                <Box display="flex" alignItems="center" flexWrap="wrap">
+                  <Box px={2} py={1} mr={1} display="inline" borderRadius={5} style={{backgroundColor: '#FAC856', color:'#FFFFFF'}}>
+                    <Typography variant="subtitle2" display="inline"><strong>{`${reportingStreak} Day Streak`}</strong></Typography>
+                  </Box>
+                  <Box py={1}>
+                    <Typography variant="subtitle2" display="inline">{' 🔥 Keep it up, you\'re doing great!'}</Typography>
+                  </Box>
+                </Box>
+
+              </Grid>
+            )
+          }
+
           <ToggleButtonGroup item container xs={12} sm={12} spacing={1} alignItems="center" justify="space-between" onChange={submitDailyDiary} value={dailyDiary ? dailyDiary.mood : null}>
             <ToggleButton value="excellent" xs={6} sm={2}>Excellent</ToggleButton>
             <ToggleButton value="good" xs={6} sm={2}>Good</ToggleButton>
