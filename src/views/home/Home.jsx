@@ -105,6 +105,7 @@ const Home = () => (
               title="Hypnos.ai Demo Video"
               src="https://www.loom.com/embed/76f36e40f8f044068fc7456d650d82ab"
               frameBorder="0"
+              loading="lazy"
               webkitallowfullscreen="true"
               mozallowfullscreen="true"
               allowFullScreen

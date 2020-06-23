@@ -44,6 +44,11 @@ function App() {
           userId: currentUser._id,
           userEmail: currentUser.email,
         });
+        ReactGA.event({
+          category: 'User',
+          action: 'User Sign In',
+          value: currentUser._id,
+        });
       }
       setLoaded(true);
     })();

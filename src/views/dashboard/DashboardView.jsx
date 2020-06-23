@@ -46,10 +46,12 @@ const DashboardView = () => {
           </Typography>
         </Box>
         {
-          !user.accounts.oura.connected &&
+          !user.accounts.oura.connected
+          && (
           <Section>
             <ConnectDeviceCTA />
           </Section>
+          )
         }
         <Section>
           <DailyDiaryPanel />

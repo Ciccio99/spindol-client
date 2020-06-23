@@ -18,6 +18,7 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { Helmet } from 'react-helmet-async';
+import ReactGA from 'react-ga';
 import UserServices from 'services/UserServices';
 import UserContext from 'context/userContext';
 
@@ -65,6 +66,15 @@ const SignInView = () => {
       dispatchUser({
         type: 'USER_LOGIN',
         user,
+      });
+      ReactGA.set({
+        userId: user._id,
+        userEmail: user.email,
+      });
+      ReactGA.event({
+        category: 'User',
+        action: 'User Sign In',
+        value: user._id,
       });
       history.replace(from);
     }
