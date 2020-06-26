@@ -18,6 +18,8 @@ import DailyDiaryServices from 'services/DailyDiaryServices';
 import styles from './DailyDiaryDetailsPanel.module.css';
 import SleepSummaryPanel from './sleepSummaryPanel/SleepSummaryPanel';
 import SleepTrialTrackerMin from './sleepTrialTrackerMin/SleepTrialTrackerMin';
+import Section from 'components/organizers/Section';
+import FatigueModule from 'components/modules/FatigueModule';
 
 const MOOD_COLOR = {
   excellent: styles.excellent,
@@ -80,6 +82,7 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
   }
 
   return (
+    <>
     <Paper elevation={24}>
       <Box px={4} py={3}>
         <Typography variant="h4" color="secondary">{moment.utc(dailyDiary.date).format('dddd - MMM DD, YYYY')}</Typography>
@@ -134,7 +137,6 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
 
       }
         </Box>
-
         <Box mt={8}>
           <Typography variant="h6">Sleep Trial Trackers</Typography>
         </Box>
@@ -148,6 +150,10 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
         </Box>
       </Box>
     </Paper>
+    <Section>
+      <FatigueModule date={selectedDate} />
+    </Section>
+    </>
   );
 };
 

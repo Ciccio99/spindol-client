@@ -10,9 +10,9 @@ import UserContext from 'context/userContext';
 import SleepTrialTrackersContext from 'context/sleepTrialTrackersContext';
 import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
 import SleepTrialTrackerPanel from 'components/sleepTrialTracker/SleepTrialTrackerPanel';
-import StatsDisplay from 'components/statsDisplay/StatsDisplay';
-import DailyDiaryPanel from 'components/dailyDiaryPanel/DailyDiaryPanel';
-import FatigueModule from 'components/dashboard/FatigueModule';
+import MoodModule from 'components/modules/MoodModule';
+import FatigueModule from 'components/modules/FatigueModule';
+import SleepComparisonModule from 'components/modules/SleepComparisonModule';
 import Section from 'components/organizers/Section';
 import ConnectDeviceCTA from 'components/cta/ConnectDevice';
 
@@ -56,17 +56,18 @@ const DashboardView = () => {
           )
         }
         <Section>
-          <DailyDiaryPanel />
+          <MoodModule />
         </Section>
         <Section>
-          <Grid container spacing={6}>
+          <FatigueModule />
+          {/* <Grid container spacing={6}>
             <Grid item xs={12} md={6}>
               <FatigueModule />
             </Grid>
-          </Grid>
+          </Grid> */}
         </Section>
         <Section>
-          <StatsDisplay />
+          <SleepComparisonModule />
         </Section>
         <Section>
           <SleepTrialTrackerPanel trialTrackers={sleepTrialTrackers} />
