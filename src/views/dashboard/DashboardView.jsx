@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import {
   Container,
   Box,
+  Grid,
   Typography,
 } from '@material-ui/core';
 import { Helmet } from 'react-helmet-async';
@@ -11,6 +12,7 @@ import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
 import SleepTrialTrackerPanel from 'components/sleepTrialTracker/SleepTrialTrackerPanel';
 import StatsDisplay from 'components/statsDisplay/StatsDisplay';
 import DailyDiaryPanel from 'components/dailyDiaryPanel/DailyDiaryPanel';
+import FatigueModule from 'components/dashboard/FatigueModule';
 import Section from 'components/organizers/Section';
 import ConnectDeviceCTA from 'components/cta/ConnectDevice';
 
@@ -55,6 +57,13 @@ const DashboardView = () => {
         }
         <Section>
           <DailyDiaryPanel />
+        </Section>
+        <Section>
+          <Grid container spacing={6}>
+            <Grid item xs={12} md={6}>
+              <FatigueModule />
+            </Grid>
+          </Grid>
         </Section>
         <Section>
           <StatsDisplay />

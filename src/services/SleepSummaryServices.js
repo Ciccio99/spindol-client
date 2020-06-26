@@ -7,7 +7,7 @@ const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   });
 
   try {
-    const { data } = await axios.get(`/sleepSummary`,
+    const { data } = await axios.get('/sleepSummary',
       {
         params: { query: queryString },
       });
@@ -165,6 +165,18 @@ const getSleepSummaryStats = (sleepSummary) => {
   return stats;
 };
 
+const getFatigueScore = async (date) => {
+  try {
+    const { data } = await axios.get('/sleepSummary/fatigueScore',
+      {
+        params: { date: moment(date).format('YYYY-MM-DD') },
+      });
+    return { data };
+  } catch (error) {
+    return {};
+  }
+};
+
 export default {
   query,
   getToday,
@@ -172,4 +184,5 @@ export default {
   getSleepSummaryAvgStats,
   getSleepSummaryStats,
   getSleepHoursDuration,
+  getFatigueScore,
 };

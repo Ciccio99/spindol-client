@@ -47,7 +47,7 @@ function App() {
         ReactGA.event({
           category: 'User',
           action: 'User Sign In',
-          value: currentUser._id,
+          value: parseInt(currentUser._id, 10),
         });
       }
       setLoaded(true);
