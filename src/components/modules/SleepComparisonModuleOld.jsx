@@ -4,14 +4,7 @@ import {
   Grid,
   LinearProgress,
   Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
 } from '@material-ui/core';
-import moment from 'moment-timezone';
 import PanelModule from 'components/organizers/PanelModule';
 import StatCard from '../statCar/StatCard';
 import UserContext from '../../context/userContext';
@@ -26,7 +19,6 @@ const StatsDisplay = () => {
   const [stats, setStats] = useState([]);
   const [todayStats, setTodayStats] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [subtitle, setSubtitle] = useState();
 
   useEffect(() => {
     let didCancel = false;
@@ -62,7 +54,6 @@ const StatsDisplay = () => {
         return;
       }
       setLoading(false);
-      setSubtitle(`Latest data from ${moment.utc(sleepSummaries[0].date).format('MMMM DD, YYYY')}`);
       setStats(data);
     })();
 
@@ -98,53 +89,54 @@ const StatsDisplay = () => {
     );
   }
 
-  if (todayStats.length && stats.length) {
-    return (
-      <PanelModule title={TITLE} subtitle={subtitle}>
-        <Box>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell variant="body" padding="checkbox" align="left">Last Night</TableCell>
-                <TableCell variant="body" padding="checkbox" align="center" />
-                <TableCell variant="body" padding="checkbox" align="right">Average Baseline</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {stats.map((statObj, index) => (
-                <TableRow key={statObj.description}>
-                  <TableCell align="left" variant="head"><Typography color="primary" variant="subtitle1"><strong>{`${todayStats[index].stat}${todayStats[index].units ? ` ${todayStats[index].units}` : ''}`}</strong></Typography></TableCell>
-                  <TableCell padding="none" align="center"><Typography variant="caption">{statObj.description}</Typography></TableCell>
-                  <TableCell align="right" variant="head"><Typography color="primary" variant="subtitle1"><strong>{`${statObj.stat}${statObj.units ? ` ${statObj.units}` : ''}`}</strong></Typography></TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Box>
-      </PanelModule>
-    );
-  }
-
   return (
-    <PanelModule title={TITLE} subtitle={subtitle}>
-      <Box>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell padding="checkbox" />
-              <TableCell padding="checkbox" align="right">Average Baseline</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {stats.map((statObj,) => (
-              <TableRow key={statObj.description}>
-                <TableCell>{statObj.description}</TableCell>
-                <TableCell align="right">{`${statObj.stat}${statObj.units ? ` ${statObj.units}` : ''}`}</TableCell>
-              </TableRow>
+    <PanelModule title={TITLE}>
+      {
+        stats.length !== 0
+        && (
+        <>
+          <Box mb={2}>
+            <Typography variant="h6" color="textSecondary">Weekly Baseline</Typography>
+          </Box>
+          <Grid container spacing={2}>
+            {stats.map((statObj, index) => (
+              <Grid key={index} item xs={6} sm={4} md={3}>
+                <Box border={1} borderColor="#CCC" borderRadius={25} height="100%">
+                  <StatCard
+                    stat={statObj.stat}
+                    units={statObj.units}
+                    description={statObj.description}
+                  />
+                </Box>
+              </Grid>
             ))}
-          </TableBody>
-        </Table>
-      </Box>
+          </Grid>
+        </>
+        )
+      }
+      {
+        todayStats.length !== 0
+        && (
+          <>
+            <Box mt={4} mb={2}>
+              <Typography variant="h6" color="textSecondary">Last Night</Typography>
+            </Box>
+            <Grid container spacing={2}>
+              {todayStats.map((statObj, index) => (
+                <Grid key={index} item xs={6} sm={4} md={3}>
+                  <Box border={1} borderColor="#CCC" borderRadius={25} height="100%">
+                    <StatCard
+                      stat={statObj.stat}
+                      units={statObj.units}
+                      description={statObj.description}
+                    />
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+          </>
+        )
+      }
     </PanelModule>
   );
 };

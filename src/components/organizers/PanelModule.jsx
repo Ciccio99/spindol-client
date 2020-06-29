@@ -10,7 +10,7 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import styles from './Organizers.module.css';
 
 const PanelModule = ({ children, title, subtitle, tooltip }) => (
-  <Paper elevation={24}>
+  <Paper elevation={24} style={{ minHeight: '100%' }}>
     <Box px={4} py={3} display="flex" justifyContent="space-between">
       <Box maxWidth="80%">
         <Typography variant="h6">{title}</Typography>
