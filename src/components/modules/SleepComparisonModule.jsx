@@ -138,8 +138,8 @@ const StatsDisplay = () => {
           <TableBody>
             {stats.map((statObj,) => (
               <TableRow key={statObj.description}>
-                <TableCell>{statObj.description}</TableCell>
-                <TableCell align="right">{`${statObj.stat}${statObj.units ? ` ${statObj.units}` : ''}`}</TableCell>
+                <TableCell align="left"><Typography variant="caption">{statObj.description}</Typography></TableCell>
+                <TableCell align="right" variant="head"><Typography color="primary" variant="subtitle1"><strong>{`${statObj.stat}${statObj.units ? ` ${statObj.units}` : ''}`}</strong></Typography></TableCell>
               </TableRow>
             ))}
           </TableBody>
