@@ -59,14 +59,16 @@ const DashboardView = () => {
           <MoodModule />
         </Section>
         <Section>
-          <Grid container spacing={8}>
-            <Grid item xs={12} md={6}>
-              <FatigueModule />
+          <Box overflow="hidden">
+            <Grid container spacing={8}>
+              <Grid item xs={12} md={6}>
+                <FatigueModule />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <SleepComparisonModule />
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <SleepComparisonModule />
-            </Grid>
-          </Grid>
+          </Box>
         </Section>
         {/* <Section>
           <SleepComparisonModule />
