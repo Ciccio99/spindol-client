@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Box,
   Grid,
@@ -7,12 +7,14 @@ import {
 import LinkText from '../../linkText/LinkText';
 import LinkOnClick from '../../linkOnClick/LinkOnClick';
 import DeviceServices from '../../../services/DeviceServices';
+import AlertSystemContext from 'context/alertSystemContext';
 
 const capFirst = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
 const DeviceSettingsItem = ({
   user, device, trackerType, userFirstName,
 }) => {
+  const { dispatchAlertSystem } = useContext(AlertSystemContext);
   const [connected, setConnected] = useState(false);
   const [redirectUri, setRedirectUri] = useState('');
 
@@ -39,7 +41,10 @@ const DeviceSettingsItem = ({
     if (success) {
       setConnected(false);
     } else {
-      console.log('Failed to disconnect device');
+      dispatchAlertSystem({
+        type: 'ERROR',
+        message: 'Failed to disconnect device. Please try again later.',
+      });
     }
   };
 
