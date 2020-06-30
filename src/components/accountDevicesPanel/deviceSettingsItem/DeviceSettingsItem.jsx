@@ -40,6 +40,10 @@ const DeviceSettingsItem = ({
     const success = await DeviceServices.revokeDeviceAccess(device);
     if (success) {
       setConnected(false);
+      dispatchAlertSystem({
+        type: 'SUCCESS',
+        message: `${capFirst(device)} successfully connected.`,
+      });
     } else {
       dispatchAlertSystem({
         type: 'ERROR',
