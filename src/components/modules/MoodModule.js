@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {
   Box,
-  Paper,
   Grid,
   Typography,
-  Divider,
   LinearProgress,
 } from '@material-ui/core';
 import moment from 'moment-timezone';

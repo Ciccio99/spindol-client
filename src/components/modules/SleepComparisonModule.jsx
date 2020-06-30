@@ -99,7 +99,7 @@ const StatsDisplay = () => {
     return (
       <PanelModule title={TITLE} subtitle={subtitle}>
         <Box>
-          <Table>
+          <Table style={{ tableLayout: 'fixed' }}>
             <TableHead>
               <TableRow>
                 <TableCell variant="body" padding="checkbox" align="left">Last Night</TableCell>

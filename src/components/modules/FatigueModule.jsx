@@ -72,7 +72,7 @@ const FatigueModule = ({ date }) => {
       }
       setIsFetching(false);
     })();
-  }, []);
+  }, [date]);
 
   if (isFetching) {
     return (
