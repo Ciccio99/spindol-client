@@ -1,25 +1,19 @@
 import React from 'react';
 import {
-  Box,
-  Paper,
-  Typography,
   Divider,
 } from '@material-ui/core';
+import PanelModule from 'components/organizers/PanelModule';
 import AccountInfoPanel from './accountInfoPanel/AccountInfoPanel';
 import AccountPasswordPanel from './accountPasswordPanel/AccountPasswordPanel';
 
+const TITLE = 'Account Info';
+
 const AccountDetailsPanel = () => (
-  <Paper elevation={24}>
-    <Box px={4} py={3}>
-      <Typography variant="h6">Account Info</Typography>
-    </Box>
+  <PanelModule title={TITLE}>
+    <AccountInfoPanel />
     <Divider />
-    <Box p={4}>
-      <AccountInfoPanel />
-      <Divider />
-      <AccountPasswordPanel />
-    </Box>
-  </Paper>
+    <AccountPasswordPanel />
+  </PanelModule>
 );
 
 export default AccountDetailsPanel;

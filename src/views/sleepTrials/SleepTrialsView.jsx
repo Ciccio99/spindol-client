@@ -13,8 +13,8 @@ import SleepTrialTrackersContext from 'context/sleepTrialTrackersContext';
 import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
 import AlertSystemContext from 'context/alertSystemContext';
 import SleepTrialCard from 'components/sleepTrial/SleepTrialCard';
-import SleepTrialTypeList from '../../components/sleepTrial/sleepTrialTypeList/SleepTrialTypeList';
-import SleepTrialServices from '../../services/SleepTrialServices';
+import SleepTrialTypeList from 'components/sleepTrial/sleepTrialTypeList/SleepTrialTypeList';
+import SleepTrialServices from 'services/SleepTrialServices';
 import styles from './SleepTrialsView.module.css';
 
 const SleepTrialsView = ({ handleCloseClick }) => {

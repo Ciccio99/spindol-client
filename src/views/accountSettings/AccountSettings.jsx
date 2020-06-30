@@ -18,7 +18,7 @@ const AccountSettings = () => (
         content="Hypnos.ai helps you track and improve your sleep habits. Settings for your account details, such as name, email, connecting sleep trackers."
       />
     </Helmet>
-    <Box mt={4}>
+    <Box mt={5}>
       <Typography variant="h3">Your Account</Typography>
     </Box>
     <Section>

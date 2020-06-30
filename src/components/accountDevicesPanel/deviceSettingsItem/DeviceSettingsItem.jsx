@@ -65,7 +65,11 @@ const DeviceSettingsItem = ({
                 </Typography>
               )
           }
-          {connected && <Typography variant="caption">Connected</Typography>}
+          {
+            connected
+              ? <Typography variant="caption" color="primary"><strong>Connected</strong></Typography>
+              : <Typography variant="caption" color="secondary"><strong>Not Connected</strong></Typography>
+          }
         </Grid>
         <Grid item>
           {
