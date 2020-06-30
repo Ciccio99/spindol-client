@@ -1,19 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {
   Box,
-  Grid,
   LinearProgress,
   Typography,
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
 } from '@material-ui/core';
 import moment from 'moment-timezone';
 import PanelModule from 'components/organizers/PanelModule';
-import StatCard from '../statCar/StatCard';
 import UserContext from '../../context/userContext';
 import SleepSummaryServices from '../../services/SleepSummaryServices';
 import AlertSystemContext from '../../context/alertSystemContext';
@@ -136,7 +133,7 @@ const StatsDisplay = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {stats.map((statObj,) => (
+            {stats.map((statObj) => (
               <TableRow key={statObj.description}>
                 <TableCell align="left"><Typography variant="caption">{statObj.description}</Typography></TableCell>
                 <TableCell align="right" variant="head"><Typography color="primary" variant="subtitle1"><strong>{`${statObj.stat}${statObj.units ? ` ${statObj.units}` : ''}`}</strong></Typography></TableCell>

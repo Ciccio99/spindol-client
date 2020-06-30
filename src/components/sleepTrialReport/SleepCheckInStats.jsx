@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   Typography,
-  Divider,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
 } from '@material-ui/core';
 import moment from 'moment-timezone';
 import SleepSummaryServices from 'services/SleepSummaryServices';
-import StatCard from 'components/statCar/StatCard';
+
+const green = { color: '#5DBD88' };
+const red = { color: '#DE1E3D' };
 
 const SleepCheckInStats = ({ sleepSummaries, sleepTrialTracker }) => {
   const [sleepStats, setSleepStats] = useState([]);
   const [incompleteSleepStats, setIncompleteSleepStats] = useState([]);
+
   useEffect(() => {
     (async () => {
       const dates = sleepTrialTracker.checkIns
@@ -22,13 +28,11 @@ const SleepCheckInStats = ({ sleepSummaries, sleepTrialTracker }) => {
         .filter((ss) => dates.some((date) => moment.utc(date).isSame(moment.utc(ss.date), 'day')));
 
 
-      const startDate = moment.utc(sleepTrialTracker.startDate);
-      const endDate = moment.utc(sleepTrialTracker.endDate);
-      const dayDiff = endDate.diff(startDate, 'days');
-      const match = { date: { $nin: dates, $lte: endDate.toISOString() } };
+      const startDate = moment.utc(sleepTrialTracker.startDate).subtract(7, 'days');
+      const endDate = moment.utc(sleepTrialTracker.startDate);
+      const match = { date: { $gte: startDate.toISOString(), $lt: endDate.toISOString() } };
       const sort = { date: -1 };
-      const limit = dayDiff;
-      const incompleteSSArr = await SleepSummaryServices.query(match, sort, limit);
+      const incompleteSSArr = await SleepSummaryServices.query(match, sort);
 
       const stats = SleepSummaryServices.getSleepSummaryAvgStats(ssArr, incompleteSSArr);
       setSleepStats(stats);
@@ -38,52 +42,76 @@ const SleepCheckInStats = ({ sleepSummaries, sleepTrialTracker }) => {
     })();
   }, [sleepSummaries, sleepTrialTracker]);
 
-  useEffect(() => {
-
-  }, [sleepSummaries, sleepTrialTracker]);
+  if (sleepStats.length === incompleteSleepStats.length) {
+    return (
+      <Box>
+        <Table style={{ tableLayout: 'fixed' }}>
+          <TableHead>
+            <TableRow>
+              <TableCell variant="body" padding="checkbox" align="left">Sleep Trial</TableCell>
+              <TableCell variant="body" padding="checkbox" align="center" />
+              <TableCell variant="body" padding="checkbox" align="right">Baseline</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {sleepStats.map((statObj, index) => (
+              <TableRow key={statObj.description}>
+                <TableCell align="left">
+                  <Typography color="primary" variant="subtitle1" display="inline">
+                    <strong>
+                      {`${statObj.stat}${statObj.units ? ` ${statObj.units}` : ''}`}
+                    </strong>
+                  </Typography>
+                  {
+                    statObj.diffPercent
+                    && (
+                    <Typography variant="subtitle2" display="inline" style={statObj.diffPercent > 0 ? green : red}>
+                      {` (${statObj.diffPercent}%)`}
+                    </Typography>
+                    )
+                  }
+                </TableCell>
+                <TableCell variant="head" padding="none" align="center"><Typography variant="caption">{statObj.description}</Typography></TableCell>
+                <TableCell align="right" variant="head">
+                  <Typography color="primary" variant="subtitle1">
+                    <strong>
+                      {`${incompleteSleepStats[index].stat}${incompleteSleepStats[index].units ? ` ${incompleteSleepStats[index].units}` : ''}`}
+                    </strong>
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Box>
+    );
+  }
 
   return (
-    <Grid container direction="column" alignItems="center" spacing={2}>
-      <Grid item container xs={12} spacing={2} justify="space-between">
-        <Grid item xs={6} sm={5}>
-          <Box pb={1}>
-            <Typography variant="h6">Trial</Typography>
-            <Divider />
-          </Box>
-        </Grid>
-        <Grid item xs={6} sm={5}>
-          <Box pb={1}>
-            <Typography variant="h6">Baseline</Typography>
-            <Divider />
-          </Box>
-        </Grid>
-      </Grid>
-      { sleepStats.length === incompleteSleepStats.length
-        && sleepStats.map((statObj, index) => (
-          <Grid key={index} item container xs={12} justify="space-between" spacing={1}>
-            <Grid item xs={6} sm={5}>
-              <Box border={1} borderColor="#CCC" borderRadius={25} minHeight="100%">
-                <StatCard
-                  stat={statObj.stat}
-                  units={statObj.units}
-                  description={statObj.description}
-                  tickerPercent={statObj.diffPercent}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={6} sm={5}>
-              <Box border={1} borderColor="#CCC" borderRadius={25} minHeight="100%">
-                <StatCard
-                  stat={incompleteSleepStats[index].stat}
-                  units={incompleteSleepStats[index].units}
-                  description={incompleteSleepStats[index].description}
-                  tickerPercent={incompleteSleepStats[index].diffPercent}
-                />
-              </Box>
-            </Grid>
-          </Grid>
-        ))}
-    </Grid>
+    <Box>
+      <Table style={{ tableLayout: 'fixed' }}>
+        <TableHead>
+          <TableRow>
+            <TableCell variant="body" padding="checkbox" align="left" />
+            <TableCell variant="body" padding="checkbox" align="right">Sleep Trial</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {sleepStats.map((statObj) => (
+            <TableRow key={statObj.description}>
+              <TableCell variant="head" padding="none" align="left"><Typography variant="caption">{statObj.description}</Typography></TableCell>
+              <TableCell align="right">
+                <Typography color="primary" variant="subtitle1" display="inline">
+                  <strong>
+                    {`${statObj.stat}${statObj.units ? ` ${statObj.units}` : ''}`}
+                  </strong>
+                </Typography>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Box>
   );
 };
 
