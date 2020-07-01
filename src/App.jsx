@@ -39,6 +39,10 @@ function App() {
         });
         if (currentUser.accounts.oura.connected) {
           await DeviceServices.syncDeviceData('oura');
+        } else if (currentUser.accounts.withings.connected) {
+          await DeviceServices.syncDeviceData('withings');
+        } else if (currentUser.accounts.fitbit.connected) {
+          await DeviceServices.syncDeviceData('fitbit');
         }
         ReactGA.set({
           userId: currentUser._id,
