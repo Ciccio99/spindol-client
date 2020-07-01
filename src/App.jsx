@@ -19,6 +19,7 @@ import alertSystemReducer from './reducers/alertSystem';
 import SleepTrialTrackersContext from './context/sleepTrialTrackersContext';
 import sleepTrialTrackersReducer from './reducers/sleepTrialTrackersReducer';
 import LoadingCard from './components/loadingCard/LoadingCard';
+import devices from 'constants/devices';
 // TODO: Upgrade to cleaner context system store https://kentcdodds.com/blog/how-to-use-react-context-effectively
 
 function App() {
@@ -38,11 +39,11 @@ function App() {
           user: currentUser,
         });
         if (currentUser.accounts.oura.connected) {
-          await DeviceServices.syncDeviceData('oura');
+          await DeviceServices.syncDeviceData(devices.OURA);
         } else if (currentUser.accounts.withings.connected) {
-          await DeviceServices.syncDeviceData('withings');
+          await DeviceServices.syncDeviceData(devices.WITHINGS);
         } else if (currentUser.accounts.fitbit.connected) {
-          await DeviceServices.syncDeviceData('fitbit');
+          await DeviceServices.syncDeviceData(devices.FITBIT);
         }
         ReactGA.set({
           userId: currentUser._id,
