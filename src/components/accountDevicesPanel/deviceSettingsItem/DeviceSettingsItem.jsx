@@ -4,10 +4,10 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
+import AlertSystemContext from 'context/alertSystemContext';
 import LinkText from '../../linkText/LinkText';
 import LinkOnClick from '../../linkOnClick/LinkOnClick';
 import DeviceServices from '../../../services/DeviceServices';
-import AlertSystemContext from 'context/alertSystemContext';
 
 const capFirst = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
@@ -42,7 +42,7 @@ const DeviceSettingsItem = ({
       setConnected(false);
       dispatchAlertSystem({
         type: 'SUCCESS',
-        message: `${capFirst(device)} successfully connected.`,
+        message: `${capFirst(device)} disconnected.`,
       });
     } else {
       dispatchAlertSystem({
