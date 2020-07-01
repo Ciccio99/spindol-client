@@ -49,6 +49,8 @@ const DashboardView = () => {
         </Box>
         {
           !user.accounts.oura.connected
+          && !user.accounts.withings.connected
+          && !user.accounts.fitbit.connected
           && (
           <Section>
             <ConnectDeviceCTA />
