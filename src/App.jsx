@@ -10,6 +10,7 @@ import DeviceServices from 'services/DeviceServices';
 import UserServices from 'services/UserServices';
 import AppRouter from 'routes/AppRouter';
 import ScrollToTop from 'routes/ScrollToTop';
+import devices from 'constants/devices';
 import Header from './views/header/Header';
 import Footer from './views/footer/Footer';
 import UserContext from './context/userContext';
@@ -38,7 +39,11 @@ function App() {
           user: currentUser,
         });
         if (currentUser.accounts.oura.connected) {
-          await DeviceServices.syncDeviceData('oura');
+          await DeviceServices.syncDeviceData(devices.OURA);
+        } else if (currentUser.accounts.withings.connected) {
+          await DeviceServices.syncDeviceData(devices.WITHINGS);
+        } else if (currentUser.accounts.fitbit.connected) {
+          await DeviceServices.syncDeviceData(devices.FITBIT);
         }
         ReactGA.set({
           userId: currentUser._id,
@@ -47,7 +52,7 @@ function App() {
         ReactGA.event({
           category: 'User',
           action: 'User Sign In',
-          value: currentUser._id,
+          value: parseInt(currentUser._id, 10),
         });
       }
       setLoaded(true);

@@ -143,12 +143,12 @@ const Home = () => (
                   Currently supported trackers:
                   <ul>
                     <li>Oura</li>
+                    <li>Withings</li>
                   </ul>
                 </Typography>
                 <Typography variant="caption" display="block" color="textSecondary">
                   Soon to be supported trackers:
                   <ul>
-                    <li>Withings</li>
                     <li>Fitbit</li>
                     <li>Whoop</li>
                   </ul>

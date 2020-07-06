@@ -5,7 +5,7 @@ const queryOne = async (match = {}, sort = {}, limit = 0, skip = 0) => {
     match, sort, limit, skip,
   });
   try {
-    const { data } = await axios.get(`/devices`,
+    const { data } = await axios.get('/devices',
       {
         params: { query: queryString },
       });

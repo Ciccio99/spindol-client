@@ -20,9 +20,9 @@ const ConnectDevice = () => (
         <Grid item sm={8}>
           <Typography className={styles.connectDeviceText} variant="h6" display="block">Connect your sleep tracker</Typography>
           <Typography className={styles.connectDeviceText} variant="caption" display="block">
-            You can connect your Oura Ring (and coming soon: FitBit, Withings)
-            to help us monitor your sleep and
-            how the different trial methods are affecting you.
+            Connect your Oura Ring or Withings (coming soon: FitBit)
+            to help Hypnos.ai monitor your sleep and
+            determine how different sleep trials affect you.
           </Typography>
         </Grid>
         <Grid item>

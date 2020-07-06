@@ -74,7 +74,7 @@ const SignInView = () => {
       ReactGA.event({
         category: 'User',
         action: 'User Sign In',
-        value: user._id,
+        value: parseInt(user._id, 10),
       });
       history.replace(from);
     }

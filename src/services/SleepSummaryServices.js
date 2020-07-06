@@ -7,7 +7,7 @@ const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   });
 
   try {
-    const { data } = await axios.get(`/sleepSummary`,
+    const { data } = await axios.get('/sleepSummary',
       {
         params: { query: queryString },
       });
@@ -117,9 +117,9 @@ const getSleepSummaryAvgStats = (sleepSummaries, oldSleepSummaries = undefined) 
     const oldDeepDuration = getAvgDeepHoursDuration(oldSleepSummaries);
     // const oldAvgBedtimeMins = getAvgBedtime(oldSleepSummaries);
 
-    stats[0].diffPercent = ((avgSleepDuration - oldSleepDuration) / oldSleepDuration).toFixed(2);
-    stats[1].diffPercent = ((avgRemDuration - oldRemDuration) / oldRemDuration).toFixed(2);
-    stats[2].diffPercent = ((avgDeepDuration - oldDeepDuration) / oldDeepDuration).toFixed(2);
+    stats[0].diffPercent = (((avgSleepDuration - oldSleepDuration) * 100) / oldSleepDuration).toFixed(2);
+    stats[1].diffPercent = (((avgRemDuration - oldRemDuration) * 100) / oldRemDuration).toFixed(2);
+    stats[2].diffPercent = (((avgDeepDuration - oldDeepDuration) * 100) / oldDeepDuration).toFixed(2);
     // Flipped the diff variables because it should be negative if your bedtime is later than before.
     // stats[3].diffPercent = ((oldAvgBedtimeMins - avgBedtimeMins) / oldAvgBedtimeMins).toFixed(2);
   }
@@ -165,6 +165,18 @@ const getSleepSummaryStats = (sleepSummary) => {
   return stats;
 };
 
+const getFatigueScore = async (date) => {
+  try {
+    const { data } = await axios.get('/sleepSummary/fatigueScore',
+      {
+        params: { date: moment(date).format('YYYY-MM-DD') },
+      });
+    return { data };
+  } catch (error) {
+    return {};
+  }
+};
+
 export default {
   query,
   getToday,
@@ -172,4 +184,5 @@ export default {
   getSleepSummaryAvgStats,
   getSleepSummaryStats,
   getSleepHoursDuration,
+  getFatigueScore,
 };

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Box,
   Grid,
   Typography,
 } from '@material-ui/core';
+import AlertSystemContext from 'context/alertSystemContext';
 import LinkText from '../../linkText/LinkText';
 import LinkOnClick from '../../linkOnClick/LinkOnClick';
 import DeviceServices from '../../../services/DeviceServices';
@@ -13,6 +14,7 @@ const capFirst = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 const DeviceSettingsItem = ({
   user, device, trackerType, userFirstName,
 }) => {
+  const { dispatchAlertSystem } = useContext(AlertSystemContext);
   const [connected, setConnected] = useState(false);
   const [redirectUri, setRedirectUri] = useState('');
 
@@ -38,8 +40,15 @@ const DeviceSettingsItem = ({
     const success = await DeviceServices.revokeDeviceAccess(device);
     if (success) {
       setConnected(false);
+      dispatchAlertSystem({
+        type: 'SUCCESS',
+        message: `${capFirst(device)} disconnected.`,
+      });
     } else {
-      console.log('Failed to disconnect device');
+      dispatchAlertSystem({
+        type: 'ERROR',
+        message: 'Failed to disconnect device. Please try again later.',
+      });
     }
   };
 
@@ -65,7 +74,11 @@ const DeviceSettingsItem = ({
                 </Typography>
               )
           }
-          {connected && <Typography variant="caption">Connected</Typography>}
+          {
+            connected
+              ? <Typography variant="caption" color="primary"><strong>Connected</strong></Typography>
+              : <Typography variant="caption" color="secondary"><strong>Not Connected</strong></Typography>
+          }
         </Grid>
         <Grid item>
           {

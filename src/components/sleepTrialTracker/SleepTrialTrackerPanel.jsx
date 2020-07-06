@@ -46,8 +46,8 @@ const CurrentSleepTrialTrackers = ({ trialTrackers }) => {
           spacing={3}
         >
           <Grid item xs={12} sm={8}>
-            <Typography variant="h5">
-              Your sleep trials
+            <Typography variant="h6">
+              Sleep Trials
             </Typography>
             <p className={styles.heroSubText}>This is where you can track your progress towards completing sleep trials.</p>
           </Grid>

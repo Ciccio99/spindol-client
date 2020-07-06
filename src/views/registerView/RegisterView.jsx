@@ -72,7 +72,7 @@ const RegisterView = () => {
       ReactGA.event({
         category: 'User',
         action: 'Created an account',
-        value: user._id,
+        value: parseInt(user._id, 10),
       });
       history.push('/dashboard');
     }
