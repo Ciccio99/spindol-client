@@ -10,6 +10,7 @@ import DeviceServices from 'services/DeviceServices';
 import UserServices from 'services/UserServices';
 import AppRouter from 'routes/AppRouter';
 import ScrollToTop from 'routes/ScrollToTop';
+import devices from 'constants/devices';
 import Header from './views/header/Header';
 import Footer from './views/footer/Footer';
 import UserContext from './context/userContext';
@@ -19,7 +20,6 @@ import alertSystemReducer from './reducers/alertSystem';
 import SleepTrialTrackersContext from './context/sleepTrialTrackersContext';
 import sleepTrialTrackersReducer from './reducers/sleepTrialTrackersReducer';
 import LoadingCard from './components/loadingCard/LoadingCard';
-import devices from 'constants/devices';
 // TODO: Upgrade to cleaner context system store https://kentcdodds.com/blog/how-to-use-react-context-effectively
 
 function App() {
