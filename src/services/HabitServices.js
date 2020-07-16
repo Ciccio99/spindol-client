@@ -2,15 +2,18 @@ import moment from 'moment-timezone';
 import axios from 'loaders/axios';
 import handleError from 'utils/handleError';
 import HabitUtils from 'utils/HabitUtils';
+import dateViews from 'constants/dateViews';
 
 const DATA_TYPES = {
   BEDTIME: 'bedtime',
   WAKETIME: 'waketime',
 };
 
-const getDashboardData = async (startDate, endDate) => {
+const getDashboardData = async (startDate, endDate, dateView = dateViews.M) => {
   let start = startDate;
   let end = endDate;
+  console.log(start);
+  console.log(end);
   if (!start) {
     start = moment().startOf('month').format('YYYY-MM-DD');
   }
@@ -51,12 +54,15 @@ const getDashboardData = async (startDate, endDate) => {
     const bedtimeHabits = responses[0].data.length > 0 ? responses[0].data : [];
     const waketimeHabits = responses[1].data.length > 0 ? responses[1].data : [];
     const sleepSummaries = responses[2].data.length > 0 ? responses[2].data : [];
-    const heatmapData = HabitUtils.getHeatmapData(sleepSummaries, bedtimeHabits, waketimeHabits);
+    const heatmapData = HabitUtils
+      .getHeatmapData(sleepSummaries, bedtimeHabits, waketimeHabits, startDate, endDate, dateView);
     const activeBedtimeHabit = bedtimeHabits.find((habit) => habit.active);
     const activeWaketimeHabit = waketimeHabits.find((habit) => habit.active);
-    return { bedtime: activeBedtimeHabit, waketime: activeWaketimeHabit, heatmapData };
+    const data = { bedtime: activeBedtimeHabit, waketime: activeWaketimeHabit, heatmapData };
+
+    return { data };
   } catch (error) {
-    return { bedtime: undefined, waketime: undefined, sleepSummaries: [] };
+    return handleError(error);
   }
 };
 

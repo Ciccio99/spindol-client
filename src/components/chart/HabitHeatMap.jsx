@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  Box,
-  Grid,
   Typography,
 } from '@material-ui/core';
 import { ResponsiveHeatMap } from '@nivo/heatmap';
@@ -53,11 +51,15 @@ const CustomTooltip = ({ habitName, auxData }) => {
   }
   return (
     <>
-      <strong>{auxData.date}</strong>
-      <br />
-      {auxData.timeActual !== -1 && `Actual ${habitName}: ${auxData.timeActual}`}
-      <br />
-      {auxData.timeTarget !== -1 && `Target ${habitName}: ${auxData.timeTarget}`}
+      <Typography variant="caption" display="block">
+        <strong>{auxData.date}</strong>
+      </Typography>
+      <Typography variant="caption" display="block">
+        {auxData.timeActual !== -1 && `Actual ${habitName}: ${auxData.timeActual}`}
+      </Typography>
+      <Typography variant="caption" display="block">
+        {auxData.timeTarget !== -1 && `Target ${habitName}: ${auxData.timeTarget}`}
+      </Typography>
     </>
   );
 };

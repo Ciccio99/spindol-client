@@ -12,36 +12,47 @@ import HabitServices from 'services/HabitServices';
 import BedtimeHabitPanel from 'components/habits/BedtimeHabitPanel';
 import WaketimeHabitPanel from 'components/habits/WaketimeHabitPanel';
 import HabitHeatMap from 'components/chart/HabitHeatMap';
+import dateViews from 'constants/dateViews';
+import useMobile from 'hooks/useMobile';
 
 const TITLE = 'Bedtime/Waketime Tracker  ';
 const SUBTITLE = 'Track how often you hit your bedtime & waketime goals.';
 
 const HabitModule = () => {
+  const { isMobile } = useMobile();
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [currDateView, setCurrDateView] = useState(isMobile ? dateViews.W : dateViews.M);
   const [currMonth, setCurrMonth] = useState(moment().format('MMMM'));
-  const [startDate, setStartDate] = useState(moment().startOf('month').format('YYYY-MM-DD'));
-  const [endDate, setEndDate] = useState(moment().endOf('month').format('YYYY-MM-DD'));
+  const [startDate, setStartDate] = useState(moment().startOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'));
+  const [endDate, setEndDate] = useState(moment().endOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'));
   const [bedtimeHabit, setBedtimeHabit] = useState();
   const [waketimeHabit, setWaketimeHabit] = useState();
   const [heatmapData, setHeatmapData] = useState();
 
   useEffect(() => {
+    setStartDate(moment().startOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'));
+    setEndDate(moment().endOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'));
+    setCurrDateView(isMobile ? dateViews.W : dateViews.M);
+  }, [isMobile]);
+
+  useEffect(() => {
     (async () => {
-      try {
-        const data = await HabitServices.getDashboardData(startDate, endDate);
+      const { data, error } = await HabitServices
+        .getDashboardData(startDate, endDate, currDateView);
+      if (error) {
+        setErrorMessage('Something went wrong, unable to load your habits...');
+      } else {
+        console.log(data);
         setBedtimeHabit(data.bedtime);
         setWaketimeHabit(data.waketime);
         setHeatmapData(data.heatmapData);
         console.log(data.heatmapData);
-        setError(false);
-      } catch (e) {
-        setError('Something went wrong, unable to load your habits...');
-      } finally {
-        setIsLoading(false);
+        setErrorMessage(false);
       }
+      setIsLoading(false);
     })();
-  }, [startDate, endDate]);
+  }, [startDate, endDate, currDateView]);
 
   if (isLoading) {
     return (
@@ -51,10 +62,10 @@ const HabitModule = () => {
     );
   }
 
-  if (error) {
+  if (errorMessage) {
     return (
       <PanelModule title={TITLE} subtitle={SUBTITLE}>
-        <Typography variant="subtitle1">{error}</Typography>
+        <Typography variant="subtitle1">{errorMessage}</Typography>
       </PanelModule>
     );
   }
@@ -65,7 +76,11 @@ const HabitModule = () => {
         <Typography variant="subtitle1">{currMonth}</Typography>
       </Box>
       <Box height={160} display="flex" justifyContent="center">
-        <HabitHeatMap data={heatmapData.data} auxData={heatmapData.auxData} keys={heatmapData.keys} />
+        <HabitHeatMap
+          data={heatmapData.data}
+          auxData={heatmapData.auxData}
+          keys={heatmapData.keys}
+        />
       </Box>
       <Box>
         <Grid container justify="center" alignItems="center" spacing={1}>

@@ -29,20 +29,23 @@ const getHeatmapCellData = (dateTime, habits) => {
   };
 };
 
-const getHeatmapData = (sleepSummaries, bedtimeHabits, waketimeHabits) => {
+const getHeatmapData = (sleepSummaries, bedtimeHabits, waketimeHabits, startDate, endDate, dateView = 'month') => {
   const bedtimeData = { habit: 'Bedtime' };
   const bedtimeDataAux = {};
   const waketimeData = { habit: 'Waketime' };
   const waketimeDataAux = { };
-  const daysInMonth = moment(sleepSummaries[0].date).endOf('month').date();
-  const keys = Array(daysInMonth).fill().map((_, i) => `${i + 1}`);
+  const startDay = moment(startDate).date();
+  const endDay = moment(endDate).date();
+  const keys = [];
   const dummyCellData = { timeTarget: -1, targetDiff: -1, timeActual: -1 };
   const sleepSummaryMap = {};
   sleepSummaries.forEach((ss) => {
     const key = moment.utc(ss.date).date();
     sleepSummaryMap[key] = ss;
   });
-  for (let day = 1; day <= daysInMonth; day += 1) {
+
+  for (let day = startDay; day <= endDay; day += 1) {
+    keys.push(`${day}`);
     if (sleepSummaryMap[day]) {
       const ss = sleepSummaryMap[day];
       // Bedtime
