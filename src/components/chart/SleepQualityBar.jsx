@@ -9,7 +9,6 @@ import SleepSummaryServices from 'services/SleepSummaryServices';
 import useMobile from 'hooks/useMobile';
 
 Chart.plugins.unregister(ChartDataLabels);
-// moment.tz.setDefault('UTC');
 
 const SLEEP_STATE_COLOR = {
   awake: '#bdbcbc',
@@ -124,7 +123,7 @@ const SleepQualityBar = ({ sleepSummaries }) => {
                 case 2:
                   return `${(tooltipItem.yLabel / 3600).toFixed(1)} hrs REM`;
                 case 3:
-                return `${(tooltipItem.yLabel / 3600).toFixed(1)} Total Sleep Avg`;
+                  return `${(tooltipItem.yLabel / 3600).toFixed(1)} Total Sleep Avg`;
                 default:
                   return tooltipItem.yLabel;
               }

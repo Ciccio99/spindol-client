@@ -118,4 +118,4 @@ const MobileMenu = () => {
   );
 };
 
-export default MobileMenu;
+export default React.memo(MobileMenu);

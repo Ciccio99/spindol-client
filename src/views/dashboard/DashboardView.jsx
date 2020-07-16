@@ -13,6 +13,7 @@ import SleepTrialTrackerPanel from 'components/sleepTrialTracker/SleepTrialTrack
 import MoodModule from 'components/modules/MoodModule';
 import FatigueModule from 'components/modules/FatigueModule';
 import SleepComparisonModule from 'components/modules/SleepComparisonModule';
+import HabitModule from 'components/modules/HabitModule';
 import Section from 'components/organizers/Section';
 import ConnectDeviceCTA from 'components/cta/ConnectDevice';
 
@@ -72,9 +73,9 @@ const DashboardView = () => {
             </Grid>
           </Box>
         </Section>
-        {/* <Section>
-          <SleepComparisonModule />
-        </Section> */}
+        <Section>
+          <HabitModule />
+        </Section>
         <Section>
           <SleepTrialTrackerPanel trialTrackers={sleepTrialTrackers} />
         </Section>
