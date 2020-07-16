@@ -69,29 +69,29 @@ const HabitModule = () => {
       </Box>
       <Box>
         <Grid container justify="center" alignItems="center" spacing={1}>
-          <Grid item>
+          <Grid item xs={6} sm="auto">
             <Box px={2} py={1} borderRadius={5} style={{ backgroundColor: 'rgb(143, 239, 155)' }}>
-              <Typography variant="caption" display="inline">0-30 min</Typography>
+              <Typography variant="caption" align="center">0-30 min</Typography>
             </Box>
           </Grid>
-          <Grid item>
+          <Grid item xs={6} sm="auto">
             <Box px={2} py={1} borderRadius={5} style={{ backgroundColor: 'rgba(250,200,86,1)' }}>
-              <Typography variant="caption" display="inline">30-60 min</Typography>
+              <Typography variant="caption" align="center">30-60 min</Typography>
             </Box>
           </Grid>
-          <Grid item>
+          <Grid item xs={6} sm="auto">
             <Box px={2} py={1} borderRadius={5} style={{ backgroundColor: 'rgba(230,126,86,1)' }}>
-              <Typography variant="caption" display="inline">60-90 min</Typography>
+              <Typography variant="caption" align="center">60-90 min</Typography>
             </Box>
           </Grid>
-          <Grid item>
+          <Grid item xs={6} sm="auto">
             <Box px={2} py={1} borderRadius={5} style={{ backgroundColor: 'rgba(218,80,87,1)' }}>
-              <Typography variant="caption" display="inline">90+ min</Typography>
+              <Typography variant="caption" align="center">90+ min</Typography>
             </Box>
           </Grid>
         </Grid>
       </Box>
-      <Box mt={2}>
+      <Box mt={4}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12}>
             <Box>

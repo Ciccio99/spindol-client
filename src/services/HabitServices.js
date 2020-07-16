@@ -48,8 +48,8 @@ const getDashboardData = async (startDate, endDate) => {
     });
 
     const responses = await Promise.all([bedtimeReq, waketimeReq, sleepReq]);
-    const bedtimeHabits = responses[0].data.length > 0 ? responses[0].data : undefined;
-    const waketimeHabits = responses[1].data.length > 0 ? responses[1].data : undefined;
+    const bedtimeHabits = responses[0].data.length > 0 ? responses[0].data : [];
+    const waketimeHabits = responses[1].data.length > 0 ? responses[1].data : [];
     const sleepSummaries = responses[2].data.length > 0 ? responses[2].data : [];
     const heatmapData = HabitUtils.getHeatmapData(sleepSummaries, bedtimeHabits, waketimeHabits);
     const activeBedtimeHabit = bedtimeHabits.find((habit) => habit.active);
