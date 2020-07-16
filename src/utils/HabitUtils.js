@@ -21,11 +21,15 @@ const getHeatmapCellData = (dateTime, habits) => {
     }
   }
   const timeActual = `${dateTime.hours()}:${dateTime.minutes() < 9 ? `0${dateTime.minutes()}` : dateTime.minutes()}`;
-  return { timeTarget, targetDiff, timeActual };
+  return {
+    timeTarget,
+    targetDiff,
+    timeActual,
+    date: dateTime.format('MMMM DD, YYYY'),
+  };
 };
 
 const getHeatmapData = (sleepSummaries, bedtimeHabits, waketimeHabits) => {
-  console.log(waketimeHabits)
   const bedtimeData = { habit: 'Bedtime' };
   const bedtimeDataAux = {};
   const waketimeData = { habit: 'Waketime' };
@@ -38,37 +42,27 @@ const getHeatmapData = (sleepSummaries, bedtimeHabits, waketimeHabits) => {
     const key = moment.utc(ss.date).date();
     sleepSummaryMap[key] = ss;
   });
-  console.log(sleepSummaryMap);
   for (let day = 1; day <= daysInMonth; day += 1) {
     if (sleepSummaryMap[day]) {
       const ss = sleepSummaryMap[day];
       // Bedtime
       const bedtime = moment.utc(ss.startDateTime).add(ss.timezoneOffset, 'minutes');
       const bedtimeCellData = getHeatmapCellData(bedtime, bedtimeHabits);
-      bedtimeData[day] = bedtimeCellData.targetDiff;
-      bedtimeDataAux[day] = {
-        timeTarget: bedtimeCellData.timeTarget,
-        timeActual: bedtimeCellData.timeActual,
-      };
+      const { targetDiff: bedtimeDiff, ...bedtimeAuxData } = bedtimeCellData;
+      bedtimeData[day] = bedtimeDiff;
+      bedtimeDataAux[day] = bedtimeAuxData;
       // Waketime
       const waketime = moment.utc(ss.endDateTime).add(ss.timezoneOffset, 'minutes');
       const waketimeCellData = getHeatmapCellData(waketime, waketimeHabits);
-      waketimeData[day] = waketimeCellData.targetDiff;
-      waketimeDataAux[day] = {
-        timeTarget: waketimeCellData.timeTarget,
-        timeActual: waketimeCellData.timeActual,
-      };
+      const { targetDiff: waketimeDiff, ...waketimeAuxData } = waketimeCellData;
+      waketimeData[day] = waketimeDiff;
+      waketimeDataAux[day] = waketimeAuxData;
     } else {
-      bedtimeData[day] = dummyCellData.targetDiff;
-      bedtimeDataAux[day] = {
-        timeTarget: dummyCellData.timeTarget,
-        timeActual: dummyCellData.timeActual,
-      };
-      waketimeData[day] = dummyCellData.targetDiff;
-      waketimeDataAux[day] = {
-        timeTarget: dummyCellData.timeTarget,
-        timeActual: dummyCellData.timeActual,
-      };
+      const { targetDiff, ...auxData } = dummyCellData;
+      bedtimeData[day] = targetDiff;
+      bedtimeDataAux[day] = auxData;
+      waketimeData[day] = targetDiff;
+      waketimeDataAux[day] = auxData;
     }
   }
 
