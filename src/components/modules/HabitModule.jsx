@@ -106,7 +106,7 @@ const HabitModule = () => {
       <Box mt={0.5} height={2}>
         { isUpdating && <LinearProgress color="secondary" /> }
       </Box>
-      <Box height={120} display="flex" justifyContent="space-between" alignItems="center">
+      <Box height={140} display="flex" justifyContent="space-between" alignItems="center">
         <HabitHeatMap
           data={heatmapData.data}
           auxData={heatmapData.auxData}
