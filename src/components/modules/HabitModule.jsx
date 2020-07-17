@@ -24,6 +24,7 @@ const SUBTITLE = 'Measure how often you achieve your bedtime & waketime habits.'
 const HabitModule = () => {
   const { isMobile } = useMobile();
   const [isLoading, setIsLoading] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [currDateView, setCurrDateView] = useState(isMobile ? dateViews.W : dateViews.M);
   const [viewDates, setViewDates] = useState({
@@ -63,6 +64,7 @@ const HabitModule = () => {
 
   useEffect(() => {
     (async () => {
+      setIsUpdating(true);
       const { data, error } = await HabitServices
         .getDashboardData(viewDates.startDate, viewDates.endDate, currDateView);
       if (error) {
@@ -73,6 +75,7 @@ const HabitModule = () => {
         setHeatmapData(data.heatmapData);
         setErrorMessage(false);
       }
+      setIsUpdating(false);
       setIsLoading(false);
     })();
   }, [viewDates, currDateView]);
@@ -99,6 +102,9 @@ const HabitModule = () => {
         <ArrowBackIosIcon onClick={handleBackClick} fontSize="small" color="action" className={styles.navArrow} />
         <Typography variant="subtitle1" display="inline">{viewDates.month}</Typography>
         <ArrowForwardIosIcon onClick={handleForwardClick} fontSize="small" color="action" className={styles.navArrow} />
+      </Box>
+      <Box mt={0.5} height={2}>
+        { isUpdating && <LinearProgress color="secondary" /> }
       </Box>
       <Box height={120} display="flex" justifyContent="space-between" alignItems="center">
         <HabitHeatMap
