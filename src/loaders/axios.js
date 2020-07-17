@@ -16,7 +16,7 @@ instance.interceptors.request.use((reqConfig) => {
 
 instance.interceptors.request.use((reqConfig) => {
   const newConfig = reqConfig;
-  newConfig.timeout = 5000;
+  newConfig.timeout = 10000;
   return newConfig;
 }, (error) => Promise.reject(error));
 

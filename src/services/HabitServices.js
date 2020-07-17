@@ -12,8 +12,7 @@ const DATA_TYPES = {
 const getDashboardData = async (startDate, endDate, dateView = dateViews.M) => {
   let start = startDate;
   let end = endDate;
-  console.log(start);
-  console.log(end);
+
   if (!start) {
     start = moment().startOf('month').format('YYYY-MM-DD');
   }

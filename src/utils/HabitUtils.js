@@ -34,8 +34,6 @@ const getHeatmapData = (sleepSummaries, bedtimeHabits, waketimeHabits, startDate
   const bedtimeDataAux = {};
   const waketimeData = { habit: 'Waketime' };
   const waketimeDataAux = { };
-  const startDay = moment(startDate).date();
-  const endDay = moment(endDate).date();
   const keys = [];
   const dummyCellData = { timeTarget: -1, targetDiff: -1, timeActual: -1 };
   const sleepSummaryMap = {};
@@ -43,8 +41,10 @@ const getHeatmapData = (sleepSummaries, bedtimeHabits, waketimeHabits, startDate
     const key = moment.utc(ss.date).date();
     sleepSummaryMap[key] = ss;
   });
-
-  for (let day = startDay; day <= endDay; day += 1) {
+  const dayDate = moment(startDate);
+  const finalDay = moment(endDate);
+  while (!dayDate.isAfter(finalDay)) {
+    const day = dayDate.date();
     keys.push(`${day}`);
     if (sleepSummaryMap[day]) {
       const ss = sleepSummaryMap[day];
@@ -67,6 +67,7 @@ const getHeatmapData = (sleepSummaries, bedtimeHabits, waketimeHabits, startDate
       waketimeData[day] = targetDiff;
       waketimeDataAux[day] = auxData;
     }
+    dayDate.add(1, 'day');
   }
 
   return {

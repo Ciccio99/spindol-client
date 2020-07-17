@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
+  Divider,
   Typography,
 } from '@material-ui/core';
 import { ResponsiveHeatMap } from '@nivo/heatmap';
@@ -45,7 +46,7 @@ const CustomCell = ({
   </g>
 );
 
-const CustomTooltip = ({ habitName, auxData }) => {
+const CustomTooltip = ({ value, habitName, auxData }) => {
   if (auxData.timeActual === -1 && auxData.timeTarget === -1) {
     return (<>{`No ${habitName} data available`}</>);
   }
@@ -54,11 +55,15 @@ const CustomTooltip = ({ habitName, auxData }) => {
       <Typography variant="caption" display="block">
         <strong>{auxData.date}</strong>
       </Typography>
+      <Divider />
       <Typography variant="caption" display="block">
         {auxData.timeActual !== -1 && `Actual ${habitName}: ${auxData.timeActual}`}
       </Typography>
       <Typography variant="caption" display="block">
         {auxData.timeTarget !== -1 && `Target ${habitName}: ${auxData.timeTarget}`}
+      </Typography>
+      <Typography variant="caption" display="block">
+        {value !== -1 && `Time Δ: ${value} mins`}
       </Typography>
     </>
   );

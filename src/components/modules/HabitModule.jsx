@@ -6,6 +6,8 @@ import {
   LinearProgress,
   Divider,
 } from '@material-ui/core';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import moment from 'moment-timezone';
 import PanelModule from 'components/organizers/PanelModule';
 import HabitServices from 'services/HabitServices';
@@ -15,44 +17,64 @@ import HabitHeatMap from 'components/chart/HabitHeatMap';
 import dateViews from 'constants/dateViews';
 import useMobile from 'hooks/useMobile';
 
-const TITLE = 'Bedtime/Waketime Tracker  ';
-const SUBTITLE = 'Track how often you hit your bedtime & waketime goals.';
+const TITLE = 'Sleep Habit Tracker  ';
+const SUBTITLE = 'Measure how often you achieve your bedtime & waketime habits.';
 
 const HabitModule = () => {
   const { isMobile } = useMobile();
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [currDateView, setCurrDateView] = useState(isMobile ? dateViews.W : dateViews.M);
-  const [currMonth, setCurrMonth] = useState(moment().format('MMMM'));
-  const [startDate, setStartDate] = useState(moment().startOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'));
-  const [endDate, setEndDate] = useState(moment().endOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'));
+  const [viewDates, setViewDates] = useState({
+    startDate: moment().startOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'),
+    endDate: moment().endOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'),
+    month: moment().format('MMMM'),
+  });
   const [bedtimeHabit, setBedtimeHabit] = useState();
   const [waketimeHabit, setWaketimeHabit] = useState();
   const [heatmapData, setHeatmapData] = useState();
 
+
+  const handleBackClick = () => {
+    setViewDates((prevState) => ({
+      startDate: moment(prevState.startDate).subtract(1, currDateView).format('YYYY-MM-DD'),
+      endDate: moment(prevState.endDate).subtract(1, currDateView).format('YYYY-MM-DD'),
+      month: moment(prevState.startDate).subtract(1, currDateView).format('MMMM'),
+    }));
+  };
+
+  const handleForwardClick = () => {
+    setViewDates((prevState) => ({
+      startDate: moment(prevState.startDate).add(1, currDateView).format('YYYY-MM-DD'),
+      endDate: moment(prevState.endDate).add(1, currDateView).format('YYYY-MM-DD'),
+      month: moment(prevState.startDate).add(1, currDateView).format('MMMM'),
+    }));
+  };
+
   useEffect(() => {
-    setStartDate(moment().startOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'));
-    setEndDate(moment().endOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'));
+    setViewDates((prevState) => ({
+      startDate: moment().startOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'),
+      endDate: moment().endOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'),
+      month: prevState.month,
+    }));
     setCurrDateView(isMobile ? dateViews.W : dateViews.M);
   }, [isMobile]);
 
   useEffect(() => {
     (async () => {
       const { data, error } = await HabitServices
-        .getDashboardData(startDate, endDate, currDateView);
+        .getDashboardData(viewDates.startDate, viewDates.endDate, currDateView);
       if (error) {
         setErrorMessage('Something went wrong, unable to load your habits...');
       } else {
-        console.log(data);
         setBedtimeHabit(data.bedtime);
         setWaketimeHabit(data.waketime);
         setHeatmapData(data.heatmapData);
-        console.log(data.heatmapData);
         setErrorMessage(false);
       }
       setIsLoading(false);
     })();
-  }, [startDate, endDate, currDateView]);
+  }, [viewDates, currDateView]);
 
   if (isLoading) {
     return (
@@ -72,10 +94,12 @@ const HabitModule = () => {
 
   return (
     <PanelModule title={TITLE} subtitle={SUBTITLE}>
-      <Box display="flex" justifyContent="center">
-        <Typography variant="subtitle1">{currMonth}</Typography>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <ArrowBackIosIcon onClick={handleBackClick} fontSize="small" color="action" />
+        <Typography variant="subtitle1" display="inline">{viewDates.month}</Typography>
+        <ArrowForwardIosIcon onClick={handleForwardClick} fontSize="small" color="action" />
       </Box>
-      <Box height={160} display="flex" justifyContent="center">
+      <Box height={160} display="flex" justifyContent="space-between" alignItems="center">
         <HabitHeatMap
           data={heatmapData.data}
           auxData={heatmapData.auxData}
@@ -83,25 +107,26 @@ const HabitModule = () => {
         />
       </Box>
       <Box>
+        <Typography variant="caption" align="center" display="block" gutterBottom>Time Δ From Goal:</Typography>
         <Grid container justify="center" alignItems="center" spacing={1}>
           <Grid item xs={6} sm="auto">
-            <Box px={2} py={1} borderRadius={5} style={{ backgroundColor: 'rgb(143, 239, 155)' }}>
-              <Typography variant="caption" align="center">0-30 min</Typography>
+            <Box px={2} py={0.5} borderRadius={5} style={{ backgroundColor: 'rgb(143, 239, 155)' }}>
+              <Typography variant="caption" align="center" display="block">0-30 min</Typography>
             </Box>
           </Grid>
           <Grid item xs={6} sm="auto">
-            <Box px={2} py={1} borderRadius={5} style={{ backgroundColor: 'rgba(250,200,86,1)' }}>
-              <Typography variant="caption" align="center">30-60 min</Typography>
+            <Box px={2} py={0.5} borderRadius={5} style={{ backgroundColor: 'rgba(250,200,86,1)' }}>
+              <Typography variant="caption" align="center" display="block">30-60 min</Typography>
             </Box>
           </Grid>
           <Grid item xs={6} sm="auto">
-            <Box px={2} py={1} borderRadius={5} style={{ backgroundColor: 'rgba(230,126,86,1)' }}>
-              <Typography variant="caption" align="center">60-90 min</Typography>
+            <Box px={2} py={0.5} borderRadius={5} style={{ backgroundColor: 'rgba(230,126,86,1)' }}>
+              <Typography variant="caption" align="center" display="block">60-90 min</Typography>
             </Box>
           </Grid>
           <Grid item xs={6} sm="auto">
-            <Box px={2} py={1} borderRadius={5} style={{ backgroundColor: 'rgba(218,80,87,1)' }}>
-              <Typography variant="caption" align="center">90+ min</Typography>
+            <Box px={2} py={0.5} borderRadius={5} style={{ backgroundColor: 'rgba(218,80,87,1)' }}>
+              <Typography variant="caption" align="center" display="block">90+ min</Typography>
             </Box>
           </Grid>
         </Grid>
