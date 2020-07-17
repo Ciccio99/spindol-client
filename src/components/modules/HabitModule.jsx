@@ -16,6 +16,7 @@ import WaketimeHabitPanel from 'components/habits/WaketimeHabitPanel';
 import HabitHeatMap from 'components/chart/HabitHeatMap';
 import dateViews from 'constants/dateViews';
 import useMobile from 'hooks/useMobile';
+import styles from './HabitModule.module.css';
 
 const TITLE = 'Sleep Habit Tracker  ';
 const SUBTITLE = 'Measure how often you achieve your bedtime & waketime habits.';
@@ -95,11 +96,11 @@ const HabitModule = () => {
   return (
     <PanelModule title={TITLE} subtitle={SUBTITLE}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <ArrowBackIosIcon onClick={handleBackClick} fontSize="small" color="action" />
+        <ArrowBackIosIcon onClick={handleBackClick} fontSize="small" color="action" className={styles.navArrow} />
         <Typography variant="subtitle1" display="inline">{viewDates.month}</Typography>
-        <ArrowForwardIosIcon onClick={handleForwardClick} fontSize="small" color="action" />
+        <ArrowForwardIosIcon onClick={handleForwardClick} fontSize="small" color="action" className={styles.navArrow} />
       </Box>
-      <Box height={160} display="flex" justifyContent="space-between" alignItems="center">
+      <Box height={120} display="flex" justifyContent="space-between" alignItems="center">
         <HabitHeatMap
           data={heatmapData.data}
           auxData={heatmapData.auxData}
@@ -132,6 +133,16 @@ const HabitModule = () => {
         </Grid>
       </Box>
       <Box mt={4}>
+        {
+          !bedtimeHabit
+          && !waketimeHabit
+          && (
+            <Typography variant="subtitle2" gutterBottom>
+              <span role="img" aria-label="warning" style={{ color: '#FAC856' }}>⚠️</span>
+              {' You haven\'t set any sleep habit goals yet! Set your Bedtime & Waketime goals to track how consistent you are at maintaing your sleep habits.'}
+            </Typography>
+          )
+        }
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12}>
             <Box>

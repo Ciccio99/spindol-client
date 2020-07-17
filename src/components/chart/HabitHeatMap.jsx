@@ -75,7 +75,7 @@ const HabitHeatMap = ({ data, auxData, keys }) => (
       indexBy="habit"
       keys={keys}
       margin={{
-        right: 20, left: 60,
+        right: 20, top: 20, left: 60,
       }}
       padding={2}
       forceSquare
