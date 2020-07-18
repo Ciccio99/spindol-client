@@ -1,31 +1,63 @@
 import moment from 'moment-timezone';
 
-const getHeatmapCellData = (dateTime, habits) => {
-  const habitMins = dateTime.hours() * 60 + dateTime.minutes();
+const MINUTES_IN_DAY = 1440;
+const MINUTES_IN_HALF_DAY = 720;
+
+const getBedtimeCellData = (ss, habits) => {
+  const date = moment.utc(ss.date);
+  const bedDateTime = moment.utc(ss.startDateTime).utcOffset(ss.timezoneOffset);
+  const habitMins = bedDateTime.hours() * 60 + bedDateTime.minutes();
   let timeTarget = -1;
   let targetDiff = -1;
   for (let i = 0; i < habits.length; i += 1) {
     const habit = habits[i];
-    if (habit.active) {
-      if (dateTime.isSameOrAfter(habit.startDate)) {
+    if (
+      (habit.active && bedDateTime.isSameOrAfter(habit.startDate))
+      || bedDateTime.isBetween(habit.startDate, habit.endDate, undefined, '[]')
+    ) {
+      if (habit.targetValue > MINUTES_IN_HALF_DAY || habitMins > MINUTES_IN_HALF_DAY) {
+        targetDiff = Math.abs(Math.abs(habitMins - habit.targetValue) - MINUTES_IN_DAY);
+      } else {
         targetDiff = Math.abs(habitMins - habit.targetValue);
-        timeTarget = moment().startOf('day').add(habit.targetValue, 'minutes');
-        timeTarget = `${timeTarget.hours()}:${timeTarget.minutes() <= 9 ? `0${timeTarget.minutes()}` : timeTarget.minutes()}`;
-        break;
       }
-    } else if (dateTime.isBetween(habit.startDate, habit.endDate, undefined, '[]')) {
+      timeTarget = moment().startOf('day').add(habit.targetValue, 'minutes');
+      timeTarget = `${timeTarget.hours()}:${timeTarget.minutes() <= 9 ? `0${timeTarget.minutes()}` : timeTarget.minutes()}`;
+      break;
+    }
+  }
+  const timeActual = `${bedDateTime.hours()}:${bedDateTime.minutes() < 9 ? `0${bedDateTime.minutes()}` : bedDateTime.minutes()}`;
+  return {
+    timeTarget,
+    targetDiff,
+    timeActual,
+    date: date.format('MMMM DD, YYYY'),
+  };
+};
+
+const getWaketimeCellData = (ss, habits) => {
+  const date = moment.utc(ss.date);
+  const wakeDateTime = moment.utc(ss.endDateTime).utcOffset(ss.timezoneOffset);
+  const habitMins = wakeDateTime.hours() * 60 + wakeDateTime.minutes();
+  let timeTarget = -1;
+  let targetDiff = -1;
+  for (let i = 0; i < habits.length; i += 1) {
+    const habit = habits[i];
+    if (
+      (habit.active && wakeDateTime.isSameOrAfter(habit.startDate))
+      || wakeDateTime.isBetween(habit.startDate, habit.endDate, undefined, '[]')
+    ) {
       targetDiff = Math.abs(habitMins - habit.targetValue);
       timeTarget = moment().startOf('day').add(habit.targetValue, 'minutes');
       timeTarget = `${timeTarget.hours()}:${timeTarget.minutes() <= 9 ? `0${timeTarget.minutes()}` : timeTarget.minutes()}`;
       break;
     }
   }
-  const timeActual = `${dateTime.hours()}:${dateTime.minutes() < 9 ? `0${dateTime.minutes()}` : dateTime.minutes()}`;
+  const timeActual = `${wakeDateTime.hours()}:${wakeDateTime.minutes() < 9 ? `0${wakeDateTime.minutes()}` : wakeDateTime.minutes()}`;
   return {
     timeTarget,
     targetDiff,
     timeActual,
-    date: dateTime.format('MMMM DD, YYYY'),
+    date: date.format('MMMM DD, YYYY'),
   };
 };
 
@@ -49,14 +81,14 @@ const getHeatmapData = (sleepSummaries, bedtimeHabits, waketimeHabits, startDate
     if (sleepSummaryMap[day]) {
       const ss = sleepSummaryMap[day];
       // Bedtime
-      const bedtime = moment.utc(ss.startDateTime).add(ss.timezoneOffset, 'minutes');
-      const bedtimeCellData = getHeatmapCellData(bedtime, bedtimeHabits);
+
+      const bedtimeCellData = getBedtimeCellData(ss, bedtimeHabits);
       const { targetDiff: bedtimeDiff, ...bedtimeAuxData } = bedtimeCellData;
       bedtimeData[day] = bedtimeDiff;
       bedtimeDataAux[day] = bedtimeAuxData;
       // Waketime
-      const waketime = moment.utc(ss.endDateTime).add(ss.timezoneOffset, 'minutes');
-      const waketimeCellData = getHeatmapCellData(waketime, waketimeHabits);
+
+      const waketimeCellData = getWaketimeCellData(ss, waketimeHabits);
       const { targetDiff: waketimeDiff, ...waketimeAuxData } = waketimeCellData;
       waketimeData[day] = waketimeDiff;
       waketimeDataAux[day] = waketimeAuxData;
