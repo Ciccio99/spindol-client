@@ -96,29 +96,30 @@ const FatigueModule = ({ date }) => {
 
   return (
     <PanelModule title={TITLE} subtitle={fatigueState.date} tooltip={TOOLTIP}>
-      <Grid container alignItems="center" justify="center" spacing={4}>
-        <Grid item xs={12} sm={12}>
-          <Typography variant="h2" align="center" style={{ color: fatigueState.color }}>{fatigueState.score}</Typography>
-          <Typography variant="h6" align="center">{`${fatigueState.level} Fatigue`}</Typography>
-          <Typography variant="caption" component="div" align="center" color="textSecondary">{fatigueState.message}</Typography>
+      <Box display="flex" alignItems="center" justifyContent="center">
+        <Grid container alignItems="center" justify="center" spacing={4}>
+          <Grid item xs={12} sm={12}>
+            <Typography variant="h2" align="center" style={{ color: fatigueState.color }}>{fatigueState.score}</Typography>
+            <Typography variant="h6" align="center">{`${fatigueState.level} Fatigue`}</Typography>
+            <Typography variant="caption" component="div" align="center" color="textSecondary">{fatigueState.message}</Typography>
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <LinearProgress
+              value={fatigueState.score}
+              variant="determinate"
+              classes={{
+                root: classes.root,
+                colorPrimary: classes.colorPrimary,
+                barColorPrimary: classes.barColorPrimary,
+              }}
+            />
+            <Box p={1} px={0.5} display="flex" justifyContent="space-between">
+              <Typography variant="caption" display="inline" color="textSecondary">0 (Low)</Typography>
+              <Typography variant="caption" display="inline" color="textSecondary">100 (Extreme)</Typography>
+            </Box>
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={12}>
-          <LinearProgress
-            value={fatigueState.score}
-            variant="determinate"
-            classes={{
-              root: classes.root,
-              colorPrimary: classes.colorPrimary,
-              barColorPrimary: classes.barColorPrimary,
-            }}
-          />
-          <Box p={1} px={0.5} display="flex" justifyContent="space-between">
-            <Typography variant="caption" display="inline" color="textSecondary">0 (Low)</Typography>
-            <Typography variant="caption" display="inline" color="textSecondary">100 (Extreme)</Typography>
-          </Box>
-
-        </Grid>
-      </Grid>
+      </Box>
     </PanelModule>
   );
 };
