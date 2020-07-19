@@ -3,22 +3,40 @@ import {
   Box,
   Container,
   Typography,
+  Grid,
 } from '@material-ui/core';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { Helmet } from 'react-helmet-async';
 import MomentUtils from '@date-io/moment';
 import moment from 'moment-timezone';
 import Section from 'components/organizers/Section';
 import DailyDiaryDetailsPanel from '../../components/dailyDiaryDetailsPanel/DailyDiaryDetailsPanel';
+import styles from './CheckInsView.module.css';
 
 const CheckInsView = () => {
-  const [selectedDate, setSelectedDate] = useState(moment().format('YYYY-MM-DD'));
+  const [selectedDate, setSelectedDate] = useState(moment());
 
   const handleDateChange = (date) => {
     setSelectedDate(date.format('YYYY-MM-DD'));
+  };
+
+  const handleBackClick = () => {
+    setSelectedDate((prevDate) => moment(prevDate).subtract(1, 'day'));
+  };
+
+  const handleForwardClick = () => {
+    setSelectedDate((prevDate) => {
+      const newDate = moment(prevDate).add(1, 'day');
+      if (newDate.isAfter(moment(), 'day')) {
+        return prevDate;
+      }
+      return newDate;
+    });
   };
 
   return (
@@ -35,20 +53,29 @@ const CheckInsView = () => {
       </Box>
 
       <Box mt={4}>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <KeyboardDatePicker
-            autoOk
-            variant="inline"
-            inputVariant="outlined"
-            margin="normal"
-            InputAdornmentProps={{ position: 'start' }}
-            label="Select a date to view"
-            format="MM-DD-YYYY"
-            disableFuture
-            value={selectedDate}
-            onChange={handleDateChange}
-          />
-        </MuiPickersUtilsProvider>
+        <Grid container spacing={2} alignItems="center" wrap="nowrap">
+          <Grid item>
+            <ArrowBackIosIcon onClick={handleBackClick} color="action" className={styles.navArrow} />
+          </Grid>
+          <Grid item>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+              <KeyboardDatePicker
+                autoOk
+                variant="inline"
+                inputVariant="outlined"
+                InputAdornmentProps={{ position: 'start' }}
+                label="Select a date to view"
+                format="MM-DD-YYYY"
+                disableFuture
+                value={selectedDate}
+                onChange={handleDateChange}
+              />
+            </MuiPickersUtilsProvider>
+          </Grid>
+          <Grid item>
+            <ArrowForwardIosIcon onClick={handleForwardClick} color="action" className={styles.navArrow} />
+          </Grid>
+        </Grid>
       </Box>
       <Section>
         <DailyDiaryDetailsPanel selectedDate={selectedDate} />

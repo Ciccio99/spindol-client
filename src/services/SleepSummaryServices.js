@@ -77,8 +77,18 @@ const getAvgBedtime = (sleepSummaries) => {
   });
 
   diffMins = Math.floor(diffMins / sleepSummaries.length);
-  // const bedTime = moment('2020-4-20', 'YYYY-MM-DD').add(diffMins, 'minutes');
   return diffMins;
+};
+
+const getAvgAvgHeartRate = (sleepSummaries) => {
+  let avgHr = 0;
+  sleepSummaries.forEach((ss) => {
+    avgHr += ss.hrAverage;
+  });
+
+  avgHr /= sleepSummaries.length;
+
+  return avgHr;
 };
 
 const getSleepSummaryAvgStats = (sleepSummaries, oldSleepSummaries = undefined) => {
@@ -87,6 +97,7 @@ const getSleepSummaryAvgStats = (sleepSummaries, oldSleepSummaries = undefined) 
   const avgDeepDuration = getAvgDeepHoursDuration(sleepSummaries);
   const avgBedtimeMins = getAvgBedtime(sleepSummaries);
   const avgBedtime = moment('2020-4-20', 'YYYY-MM-DD').add(avgBedtimeMins, 'minutes');
+  const avgHr = getAvgAvgHeartRate(sleepSummaries);
 
   const stats = [
     {
@@ -108,6 +119,11 @@ const getSleepSummaryAvgStats = (sleepSummaries, oldSleepSummaries = undefined) 
       stat: avgBedtime.format('h:mm a'),
       units: null,
       description: 'Bedtime',
+    },
+    {
+      stat: avgHr.toFixed(0),
+      units: 'bpm',
+      description: 'Resting HR',
     },
   ];
 
@@ -132,6 +148,7 @@ const getSleepSummaryStats = (sleepSummary) => {
   const sleepDuration = getSleepHoursDuration(sleepSummary).toFixed(1);
   const remDuration = (sleepSummary.remSleepDuration / 3600).toFixed(1);
   const deepDuration = (sleepSummary.deepSleepDuration / 3600).toFixed(1);
+  const avgHr = sleepSummary.hrAverage;
   const bedtime = moment.utc(sleepSummary.startDateTime).utcOffset(sleepSummary.timezoneOffset);
   const { efficiency } = sleepSummary;
 
@@ -155,7 +172,13 @@ const getSleepSummaryStats = (sleepSummary) => {
       stat: bedtime.format('h:mm a'),
       units: null,
       description: 'Bedtime',
-    }, {
+    },
+    {
+      stat: avgHr.toFixed(0),
+      units: 'bpm',
+      description: 'Resting HR',
+    },
+    {
       stat: efficiency,
       units: '%',
       description: 'Sleep Efficiency',
