@@ -20,8 +20,12 @@ const TITLE = 'Sleep';
 const StatsDisplay = () => {
   const { user } = useContext(UserContext);
   const { dispatchAlertSystem } = useContext(AlertSystemContext);
-  const [stats, setStats] = useState([]);
-  const [todayStats, setTodayStats] = useState([]);
+  const [stats, setStats] = useState({
+    baselineStats: undefined,
+    todayStats: undefined,
+    keys: [],
+    lastSyncDate: '',
+  });
   const [loading, setLoading] = useState(false);
   const [subtitle, setSubtitle] = useState();
 
@@ -29,46 +33,20 @@ const StatsDisplay = () => {
     let didCancel = false;
     (async () => {
       setLoading(true);
-      const match = { };
-      const sort = { date: 'desc' };
-      const limit = 7;
-      const sleepSummaries = await SleepSummaryServices.query(match, sort, limit);
-      if (sleepSummaries.length === 0) {
-        if (didCancel) {
-          setLoading(false);
-          return;
-        }
-        setStats([]);
+
+      const { data, error } = await SleepSummaryServices.getDashboardComparisonData();
+      if (error) {
         dispatchAlertSystem({
           type: 'WARNING',
-          message: 'Sleep data not available.',
+          message: 'Something went wrong. Sleep data unavailable...',
         });
-        setLoading(false);
         return;
       }
-      if (sleepSummaries.length === 1) {
-        if (didCancel) {
-          setLoading(false);
-          setStats([]);
+      if (data) {
+        if (!didCancel) {
+          setStats(data);
+          setSubtitle(`Latest data from ${data.lastSyncDate}`);
         }
-        return;
-      }
-      const data = SleepSummaryServices.getSleepSummaryAvgStats(sleepSummaries);
-      if (didCancel) {
-        setLoading(false);
-        return;
-      }
-      setLoading(false);
-      setSubtitle(`Latest data from ${moment.utc(sleepSummaries[0].date).format('MMMM DD, YYYY')}`);
-      setStats(data);
-    })();
-
-    (async () => {
-      setLoading(true);
-      const sleepSummary = await SleepSummaryServices.getToday();
-      if (sleepSummary) {
-        const statsArr = SleepSummaryServices.getSleepSummaryStats(sleepSummary);
-        setTodayStats(statsArr);
       }
 
       setLoading(false);
@@ -87,7 +65,7 @@ const StatsDisplay = () => {
     );
   }
 
-  if (!todayStats.length && !stats.length) {
+  if (!stats.baselineStats && !stats.todayStats) {
     return (
       <PanelModule title={TITLE}>
         <Typography variant="h6">No sleep data available...</Typography>
@@ -95,7 +73,7 @@ const StatsDisplay = () => {
     );
   }
 
-  if (todayStats.length && stats.length) {
+  if (stats.todayStats && stats.baselineStats) {
     return (
       <PanelModule title={TITLE} subtitle={subtitle}>
         <Box>
@@ -108,11 +86,21 @@ const StatsDisplay = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {stats.map((statObj, index) => (
-                <TableRow key={statObj.description}>
-                  <TableCell align="left" variant="head"><Typography color="primary" variant="subtitle1"><strong>{`${todayStats[index].stat}${todayStats[index].units ? ` ${todayStats[index].units}` : ''}`}</strong></Typography></TableCell>
-                  <TableCell padding="none" align="center"><Typography variant="caption">{statObj.description}</Typography></TableCell>
-                  <TableCell align="right" variant="head"><Typography color="primary" variant="subtitle1"><strong>{`${statObj.stat}${statObj.units ? ` ${statObj.units}` : ''}`}</strong></Typography></TableCell>
+              {stats.keys.map((key) => (
+                <TableRow key={key}>
+                  <TableCell align="left" variant="head">
+                    <Typography color="primary" variant="subtitle1">
+                      <strong>
+                        {`${stats.todayStats[key].stat}${stats.todayStats[key].units ? ` ${stats.todayStats[key].units}` : ''}`}
+                      </strong>
+                    </Typography>
+                  </TableCell>
+                  <TableCell padding="none" align="center"><Typography variant="caption">{stats.baselineStats[key].description}</Typography></TableCell>
+                  <TableCell align="right" variant="head">
+                    <Typography color="primary" variant="subtitle1">
+                      <strong>{`${stats.baselineStats[key].stat}${stats.baselineStats[key].units ? ` ${stats.baselineStats[key].units}` : ''}`}</strong>
+                    </Typography>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -133,10 +121,14 @@ const StatsDisplay = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {stats.map((statObj) => (
-              <TableRow key={statObj.description}>
-                <TableCell align="left"><Typography variant="caption">{statObj.description}</Typography></TableCell>
-                <TableCell align="right" variant="head"><Typography color="primary" variant="subtitle1"><strong>{`${statObj.stat}${statObj.units ? ` ${statObj.units}` : ''}`}</strong></Typography></TableCell>
+            {stats.keys.map((key) => (
+              <TableRow key={stats.baselineStats[key].description}>
+                <TableCell align="left"><Typography variant="caption">{stats.baselineStats[key].description}</Typography></TableCell>
+                <TableCell align="right" variant="head">
+                  <Typography color="primary" variant="subtitle1">
+                    <strong>{`${stats.baselineStats[key].stat}${stats.baselineStats[key].units ? ` ${stats.baselineStats[key].units}` : ''}`}</strong>
+                  </Typography>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -57,11 +57,15 @@ const FatigueModule = ({ date }) => {
   const classes = useStyles();
 
   useEffect(() => {
-    setIsFetching(true);
+    let didCancel = false;
+    if (didCancel) {
+      setIsFetching(true);
+    }
+
     (async () => {
       const searchDate = date ? moment(date) : moment();
       const { data } = await SleepSummaryServices.getFatigueScore(searchDate.format('YYYY-MM-DD'));
-      if (data && data.fatigueScore >= 0) {
+      if (data && data.fatigueScore >= 0 && !didCancel) {
         setFatigueState({
           score: Math.round(data.fatigueScore),
           level: getFatigueLevel(data.fatigueScore),
@@ -70,8 +74,11 @@ const FatigueModule = ({ date }) => {
           date: searchDate.format('MMMM DD, YYYY'),
         });
       }
-      setIsFetching(false);
+      if (!didCancel) {
+        setIsFetching(false);
+      }
     })();
+    return () => { didCancel = true; };
   }, [date]);
 
   if (isFetching) {

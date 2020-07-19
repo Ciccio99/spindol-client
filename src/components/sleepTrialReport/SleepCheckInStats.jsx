@@ -15,8 +15,11 @@ const green = { color: '#5DBD88' };
 const red = { color: '#DE1E3D' };
 
 const SleepCheckInStats = ({ sleepSummaries, sleepTrialTracker }) => {
-  const [sleepStats, setSleepStats] = useState([]);
-  const [incompleteSleepStats, setIncompleteSleepStats] = useState([]);
+  const [stats, setStats] = useState({
+    baselineStats: undefined,
+    trialStats: undefined,
+    keys: [],
+  });
 
   useEffect(() => {
     (async () => {
@@ -27,22 +30,37 @@ const SleepCheckInStats = ({ sleepSummaries, sleepTrialTracker }) => {
       const ssArr = sleepSummaries
         .filter((ss) => dates.some((date) => moment.utc(date).isSame(moment.utc(ss.date), 'day')));
 
-
       const startDate = moment.utc(sleepTrialTracker.startDate).subtract(7, 'days');
       const endDate = moment.utc(sleepTrialTracker.startDate);
       const match = { date: { $gte: startDate.toISOString(), $lt: endDate.toISOString() } };
       const sort = { date: -1 };
       const incompleteSSArr = await SleepSummaryServices.query(match, sort);
 
-      const stats = SleepSummaryServices.getSleepSummaryAvgStats(ssArr, incompleteSSArr);
-      setSleepStats(stats);
+      const trialStats = ssArr.length ? SleepSummaryServices.getSleepSummaryAvgStats(ssArr, incompleteSSArr) : undefined;
+      const baselineStats = incompleteSSArr.length ? SleepSummaryServices.getSleepSummaryAvgStats(incompleteSSArr) : undefined;
 
-      const incompleteStats = SleepSummaryServices.getSleepSummaryAvgStats(incompleteSSArr);
-      setIncompleteSleepStats(incompleteStats);
+      const keys = [];
+      if (baselineStats && trialStats) {
+        const baselineKeys = Object.keys(baselineStats);
+        const todayKeys = Object.keys(trialStats);
+        baselineKeys.forEach((key) => {
+          if (todayKeys.includes(key)) {
+            keys.push(key);
+          }
+        });
+      } else {
+        keys.concat(Object.keys(baselineStats));
+      }
+
+      setStats({
+        baselineStats,
+        trialStats,
+        keys,
+      });
     })();
   }, [sleepSummaries, sleepTrialTracker]);
 
-  if (sleepStats.length === incompleteSleepStats.length) {
+  if (stats.baselineStats && stats.trialStats) {
     return (
       <Box>
         <Table style={{ tableLayout: 'fixed' }}>
@@ -54,28 +72,28 @@ const SleepCheckInStats = ({ sleepSummaries, sleepTrialTracker }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sleepStats.map((statObj, index) => (
-              <TableRow key={statObj.description}>
+            {stats.keys.map((key) => (
+              <TableRow key={key}>
                 <TableCell align="left">
                   <Typography color="primary" variant="subtitle1" display="inline">
                     <strong>
-                      {`${statObj.stat}${statObj.units ? ` ${statObj.units}` : ''}`}
+                      {`${stats.trialStats[key].stat}${stats.trialStats[key].units ? ` ${stats.trialStats[key].units}` : ''}`}
                     </strong>
                   </Typography>
                   {
-                    statObj.diffPercent
+                    stats.trialStats[key].diffPercent
                     && (
-                    <Typography variant="subtitle2" display="inline" style={statObj.diffPercent > 0 ? green : red}>
-                      {` (${statObj.diffPercent}%)`}
+                    <Typography variant="subtitle2" display="inline" style={stats.trialStats[key].diffPercent > 0 ? green : red}>
+                      {` (${stats.trialStats[key].diffPercent}%)`}
                     </Typography>
                     )
                   }
                 </TableCell>
-                <TableCell variant="head" padding="none" align="center"><Typography variant="caption">{statObj.description}</Typography></TableCell>
+                <TableCell variant="head" padding="none" align="center"><Typography variant="caption">{stats.trialStats[key].description}</Typography></TableCell>
                 <TableCell align="right" variant="head">
                   <Typography color="primary" variant="subtitle1">
                     <strong>
-                      {`${incompleteSleepStats[index].stat}${incompleteSleepStats[index].units ? ` ${incompleteSleepStats[index].units}` : ''}`}
+                      {`${stats.baselineStats[key].stat}${stats.baselineStats[key].units ? ` ${stats.baselineStats[key].units}` : ''}`}
                     </strong>
                   </Typography>
                 </TableCell>
@@ -97,13 +115,13 @@ const SleepCheckInStats = ({ sleepSummaries, sleepTrialTracker }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {sleepStats.map((statObj) => (
-            <TableRow key={statObj.description}>
-              <TableCell variant="head" padding="none" align="left"><Typography variant="caption">{statObj.description}</Typography></TableCell>
+          {stats.keys.map((key) => (
+            <TableRow key={key}>
+              <TableCell variant="head" padding="none" align="left"><Typography variant="caption">{stats.trialStats[key].description}</Typography></TableCell>
               <TableCell align="right">
                 <Typography color="primary" variant="subtitle1" display="inline">
                   <strong>
-                    {`${statObj.stat}${statObj.units ? ` ${statObj.units}` : ''}`}
+                    {`${stats.trialStats[key].stat}${stats.trialStats[key].units ? ` ${stats.trialStats[key].units}` : ''}`}
                   </strong>
                 </Typography>
               </TableCell>

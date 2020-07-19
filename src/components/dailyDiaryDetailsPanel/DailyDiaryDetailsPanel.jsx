@@ -35,6 +35,7 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    let didCancel = false;
     (async () => {
       setLoading(true);
       const dd = await DailyDiaryServices.getByDate(selectedDate);
@@ -47,9 +48,12 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
         setDailyDiary();
         return;
       }
-      setDailyDiary(dd);
+      if (!didCancel) {
+        setDailyDiary(dd);
+      }
       setLoading(false);
     })();
+    return () => { didCancel = true; };
   }, [dispatchAlertSystem, selectedDate]);
 
   const handleUpdateMood = async (e) => {
