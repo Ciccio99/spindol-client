@@ -25,7 +25,7 @@ const getBedtimeCellData = (ss, habits) => {
       break;
     }
   }
-  const timeActual = `${bedDateTime.hours()}:${bedDateTime.minutes() < 9 ? `0${bedDateTime.minutes()}` : bedDateTime.minutes()}`;
+  const timeActual = `${bedDateTime.hours()}:${bedDateTime.minutes() <= 9 ? `0${bedDateTime.minutes()}` : bedDateTime.minutes()}`;
   return {
     timeTarget,
     targetDiff,
@@ -52,7 +52,7 @@ const getWaketimeCellData = (ss, habits) => {
       break;
     }
   }
-  const timeActual = `${wakeDateTime.hours()}:${wakeDateTime.minutes() < 9 ? `0${wakeDateTime.minutes()}` : wakeDateTime.minutes()}`;
+  const timeActual = `${wakeDateTime.hours()}:${wakeDateTime.minutes() <= 9 ? `0${wakeDateTime.minutes()}` : wakeDateTime.minutes()}`;
   return {
     timeTarget,
     targetDiff,
