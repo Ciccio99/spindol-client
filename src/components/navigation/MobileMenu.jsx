@@ -10,12 +10,12 @@ import {
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 import UserContext from 'context/userContext';
 import UserServices from 'services/UserServices';
-import AlertSystemContext from 'context/alertSystemContext';
+import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import styles from './Navigation.module.css';
 
 const MobileMenu = () => {
   const { user, dispatchUser } = useContext(UserContext);
-  const { dispatchAlertSystem } = useContext(AlertSystemContext);
+  const dispatchAlertSystem = useAlertSystemDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
 

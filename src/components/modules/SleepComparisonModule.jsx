@@ -9,17 +9,16 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
-import moment from 'moment-timezone';
 import PanelModule from 'components/organizers/PanelModule';
-import UserContext from '../../context/userContext';
-import SleepSummaryServices from '../../services/SleepSummaryServices';
-import AlertSystemContext from '../../context/alertSystemContext';
+import UserContext from 'context/userContext';
+import SleepSummaryServices from 'services/SleepSummaryServices';
+import { useAlertSystemDispatch } from 'context/alertSystemContext';
 
 const TITLE = 'Sleep';
 
 const StatsDisplay = () => {
   const { user } = useContext(UserContext);
-  const { dispatchAlertSystem } = useContext(AlertSystemContext);
+  const dispatchAlertSystem = useAlertSystemDispatch();
   const [stats, setStats] = useState({
     baselineStats: undefined,
     todayStats: undefined,

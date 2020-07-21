@@ -9,12 +9,12 @@ import {
 
 import UserContext from '../../../context/userContext';
 import UserServices from '../../../services/UserServices';
-import AlertSystemContext from '../../../context/alertSystemContext';
+import { useAlertSystemDispatch } from 'context/alertSystemContext';
 
 const AccountInfoPanel = () => {
   const initFormState = { email: '', name: '' };
   const { user, dispatchUser } = useContext(UserContext);
-  const { dispatchAlertSystem } = useContext(AlertSystemContext);
+  const dispatchAlertSystem = useAlertSystemDispatch();
   const [formState, setFormState] = useState(initFormState);
   const [buttonDisabled, setButtonDisabled] = useState(true);
 

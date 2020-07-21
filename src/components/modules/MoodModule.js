@@ -10,14 +10,14 @@ import DailyDiaryServices from 'services/DailyDiaryServices';
 import ToggleButtonGroup from 'components/buttons/toggleButton/ToggleButtonGroup';
 import ToggleButton from 'components/buttons/toggleButton/ToggleButton';
 import UserContext from 'context/userContext';
-import AlertSystemContext from 'context/alertSystemContext';
+import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import PanelModule from 'components/organizers/PanelModule';
 
 const TITLE = 'How are you feeling today?';
 
 const MoodModule = () => {
   const { user } = useContext(UserContext);
-  const { dispatchAlertSystem } = useContext(AlertSystemContext);
+  const dispatchAlertSystem = useAlertSystemDispatch();
   const [dailyDiary, setDailyDiary] = useState();
   const [reportingStreak, setReportingStreak] = useState(0);
   const [todayDate] = useState(moment().startOf('day'));

@@ -1,5 +1,5 @@
 const alertSystemReducer = (state, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'SUCCESS':
       return {
         open: true,

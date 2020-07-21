@@ -15,7 +15,7 @@ const TITLE = 'Sleep';
 
 const StatsDisplay = () => {
   const { user } = useContext(UserContext);
-  const { dispatchAlertSystem } = useContext(AlertSystemContext);
+  const dispatchAlertSystem = useAlertSystemDispatch();
   const [stats, setStats] = useState([]);
   const [todayStats, setTodayStats] = useState([]);
   const [loading, setLoading] = useState(false);

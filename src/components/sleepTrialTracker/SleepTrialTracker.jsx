@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import LinkOnClick from 'components/linkOnClick/LinkOnClick';
 import CancelSTTModal from 'components/modals/CancelSTTModal';
 import SleepTrialTrackerContext from 'context/sleepTrialTrackersContext';
-import AlertSystemContext from 'context/alertSystemContext';
+import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
 import styles from './SleepTrialTracker.module.css';
 import TrialTrackerCheckIn from './TrialTrackerCheckIn';
@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 
 const SleepTrialTracker = ({ trialTracker }) => {
   const { dispatchSleepTrialTrackers } = useContext(SleepTrialTrackerContext);
-  const { dispatchAlertSystem } = useContext(AlertSystemContext);
+  const dispatchAlertSystem = useAlertSystemDispatch();
   const [completionProgress, setCompletionProgress] = useState(0);
   const [completedDays, setCompletedDays] = useState(0);
   const [showCancelModal, setShowCancelModal] = useState(false);

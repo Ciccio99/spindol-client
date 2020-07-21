@@ -12,11 +12,11 @@ import ToggleButton from 'components/buttons/toggleButton/ToggleButton';
 import CompletedSTTModal from 'components/modals/CompletedSTTModal';
 import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
 import SleepTrialTrackersContext from 'context/sleepTrialTrackersContext';
-import AlertSystemContext from 'context/alertSystemContext';
+import { useAlertSystemDispatch } from 'context/alertSystemContext';
 
 const TrialTrackerCheckIn = ({ trialTracker }) => {
   const { dispatchSleepTrialTrackers } = useContext(SleepTrialTrackersContext);
-  const { dispatchAlertSystem } = useContext(AlertSystemContext);
+  const dispatchAlertSystem = useAlertSystemDispatch();
   const [completed, setCompleted] = useState(null);
   const [showCompletedModal, setShowCompletedModal] = useState(false);
   const yesterdayDate = moment().subtract(1, 'day');

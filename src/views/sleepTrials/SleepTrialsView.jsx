@@ -11,7 +11,7 @@ import {
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import SleepTrialTrackersContext from 'context/sleepTrialTrackersContext';
 import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
-import AlertSystemContext from 'context/alertSystemContext';
+import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import SleepTrialCard from 'components/sleepTrial/SleepTrialCard';
 import SleepTrialTypeList from 'components/sleepTrial/sleepTrialTypeList/SleepTrialTypeList';
 import SleepTrialServices from 'services/SleepTrialServices';
@@ -19,7 +19,7 @@ import styles from './SleepTrialsView.module.css';
 
 const SleepTrialsView = ({ handleCloseClick }) => {
   const { sleepTrialTrackers, dispatchSleepTrialTrackers } = useContext(SleepTrialTrackersContext);
-  const { dispatchAlertSystem } = useContext(AlertSystemContext);
+  const dispatchAlertSystem = useAlertSystemDispatch();
   const [sleepTrials, setSleepTrials] = useState([]);
   const [sleepTrialTypes, setSleepTrialTypes] = useState({});
   const [loading, setLoading] = useState(false);
