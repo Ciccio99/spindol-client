@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Paper,
@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 
 import moment from 'moment-timezone';
-import AlertSystemContext from 'context/alertSystemContext';
+import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import DailyDiaryServices from 'services/DailyDiaryServices';
 import styles from './DailyDiaryDetailsPanel.module.css';
 import SleepSummaryPanel from './sleepSummaryPanel/SleepSummaryPanel';
@@ -30,7 +30,7 @@ const MOOD_COLOR = {
 };
 
 const DailyDiaryDetailsPanel = ({ selectedDate }) => {
-  const { dispatchAlertSystem } = useContext(AlertSystemContext);
+  const dispatchAlertSystem = useAlertSystemDispatch();
   const [dailyDiary, setDailyDiary] = useState();
   const [loading, setLoading] = useState(false);
 

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   Box,
   Grid,
@@ -12,12 +12,12 @@ import {
 import MomentUtils from '@date-io/moment';
 import moment from 'moment-timezone';
 import HabitServices from 'services/HabitServices';
-import AlertSystemContext from 'context/alertSystemContext';
+import { useAlertSystemDispatch } from 'context/alertSystemContext';
 
 const NAME = 'Waketime';
 
 const WaketimeHabitPanel = ({ habit }) => {
-  const { dispatchAlertSystem } = useContext(AlertSystemContext);
+  const dispatchAlertSystem = useAlertSystemDispatch();
   const [currentHabit, setCurrentHabit] = useState(habit);
   const [selectedTime, setSelectedTime] = useState(habit ? moment().startOf('day').add(habit.targetValue, 'minutes') : moment());
   const [saveDisabled, setSaveDisabled] = useState(true);

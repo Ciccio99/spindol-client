@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Grid,
   Typography,
 } from '@material-ui/core';
-import AlertSystemContext from 'context/alertSystemContext';
+import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import LinkText from '../../linkText/LinkText';
 import LinkOnClick from '../../linkOnClick/LinkOnClick';
 import DeviceServices from '../../../services/DeviceServices';
@@ -14,7 +14,7 @@ const capFirst = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 const DeviceSettingsItem = ({
   user, device, trackerType, userFirstName,
 }) => {
-  const { dispatchAlertSystem } = useContext(AlertSystemContext);
+  const dispatchAlertSystem = useAlertSystemDispatch();
   const [connected, setConnected] = useState(false);
   const [redirectUri, setRedirectUri] = useState('');
 

@@ -46,7 +46,7 @@ const getDashboardComparisonData = async () => {
     const todaySleepSummaries = responses[1].data.length > 0 ? responses[1].data : [];
     const baselineStats = baselineSleepSummaries.length ? getSleepSummaryAvgStats(baselineSleepSummaries) : undefined;
     const todayStats = todaySleepSummaries.length ? getSleepSummaryStats(todaySleepSummaries[0]) : undefined;
-    const keys = [];
+    let keys = [];
 
 
     if (baselineStats && todayStats) {
@@ -58,7 +58,7 @@ const getDashboardComparisonData = async () => {
         }
       });
     } else {
-      keys.concat(Object.keys(baselineStats));
+      keys = keys.concat(Object.keys(baselineStats));
     }
 
     return {

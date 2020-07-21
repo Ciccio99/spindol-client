@@ -9,11 +9,11 @@ import ToggleButtonGroup from '../../buttons/toggleButton/ToggleButtonGroup';
 import ToggleButton from '../../buttons/toggleButton/ToggleButton';
 import SleepTrialTrackerServices from '../../../services/SleepTrialTrackerServices';
 import SleepTrialTrackersContext from '../../../context/sleepTrialTrackersContext';
-import AlertSystemContext from 'context/alertSystemContext';
+import { useAlertSystemDispatch } from 'context/alertSystemContext';
 
 const SleepTrialTrackerMin = ({ sleepTrialTracker, date }) => {
   const { dispatchSleepTrialTrackers } = useContext(SleepTrialTrackersContext);
-  const { dispatchAlertSystem } = useContext(AlertSystemContext);
+  const dispatchAlertSystem = useAlertSystemDispatch();
   const [trialTracker, setTrialTracker] = useState(sleepTrialTracker);
   const [completed, setCompleted] = useState(null);
   const [yesterdayDate] = useState(moment.utc(date).subtract(1, 'day'));

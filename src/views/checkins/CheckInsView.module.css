@@ -1,5 +1,6 @@
 .navArrow {
   cursor: pointer;
+  text-align: center;
 }
 
 .navArrow :hover {

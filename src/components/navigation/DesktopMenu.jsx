@@ -8,12 +8,12 @@ import {
 } from '@material-ui/core';
 import UserContext from 'context/userContext';
 import UserServices from 'services/UserServices';
-import AlertSystemContext from 'context/alertSystemContext';
+import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import styles from './Navigation.module.css';
 
 const DesktopMenu = () => {
   const { user, dispatchUser } = useContext(UserContext);
-  const { dispatchAlertSystem } = useContext(AlertSystemContext);
+  const dispatchAlertSystem = useAlertSystemDispatch();
   const history = useHistory();
 
   const handleLogoutClick = () => {
