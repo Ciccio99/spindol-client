@@ -1,7 +1,6 @@
 import moment from 'moment-timezone';
 
 const MINUTES_IN_DAY = 1440;
-const MINUTES_IN_HALF_DAY = 720;
 
 const getBedtimeCellData = (ss, habits) => {
   const date = moment.utc(ss.date);
@@ -15,11 +14,9 @@ const getBedtimeCellData = (ss, habits) => {
       (habit.active && bedDateTime.isSameOrAfter(habit.startDate))
       || bedDateTime.isBetween(habit.startDate, habit.endDate, undefined, '[]')
     ) {
-      if (habit.targetValue > MINUTES_IN_HALF_DAY || habitMins > MINUTES_IN_HALF_DAY) {
-        targetDiff = Math.abs(Math.abs(habitMins - habit.targetValue) - MINUTES_IN_DAY);
-      } else {
-        targetDiff = Math.abs(habitMins - habit.targetValue);
-      }
+      const result1 = MINUTES_IN_DAY - Math.abs(habit.targetValue - habitMins);
+      const result2 = Math.abs(habit.targetValue - habitMins);
+      targetDiff = Math.min(result1, result2);
       timeTarget = moment().startOf('day').add(habit.targetValue, 'minutes');
       timeTarget = `${timeTarget.hours()}:${timeTarget.minutes() <= 9 ? `0${timeTarget.minutes()}` : timeTarget.minutes()}`;
       break;
