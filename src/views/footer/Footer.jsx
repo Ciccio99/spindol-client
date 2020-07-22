@@ -22,6 +22,7 @@ const Footer = () => (
               </Box>
               <Box py={1}>
                 <LinkText to="https://twitter.com/hypnos_ai" external>Twitter</LinkText>
+                <LinkText to="https://www.facebook.com/hypnosai/" external>Facebook</LinkText>
               </Box>
             </Box>
           </Grid>
