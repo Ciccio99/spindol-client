@@ -12,9 +12,9 @@ import CancelSTTModal from 'components/modals/CancelSTTModal';
 import SleepTrialTrackerContext from 'context/sleepTrialTrackersContext';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
+import ExpansionPanel from 'components/expansionPanel/ExpansionPanel';
 import styles from './SleepTrialTracker.module.css';
 import TrialTrackerCheckIn from './TrialTrackerCheckIn';
-import ExpansionPanel from 'components/expansionPanel/ExpansionPanel';
 
 const useStyles = makeStyles({
   root: {
