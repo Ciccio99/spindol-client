@@ -45,7 +45,11 @@ const getDashboardComparisonData = async () => {
     const baselineSleepSummaries = responses[0].data.length > 0 ? responses[0].data : [];
     const todaySleepSummaries = responses[1].data.length > 0 ? responses[1].data : [];
     const baselineStats = baselineSleepSummaries.length ? getSleepSummaryAvgStats(baselineSleepSummaries) : undefined;
-    const todayStats = todaySleepSummaries.length ? getSleepSummaryStats(todaySleepSummaries[0]) : undefined;
+    const todayStats = todaySleepSummaries.length
+      ? getSleepSummaryAvgStats(todaySleepSummaries, baselineSleepSummaries.length
+        ? baselineSleepSummaries
+        : undefined)
+      : undefined;
     let keys = [];
 
 
@@ -200,13 +204,15 @@ const getSleepSummaryAvgStats = (sleepSummaries, oldSleepSummaries = undefined) 
     const oldSleepDuration = getAvgSleepHoursDuration(oldSleepSummaries);
     const oldRemDuration = getAvgRemHoursDuration(oldSleepSummaries);
     const oldDeepDuration = getAvgDeepHoursDuration(oldSleepSummaries);
+    const oldAvgHr = getAvgAvgHeartRate(oldSleepSummaries);
     // const oldAvgBedtimeMins = getAvgBedtime(oldSleepSummaries);
 
-    stats.sleepDuration.diffPercent = (((avgSleepDuration - oldSleepDuration) * 100) / oldSleepDuration).toFixed(2);
-    stats.remDuration.diffPercent = (((avgRemDuration - oldRemDuration) * 100) / oldRemDuration).toFixed(2);
-    stats.deepDuration.diffPercent = (((avgDeepDuration - oldDeepDuration) * 100) / oldDeepDuration).toFixed(2);
-    // Flipped the diff variables because it should be negative if your bedtime is later than before.
-    // stats[3].diffPercent = ((oldAvgBedtimeMins - avgBedtimeMins) / oldAvgBedtimeMins).toFixed(2);
+    stats.sleepDuration.diffPercent = (((avgSleepDuration - oldSleepDuration) * 100) / oldSleepDuration).toFixed(0);
+    stats.remDuration.diffPercent = (((avgRemDuration - oldRemDuration) * 100) / oldRemDuration).toFixed(0);
+    stats.deepDuration.diffPercent = (((avgDeepDuration - oldDeepDuration) * 100) / oldDeepDuration).toFixed(0);
+    if (avgHr) {
+      stats.avgHr.diffPercent = (((oldAvgHr - avgHr) * 100) / oldAvgHr).toFixed(0);
+    }
   }
 
   return stats;

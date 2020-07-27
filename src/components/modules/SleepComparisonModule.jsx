@@ -14,6 +14,8 @@ import SleepSummaryServices from 'services/SleepSummaryServices';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 
 const TITLE = 'Sleep';
+const green = { color: '#5DBD88' };
+const red = { color: '#DE1E3D' };
 
 const StatsDisplay = () => {
   const dispatchAlertSystem = useAlertSystemDispatch();
@@ -32,6 +34,7 @@ const StatsDisplay = () => {
       setLoading(true);
 
       const { data, error } = await SleepSummaryServices.getDashboardComparisonData();
+      console.log(data)
       if (error) {
         dispatchAlertSystem({
           type: 'WARNING',
@@ -79,18 +82,26 @@ const StatsDisplay = () => {
               <TableRow>
                 <TableCell variant="body" padding="checkbox" align="left">Last Night</TableCell>
                 <TableCell variant="body" padding="checkbox" align="center" />
-                <TableCell variant="body" padding="checkbox" align="right">Average Baseline</TableCell>
+                <TableCell variant="body" padding="checkbox" align="right">Average</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {stats.keys.map((key) => (
                 <TableRow key={key}>
-                  <TableCell align="left" variant="head">
-                    <Typography color="primary" variant="subtitle1">
+                  <TableCell align="left" variant="head" padding="none">
+                    <Typography color="primary" variant="subtitle1" display="inline">
                       <strong>
                         {`${stats.todayStats[key].stat}${stats.todayStats[key].units ? ` ${stats.todayStats[key].units}` : ''}`}
                       </strong>
                     </Typography>
+                    {
+                      stats.todayStats[key].diffPercent
+                      && (
+                      <Typography variant="subtitle2" display="inline" style={stats.todayStats[key].diffPercent >= 0 ? green : red}>
+                        {` (${stats.todayStats[key].diffPercent}%)`}
+                      </Typography>
+                      )
+                    }
                   </TableCell>
                   <TableCell padding="none" align="center"><Typography variant="caption">{stats.baselineStats[key].description}</Typography></TableCell>
                   <TableCell align="right" variant="head">

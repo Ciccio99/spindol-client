@@ -83,7 +83,7 @@ const SleepCheckInStats = ({ sleepSummaries, sleepTrialTracker }) => {
                   {
                     stats.trialStats[key].diffPercent
                     && (
-                    <Typography variant="subtitle2" display="inline" style={stats.trialStats[key].diffPercent > 0 ? green : red}>
+                    <Typography variant="subtitle2" display="inline" style={stats.trialStats[key].diffPercent >= 0 ? green : red}>
                       {` (${stats.trialStats[key].diffPercent}%)`}
                     </Typography>
                     )
