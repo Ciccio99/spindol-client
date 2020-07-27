@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   Box,
   Divider,
 } from '@material-ui/core';
-import UserContext from 'context/userContext';
+import { useUserState } from 'context/userContext';
 import PanelModule from 'components/organizers/PanelModule';
 import DeviceSettingsItem from './deviceSettingsItem/DeviceSettingsItem';
 
@@ -11,7 +11,7 @@ const TITLE = 'Your Sleep Trackers';
 const SUBTITLE = 'Only one tracker can be connected at a time. If you connect a new tracker, any previously connected trackers will be disconnected.'
 
 const AccountDevicesPanel = () => {
-  const { user } = useContext(UserContext);
+  const user = useUserState();
   const userFirstName = user.name ? user.name.split(' ')[0] : '';
   return (
     <PanelModule title={TITLE} subtitle={SUBTITLE}>

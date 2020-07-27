@@ -9,13 +9,20 @@ import config from 'config';
 import HypnosTheme from './constants/HypnosTheme';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
+import {
+  UserProvider,
+} from 'context/userContext';
+import {
+  AlertSystemProvider,
+} from 'context/alertSystemContext';
+import AlertSystemModule from 'components/alertSystem/AlertSystemModule';
 
-if (config.ga.trackingId) {
+if (config?.ga?.trackingId) {
   ReactGA.initialize(config.ga.trackingId);
 } else {
   ReactGA.initialize('foo', { testMode: true });
 }
-if (config.hotjar.trackingId) {
+if (config?.hotjar?.trackingId) {
   hotjar.initialize(config.hotjar.trackingId);
 }
 if (config?.crisp?.id) {
@@ -37,7 +44,12 @@ ReactDOM.render(
     <HelmetProvider>
       <HypnosTheme>
         <CssBaseline>
-          <App />
+          <UserProvider>
+            <AlertSystemProvider>
+              <App />
+              <AlertSystemModule />
+            </AlertSystemProvider>
+          </UserProvider>
         </CssBaseline>
       </HypnosTheme>
     </HelmetProvider>

@@ -8,7 +8,6 @@ import {
   Button,
   Tab,
   Tabs,
-  Divider,
 } from '@material-ui/core';
 import SwipeableViews from 'react-swipeable-views';
 import styles from './SleepTrialTracker.module.css';

@@ -1,5 +1,7 @@
 import moment from 'moment-timezone';
 import axios from '../loaders/axios';
+import ErrorHandler from 'utils/ErrorHandler';
+import handleError from 'utils/handleError';
 
 const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   const queryString = JSON.stringify({
@@ -50,7 +52,6 @@ const getAllDailyDiary = async () => {
   try {
     const { data } = await axios.get('/dailyDiary',
       { params: { query: queryString } });
-    console.log(data);
     return data;
   } catch (error) {
     return [];
@@ -89,14 +90,25 @@ const upsert = async (date, mood) => {
   }
 };
 
-const update = async () => {
-  const body = {};
+const update = async (dto) => {
+  const body = dto;
   try {
-    const { data } = await axios.post('/dailyDiary/update', body);
+    const { data } = await axios.patch(`/dailyDiary/${body._id}`, body);
     return data;
   } catch (error) {
-    console.log(error);
-    return null;
+    throw new ErrorHandler(error);
+  }
+};
+
+const getDashboardData = async () => {
+  try {
+    const date = moment().format('YYYY-MM-DD');
+    const queryString = JSON.stringify({ date });
+    const { data } = await axios.get('/dailyDiary/getByDate',
+      { params: { query: queryString } });
+    return data;
+  } catch (error) {
+    throw new ErrorHandler(error);
   }
 };
 
@@ -108,4 +120,5 @@ export default {
   getAllDailyDiary,
   getByDate,
   getReportingStreak,
+  getDashboardData
 };

@@ -7,13 +7,13 @@ import {
   Typography,
   Divider,
 } from '@material-ui/core';
+import { useAlertSystemDispatch } from 'context/alertSystemContext';
+import { useUserState } from 'context/userContext';
+import SleepSummaryServices from 'services/SleepSummaryServices';
 import StatCard from '../statCar/StatCard';
-import UserContext from '../../context/userContext';
-import SleepSummaryServices from '../../services/SleepSummaryServices';
-import AlertSystemContext from '../../context/alertSystemContext';
 
 const StatsDisplay = () => {
-  const { user } = useContext(UserContext);
+  const user = useUserState();
   const dispatchAlertSystem = useAlertSystemDispatch();
   const [stats, setStats] = useState([]);
   const [todayStats, setTodayStats] = useState([]);

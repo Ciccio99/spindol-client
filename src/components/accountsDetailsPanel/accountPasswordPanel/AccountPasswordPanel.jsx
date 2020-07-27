@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -9,12 +9,12 @@ import {
 } from '@material-ui/core';
 
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
-import UserContext from 'context/userContext';
+import { useUserDispatch } from 'context/userContext';
 import UserServices from 'services/UserServices';
 
 const AccountPasswordPanel = () => {
   const initFormState = { password: '', confirmPassword: '', currentPassword: '' };
-  const { dispatchUser } = useContext(UserContext);
+  const dispatchUser = useUserDispatch();
   const dispatchAlertSystem = useAlertSystemDispatch();
   const [formState, setFormState] = useState(initFormState);
   const [buttonDisabled, setButtonDisabled] = useState(true);

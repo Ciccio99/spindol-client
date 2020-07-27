@@ -15,7 +15,7 @@ import { Helmet } from 'react-helmet-async';
 import MomentUtils from '@date-io/moment';
 import moment from 'moment-timezone';
 import Section from 'components/organizers/Section';
-import DailyDiaryDetailsPanel from '../../components/dailyDiaryDetailsPanel/DailyDiaryDetailsPanel';
+import DailyDiaryDetailsPanel from 'components/dailyDiaryDetailsPanel/DailyDiaryDetailsPanel';
 import styles from './CheckInsView.module.css';
 
 const CheckInsView = () => {

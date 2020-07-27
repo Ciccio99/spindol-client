@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
 import {
   Avatar,
@@ -20,7 +20,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Helmet } from 'react-helmet-async';
 import ReactGA from 'react-ga';
 import UserServices from 'services/UserServices';
-import UserContext from 'context/userContext';
+import { useUserDispatch } from 'context/userContext';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SignInView = () => {
   const classes = useStyles();
-  const { dispatchUser } = useContext(UserContext);
+  const dispatchUser = useUserDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');

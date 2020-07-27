@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import {
   Box,
@@ -8,13 +8,14 @@ import {
   Typography,
 } from '@material-ui/core';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
-import UserContext from 'context/userContext';
+import { useUserState, useUserDispatch } from 'context/userContext';
 import UserServices from 'services/UserServices';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import styles from './Navigation.module.css';
 
 const MobileMenu = () => {
-  const { user, dispatchUser } = useContext(UserContext);
+  const user = useUserState();
+  const dispatchUser = useUserDispatch();
   const dispatchAlertSystem = useAlertSystemDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();

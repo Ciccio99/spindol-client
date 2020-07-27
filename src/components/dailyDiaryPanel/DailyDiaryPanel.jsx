@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Paper,
@@ -11,11 +11,11 @@ import moment from 'moment-timezone';
 import DailyDiaryServices from 'services/DailyDiaryServices';
 import ToggleButtonGroup from 'components/buttons/toggleButton/ToggleButtonGroup';
 import ToggleButton from 'components/buttons/toggleButton/ToggleButton';
-import UserContext from 'context/userContext';
+import { useUserState } from 'context/userContext';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 
 const DailyDiaryPanel = () => {
-  const { user } = useContext(UserContext);
+  const user = useUserState();
   const dispatchAlertSystem = useAlertSystemDispatch();
   const [dailyDiary, setDailyDiary] = useState();
   const [reportingStreak, setReportingStreak] = useState(0);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   LinearProgress,
@@ -10,14 +10,12 @@ import {
   TableRow,
 } from '@material-ui/core';
 import PanelModule from 'components/organizers/PanelModule';
-import UserContext from 'context/userContext';
 import SleepSummaryServices from 'services/SleepSummaryServices';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 
 const TITLE = 'Sleep';
 
 const StatsDisplay = () => {
-  const { user } = useContext(UserContext);
   const dispatchAlertSystem = useAlertSystemDispatch();
   const [stats, setStats] = useState({
     baselineStats: undefined,
@@ -52,7 +50,7 @@ const StatsDisplay = () => {
     })();
 
     return () => { didCancel = true; };
-  }, [dispatchAlertSystem, user]);
+  }, [dispatchAlertSystem]);
 
   if (loading) {
     return (
