@@ -34,7 +34,6 @@ const StatsDisplay = () => {
       setLoading(true);
 
       const { data, error } = await SleepSummaryServices.getDashboardComparisonData();
-      console.log(data)
       if (error) {
         dispatchAlertSystem({
           type: 'WARNING',

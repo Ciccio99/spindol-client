@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Button,
@@ -27,7 +27,7 @@ const EditTagsModal = ({ open, tags, handleModal, handleSaveTags }) => {
   const user = useUserState();
   const dispatchUser = useUserDispatch();
   const dispatchAlertSystem = useAlertSystemDispatch();
-  const availableTags = getAvailableTags(user.settings?.tags);
+  const availableTags = getAvailableTags(tags.concat(user.settings?.tags || []));
   const [selectedTags, setSelectedTags] = useState(tags);
   const [tagInput, setTagInput] = useState('');
 

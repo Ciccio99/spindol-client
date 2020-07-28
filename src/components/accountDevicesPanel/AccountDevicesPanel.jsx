@@ -15,7 +15,6 @@ const AccountDevicesPanel = () => {
   const userFirstName = user.name ? user.name.split(' ')[0] : '';
   return (
     <PanelModule title={TITLE} subtitle={SUBTITLE}>
-
       <DeviceSettingsItem
         user={user}
         device="oura"

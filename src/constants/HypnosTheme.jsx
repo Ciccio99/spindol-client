@@ -81,7 +81,7 @@ const HypnosTheme = ({ children }) => {
 
   useEffect(() => {
     if (isMobile) {
-      customTheme.spacing = 5;
+      customTheme.spacing = 4;
       let newTheme = createMuiTheme(customTheme);
       newTheme = responsiveFontSizes(newTheme, fontSizesOptions);
       setTheme(newTheme);
