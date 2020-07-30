@@ -1,5 +1,6 @@
 import moment from 'moment-timezone';
 import handleError from 'utils/handleError';
+import ErrorHandler from 'utils/ErrorHandler';
 import axios from 'loaders/axios';
 
 const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
@@ -18,10 +19,14 @@ const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   }
 };
 
-const getDashboardComparisonData = async () => {
+const getDashboardComparisonData = async ({ searchDate }) => {
+  const todayDate = searchDate ? moment(searchDate) : moment();
+
   try {
     let queryString = JSON.stringify({
-      match: { },
+      match: {
+        date: { $lt: todayDate.format('YYYY-MM-DD') },
+      },
       sort: { date: 'desc' },
       limit: 7,
       skip: 0,
@@ -32,7 +37,7 @@ const getDashboardComparisonData = async () => {
 
     queryString = JSON.stringify({
       match: {
-        date: moment().format('YYYY-MM-DD'),
+        date: todayDate.format('YYYY-MM-DD'),
       },
       limit: 1,
     });
@@ -64,17 +69,16 @@ const getDashboardComparisonData = async () => {
     } else {
       keys = keys.concat(Object.keys(baselineStats));
     }
-
-    return {
-      data: {
-        baselineStats,
-        todayStats,
-        keys,
-        lastSyncDate: moment.utc(baselineSleepSummaries[0].date).format('MMM DD, YYYY'),
-      },
+    const data = {
+      baselineStats,
+      todayStats,
+      keys,
+      lastSyncDate: moment.utc(todaySleepSummaries[0].date).format('MMM DD, YYYY'),
     };
+
+    return data;
   } catch (error) {
-    return handleError;
+    throw new ErrorHandler(error);
   }
 };
 
@@ -207,11 +211,11 @@ const getSleepSummaryAvgStats = (sleepSummaries, oldSleepSummaries = undefined) 
     const oldAvgHr = getAvgAvgHeartRate(oldSleepSummaries);
     // const oldAvgBedtimeMins = getAvgBedtime(oldSleepSummaries);
 
-    stats.sleepDuration.diffPercent = (((avgSleepDuration - oldSleepDuration) * 100) / oldSleepDuration).toFixed(0);
-    stats.remDuration.diffPercent = (((avgRemDuration - oldRemDuration) * 100) / oldRemDuration).toFixed(0);
-    stats.deepDuration.diffPercent = (((avgDeepDuration - oldDeepDuration) * 100) / oldDeepDuration).toFixed(0);
+    stats.sleepDuration.diffPercent = Math.round(((avgSleepDuration - oldSleepDuration) * 100) / oldSleepDuration).toFixed(0);
+    stats.remDuration.diffPercent = Math.round(((avgRemDuration - oldRemDuration) * 100) / oldRemDuration).toFixed(0);
+    stats.deepDuration.diffPercent = Math.round(((avgDeepDuration - oldDeepDuration) * 100) / oldDeepDuration).toFixed(0);
     if (avgHr) {
-      stats.avgHr.diffPercent = (((oldAvgHr - avgHr) * 100) / oldAvgHr).toFixed(0);
+      stats.avgHr.diffPercent = Math.round(((oldAvgHr - avgHr) * 100) / oldAvgHr).toFixed(0);
     }
   }
 

@@ -21,9 +21,9 @@ const PanelWrapper = ({ children }) => (
   </PanelModule>
 );
 
-const DailyDiaryDashboardModule = () => {
+const DailyDiaryDashboardModule = ({ date }) => {
   const dispatchAlertSystem = useAlertSystemDispatch();
-  const { data, error, isPending } = useAsync(DailyDiaryServices.getDashboardData);
+  const { data, error, isPending } = useAsync(DailyDiaryServices.getDashboardData, { date });
   const [dailyDiary, setDailyDiary] = useState(null);
 
   const handleUpdate = React.useCallback(async (dto) => {

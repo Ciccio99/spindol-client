@@ -100,10 +100,10 @@ const update = async (dto) => {
   }
 };
 
-const getDashboardData = async () => {
+const getDashboardData = async ({ date = moment() }) => {
   try {
-    const date = moment().format('YYYY-MM-DD');
-    const queryString = JSON.stringify({ date });
+    const searchDate = moment(date).format('YYYY-MM-DD');
+    const queryString = JSON.stringify({ date: searchDate });
     const { data } = await axios.get('/dailyDiary/getByDate',
       { params: { query: queryString } });
     return data;

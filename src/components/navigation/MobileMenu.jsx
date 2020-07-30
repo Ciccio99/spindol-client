@@ -48,7 +48,7 @@ const MobileMenu = () => {
   };
 
   return (
-    <Box m={1.5}>
+    <Box m={1.5} mx={0}>
       <Button aria-controls="header-menu" aria-haspopup="true" onClick={handleClick} disableRipple>
         <MenuRoundedIcon fontSize="large" />
       </Button>

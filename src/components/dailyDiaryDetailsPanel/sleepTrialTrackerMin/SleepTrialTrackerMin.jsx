@@ -18,7 +18,6 @@ const SleepTrialTrackerMin = ({ sleepTrialTracker, date }) => {
   const [completed, setCompleted] = useState(null);
   const [yesterdayDate] = useState(moment.utc(date).subtract(1, 'day'));
   const [completedCount, setCompletedCount] = useState(0);
-
   useEffect(() => {
     const existingCheckIn = trialTracker.checkIns.find((checkIn) => {
       const checkInDate = moment.utc(checkIn.date);
@@ -66,15 +65,14 @@ const SleepTrialTrackerMin = ({ sleepTrialTracker, date }) => {
       <Grid container spacing={2} justify="space-between" alignItems="center">
         <Grid item xs={12} sm={6}>
           <Typography variant="subtitle1">{sleepTrialTracker.sleepTrial.name}</Typography>
-          {/* <Typography variant='subtitle2' display='inline'>Did you perform this trial?</Typography> */}
           <Grid container spacing={1} alignItems="center">
             <Grid item xs={12}>
               <Typography variant="caption">
-                Did you complete this trial the night of <strong>{yesterdayDate.format('MMM D, YYYY')}</strong>?
+                <strong>Night of {yesterdayDate.format('MMMM DD, YYYY')}</strong>
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="caption" color="textSecondary">
+              <Typography variant="caption" color="primary">
                 {`${completedCount}/${sleepTrialTracker.trialLength} days completed`}
               </Typography>
             </Grid>

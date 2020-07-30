@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
+  Container,
   Paper,
   Typography,
   LinearProgress,
@@ -20,6 +21,11 @@ import SleepSummaryPanel from './sleepSummaryPanel/SleepSummaryPanel';
 import SleepTrialTrackerMin from './sleepTrialTrackerMin/SleepTrialTrackerMin';
 import Section from 'components/organizers/Section';
 import FatigueModule from 'components/modules/FatigueModule';
+import SleepComparisonModule from 'components/modules/SleepComparisonModule';
+import MoodSelectModule from 'components/modules/MoodSelectModule';
+import DailyDiaryDashboardModule from 'components/modules/DailyDiaryDashboardModule';
+import CurrentTrialsModule from 'components/modules/CurrentTrialsModule';
+import useMedium from 'hooks/useMedium';
 
 const MOOD_COLOR = {
   excellent: styles.excellent,
@@ -30,6 +36,7 @@ const MOOD_COLOR = {
 };
 
 const DailyDiaryDetailsPanel = ({ selectedDate }) => {
+  const { isMedium } = useMedium();
   const dispatchAlertSystem = useAlertSystemDispatch();
   const [dailyDiary, setDailyDiary] = useState();
   const [loading, setLoading] = useState(false);
@@ -87,76 +94,26 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
 
   return (
     <>
-    <Paper elevation={24}>
-      <Box px={4} py={3}>
-        <Typography variant="h4" color="secondary">{moment.utc(dailyDiary.date).format('dddd - MMM DD, YYYY')}</Typography>
-      </Box>
-      <Divider />
-      <Box p={4}>
-        <Typography variant="h6">Mood</Typography>
-        <Box className={styles.panel} p={3} mt={2} border={1} borderColor="#CCC" borderRadius={25}>
-          <Grid container spacing={2} justify="space-between" alignItems="center">
-            <Grid item>
-              {
-              dailyDiary.mood
-                ? (
-                  <Typography variant="h6">
-                    {'You felt '}
-                    <span className={MOOD_COLOR[dailyDiary.mood]}>{dailyDiary.mood}</span>
-                    {' '}
-                    on this day.
-                  </Typography>
-                )
-                : <Typography variant="h6">No mood set for this day...</Typography>
-            }
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <FormControl variant="outlined" fullWidth color="secondary" size="medium">
-                <InputLabel htmlFor="mood-select">Edit Mood</InputLabel>
-                <Select
-                  labelId="mood-select"
-                  value={dailyDiary.mood || ''}
-                  label="Edit Mood"
-                  onChange={handleUpdateMood}
-                  classes={{ root: styles.root }}
-                >
-                  <MenuItem value="excellent">Excellent</MenuItem>
-                  <MenuItem value="good">Good</MenuItem>
-                  <MenuItem value="meh">Meh</MenuItem>
-                  <MenuItem value="bad">Bad</MenuItem>
-                  <MenuItem value="awful">Awful</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
+      <Section>
+        <DailyDiaryDashboardModule date={selectedDate} />
+      </Section>
+      <Section>
+        <CurrentTrialsModule date={selectedDate} />
+      </Section>
+      <Section>
+        <Grid container>
+          <Grid component={Grid} item xs={12} md={6}>
+            <Box mr={isMedium ? 0 : 4}>
+              <SleepComparisonModule date={selectedDate}/>
+            </Box>
           </Grid>
-        </Box>
-        <Box mt={8}>
-          <Typography variant="h6">Sleep Details</Typography>
-        </Box>
-        <Box mt={2}>
-          {
-        !dailyDiary.sleepSummary
-          ? <Typography>No sleep data available for this day...</Typography>
-          : <SleepSummaryPanel sleepSummary={dailyDiary.sleepSummary} />
-
-      }
-        </Box>
-        <Box mt={8}>
-          <Typography variant="h6">Sleep Trial Trackers</Typography>
-        </Box>
-        <Box mt={2} mb={6}>
-          {
-          !dailyDiary.sleepTrialTrackers || dailyDiary.sleepTrialTrackers.length === 0
-          ? <Typography>No Sleep Trials were being tracked for this day...</Typography>
-          : dailyDiary.sleepTrialTrackers.map((stt) => <SleepTrialTrackerMin key={stt._id} sleepTrialTracker={stt} date={selectedDate} />)
-
-      }
-        </Box>
-      </Box>
-    </Paper>
-    <Section>
-      <FatigueModule date={selectedDate} />
-    </Section>
+          <Grid item xs={12} md={6}>
+            <Box mt={isMedium ? 8 : 0} height={isMedium ? 'auto' : '100%'}>
+              <FatigueModule date={selectedDate}/>
+            </Box>
+          </Grid>
+        </Grid>
+      </Section>
     </>
   );
 };

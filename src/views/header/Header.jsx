@@ -16,12 +16,11 @@ import styles from './Header.module.css';
 
 const Header = () => {
   const { isMedium } = useMedium();
-
   return (
     <AppBar position="sticky" elevation={0} color="default">
       <Box>
         <Toolbar>
-          <Grid container alignItems="center" justify="space-between">
+          <Grid container alignItems="center" justify="space-between" wrap="nowrap">
             <Grid item>
               <NavLink className={styles.navLink} exact to="/">
                 <Box display="flex" alignItems="center">
@@ -31,7 +30,8 @@ const Header = () => {
                 </Box>
               </NavLink>
             </Grid>
-            <Grid item>
+            <Grid item container wrap="nowrap" justify="flex-end" alignItems="center">
+              <Box id="changelog" component="span" />
               {
                 isMedium
                   ? <MobileMenu />

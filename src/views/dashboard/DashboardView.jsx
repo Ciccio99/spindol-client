@@ -17,9 +17,11 @@ import SleepComparisonModule from 'components/modules/SleepComparisonModule';
 import HabitModule from 'components/modules/HabitModule';
 import Section from 'components/organizers/Section';
 import ConnectDeviceCTA from 'components/cta/ConnectDevice';
+import useMedium from 'hooks/useMedium';
 
 const DashboardView = () => {
   const user = useUserState();
+  const { isMedium } = useMedium();
   const { sleepTrialTrackers, dispatchSleepTrialTrackers } = useContext(SleepTrialTrackersContext);
   const userFirstName = user.name ? user.name.split(' ')[0] : '';
 
@@ -43,9 +45,9 @@ const DashboardView = () => {
           content="Hypnos.ai helps you track and improve your sleep habits. Use the dashboard to set your daily mood, check in to your sleep trials and see what your sleep has been lately."
         />
       </Helmet>
-      <Container style={{ overflowX: 'hidden' }}>
-        <Box mt={5}>
-          <Typography variant="h3">
+      <Container>
+        <Box mt={4}>
+          <Typography variant="h5">
             {`Welcome${userFirstName ? ` ${userFirstName}` : ''}!`}
           </Typography>
         </Box>
@@ -66,16 +68,18 @@ const DashboardView = () => {
           <DailyDiaryDahboardModule />
         </Section>
         <Section>
-          <Box>
-            <Grid container spacing={8}>
-              <Grid item xs={12} md={6}>
+          <Grid container>
+            <Grid component={Grid} item xs={12} md={6}>
+              <Box mr={isMedium ? 0 : 4}>
                 <SleepComparisonModule />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <FatigueModule />
-              </Grid>
+              </Box>
             </Grid>
-          </Box>
+            <Grid item xs={12} md={6}>
+              <Box mt={isMedium ? 8 : 0} height={isMedium ? 'auto' : '100%'}>
+                <FatigueModule />
+              </Box>
+            </Grid>
+          </Grid>
         </Section>
         <Section>
           <HabitModule />
