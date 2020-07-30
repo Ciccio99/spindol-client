@@ -15,6 +15,7 @@ import defaultTags from 'constants/defaultTags';
 import { useUserState, useUserDispatch } from 'context/userContext';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import UserServices from 'services/UserServices';
+import LinkText from 'components/linkText/LinkText';
 import styles from './Modals.module.css';
 
 const getAvailableTags = (customTags = []) => {
@@ -162,6 +163,9 @@ const EditTagsModal = ({ open, tags, handleModal, handleSaveTags }) => {
                         </Button>
                       </Grid>
                     </Grid>
+                  </Box>
+                  <Box mt={4}>
+                    <LinkText to={{ pathname: "/settings", hash: "tags" }}>Manage Habit Tags</LinkText>
                   </Box>
               </Box>
             </Box>

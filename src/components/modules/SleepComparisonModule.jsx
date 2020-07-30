@@ -37,7 +37,7 @@ const StatsDisplay = ({ date }) => {
   if (error) {
     return (
       <PanelModule title={TITLE}>
-        <Typography variant="subtitle1">{error.message}</Typography>
+        <Typography variant="subtitle1">Something went wrong...</Typography>
       </PanelModule>
     );
   }
@@ -95,7 +95,7 @@ const StatsDisplay = ({ date }) => {
             <TableHead>
               <TableRow>
                 <TableCell padding="checkbox" />
-                <TableCell padding="checkbox" align="right">Average Baseline</TableCell>
+                <TableCell padding="checkbox" align="right">Average</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

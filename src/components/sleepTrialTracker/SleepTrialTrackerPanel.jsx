@@ -9,7 +9,6 @@ import {
   Tab,
   Tabs,
 } from '@material-ui/core';
-import SwipeableViews from 'react-swipeable-views';
 import styles from './SleepTrialTracker.module.css';
 import LinkOnClick from '../linkOnClick/LinkOnClick';
 import SleepTrialsView from '../../views/sleepTrials/SleepTrialsView';
@@ -29,10 +28,6 @@ const CurrentSleepTrialTrackers = ({ trialTrackers }) => {
   const handleTabSelect = (e, newValue) => {
     e.preventDefault();
     setTabValue(newValue);
-  };
-
-  const handleTabSwipe = (index) => {
-    setTabValue(index);
   };
 
   const closeSleepTrialsModal = () => {
@@ -69,17 +64,12 @@ const CurrentSleepTrialTrackers = ({ trialTrackers }) => {
         </Tabs>
       </Box>
       <Box>
-        <SwipeableViews
-          index={tabValue}
-          onChangeIndex={handleTabSwipe}
-        >
-          <TabPanel value={tabValue} index={0}>
-            <CurrentSleepTrialsSubPanel trialTrackers={trialTrackers} />
-          </TabPanel>
-          <TabPanel value={tabValue} index={1}>
-            <CompletedSleepTrialsSubPanel trialTrackers={trialTrackers} />
-          </TabPanel>
-        </SwipeableViews>
+        <TabPanel value={tabValue} index={0}>
+          <CurrentSleepTrialsSubPanel trialTrackers={trialTrackers} />
+        </TabPanel>
+        <TabPanel value={tabValue} index={1}>
+          <CompletedSleepTrialsSubPanel trialTrackers={trialTrackers} />
+        </TabPanel>
       </Box>
 
       <Modal

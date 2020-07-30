@@ -73,7 +73,7 @@ const getDashboardComparisonData = async ({ searchDate }) => {
       baselineStats,
       todayStats,
       keys,
-      lastSyncDate: moment.utc(todaySleepSummaries[0].date).format('MMM DD, YYYY'),
+      lastSyncDate: moment.utc(todaySleepSummaries[0]?.date || baselineSleepSummaries[0]?.date).format('MMM DD, YYYY'),
     };
 
     return data;

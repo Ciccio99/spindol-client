@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -15,7 +16,26 @@ import Section from 'components/organizers/Section';
 import TabPanel from 'components/tabPanel/TabPanel';
 
 const AccountSettings = () => {
+  const location = useLocation();
   const [tabValue, setTabValue] = useState(0);
+
+  React.useEffect(() => {
+    if (location.hash) {
+      switch (location.hash) {
+        case '#account':
+          setTabValue(0);
+          break;
+        case '#devices':
+          setTabValue(1);
+          break;
+        case '#tags':
+          setTabValue(2);
+          break;
+        default:
+          break;
+      }
+    }
+  }, [location]);
 
   return (
     <Container>
@@ -26,7 +46,7 @@ const AccountSettings = () => {
           content="Hypnos.ai helps you track and improve your sleep habits. Settings for your account details, such as name, email, connecting sleep trackers."
         />
       </Helmet>
-      <Box mt={5}>
+      <Box mt={4}>
         <Typography variant="h5">Account Settings</Typography>
       </Box>
       <Box

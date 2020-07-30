@@ -32,7 +32,7 @@ const DayTagsSubModule = ({ tags, handleUpdate }) => {
               <EditTwoToneIcon onClick={() => { setIsModalOpen(true); }} style={{ cursor: 'pointer' }} color="secondary" />
           )
           : (
-            <Button size="small" variant="contained" color="secondary" startIcon={<EditTwoToneIcon />} disableElevation
+            <Button size="small" variant="contained" color="secondary" startIcon={<EditTwoToneIcon />}
               onClick={() => { setIsModalOpen(true); }}
             >
               <Typography variant="caption">Edit Tags</Typography>

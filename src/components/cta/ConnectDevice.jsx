@@ -26,8 +26,8 @@ const ConnectDevice = () => (
           </Typography>
         </Grid>
         <Grid item>
-          <Link to="/settings" style={{ textDecoration: 'none' }}>
-            <Button color="secondary" variant="contained" size="large" disableElevation>Connect Sleep Tracker</Button>
+          <Link to={{ pathname: '/settings', hash: 'devices' }} style={{ textDecoration: 'none' }}>
+            <Button color="secondary" variant="contained" size="large">Connect Sleep Tracker</Button>
           </Link>
         </Grid>
       </Grid>
