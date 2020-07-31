@@ -103,7 +103,7 @@ const Home = () => (
           <div style={{ position: 'relative', overflow: 'hidden', paddingTop: '56.25%' }}>
             <iframe
               title="Hypnos.ai Demo Video"
-              src="https://www.loom.com/embed/76f36e40f8f044068fc7456d650d82ab"
+              src="https://www.loom.com/embed/92b4f80cee9b41bb980f5fc736610823"
               frameBorder="0"
               loading="lazy"
               webkitallowfullscreen="true"
