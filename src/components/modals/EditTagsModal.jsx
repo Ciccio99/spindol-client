@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Button,
@@ -11,6 +11,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import defaultTags from 'constants/defaultTags';
 import { useUserState, useUserDispatch } from 'context/userContext';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
@@ -30,7 +31,23 @@ const EditTagsModal = ({ open, tags, handleModal, handleSaveTags }) => {
   const dispatchAlertSystem = useAlertSystemDispatch();
   const availableTags = getAvailableTags(tags.concat(user.settings?.tags || []));
   const [selectedTags, setSelectedTags] = useState(tags);
+  const [tagsChanged, setTagsChanged] = useState(false);
   const [tagInput, setTagInput] = useState('');
+
+  useEffect(() => {
+    if (selectedTags.length !== tags.length) {
+      setTagsChanged(true);
+      return;
+    }
+    
+    for (let i = 0; i < selectedTags.length; i += 1) {
+      if (!tags.includes(selectedTags[i])) {
+        setTagsChanged(true);
+        return;
+      }
+    }
+    setTagsChanged(false);
+  }, [selectedTags, tags])
 
   const handleTagSelect = (tag) => {
     setSelectedTags(prevState => ([...prevState, tag]));
@@ -109,7 +126,12 @@ const EditTagsModal = ({ open, tags, handleModal, handleSaveTags }) => {
             <Box>
               <Box display="flex" justifyContent="space-between" px={2} pt={2}>
                 <Typography variant="h6">Edit Day Tags</Typography>
-                <CancelOutlinedIcon color="action" className={styles.closeButton} onClick={handleOnModalClose} />
+                {
+                  tagsChanged
+                  ? <CheckCircleOutlineIcon className={styles.closeSuccessButton} onClick={handleOnModalClose} />
+                  : <CancelOutlinedIcon color="action" className={styles.closeButton} onClick={handleOnModalClose} />
+                }
+
               </Box>
               <Box p={4} display="flex" justifyContent="space-between" flexDirection="column" alignItems="center">
                   <Grid container justify="center" alignItems="center" spacing={2}>

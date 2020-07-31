@@ -5,3 +5,8 @@
 .closeButton {
   cursor: pointer;
 }
+
+.closeSuccessButton {
+  cursor: pointer;
+  color: #5DBD88;
+}
