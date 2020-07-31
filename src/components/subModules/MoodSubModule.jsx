@@ -23,7 +23,7 @@ const MoodSubModule = ({ mood, handleUpdate, enableStreak }) => {
       const data = await DailyDiaryServices.getReportingStreak();
       setStreak(data);
     })();
-  }, [enableStreak]);
+  }, [enableStreak, mood]);
 
   return (
     <Box>
