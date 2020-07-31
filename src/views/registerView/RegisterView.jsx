@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink, useHistory, useParams } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -18,7 +18,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import { Helmet } from 'react-helmet-async';
 import UserServices from 'services/UserServices';
 import ReactGA from 'react-ga';
-import UserContext from '../../context/userContext';
+import { useUserDispatch } from 'context/userContext';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,7 +44,7 @@ const RegisterView = () => {
   const history = useHistory();
   const { token } = useParams();
   const classes = useStyles();
-  const { dispatchUser } = useContext(UserContext);
+  const dispatchUser = useUserDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');

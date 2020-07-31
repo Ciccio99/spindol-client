@@ -1,5 +1,6 @@
 import axios from '../loaders/axios';
 import moment from 'moment-timezone';
+import ErrorHandler from 'utils/ErrorHandler';
 
 const querySleepTrialTracker = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   const queryString = JSON.stringify({
@@ -15,6 +16,36 @@ const querySleepTrialTracker = async (match = {}, sort = {}, limit = 0, skip = 0
     return [];
   }
 };
+
+const getByDate = async ({ date = undefined }) => {
+  try {
+    const searchDate = moment(date).format('YYYY-MM-DD')
+    const query = JSON.stringify({
+      match: {
+        $or: [
+          {
+            startDate: { $lte: searchDate },
+            endDate: { $gte: searchDate },
+          },
+          {
+            startDate: {$lte: searchDate },
+            endDate: { $exists: false },
+          }
+        ]
+
+      },
+      sort: {},
+      skip: 0,
+      limit: 0,
+    });
+    const { data } = await axios.get('/sleepTrialTracker', {
+       params: { query },
+      });
+    return data;
+  } catch (error) {
+    throw new ErrorHandler(error);
+  }
+}
 
 const getById = async (id) => {
   try {
@@ -76,6 +107,7 @@ const removeById = async (id) => {
 
 export default {
   querySleepTrialTracker,
+  getByDate,
   create,
   addCheckIn,
   getById,

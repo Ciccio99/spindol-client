@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import {
   Box,
@@ -6,13 +6,14 @@ import {
   Grid,
   Button,
 } from '@material-ui/core';
-import UserContext from 'context/userContext';
+import { useUserState, useUserDispatch } from 'context/userContext';
 import UserServices from 'services/UserServices';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import styles from './Navigation.module.css';
 
 const DesktopMenu = () => {
-  const { user, dispatchUser } = useContext(UserContext);
+  const user = useUserState();
+  const dispatchUser = useUserDispatch();
   const dispatchAlertSystem = useAlertSystemDispatch();
   const history = useHistory();
 

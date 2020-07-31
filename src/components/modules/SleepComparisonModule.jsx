@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import {
   Box,
   LinearProgress,
@@ -9,52 +9,22 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
+import { useAsync } from 'react-async';
 import PanelModule from 'components/organizers/PanelModule';
-import UserContext from 'context/userContext';
 import SleepSummaryServices from 'services/SleepSummaryServices';
-import { useAlertSystemDispatch } from 'context/alertSystemContext';
 
 const TITLE = 'Sleep';
+const green = { color: '#5DBD88' };
+const red = { color: '#DE1E3D' };
 
-const StatsDisplay = () => {
-  const { user } = useContext(UserContext);
-  const dispatchAlertSystem = useAlertSystemDispatch();
-  const [stats, setStats] = useState({
-    baselineStats: undefined,
-    todayStats: undefined,
-    keys: [],
-    lastSyncDate: '',
-  });
-  const [loading, setLoading] = useState(false);
-  const [subtitle, setSubtitle] = useState();
+const getSubtitle = (date) => {
+  return date ? `Last sync on ${date}` : undefined;
+};
 
-  useEffect(() => {
-    let didCancel = false;
-    (async () => {
-      setLoading(true);
+const StatsDisplay = ({ date }) => {
+  const { data, error, isPending } = useAsync(SleepSummaryServices.getDashboardComparisonData, { searchDate: date });
 
-      const { data, error } = await SleepSummaryServices.getDashboardComparisonData();
-      if (error) {
-        dispatchAlertSystem({
-          type: 'WARNING',
-          message: 'Something went wrong. Sleep data unavailable...',
-        });
-        return;
-      }
-      if (data) {
-        if (!didCancel) {
-          setStats(data);
-          setSubtitle(`Latest data from ${data.lastSyncDate}`);
-        }
-      }
-
-      setLoading(false);
-    })();
-
-    return () => { didCancel = true; };
-  }, [dispatchAlertSystem, user]);
-
-  if (loading) {
+  if (isPending) {
     return (
       <PanelModule title={TITLE}>
         <Box>
@@ -64,40 +34,48 @@ const StatsDisplay = () => {
     );
   }
 
-  if (!stats.baselineStats && !stats.todayStats) {
+  if (error) {
     return (
       <PanelModule title={TITLE}>
-        <Typography variant="h6">No sleep data available...</Typography>
+        <Typography variant="subtitle1">Something went wrong...</Typography>
       </PanelModule>
     );
   }
 
-  if (stats.todayStats && stats.baselineStats) {
+  if (data.todayStats && data.baselineStats) {
     return (
-      <PanelModule title={TITLE} subtitle={subtitle}>
+      <PanelModule title={TITLE} subtitle={getSubtitle(data.lastSyncDate)}>
         <Box>
           <Table style={{ tableLayout: 'fixed' }}>
             <TableHead>
               <TableRow>
                 <TableCell variant="body" padding="checkbox" align="left">Last Night</TableCell>
                 <TableCell variant="body" padding="checkbox" align="center" />
-                <TableCell variant="body" padding="checkbox" align="right">Average Baseline</TableCell>
+                <TableCell variant="body" padding="checkbox" align="right">Average</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {stats.keys.map((key) => (
+              {data.keys.map((key) => (
                 <TableRow key={key}>
-                  <TableCell align="left" variant="head">
-                    <Typography color="primary" variant="subtitle1">
+                  <TableCell align="left" variant="head" padding="none">
+                    <Typography color="primary" variant="subtitle1" display="inline">
                       <strong>
-                        {`${stats.todayStats[key].stat}${stats.todayStats[key].units ? ` ${stats.todayStats[key].units}` : ''}`}
+                        {`${data.todayStats[key].stat}${data.todayStats[key].units ? ` ${data.todayStats[key].units}` : ''}`}
                       </strong>
                     </Typography>
+                    {
+                      data.todayStats[key].diffPercent
+                      && (
+                      <Typography variant="subtitle2" display="inline" style={data.todayStats[key].diffPercent >= 0 ? green : red}>
+                        {` (${data.todayStats[key].diffPercent}%)`}
+                      </Typography>
+                      )
+                    }
                   </TableCell>
-                  <TableCell padding="none" align="center"><Typography variant="caption">{stats.baselineStats[key].description}</Typography></TableCell>
+                  <TableCell padding="none" align="center"><Typography variant="caption">{data.baselineStats[key].description}</Typography></TableCell>
                   <TableCell align="right" variant="head">
                     <Typography color="primary" variant="subtitle1">
-                      <strong>{`${stats.baselineStats[key].stat}${stats.baselineStats[key].units ? ` ${stats.baselineStats[key].units}` : ''}`}</strong>
+                      <strong>{`${data.baselineStats[key].stat}${data.baselineStats[key].units ? ` ${data.baselineStats[key].units}` : ''}`}</strong>
                     </Typography>
                   </TableCell>
                 </TableRow>
@@ -109,32 +87,36 @@ const StatsDisplay = () => {
     );
   }
 
-  return (
-    <PanelModule title={TITLE} subtitle={subtitle}>
-      <Box>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell padding="checkbox" />
-              <TableCell padding="checkbox" align="right">Average Baseline</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {stats.keys.map((key) => (
-              <TableRow key={stats.baselineStats[key].description}>
-                <TableCell align="left"><Typography variant="caption">{stats.baselineStats[key].description}</Typography></TableCell>
-                <TableCell align="right" variant="head">
-                  <Typography color="primary" variant="subtitle1">
-                    <strong>{`${stats.baselineStats[key].stat}${stats.baselineStats[key].units ? ` ${stats.baselineStats[key].units}` : ''}`}</strong>
-                  </Typography>
-                </TableCell>
+  if (data.baselineStats) {
+    return (
+      <PanelModule title={TITLE} subtitle={getSubtitle(data.lastSyncDate)}>
+        <Box>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell padding="checkbox" />
+                <TableCell padding="checkbox" align="right">Average</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Box>
-    </PanelModule>
-  );
+            </TableHead>
+            <TableBody>
+              {data.keys.map((key) => (
+                <TableRow key={data.baselineStats[key].description}>
+                  <TableCell align="left"><Typography variant="caption">{data.baselineStats[key].description}</Typography></TableCell>
+                  <TableCell align="right" variant="head">
+                    <Typography color="primary" variant="subtitle1">
+                      <strong>{`${data.baselineStats[key].stat}${data.baselineStats[key].units ? ` ${data.baselineStats[key].units}` : ''}`}</strong>
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Box>
+      </PanelModule>
+    );
+  }
+
+  return null;
 };
 
 export default React.memo(StatsDisplay);

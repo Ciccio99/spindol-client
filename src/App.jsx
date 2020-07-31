@@ -9,22 +9,20 @@ import UserServices from 'services/UserServices';
 import AppRouter from 'routes/AppRouter';
 import ScrollToTop from 'routes/ScrollToTop';
 import devices from 'constants/devices';
+import {
+  useUserDispatch,
+} from 'context/userContext';
 import Header from './views/header/Header';
 import Footer from './views/footer/Footer';
-import UserContext from './context/userContext';
-import userReducer from './reducers/user';
-import {
-  AlertSystemProvider,
-} from 'context/alertSystemContext';
+
 import SleepTrialTrackersContext from './context/sleepTrialTrackersContext';
 import sleepTrialTrackersReducer from './reducers/sleepTrialTrackersReducer';
 import LoadingCard from './components/loadingCard/LoadingCard';
-import AlertSystemModule from 'components/alertSystem/AlertSystemModule';
 
 // TODO: Upgrade to cleaner context system store https://kentcdodds.com/blog/how-to-use-react-context-effectively
 
 function App() {
-  const [user, dispatchUser] = useReducer(userReducer, {});
+  const dispatchUser = useUserDispatch();
   const [sleepTrialTrackers, dispatchSleepTrialTrackers] = useReducer(
     sleepTrialTrackersReducer, [],
   );
@@ -57,28 +55,21 @@ function App() {
       }
       setLoaded(true);
     })();
-  }, []);
+  }, [dispatchUser]);
 
   return (
-    <UserContext.Provider
-      value={{ user, dispatchUser }}
+    <SleepTrialTrackersContext.Provider
+      value={{ sleepTrialTrackers, dispatchSleepTrialTrackers }}
     >
-      <AlertSystemProvider>
-        <SleepTrialTrackersContext.Provider
-          value={{ sleepTrialTrackers, dispatchSleepTrialTrackers }}
-        >
-          <Box minHeight="100vh" display="flex" flexDirection="column" component="main">
-            <BrowserRouter>
-              <ScrollToTop />
-              <Header />
-              {loaded ? <AppRouter /> : <LoadingCard />}
-              <Footer />
-            </BrowserRouter>
-          </Box>
-        </SleepTrialTrackersContext.Provider>
-        <AlertSystemModule />
-      </AlertSystemProvider>
-    </UserContext.Provider>
+      <Box minHeight="100vh" display="flex" flexDirection="column" component="main">
+        <BrowserRouter>
+          <ScrollToTop />
+          <Header />
+          {loaded ? <AppRouter /> : <LoadingCard />}
+          <Footer />
+        </BrowserRouter>
+      </Box>
+    </SleepTrialTrackersContext.Provider>
   );
 }
 

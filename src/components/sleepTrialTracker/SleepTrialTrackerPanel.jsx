@@ -9,7 +9,6 @@ import {
   Tab,
   Tabs,
 } from '@material-ui/core';
-
 import styles from './SleepTrialTracker.module.css';
 import LinkOnClick from '../linkOnClick/LinkOnClick';
 import SleepTrialsView from '../../views/sleepTrials/SleepTrialsView';
@@ -59,7 +58,7 @@ const CurrentSleepTrialTrackers = ({ trialTrackers }) => {
         </Grid>
       </Box>
       <Box>
-        <Tabs value={tabValue} onChange={handleTabSelect}>
+        <Tabs value={tabValue} onChange={handleTabSelect} variant="fullWidth">
           <Tab label="Current" disableRipple />
           <Tab label="Completed" disableRipple />
         </Tabs>

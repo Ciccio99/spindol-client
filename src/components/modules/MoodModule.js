@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Grid,
@@ -9,14 +9,12 @@ import moment from 'moment-timezone';
 import DailyDiaryServices from 'services/DailyDiaryServices';
 import ToggleButtonGroup from 'components/buttons/toggleButton/ToggleButtonGroup';
 import ToggleButton from 'components/buttons/toggleButton/ToggleButton';
-import UserContext from 'context/userContext';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import PanelModule from 'components/organizers/PanelModule';
 
 const TITLE = 'How are you feeling today?';
 
 const MoodModule = () => {
-  const { user } = useContext(UserContext);
   const dispatchAlertSystem = useAlertSystemDispatch();
   const [dailyDiary, setDailyDiary] = useState();
   const [reportingStreak, setReportingStreak] = useState(0);
@@ -42,7 +40,7 @@ const MoodModule = () => {
         setIsLoading(false);
       }
     })();
-  }, [dispatchAlertSystem, user, todayDate]);
+  }, [dispatchAlertSystem, todayDate]);
 
   useEffect(() => {
     (async () => {

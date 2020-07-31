@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import axios from '../loaders/axios';
+import ErrorHandler from 'utils/ErrorHandler';
 
 const signUp = async (email, name, password, confirmPassword, token = undefined) => {
   try {
@@ -75,8 +76,18 @@ const logout = async () => {
 };
 
 const update = async (userDTO) => {
-  const { data } = await axios.patch(`/users/me`, userDTO);
+  const { data } = await axios.patch('/users/me', userDTO);
   return data.user;
+};
+
+const insertUserTags = async (tags) => {
+  try {
+    const dto = { tags };
+    const { data } = await axios.put('/users/me/tags', dto);
+    return data.tags
+  } catch (error) {
+    throw new ErrorHandler(error);
+  }
 };
 
 export default {
@@ -85,4 +96,5 @@ export default {
   tokenSignIn,
   logout,
   update,
+  insertUserTags,
 };

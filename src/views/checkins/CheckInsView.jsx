@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Box,
   Container,
+  Divider,
   Typography,
   Grid,
 } from '@material-ui/core';
@@ -15,7 +16,7 @@ import { Helmet } from 'react-helmet-async';
 import MomentUtils from '@date-io/moment';
 import moment from 'moment-timezone';
 import Section from 'components/organizers/Section';
-import DailyDiaryDetailsPanel from '../../components/dailyDiaryDetailsPanel/DailyDiaryDetailsPanel';
+import DailyDiaryDetailsPanel from 'components/dailyDiaryDetailsPanel/DailyDiaryDetailsPanel';
 import styles from './CheckInsView.module.css';
 
 const CheckInsView = () => {
@@ -49,10 +50,9 @@ const CheckInsView = () => {
         />
       </Helmet>
       <Box mt={4}>
-        <Typography variant="h3">Your Daily Diary</Typography>
+        <Typography variant="h5">Your Daily Diary</Typography>
       </Box>
-
-      <Box mt={4}>
+      <Box mt={4} mb={4}>
         <Grid container spacing={2} alignItems="center" wrap="nowrap">
           <Grid item>
             <ArrowBackIosIcon onClick={handleBackClick} color="action" className={styles.navArrow} />
@@ -77,6 +77,7 @@ const CheckInsView = () => {
           </Grid>
         </Grid>
       </Box>
+      <Divider />
       <Section>
         <DailyDiaryDetailsPanel selectedDate={selectedDate} />
       </Section>
