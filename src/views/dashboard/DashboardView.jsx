@@ -61,11 +61,8 @@ const DashboardView = () => {
           </Section>
           )
         }
-        {/* <Section>
-          <MoodModule />
-        </Section> */}
         <Section>
-          <DailyDiaryDahboardModule />
+          <DailyDiaryDahboardModule enableStreak />
         </Section>
         <Section>
           <Grid container>

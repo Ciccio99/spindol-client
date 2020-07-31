@@ -159,7 +159,7 @@ const EditTagsModal = ({ open, tags, handleModal, handleSaveTags }) => {
                       </Grid>
                       <Grid item xs={12} sm={4}>
                         <Button disabled={!tagInput} type="submit" color="secondary" variant="contained" disableElevation size="large" fullWidth>
-                          <Typography variant="body2">Add Tag</Typography>
+                          <Typography variant="body2">Create</Typography>
                         </Button>
                       </Grid>
                     </Grid>

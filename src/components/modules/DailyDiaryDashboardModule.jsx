@@ -21,7 +21,7 @@ const PanelWrapper = ({ children }) => (
   </PanelModule>
 );
 
-const DailyDiaryDashboardModule = ({ date }) => {
+const DailyDiaryDashboardModule = ({ date, enableStreak }) => {
   const dispatchAlertSystem = useAlertSystemDispatch();
   const { data, error, isPending } = useAsync(DailyDiaryServices.getDashboardData, { date });
   const [dailyDiary, setDailyDiary] = useState(null);
@@ -79,7 +79,7 @@ const DailyDiaryDashboardModule = ({ date }) => {
     return (
       <PanelWrapper>
         <Box mb={4}>
-          <MoodSubModule mood={dailyDiary.mood} handleUpdate={handleUpdate} />
+          <MoodSubModule mood={dailyDiary.mood} handleUpdate={handleUpdate} enableStreak={enableStreak} />
         </Box>
         <Divider />
         <Box mt={4}>
@@ -90,6 +90,10 @@ const DailyDiaryDashboardModule = ({ date }) => {
   }
 
   return null;
+};
+
+DailyDiaryDashboardModule.defaultProps = {
+  enableStreak: false,
 };
 
 export default DailyDiaryDashboardModule;
