@@ -222,6 +222,21 @@ const getSleepSummaryAvgStats = (sleepSummaries, oldSleepSummaries = undefined) 
   return stats;
 };
 
+const getTotalStats = (sleepSummaries) => {
+  const totals = sleepSummaries.reduce((totalsMap, sleepSummary) => {
+    totalsMap.sleepTime += getSleepHoursDuration(sleepSummary);
+    totalsMap.deep += sleepSummary.deepSleepDuration;
+    totalsMap.rem += sleepSummary.remSleepDuration;
+    return totalsMap;
+  }, {
+    sleepTime: 0,
+    deep: 0,
+    rem: 0,
+  });
+
+  return totals;
+};
+
 
 const getSleepSummaryStats = (sleepSummary) => {
   if (!sleepSummary) {
@@ -293,6 +308,7 @@ export default {
   getToday,
   getAvgSleepHoursDuration,
   getSleepSummaryAvgStats,
+  getTotalStats,
   getSleepSummaryStats,
   getSleepHoursDuration,
   getFatigueScore,

@@ -10,6 +10,7 @@ import { useUserState, useUserDispatch } from 'context/userContext';
 import UserServices from 'services/UserServices';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import styles from './Navigation.module.css';
+import { ADMIN_ROLE } from 'constants/Roles';
 
 const DesktopMenu = () => {
   const user = useUserState();
@@ -68,6 +69,15 @@ const DesktopMenu = () => {
                 <Typography variant="subtitle1">Daily Diary</Typography>
               </NavLink>
             </Grid>,
+              user?.role === ADMIN_ROLE
+              ? (
+                <Grid item key="Team">
+                  <NavLink to="/team" className={styles.navLink} activeClassName={styles.navLinkActive}>
+                    <Typography variant="subtitle1">Team</Typography>
+                  </NavLink>
+                </Grid>
+              )
+            : null,
             <Grid item key="settings">
               <NavLink key="settings" to="/settings" className={styles.navLink} activeClassName={styles.navLinkActive}>
                 <Typography variant="subtitle1">Account</Typography>

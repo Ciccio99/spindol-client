@@ -90,6 +90,19 @@ const insertUserTags = async (tags) => {
   }
 };
 
+const getAdmins = async () => {
+  try {
+    const { data } = await axios.get('/users', {
+      params: {
+        role: 'admin',
+      },
+    });
+    return data;
+  } catch (error) {
+    throw new ErrorHandler(error);
+  }
+}
+
 export default {
   signUp,
   signIn,
@@ -97,4 +110,5 @@ export default {
   logout,
   update,
   insertUserTags,
+  getAdmins,
 };
