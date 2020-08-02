@@ -23,13 +23,7 @@ const getTeamDashboard = async () => {
       teamData[user._id] = {
         user,
       };
-      return SleepSummaryServices.query({
-        owner: user._id,
-        date: {
-          $gte: weekStart,
-          $lte: weekEnd,
-        },
-      });
+      return SleepSummaryServices.getSleepTeamMember(user.id, weekStart, weekEnd);
     });
     const responses = await Promise.all(requests);
     responses.forEach((sleepArray) => {

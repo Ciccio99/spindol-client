@@ -36,21 +36,40 @@ const useStyles = makeStyles({
 const TeamView = () => {
   const classes = useStyles();
   const currentDate = moment();
-  const { data, isPending } = useAsync(getTeamDashboard);
+  const { data, isPending, error } = useAsync(getTeamDashboard);
   const [goal, setGoal] = useState(0);
   const [progress, setProgress] = useState(0);
   const [totalTeamSleep, setTotalTeamSleep] = useState(0);
+  const [tableRows, setTableRows] = useState(null);
 
   useEffect(() => {
     if (data) {
       const memberIds = Object.keys(data);
       const objectiveGoal = memberIds.length * 8 * 7;
       const totalSleep = memberIds
-        .reduce((total, id) => (total + data[id].sleepTotals.sleepTime), 0);
+        .reduce((total, id) => (total + (data[id].sleepTotals?.sleepTime || 0)), 0);
       const teamProgress = (totalSleep / objectiveGoal) * 100;
       setGoal(objectiveGoal);
       setProgress(teamProgress);
       setTotalTeamSleep(totalSleep);
+      const teamTableRows = Object.keys(data).map((id) => {
+        return (
+          <TableRow key={id}>
+            <TableCell>
+              {data[id].user.name}
+            </TableCell>
+            <TableCell>
+              {
+                data[id].sleepTotals
+                ? `${data[id].sleepTotals.sleepTime.toFixed(1)} hrs (${(100 * data[id].sleepTotals.sleepTime / totalSleep).toFixed(0)}%)`
+                : 'No sleep time'
+              }
+
+            </TableCell>
+          </TableRow>
+        );
+      });
+      setTableRows(teamTableRows);
     }
   }, [data]);
 
@@ -68,6 +87,22 @@ const TeamView = () => {
       </Container>
     );
   }
+
+  if (error) {
+    return (
+      <Container>
+        <ViewHeader>
+          Team Founders
+        </ViewHeader>
+        <Section>
+          <PanelModule title="Weekly Objectives" subtitle="Reach your weekly objectives by supporting each other and keeping eachother accountable!">
+            <Typography color="error">{error.message}</Typography>
+          </PanelModule>
+        </Section>
+      </Container>
+    );
+  }
+
   if (data) {
     return (
       <Container>
@@ -108,18 +143,7 @@ const TeamView = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {
-                      Object.keys(data).map((id) => (
-                        <TableRow key={id}>
-                          <TableCell>
-                            {data[id].user.name}
-                          </TableCell>
-                          <TableCell>
-                            {`${data[id].sleepTotals.sleepTime.toFixed(1)} hrs (${(100 * data[id].sleepTotals.sleepTime / totalTeamSleep).toFixed(0)}%)`}
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    }
+                    {tableRows}
                   </TableBody>
                 </Table>
               </Box>
@@ -129,6 +153,8 @@ const TeamView = () => {
       </Container>
     );
   }
+
+  return null;
 };
 
 export default TeamView;
