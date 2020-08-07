@@ -12,10 +12,10 @@ import PanelModule from 'components/organizers/PanelModule';
 import MoodSubModule from 'components/subModules/MoodSubModule';
 import DayTagsSubModule from 'components/subModules/DayTagsSubModule';
 
-const PanelWrapper = ({ children }) => (
+const PanelWrapper = ({date, children }) => (
   <PanelModule
     title="Daily Diary Check-In"
-    subtitle={moment().format('MMMM DD, YYYY')}
+    subtitle={moment(date || undefined).format('MMMM DD, YYYY')}
   >
     {children}
   </PanelModule>
@@ -61,7 +61,7 @@ const DailyDiaryDashboardModule = ({ date, enableStreak }) => {
 
   if (isPending) {
     return (
-      <PanelWrapper>
+      <PanelWrapper date={date}>
         <LinearProgress color="secondary" />
       </PanelWrapper>
     );
@@ -69,7 +69,7 @@ const DailyDiaryDashboardModule = ({ date, enableStreak }) => {
 
   if (error) {
     return (
-      <PanelWrapper>
+      <PanelWrapper date={date}>
         {`${error.message}`}
       </PanelWrapper>
     );
@@ -77,7 +77,7 @@ const DailyDiaryDashboardModule = ({ date, enableStreak }) => {
 
   if (dailyDiary) {
     return (
-      <PanelWrapper>
+      <PanelWrapper date={date}>
         <Box mb={4}>
           <MoodSubModule mood={dailyDiary.mood} handleUpdate={handleUpdate} enableStreak={enableStreak} />
         </Box>

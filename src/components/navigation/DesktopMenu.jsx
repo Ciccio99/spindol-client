@@ -38,13 +38,13 @@ const DesktopMenu = () => {
 
   return (
     <Box m={1.5}>
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={2} justify="flex-end" alignItems="center" wrap="nowrap">
         {
         !user._id
           ? ([
             <Grid item key="signin">
               <NavLink key="signin" to="signin" className={styles.navLink} activeClassName={styles.navLinkActive}>
-                <Typography variant="subtitle1">Sign In</Typography>
+                <Typography variant="subtitle1" noWrap>Sign In</Typography>
               </NavLink>
             </Grid>,
             <Grid item key="community">
@@ -53,8 +53,8 @@ const DesktopMenu = () => {
               </a>
             </Grid>,
             <Grid item key="requestAccess">
-              <Button variant="contained" disableElevation color="primary" size="small" href="https://sleepwell.typeform.com/to/FnZPZk" target="_blank" rel="noopener noreferrer">
-                <Typography variant="subtitle1">Request Access</Typography>
+              <Button variant="contained" color="primary" size="small" href="https://sleepwell.typeform.com/to/FnZPZk" target="_blank" rel="noopener noreferrer">
+                <Typography variant="subtitle1" noWrap>Request Access</Typography>
               </Button>
             </Grid>,
           ])
@@ -66,7 +66,7 @@ const DesktopMenu = () => {
             </Grid>,
             <Grid item key="dailydiary">
               <NavLink key="dailyDiary" to="/daily-diary" className={styles.navLink} activeClassName={styles.navLinkActive}>
-                <Typography variant="subtitle1">Daily Diary</Typography>
+                <Typography variant="subtitle1" noWrap>Daily Diary</Typography>
               </NavLink>
             </Grid>,
               user?.role === ADMIN_ROLE

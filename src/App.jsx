@@ -20,6 +20,7 @@ import sleepTrialTrackersReducer from './reducers/sleepTrialTrackersReducer';
 import LoadingCard from './components/loadingCard/LoadingCard';
 
 // TODO: Upgrade to cleaner context system store https://kentcdodds.com/blog/how-to-use-react-context-effectively
+// TODO: REactGA improvement https://medium.com/@malith.dev/track-users-in-your-react-app-with-google-analytics-6364ebfcbae8#:~:text=That's%20it.,%2D%3EEvents%2D%3EOverview.
 
 function App() {
   const dispatchUser = useUserDispatch();

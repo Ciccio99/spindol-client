@@ -26,10 +26,16 @@ const HabitModule = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [currDateView, setCurrDateView] = useState(isMobile ? dateViews.W : dateViews.M);
+  // const [currDateView, setCurrDateView] = useState(isMobile ? dateViews.W : dateViews.M);
+  // const [viewDates, setViewDates] = useState({
+  //   startDate: moment().startOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'),
+  //   endDate: moment().endOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'),
+  //   month: moment().format('MMMM'),
+  // });
+  const [currDateView, setCurrDateView] = useState(dateViews.W);
   const [viewDates, setViewDates] = useState({
-    startDate: moment().startOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'),
-    endDate: moment().endOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'),
+    startDate: moment().startOf(dateViews.W).format('YYYY-MM-DD'),
+    endDate: moment().endOf(dateViews.W).format('YYYY-MM-DD'),
     month: moment().format('MMMM'),
   });
   const [bedtimeHabit, setBedtimeHabit] = useState();
@@ -53,14 +59,14 @@ const HabitModule = () => {
     }));
   };
 
-  useEffect(() => {
-    setViewDates((prevState) => ({
-      startDate: moment().startOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'),
-      endDate: moment().endOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'),
-      month: prevState.month,
-    }));
-    setCurrDateView(isMobile ? dateViews.W : dateViews.M);
-  }, [isMobile]);
+  // useEffect(() => {
+  //   setViewDates((prevState) => ({
+  //     startDate: moment().startOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'),
+  //     endDate: moment().endOf(isMobile ? dateViews.W : dateViews.M).format('YYYY-MM-DD'),
+  //     month: prevState.month,
+  //   }));
+  //   setCurrDateView(isMobile ? dateViews.W : dateViews.M);
+  // }, [isMobile]);
 
   useEffect(() => {
     (async () => {
@@ -106,35 +112,27 @@ const HabitModule = () => {
       <Box mt={0.5} height={2}>
         { isUpdating && <LinearProgress color="secondary" /> }
       </Box>
-      <Box height={140} display="flex" justifyContent="space-between" alignItems="center">
+      <Box height={120} display="flex" justifyContent="space-between" alignItems="center">
         <HabitHeatMap
           data={heatmapData.data}
           auxData={heatmapData.auxData}
           keys={heatmapData.keys}
         />
       </Box>
-      <Box>
+      <Box mt={1}>
         <Typography variant="caption" align="center" display="block" gutterBottom>Time Δ From Goal:</Typography>
         <Grid container justify="center" alignItems="center" spacing={1}>
           <Grid item xs={6} sm="auto">
-            <Box px={2} py={0.5} borderRadius={5} style={{ backgroundColor: 'rgb(143, 239, 155)' }}>
-              <Typography variant="caption" align="center" display="block">0-30 min</Typography>
-            </Box>
+            <LegendBlock label="0-30 min" color="rgb(143, 239, 155)" />
           </Grid>
           <Grid item xs={6} sm="auto">
-            <Box px={2} py={0.5} borderRadius={5} style={{ backgroundColor: 'rgba(250,200,86,1)' }}>
-              <Typography variant="caption" align="center" display="block">30-60 min</Typography>
-            </Box>
+            <LegendBlock label="30-60 min" color="rgba(250,200,86,1)" />
           </Grid>
           <Grid item xs={6} sm="auto">
-            <Box px={2} py={0.5} borderRadius={5} style={{ backgroundColor: 'rgba(230,126,86,1)' }}>
-              <Typography variant="caption" align="center" display="block">60-90 min</Typography>
-            </Box>
+            <LegendBlock label="60-90 min" color="rgba(230,126,86,1)" />
           </Grid>
           <Grid item xs={6} sm="auto">
-            <Box px={2} py={0.5} borderRadius={5} style={{ backgroundColor: 'rgba(218,80,87,1)' }}>
-              <Typography variant="caption" align="center" display="block">90+ min</Typography>
-            </Box>
+            <LegendBlock label="90+ min" color="rgba(218,80,87,1)" />
           </Grid>
         </Grid>
       </Box>
@@ -166,4 +164,13 @@ const HabitModule = () => {
     </PanelModule>
   );
 };
+
+const LegendBlock = ({ label, color }) => (
+  <Box px={0.5} py={0.5} width={80} borderRadius={5} style={{ backgroundColor: color }}>
+    <Typography variant="caption" align="center" display="block">
+      {label}
+    </Typography>
+  </Box>
+);
+
 export default HabitModule;

@@ -71,7 +71,7 @@ const WaketimeHabitPanel = ({ habit }) => {
             {`Set your ${NAME} goal `}
           </Typography>
         </Grid>
-        <Grid item container justify="flex-end" spacing={2} xs={12} sm={6} wrap="nowrap">
+        <Grid item container justify="flex-end" spacing={2} xs={12} sm={7} wrap="nowrap">
           <Grid item>
             <MuiPickersUtilsProvider utils={MomentUtils}>
               <KeyboardTimePicker

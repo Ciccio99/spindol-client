@@ -17,6 +17,8 @@ const DeviceSettingsItem = ({
   const dispatchAlertSystem = useAlertSystemDispatch();
   const [connected, setConnected] = useState(false);
   const [redirectUri, setRedirectUri] = useState('');
+  const deviceName = React.useMemo(() => capFirst(device), [device]);
+  const trackerTypeName = React.useMemo(() => capFirst(trackerType), [trackerType]);
 
   useEffect(() => {
     async function fetchData() {
@@ -42,7 +44,7 @@ const DeviceSettingsItem = ({
       setConnected(false);
       dispatchAlertSystem({
         type: 'SUCCESS',
-        message: `${capFirst(device)} disconnected.`,
+        message: `${deviceName} disconnected.`,
       });
     } else {
       dispatchAlertSystem({
@@ -61,16 +63,16 @@ const DeviceSettingsItem = ({
               ? (
                 <Typography variant="h6">
                   {userFirstName ? `${userFirstName}'s ` : ''}
-                  {capFirst(device)}
+                  {deviceName}
                   {' '}
-                  {capFirst(trackerType)}
+                  {trackerTypeName}
                 </Typography>
               )
               : (
                 <Typography variant="h6">
-                  {capFirst(device)}
+                  {deviceName}
                   {' '}
-                  {capFirst(trackerType)}
+                  {trackerTypeName}
                 </Typography>
               )
           }

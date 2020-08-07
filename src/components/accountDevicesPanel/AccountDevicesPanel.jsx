@@ -12,14 +12,14 @@ const SUBTITLE = 'Only one tracker can be connected at a time. If you connect a 
 
 const AccountDevicesPanel = () => {
   const user = useUserState();
-  const userFirstName = user.name ? user.name.split(' ')[0] : '';
+  const userFirstName = React.useMemo(() => (user.name ? user.name.split(' ')[0] : ''), [user]);
   return (
     <PanelModule title={TITLE} subtitle={SUBTITLE}>
       <DeviceSettingsItem
         user={user}
         device="oura"
         trackerType="Ring"
-        userFirstName={userFirstName ? ` ${userFirstName}` : ''}
+        userFirstName={userFirstName || ''}
       />
       <Box my={4}>
         <Divider />
@@ -28,7 +28,7 @@ const AccountDevicesPanel = () => {
         user={user}
         device="withings"
         trackerType="Tracker"
-        userFirstName={userFirstName ? ` ${userFirstName}` : ''}
+        userFirstName={userFirstName || ''}
       />
     </PanelModule>
   );
