@@ -58,19 +58,20 @@ const StatsDisplay = ({ date }) => {
               {data.keys.map((key) => (
                 <TableRow key={key}>
                   <TableCell align="left" variant="head" padding="none">
-                    <Typography color="primary" variant="subtitle1" display="inline">
+                    <Typography color="primary" variant="subtitle1" display="inline" noWrap>
                       <strong>
                         {`${data.todayStats[key].stat}${data.todayStats[key].units ? ` ${data.todayStats[key].units}` : ''}`}
                       </strong>
-                    </Typography>
-                    {
+                      {
                       data.todayStats[key].diffPercent
                       && (
-                      <Typography variant="subtitle2" display="inline" style={data.todayStats[key].diffPercent >= 0 ? green : red}>
+                      <Typography variant="subtitle2" noWrap display="inline" style={data.todayStats[key].diffPercent >= 0 ? green : red}>
                         {` (${data.todayStats[key].diffPercent}%)`}
                       </Typography>
                       )
                     }
+                    </Typography>
+
                   </TableCell>
                   <TableCell padding="none" align="center"><Typography variant="caption">{data.baselineStats[key].description}</Typography></TableCell>
                   <TableCell align="right" variant="head">
