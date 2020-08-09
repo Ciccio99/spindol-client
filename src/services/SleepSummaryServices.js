@@ -19,6 +19,21 @@ const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   }
 };
 
+const getSleepTeamMember = async (id, dateStart, dateEnd) => {
+  try {
+    const { data } = await axios.get('/sleepSummary/teams', {
+      params: {
+        owner: id,
+        rangeDateStart: dateStart,
+        rangeDateEnd: dateEnd,
+      }
+    });
+    return data;
+  } catch (error) {
+    throw new ErrorHandler(error);
+  }
+};
+
 const getDashboardComparisonData = async ({ searchDate }) => {
   const todayDate = searchDate ? moment(searchDate) : moment();
 
@@ -222,6 +237,21 @@ const getSleepSummaryAvgStats = (sleepSummaries, oldSleepSummaries = undefined) 
   return stats;
 };
 
+const getTotalStats = (sleepSummaries) => {
+  const totals = sleepSummaries.reduce((totalsMap, sleepSummary) => {
+    totalsMap.sleepTime += getSleepHoursDuration(sleepSummary);
+    totalsMap.deep += sleepSummary.deepSleepDuration;
+    totalsMap.rem += sleepSummary.remSleepDuration;
+    return totalsMap;
+  }, {
+    sleepTime: 0,
+    deep: 0,
+    rem: 0,
+  });
+
+  return totals;
+};
+
 
 const getSleepSummaryStats = (sleepSummary) => {
   if (!sleepSummary) {
@@ -293,7 +323,9 @@ export default {
   getToday,
   getAvgSleepHoursDuration,
   getSleepSummaryAvgStats,
+  getTotalStats,
   getSleepSummaryStats,
   getSleepHoursDuration,
   getFatigueScore,
+  getSleepTeamMember,
 };

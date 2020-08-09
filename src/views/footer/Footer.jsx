@@ -31,8 +31,6 @@ const Footer = () => (
               <Typography variant="body1">Legal</Typography>
               <Box py={1}>
                 <LinkText to="/terms-of-service">Terms of Service</LinkText>
-              </Box>
-              <Box py={1}>
                 <LinkText to="/privacy-policy">Privacy Policy</LinkText>
               </Box>
             </Box>

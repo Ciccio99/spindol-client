@@ -12,6 +12,7 @@ import { Helmet } from 'react-helmet-async';
 import AccountDevicesPanel from 'components/accountDevicesPanel/AccountDevicesPanel';
 import AccountDetailsPanel from 'components/accountsDetailsPanel/AccountDetailsPanel';
 import TagManagementPanel from 'components/accountSettings/TagManagementPanel';
+import NotificationSettingsModule from 'components/modules/NotifcationSettingsModule';
 import Section from 'components/organizers/Section';
 import TabPanel from 'components/tabPanel/TabPanel';
 
@@ -28,8 +29,11 @@ const AccountSettings = () => {
         case '#devices':
           setTabValue(1);
           break;
-        case '#tags':
+        case '#notifications':
           setTabValue(2);
+          break;
+        case '#tags':
+          setTabValue(3);
           break;
         default:
           break;
@@ -53,12 +57,15 @@ const AccountSettings = () => {
         component={Tabs}
         value={tabValue}
         onChange={(e, newValue) => { setTabValue(newValue); }}
-        indicatorColor="primary"
-        textColor="primary"
+        variant="scrollable"
+        scrollButtons="off"
+        indicatorColor="secondary"
+        textColor="secondary"
         mt={4}
       >
         <Tab label="Account" disableRipple />
         <Tab label="Devices" disableRipple />
+        <Tab label="Notifications" disableRipple />
         <Tab label="Habit Tags" disableRipple />
       </Box>
       <Divider />
@@ -70,6 +77,9 @@ const AccountSettings = () => {
           <AccountDevicesPanel />
         </TabPanel>
         <TabPanel value={tabValue} index={2}>
+          <NotificationSettingsModule />
+        </TabPanel>
+        <TabPanel value={tabValue} index={3}>
           <TagManagementPanel />
         </TabPanel>
       </Section>

@@ -9,9 +9,11 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
+import moment from 'moment-timezone';
 import { useAsync } from 'react-async';
 import PanelModule from 'components/organizers/PanelModule';
 import SleepSummaryServices from 'services/SleepSummaryServices';
+import { useUserState } from 'context/userContext';
 
 const TITLE = 'Sleep';
 const green = { color: '#5DBD88' };
@@ -22,6 +24,7 @@ const getSubtitle = (date) => {
 };
 
 const StatsDisplay = ({ date }) => {
+  const user = useUserState();
   const { data, error, isPending } = useAsync(SleepSummaryServices.getDashboardComparisonData, { searchDate: date });
 
   if (isPending) {
@@ -43,8 +46,9 @@ const StatsDisplay = ({ date }) => {
   }
 
   if (data.todayStats && data.baselineStats) {
+    const enableCTA = moment().diff(moment(user.createdAt), 'days') < 3 && moment(data.lastSyncDate).isSame(moment(), 'day');
     return (
-      <PanelModule title={TITLE} subtitle={getSubtitle(data.lastSyncDate)}>
+      <PanelModule title={TITLE} subtitle={getSubtitle(data.lastSyncDate)} enableCTA={enableCTA}>
         <Box>
           <Table style={{ tableLayout: 'fixed' }}>
             <TableHead>
@@ -58,19 +62,20 @@ const StatsDisplay = ({ date }) => {
               {data.keys.map((key) => (
                 <TableRow key={key}>
                   <TableCell align="left" variant="head" padding="none">
-                    <Typography color="primary" variant="subtitle1" display="inline">
+                    <Typography color="primary" variant="subtitle1" display="inline" noWrap>
                       <strong>
                         {`${data.todayStats[key].stat}${data.todayStats[key].units ? ` ${data.todayStats[key].units}` : ''}`}
                       </strong>
-                    </Typography>
-                    {
+                      {
                       data.todayStats[key].diffPercent
                       && (
-                      <Typography variant="subtitle2" display="inline" style={data.todayStats[key].diffPercent >= 0 ? green : red}>
+                      <Typography variant="subtitle2" noWrap display="inline" style={data.todayStats[key].diffPercent >= 0 ? green : red}>
                         {` (${data.todayStats[key].diffPercent}%)`}
                       </Typography>
                       )
                     }
+                    </Typography>
+
                   </TableCell>
                   <TableCell padding="none" align="center"><Typography variant="caption">{data.baselineStats[key].description}</Typography></TableCell>
                   <TableCell align="right" variant="head">

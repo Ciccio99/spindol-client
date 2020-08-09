@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Box,
   LinearProgress,
   Typography,
 } from '@material-ui/core';
@@ -20,7 +19,7 @@ const PanelWrapper = ({ children }) => (
 
 const CurrentTrialsModule = ({ date }) => {
   const currentDate = date || moment().format('YYYY-MM-DD');
-  const { data, error, isPending, setData } = useAsync({
+  const { data, error, isPending } = useAsync({
     promiseFn: SleepTrialTrackerServices.getByDate,
     date: currentDate,
   });

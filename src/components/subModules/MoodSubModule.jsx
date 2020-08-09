@@ -29,7 +29,7 @@ const MoodSubModule = ({ mood, handleUpdate, enableStreak }) => {
     <Box>
       <Grid container justify="space-between" alignItems="center" spacing={4}>
         <Grid item>
-          <Typography variant="subtitle2"><strong>How are you feeling today?</strong></Typography>
+          <Typography variant="subtitle2"><strong>How did your sleep make you feel this morning?</strong></Typography>
         </Grid>
         {
           streak > 0

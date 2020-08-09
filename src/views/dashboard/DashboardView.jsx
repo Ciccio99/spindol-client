@@ -10,7 +10,6 @@ import { useUserState } from 'context/userContext';
 import SleepTrialTrackersContext from 'context/sleepTrialTrackersContext';
 import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
 import SleepTrialTrackerPanel from 'components/sleepTrialTracker/SleepTrialTrackerPanel';
-import MoodModule from 'components/modules/MoodModule';
 import DailyDiaryDahboardModule from 'components/modules/DailyDiaryDashboardModule';
 import FatigueModule from 'components/modules/FatigueModule';
 import SleepComparisonModule from 'components/modules/SleepComparisonModule';
@@ -67,19 +66,16 @@ const DashboardView = () => {
         <Section>
           <Grid container>
             <Grid component={Grid} item xs={12} md={6}>
-              <Box mr={isMedium ? 0 : 4}>
+              <Box mr={isMedium ? 0 : 4} height={isMedium ? 'auto' : '100%'}>
                 <SleepComparisonModule />
               </Box>
             </Grid>
             <Grid item xs={12} md={6}>
               <Box mt={isMedium ? 8 : 0} height={isMedium ? 'auto' : '100%'}>
-                <FatigueModule />
+                <HabitModule />
               </Box>
             </Grid>
           </Grid>
-        </Section>
-        <Section>
-          <HabitModule />
         </Section>
         <Section>
           <SleepTrialTrackerPanel trialTrackers={sleepTrialTrackers} />
