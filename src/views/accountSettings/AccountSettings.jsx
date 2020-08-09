@@ -59,8 +59,8 @@ const AccountSettings = () => {
         onChange={(e, newValue) => { setTabValue(newValue); }}
         variant="scrollable"
         scrollButtons="off"
-        indicatorColor="primary"
-        textColor="primary"
+        indicatorColor="secondary"
+        textColor="secondary"
         mt={4}
       >
         <Tab label="Account" disableRipple />

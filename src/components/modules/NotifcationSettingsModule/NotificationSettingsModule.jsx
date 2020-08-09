@@ -73,30 +73,21 @@ const NotificationSettingsModule = () => {
     );
   }
 
-  if (error) {
-    return (
-      <PanelWrapper>
-        <Typography color="error">{error.message}</Typography>
-      </PanelWrapper>
-    );
-  }
 
-  if (data) {
-    return (
-      <PanelWrapper>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="subtitle1">Daily Email Reminders</Typography>
-          <Switch
-            checked={dailyEmailReminder}
-            name="dailyEmailReminder"
-            onChange={handleChange}
-            disabled={!switchEnabled}
-          />
-        </Box>
-      </PanelWrapper>
-    );
-  }
-  return null;
+  return (
+    <PanelWrapper>
+      <Typography>Coming Soon...</Typography>
+      {/* <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Typography variant="subtitle1">Daily Email Reminders</Typography>
+        <Switch
+          checked={dailyEmailReminder}
+          name="dailyEmailReminder"
+          onChange={handleChange}
+          disabled={!switchEnabled}
+        />
+      </Box> */}
+    </PanelWrapper>
+  );
 };
 
 export default NotificationSettingsModule;

@@ -9,9 +9,11 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
+import moment from 'moment-timezone';
 import { useAsync } from 'react-async';
 import PanelModule from 'components/organizers/PanelModule';
 import SleepSummaryServices from 'services/SleepSummaryServices';
+import { useUserState } from 'context/userContext';
 
 const TITLE = 'Sleep';
 const green = { color: '#5DBD88' };
@@ -22,6 +24,7 @@ const getSubtitle = (date) => {
 };
 
 const StatsDisplay = ({ date }) => {
+  const user = useUserState();
   const { data, error, isPending } = useAsync(SleepSummaryServices.getDashboardComparisonData, { searchDate: date });
 
   if (isPending) {
@@ -43,8 +46,9 @@ const StatsDisplay = ({ date }) => {
   }
 
   if (data.todayStats && data.baselineStats) {
+    const enableCTA = moment().diff(moment(user.createdAt), 'days') < 3 && moment(data.lastSyncDate).isSame(moment(), 'day');
     return (
-      <PanelModule title={TITLE} subtitle={getSubtitle(data.lastSyncDate)}>
+      <PanelModule title={TITLE} subtitle={getSubtitle(data.lastSyncDate)} enableCTA={enableCTA}>
         <Box>
           <Table style={{ tableLayout: 'fixed' }}>
             <TableHead>
