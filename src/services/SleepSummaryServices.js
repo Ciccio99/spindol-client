@@ -81,7 +81,7 @@ const getDashboardComparisonData = async ({ searchDate }) => {
           keys.push(key);
         }
       });
-    } else {
+    } else if (baselineStats) {
       keys = keys.concat(Object.keys(baselineStats));
     }
     const data = {

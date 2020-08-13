@@ -1,7 +1,6 @@
 import moment from 'moment-timezone';
 import axios from '../loaders/axios';
 import ErrorHandler from 'utils/ErrorHandler';
-import handleError from 'utils/handleError';
 
 const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   const queryString = JSON.stringify({
