@@ -6,7 +6,6 @@ import {
   Switch,
 } from '@material-ui/core';
 import { useAsync } from 'react-async';
-import moment from 'moment-timezone';
 import {
   getCurrentDailyReminder,
   updateDailyEmailReminderById,
@@ -76,8 +75,7 @@ const NotificationSettingsModule = () => {
 
   return (
     <PanelWrapper>
-      <Typography>Coming Soon...</Typography>
-      {/* <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="subtitle1">Daily Email Reminders</Typography>
         <Switch
           checked={dailyEmailReminder}
@@ -85,7 +83,7 @@ const NotificationSettingsModule = () => {
           onChange={handleChange}
           disabled={!switchEnabled}
         />
-      </Box> */}
+      </Box>
     </PanelWrapper>
   );
 };

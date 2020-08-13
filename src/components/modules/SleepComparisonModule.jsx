@@ -121,7 +121,13 @@ const StatsDisplay = ({ date }) => {
     );
   }
 
-  return null;
+  return (
+    <PanelModule title={TITLE} subtitle={getSubtitle(data.lastSyncDate)}>
+      <Box>
+        <Typography variant="body1">No sleep data available yet. Connect your sleep tracker to start seeing your data!</Typography>
+      </Box>
+    </PanelModule>
+  );
 };
 
 export default React.memo(StatsDisplay);

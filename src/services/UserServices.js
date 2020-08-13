@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 import axios from '../loaders/axios';
 import ErrorHandler from 'utils/ErrorHandler';
+import { insertDailyEmailReminder } from 'services/notification-service';
 
 const signUp = async (email, name, password, confirmPassword, token = undefined) => {
   try {
@@ -20,6 +21,12 @@ const signUp = async (email, name, password, confirmPassword, token = undefined)
 
     if (data.user && data.token) {
       Cookies.set('HypnosAuthJWT', data.token, { expires: 7 })
+    }
+    try {
+      await insertDailyEmailReminder();
+    } catch (error) {
+      // TODO: If something goes wrong setting up reminders, don't worry. We'll be changing the reminders
+      // Settings anyways.
     }
     return { user: data.user };
   } catch (e) {
