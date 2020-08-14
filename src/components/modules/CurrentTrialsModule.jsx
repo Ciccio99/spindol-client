@@ -39,7 +39,7 @@ const CurrentTrialsModule = ({ date }) => {
     );
   }
 
-  if (data) {
+  if (data && data.length > 0) {
     const trialTrackers = data.map((tracker) => (
       <SleepTrialTrackerMin key={tracker._id} sleepTrialTracker={tracker} date={currentDate} />
     ));
@@ -50,7 +50,11 @@ const CurrentTrialsModule = ({ date }) => {
     );
   }
 
-  return null;
+  return (
+    <PanelWrapper>
+      <Typography variant="body1">No sleep trials...</Typography>
+    </PanelWrapper>
+  );
 };
 
 export default CurrentTrialsModule;

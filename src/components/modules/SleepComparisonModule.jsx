@@ -19,9 +19,7 @@ const TITLE = 'Sleep';
 const green = { color: '#5DBD88' };
 const red = { color: '#DE1E3D' };
 
-const getSubtitle = (date) => {
-  return date ? `Last sync on ${date}` : undefined;
-};
+const getSubtitle = (date) => (date ? `Last sync on ${date}` : undefined);
 
 const StatsDisplay = ({ date }) => {
   const user = useUserState();
