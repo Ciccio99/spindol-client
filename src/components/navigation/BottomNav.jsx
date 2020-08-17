@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     zIndex: 1,
     backgroundColor: theme.palette.tertiary.main,
+    height: '78px',
+    paddingBottom: theme.spacing(2),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
   },
 }));
 

@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   selected: {
+    fontSize: '0.75rem !important',
     color: theme.palette.common.white,
     '& svg': {
       color: theme.palette.common.white,
@@ -23,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.common.white,
       },
     },
+  },
+  label: {
+    fontSize: '0.75rem',
   },
 }));
 
