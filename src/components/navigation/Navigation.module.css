@@ -1,14 +1,26 @@
 .navLink {
   text-decoration: none;
-  color: #9072BA;
+  /* color: #9072BA; */
+  color: #6D9AB0;
+  letter-spacing: 0.05em;
   cursor: pointer;
+  padding-bottom: 1px;
 }
 
-.navLink :hover {
-  text-decoration: underline;
+.logout {
+  color: #D8464D;
 }
 
 .navLinkActive {
-  text-decoration: underline;
+  border-bottom: 1px solid #e67e56;
+  font-weight: 700 !important;
+  padding-bottom: 0;
   color: #e67e56;
+}
+
+
+.bottomNav {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
 }

@@ -78,8 +78,13 @@ const tokenSignIn = async () => {
 };
 
 const logout = async () => {
-  await axios.post(`/users/logout`);
-  Cookies.remove('HypnosAuthJWT');
+  try {
+    await axios.post(`/users/logout`);
+  } catch (error) {
+    throw new ErrorHandler(error);
+  } finally {
+    Cookies.remove('HypnosAuthJWT');
+  }
 };
 
 const update = async (userDTO) => {

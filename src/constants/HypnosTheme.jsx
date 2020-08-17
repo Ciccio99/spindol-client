@@ -59,6 +59,12 @@ const customTheme = {
       dark: '#af502b',
       contrastText: '#fff',
     },
+    tertiary: {
+      light: '#9dcbe2',
+      main: '#6d9ab0',
+      dark: '#3e6c81',
+      contrastText: '#fff',
+    },
     background: {
       default: '#F5F5F5',
     },
