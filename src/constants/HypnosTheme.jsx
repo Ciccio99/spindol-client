@@ -74,6 +74,15 @@ const customTheme = {
   },
   shape: {
     borderRadius: 25,
+    borderRadiusSmall: 10,
+  },
+  overrides: {
+    MuiOutlinedInput: {
+      root: {
+        borderRadius: '10px',
+        border: 0,
+      },
+    },
   },
 };
 

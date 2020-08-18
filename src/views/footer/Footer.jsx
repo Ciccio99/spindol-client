@@ -8,10 +8,11 @@ import {
 import Copyright from 'components/copyright/Copyright';
 import LinkText from 'components/linkText/LinkText';
 import logo from 'assets/hypnos-logo-text-xs.png';
+import useMedium from 'hooks/useMedium';
 import styles from './Footer.module.css';
 
 const Footer = () => (
-  <footer className={styles.footer}>
+  <footer className={styles.footer} style={useMedium().isMedium ? { marginBottom: '78px' } : null}>
     <Container maxWidth="lg">
       <Box mt={8} mb={3}>
         <Grid container spacing={2}>

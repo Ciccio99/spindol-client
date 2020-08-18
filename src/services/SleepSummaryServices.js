@@ -181,6 +181,33 @@ const getAvgAvgHeartRate = (sleepSummaries) => {
   return avgHr;
 };
 
+const toComparisonFormat = (newSleepData, baselineSleepData) => {
+  const newStats = newSleepData.length ? getSleepSummaryAvgStats(newSleepData, baselineSleepData) : undefined;
+  const baselineStats = getSleepSummaryAvgStats(baselineSleepData);
+
+  let keys = [];
+
+  if (newStats && baselineStats) {
+    const baselineKeys = Object.keys(baselineStats);
+    const newKeys = Object.keys(newStats);
+    baselineKeys.forEach((key) => {
+      if (newKeys.includes(key)) {
+        keys.push(key);
+      }
+    })
+  } else if (baselineStats) {
+    keys = keys.concat(Object.keys(baselineStats));
+  }
+
+  const data = {
+    newStats,
+    baselineStats,
+    keys,
+  };
+
+  return data;
+};
+
 const getSleepSummaryAvgStats = (sleepSummaries, oldSleepSummaries = undefined) => {
   const avgSleepDuration = getAvgSleepHoursDuration(sleepSummaries);
   const avgRemDuration = getAvgRemHoursDuration(sleepSummaries);
@@ -317,6 +344,31 @@ const getFatigueScore = async (date) => {
   }
 };
 
+const getTagSleepTableData = async (startDate, endDate, tag) => {
+  try {
+    const { data } = await axios.get('/sleepSummary/tags', {
+      params: {
+        startDate,
+        endDate,
+        tags: tag,
+      },
+    });
+    if (!data.tagSleepData?.length) {
+      throw new Error('No sleep data available for this tag');
+    }
+    if (!data.baselineSleepData?.length) {
+      throw new Error('No baseline sleep data available for this tag - you\'ve performed this tag every day throughout this date range.');
+    }
+
+    const comparisonData = toComparisonFormat(data.tagSleepData, data.baselineSleepData);
+    comparisonData.newStatsCount = data.tagSleepData?.length;
+    comparisonData.baselineStatsCounts = data.baselineSleepData?.length;
+    return comparisonData;
+  } catch (error) {
+    throw new ErrorHandler(error);
+  }
+}
+
 export default {
   query,
   getDashboardComparisonData,
@@ -328,4 +380,5 @@ export default {
   getSleepHoursDuration,
   getFatigueScore,
   getSleepTeamMember,
+  getTagSleepTableData,
 };

@@ -1,5 +1,4 @@
 .card {
-  margin: auto;
   width:50%;
   height:50%;
 }
@@ -16,7 +15,6 @@
   transform-origin:50% 50%;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
-  margin: auto;
 }
 
 
