@@ -353,7 +353,6 @@ const getTagSleepTableData = async (startDate, endDate, tag) => {
         tags: tag,
       },
     });
-    console.log(data);
     if (!data.tagSleepData?.length) {
       throw new Error('No sleep data available for this tag');
     }
