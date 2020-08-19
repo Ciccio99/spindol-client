@@ -64,11 +64,11 @@ const AuthDesktopNavigation = () => (
             </Box>
           </NavLink>
         </Grid>
-        <Grid item>
-          <CenterMenu />
-        </Grid>
         <Grid item xs={2}>
-          <DrawerMenu />
+          <Box display="flex" justifyContent="flex-end">
+            <CenterMenu />
+            <DrawerMenu />
+          </Box>
         </Grid>
       </Grid>
     </Toolbar>
