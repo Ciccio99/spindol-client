@@ -39,22 +39,24 @@ const TagSleepTable = ({ startDate, endDate, tag }) => {
     })();
   }, [startDate, endDate, tag]);
 
-  if (isPending) {
+  if (!data && isPending) {
     return <LinearProgress color="secondary" />;
   }
 
   if (error) {
     return <Box mt={4}><Typography>{error.message}</Typography></Box>;
   }
-
   if (data) {
     return (
-      <ComparisonTable
-        keys={data.keys}
-        newStats={data.newStats}
-        newLabel={`Tag Sleep (${data.newStatsCount} data point${data.newStatsCount === 1 ? '' : 's'})`}
-        baselineStats={data.baselineStats}
-      />
+      <>
+        {isPending && <Box mb={4}><LinearProgress color="primary" /></Box>}
+        <ComparisonTable
+          keys={data.keys}
+          newStats={data.newStats}
+          newLabel={`Tag Sleep (${data.newStatsCount} data point${data.newStatsCount === 1 ? '' : 's'})`}
+          baselineStats={data.baselineStats}
+        />
+      </>
     );
   }
 

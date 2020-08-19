@@ -28,12 +28,12 @@ const TagsHeatMapModule = ({ startDate, endDate, viewRange }) => {
       return;
     }
     setIsPending(true);
+    setError(null);
     (async () => {
       try {
         const newData = await DailyDiaryServices
           .getTagsHeatMapData(startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'));
         setData(newData);
-        setError(null);
       } catch (e) {
         setError(e);
       } finally {
