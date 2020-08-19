@@ -1,42 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Box,
-  Container,
-  Paper,
-  Typography,
   LinearProgress,
-  InputLabel,
-  FormControl,
-  MenuItem,
-  Grid,
-  Select,
-  Divider,
 } from '@material-ui/core';
-
-import moment from 'moment-timezone';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import DailyDiaryServices from 'services/DailyDiaryServices';
-import styles from './DailyDiaryDetailsPanel.module.css';
-import SleepSummaryPanel from './sleepSummaryPanel/SleepSummaryPanel';
-import SleepTrialTrackerMin from './sleepTrialTrackerMin/SleepTrialTrackerMin';
 import Section from 'components/organizers/Section';
-import FatigueModule from 'components/modules/FatigueModule';
 import SleepComparisonModule from 'components/modules/SleepComparisonModule';
-import MoodSelectModule from 'components/modules/MoodSelectModule';
 import DailyDiaryDashboardModule from 'components/modules/DailyDiaryDashboardModule';
 import CurrentTrialsModule from 'components/modules/CurrentTrialsModule';
-import useMedium from 'hooks/useMedium';
-
-const MOOD_COLOR = {
-  excellent: styles.excellent,
-  good: styles.good,
-  meh: styles.meh,
-  bad: styles.bad,
-  awful: styles.awful,
-};
 
 const DailyDiaryDetailsPanel = ({ selectedDate }) => {
-  const { isMedium } = useMedium();
   const dispatchAlertSystem = useAlertSystemDispatch();
   const [dailyDiary, setDailyDiary] = useState();
   const [loading, setLoading] = useState(false);
@@ -63,33 +36,29 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
     return () => { didCancel = true; };
   }, [dispatchAlertSystem, selectedDate]);
 
-  const handleUpdateMood = async (e) => {
-    const mood = e.target.value;
-    const initMood = dailyDiary?.mood;
-
-    setDailyDiary((prevState) => ({ ...prevState, mood }));
-
-    const { data, error } = await DailyDiaryServices.upsert(moment.utc(dailyDiary.date).format('YYYY-MM-DD'), mood);
-    if (data) {
-      setDailyDiary(data);
-      dispatchAlertSystem({
-        type: 'SUCCESS',
-        message: 'Mood Updated!',
-      });
-    } else if (error) {
-      setDailyDiary((prevState) => ({ ...prevState, mood: initMood }));
-      dispatchAlertSystem({
-        type: 'WARNING',
-        message: error.message,
-      });
-    }
-  };
-
-  if (loading) {
+  if (loading && !dailyDiary) {
     return <LinearProgress color="primary" />;
   }
+
   if (!dailyDiary) {
     return null;
+  }
+
+  if (loading && dailyDiary) {
+    return (
+      <>
+        <LinearProgress color="primary" />
+        <Section>
+          <DailyDiaryDashboardModule date={selectedDate} />
+        </Section>
+        <Section>
+          <CurrentTrialsModule date={selectedDate} />
+        </Section>
+        <Section>
+          <SleepComparisonModule date={selectedDate} />
+        </Section>
+      </>
+    );
   }
 
   return (
@@ -101,7 +70,7 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
         <CurrentTrialsModule date={selectedDate} />
       </Section>
       <Section>
-        <SleepComparisonModule date={selectedDate}/>
+        <SleepComparisonModule date={selectedDate} />
       </Section>
     </>
   );
