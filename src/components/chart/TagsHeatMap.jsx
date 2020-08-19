@@ -6,6 +6,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
 import { ResponsiveHeatMap } from '@nivo/heatmap';
 import colors from 'constants/colors';
+import useMobile from 'hooks/useMobile';
 
 const CustomCell = ({
   value,
@@ -58,9 +59,15 @@ const CustomTooltip = ({ xKey, yKey, value }) => (
   </Box>
 );
 
+const calculateCellHeight = (dataLength, dataWidth, isMobile) => {
+  if (isMobile || dataWidth > 7) {
+    return dataLength * 30;
+  }
+  return dataLength * 40;
+};
 
 const TagsHeatMap = ({ data, keys }) => (
-  <Box height={data.length * 30}>
+  <Box height={calculateCellHeight(data.length, keys.length, useMobile().isMobile)}>
     <ResponsiveHeatMap
       data={data}
       indexBy="tag"
@@ -71,14 +78,14 @@ const TagsHeatMap = ({ data, keys }) => (
       padding={2}
       forceSquare
       axisTop={{
-        orient: 'bottom', tickSize: 5, tickPadding: 5, tickRotation: 0, legend: '', legendOffset: 36,
+        orient: 'bottom', tickSize: 0, tickPadding: 10, tickRotation: 0, legend: '', legendOffset: 36,
       }}
       axisRight={null}
       axisBottom={null}
       axisLeft={{
         orient: 'left',
-        tickSize: 5,
-        tickPadding: 5,
+        tickSize: 0,
+        tickPadding: 10,
         tickRotation: 0,
       }}
       cellShape={CustomCell}
