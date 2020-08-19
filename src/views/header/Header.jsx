@@ -14,6 +14,7 @@ import DesktopMenu from 'components/navigation/DesktopMenu';
 import CenterMenu from 'components/navigation/CenterMenu';
 import BottomNav from 'components/navigation/BottomNav';
 import DrawerMenu from 'components/navigation/DrawerMenu';
+import HeadwayWidget from 'components/common/HeadwayWidget';
 import { useUserState } from 'context/userContext';
 import styles from './Header.module.css';
 
@@ -38,7 +39,7 @@ const DesktopNavigation = () => (
               <img src={logo} alt="SleepWell Logo" height="45px" />
               <Typography className={styles.logoName} color="textPrimary" variant="h6" display="inline">Hypnos.ai</Typography>
               <Chip label="beta" color="primary" variant="outlined" size="small" style={{ marginLeft: '0.5rem' }} />
-              <Box id="changelog" component="span" />
+              <HeadwayWidget />
             </Box>
           </NavLink>
         </Grid>
@@ -54,17 +55,17 @@ const AuthDesktopNavigation = () => (
   <AppBar position="sticky" elevation={0} color="default">
     <Toolbar>
       <Grid container alignItems="center" justify="space-between" wrap="nowrap" style={{ marginTop: '-1px' }}>
-        <Grid item xs={2}>
+        <Grid item>
           <NavLink className={styles.navLink} exact to="/">
             <Box display="flex" alignItems="center">
               <img src={logo} alt="SleepWell Logo" height="45px" />
               <Typography className={styles.logoName} color="textPrimary" variant="h6" display="inline">Hypnos.ai</Typography>
               <Chip label="beta" color="primary" variant="outlined" size="small" style={{ marginLeft: '0.5rem' }} />
-              <Box id="changelog" component="span" />
+              <HeadwayWidget />
             </Box>
           </NavLink>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item>
           <Box display="flex" justifyContent="flex-end">
             <CenterMenu />
             <DrawerMenu />
@@ -83,10 +84,10 @@ const MobileNavigation = () => (
           <Grid item>
             <NavLink className={styles.navLink} exact to="/">
               <Box display="flex" alignItems="center">
-                <img src={logo} alt="SleepWell Logo" height="45px" />
-                <Typography className={styles.logoName} color="textPrimary" variant="h6" display="inline">Hypnos.ai</Typography>
+                <img src={logo} alt="SleepWell Logo" height="30px" />
+                <Typography className={styles.logoName} color="textPrimary" variant="subtitle1" display="inline">Hypnos.ai</Typography>
                 <Chip label="beta" color="primary" variant="outlined" size="small" style={{ marginLeft: '0.5rem' }} />
-                <Box id="changelog" component="span" />
+                <HeadwayWidget />
               </Box>
             </NavLink>
           </Grid>
@@ -95,6 +96,7 @@ const MobileNavigation = () => (
           </Grid>
         </Grid>
       </Toolbar>
+
     </AppBar>
     <BottomNav />
   </>
