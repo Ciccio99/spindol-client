@@ -35,7 +35,7 @@ const DayTagsSubModule = ({ tags, handleUpdate }) => {
             <Button size="small" variant="contained" color="secondary" startIcon={<EditTwoToneIcon />}
               onClick={() => { setIsModalOpen(true); }}
             >
-              <Typography variant="caption">Edit Tags</Typography>
+              <Typography variant="caption">Add Tags</Typography>
             </Button>
           )
         }
@@ -50,7 +50,7 @@ const DayTagsSubModule = ({ tags, handleUpdate }) => {
             </Grid>
           ))}
         </Grid>)
-        : <Typography variant="subtitle1">No activity tags selected...</Typography>
+        : <Typography variant="subtitle1">Track your day by adding tags!</Typography>
         }
       </Box>
       <EditTagsModal open={isModalOpen} tags={sortedTags} handleModal={setIsModalOpen} handleSaveTags={handleTagsUpdate}/>

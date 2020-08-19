@@ -101,18 +101,7 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
         <CurrentTrialsModule date={selectedDate} />
       </Section>
       <Section>
-        <Grid container>
-          <Grid component={Grid} item xs={12} md={6}>
-            <Box mr={isMedium ? 0 : 4}>
-              <SleepComparisonModule date={selectedDate}/>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Box mt={isMedium ? 8 : 0} height={isMedium ? 'auto' : '100%'}>
-              <FatigueModule date={selectedDate}/>
-            </Box>
-          </Grid>
-        </Grid>
+        <SleepComparisonModule date={selectedDate}/>
       </Section>
     </>
   );
