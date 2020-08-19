@@ -76,9 +76,7 @@ const TeamView = () => {
   if (isPending) {
     return (
       <Container>
-        <ViewHeader>
-          Team Founders
-        </ViewHeader>
+        <ViewHeader label="Team Founders" />
         <Section>
           <PanelModule title="Weekly Objectives" subtitle="Reach your weekly objectives by supporting each other and keeping eachother accountable!">
             <LinearProgress color="secondary" />

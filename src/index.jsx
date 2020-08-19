@@ -37,6 +37,7 @@ if (config?.crisp?.id) {
     s.async = 1;
     d.getElementsByTagName("head")[0].appendChild(s);
   })();
+  window.$crisp.push(["safe", true]);
 }
 
 ReactDOM.render(

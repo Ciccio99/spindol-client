@@ -4,10 +4,10 @@ import {
   Typography,
 } from '@material-ui/core';
 
-const ViewHeader = ({ children }) => (
+const ViewHeader = ({ label }) => (
   <Box mt={4}>
     <Typography variant="h5">
-      {children}
+      {label}
     </Typography>
   </Box>
 );

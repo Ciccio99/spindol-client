@@ -166,7 +166,7 @@ const HabitModule = () => {
 };
 
 const LegendBlock = ({ label, color }) => (
-  <Box px={0.5} py={0.5} width={80} borderRadius={5} style={{ backgroundColor: color }}>
+  <Box px={0.5} py={0.5} minWidth={80} borderRadius={5} style={{ backgroundColor: color }}>
     <Typography variant="caption" align="center" display="block">
       {label}
     </Typography>

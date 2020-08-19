@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Box,
-  Divider,
   Paper,
   Typography,
   Tooltip,
@@ -9,7 +8,6 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import styles from './Organizers.module.css';
-
 
 const useStyles = makeStyles({
   elevation24: {
@@ -42,8 +40,8 @@ const PanelModule = ({
       }
 
       </Box>
-      <Divider />
-      <Box p={4}>
+      {/* <Divider /> */}
+      <Box p={4} pt={2}>
         {children}
       </Box>
     </Paper>

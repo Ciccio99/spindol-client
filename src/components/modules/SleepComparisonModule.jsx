@@ -19,9 +19,7 @@ const TITLE = 'Sleep';
 const green = { color: '#5DBD88' };
 const red = { color: '#DE1E3D' };
 
-const getSubtitle = (date) => {
-  return date ? `Last sync on ${date}` : undefined;
-};
+const getSubtitle = (date) => (date ? `Last sync on ${date}` : undefined);
 
 const StatsDisplay = ({ date }) => {
   const user = useUserState();
@@ -66,7 +64,8 @@ const StatsDisplay = ({ date }) => {
                       <strong>
                         {`${data.todayStats[key].stat}${data.todayStats[key].units ? ` ${data.todayStats[key].units}` : ''}`}
                       </strong>
-                      {
+                    </Typography>
+                    {
                       data.todayStats[key].diffPercent
                       && (
                       <Typography variant="subtitle2" noWrap display="inline" style={data.todayStats[key].diffPercent >= 0 ? green : red}>
@@ -74,8 +73,6 @@ const StatsDisplay = ({ date }) => {
                       </Typography>
                       )
                     }
-                    </Typography>
-
                   </TableCell>
                   <TableCell padding="none" align="center"><Typography variant="caption">{data.baselineStats[key].description}</Typography></TableCell>
                   <TableCell align="right" variant="head">

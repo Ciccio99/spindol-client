@@ -15,6 +15,7 @@ import PrivacyPolicy from 'views/legal/PrivacyPolicy';
 import Home from 'views/home/Home';
 import usePageTracker from 'hooks/usePageTracker';
 import TeamView from 'views/TeamView';
+import DataView from 'views/DataView';
 
 const AppRouter = () => {
   usePageTracker();
@@ -30,6 +31,7 @@ const AppRouter = () => {
         <PublicRoute path="/privacy-policy" component={PrivacyPolicy} />
         <ProtectedRoute path="/dashboard" component={DashboardView} />
         <ProtectedRoute path="/daily-diary" component={CheckInsView} />
+        <ProtectedRoute path="/data" component={DataView} />
         <AdminRoute path="/team" component={TeamView} />
         <ProtectedRoute path="/sleep-trial-report/:id" component={SleepTrialReportView} />
         <ProtectedRoute path="/settings" component={AccountSettings} />
