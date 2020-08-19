@@ -16,6 +16,7 @@ import ViewHeader from 'components/ViewHeader';
 import useMedium from 'hooks/useMedium';
 import Section from 'components/organizers/Section';
 import TagSleepDataModule from 'components/modules/TagSleepDataModule';
+import TagsHeatMapModule from 'components/modules/TagsHeatMapModule';
 
 const useStylesArrows = makeStyles((theme) => ({
   root: {
@@ -110,6 +111,9 @@ const DataView = () => {
       </Box>
       <Section>
         <TagSleepDataModule startDate={viewDates.startDate} endDate={viewDates.endDate} />
+      </Section>
+      <Section>
+        <TagsHeatMapModule startDate={viewDates.startDate} endDate={viewDates.endDate} viewRange={viewRange} />
       </Section>
     </Container>
   );

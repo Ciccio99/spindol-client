@@ -1,10 +1,11 @@
 import React from 'react';
 import {
-  Divider,
-  Typography,
+  Box, Typography,
 } from '@material-ui/core';
+import DoneIcon from '@material-ui/icons/Done';
+import CloseIcon from '@material-ui/icons/Close';
 import { ResponsiveHeatMap } from '@nivo/heatmap';
-import HabitUtils from 'utils/HabitUtils';
+import colors from 'constants/colors';
 
 const CustomCell = ({
   value,
@@ -28,10 +29,10 @@ const CustomCell = ({
       height={height}
       width={width}
       strokeWidth={borderWidth}
-      fill={HabitUtils.mapDiffToColor(value)}
+      fill={value === 1 ? colors.GREEN : colors.GRAY}
       fillOpacity={opacity}
       stroke={borderColor}
-      rx={10}
+      rx={5}
       x={`-${width / 2}`}
       y={`-${height / 2}`}
     />
@@ -46,37 +47,26 @@ const CustomCell = ({
   </g>
 );
 
-const CustomTooltip = ({ value, habitName, auxData }) => {
-  if (auxData.timeActual === -1 && auxData.timeTarget === -1) {
-    return (<>{`No ${habitName} data available`}</>);
-  }
-  return (
-    <>
-      <Typography variant="caption" display="block">
-        <strong>{auxData.date}</strong>
-      </Typography>
-      <Divider />
-      <Typography variant="caption" display="block">
-        {auxData.timeActual !== -1 && `Actual ${habitName}: ${auxData.timeActual}`}
-      </Typography>
-      <Typography variant="caption" display="block">
-        {auxData.timeTarget !== -1 && `Target ${habitName}: ${auxData.timeTarget}`}
-      </Typography>
-      <Typography variant="caption" display="block">
-        {value !== -1 && `Time Δ: ${value} mins`}
-      </Typography>
-    </>
-  );
-};
+const CustomTooltip = ({ xKey, yKey, value }) => (
+  <Box display="flex" alignItems="center">
+    <Typography display="inline">{`${xKey} - ${yKey}`}</Typography>
+    {
+      value
+        ? <DoneIcon fontSize="small" htmlColor={colors.GREEN} style={{ marginLeft: '6px' }} />
+        : <CloseIcon fontSize="small" htmlColor={colors.RED} style={{ marginLeft: '6px' }} />
+    }
+  </Box>
+);
 
-const HabitHeatMap = ({ data, auxData, keys }) => (
-  <>
+
+const TagsHeatMap = ({ data, keys }) => (
+  <Box height={data.length * 30}>
     <ResponsiveHeatMap
       data={data}
-      indexBy="habit"
+      indexBy="tag"
       keys={keys}
       margin={{
-        right: 20, top: 20, left: 60,
+        right: 20, top: 20, left: 100,
       }}
       padding={2}
       forceSquare
@@ -92,10 +82,7 @@ const HabitHeatMap = ({ data, auxData, keys }) => (
         tickRotation: 0,
       }}
       cellShape={CustomCell}
-      tooltip={({ yKey, xKey, ...otherProps }) => {
-        const tooltipData = auxData[yKey][xKey];
-        return (<CustomTooltip auxData={tooltipData} habitName={yKey} {...otherProps} />);
-      }}
+      tooltip={CustomTooltip}
       cellOpacity={1}
       cellBorderColor={{ from: 'color', modifiers: [['darker', 0.4]] }}
       labelTextColor={{ from: 'color', modifiers: [['darker', 1.8]] }}
@@ -119,8 +106,7 @@ const HabitHeatMap = ({ data, auxData, keys }) => (
       cellHoverOpacity={0.6}
       cellHoverOthersOpacity={1}
     />
-
-  </>
+  </Box>
 );
 
-export default HabitHeatMap;
+export default TagsHeatMap;

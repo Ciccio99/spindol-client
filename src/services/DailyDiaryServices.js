@@ -111,6 +111,46 @@ const getDashboardData = async ({ date = moment() }) => {
   }
 };
 
+const getTagsHeatMapData = async (startDate, endDate) => {
+  try {
+    const data = await query({ date: { $gte: startDate, $lte: endDate } });
+    const keys = [];
+    const ddMap = {};
+    const tagMap = {};
+    data.forEach((dd) => {
+      ddMap[moment.utc(dd.date).date()] = dd.tags || [];
+      dd.tags.forEach((tag) => {
+        tagMap[tag] = { tag };
+      });
+    });
+    const tagKeys = Object.keys(tagMap);
+    const dateIndex = moment.utc(startDate);
+    while(!dateIndex.isAfter(endDate)) {
+      const day = dateIndex.date();
+      keys.push(`${day}`);
+      if (ddMap[day]) {
+        tagKeys.forEach((tag) => {
+          if (ddMap[day].includes(tag)) {
+            tagMap[tag][day] = 1;
+          } else {
+            tagMap[tag][day] = 0;
+          }
+        })
+      } else {
+        tagKeys.forEach((tag) => {
+          tagMap[tag][day] = 0;
+        });
+      }
+      dateIndex.add(1, 'day');
+    }
+    let heatMapData = Object.values(tagMap);
+    heatMapData.sort((a, b) => a.tag < b.tag ? -1 : 1);
+    return { data: heatMapData, keys };
+  } catch (error) {
+    throw new ErrorHandler(error);
+  }
+};
+
 export default {
   query,
   create,
@@ -119,5 +159,6 @@ export default {
   getAllDailyDiary,
   getByDate,
   getReportingStreak,
-  getDashboardData
+  getDashboardData,
+  getTagsHeatMapData,
 };
