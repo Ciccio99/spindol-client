@@ -53,7 +53,8 @@ const TagsHeatMapModule = ({ startDate, endDate, viewRange }) => {
   if (isMobile && viewRange !== dateViews.W) {
     return (
       <PanelWrapper>
-        <Typography variant="body1">
+        <Typography variant="body2">
+          Monthly view is only available on Desktop.
           Toggle date range to 'Weekly' to view your Tag Tracker data.
         </Typography>
       </PanelWrapper>
