@@ -28,8 +28,8 @@ const useStyles = makeStyles((theme) => ({
 
 const pathMap = [
   '/dashboard',
-  '/data',
   '/daily-diary',
+  '/data',
   '/team',
 ];
 
@@ -55,8 +55,8 @@ const BottomNav = () => {
         showLabels
       >
         <BottomNavAction label="Dashboard" icon={<DashboardIcon />} disableRipple component={NavLink} to={pathMap[0]} />
-        <BottomNavAction label="Data" icon={<AssessmentIcon />} disableRipple component={NavLink} to={pathMap[1]} />
-        <BottomNavAction label="Diary" icon={<AssignmentIcon />} disableRipple component={NavLink} to={pathMap[2]} />
+        <BottomNavAction label="Diary" icon={<AssignmentIcon />} disableRipple component={NavLink} to={pathMap[1]} />
+        <BottomNavAction label="Data" icon={<AssessmentIcon />} disableRipple component={NavLink} to={pathMap[2]} />
         { user.role === ADMIN_ROLE && <BottomNavAction label="Team" icon={<GroupWorkIcon />} disableRipple component={NavLink} to={pathMap[3]} />}
       </BottomNavigation>
     );

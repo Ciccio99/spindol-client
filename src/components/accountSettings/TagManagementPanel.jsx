@@ -28,10 +28,16 @@ const PanelWrapper = ({ children }) => (
   </PanelModule>
 );
 
+const getAvailableTags = async () => {
+  const userTags = await getAllUserTags();
+  userTags.sort((a, b) => (a.tag.toLowerCase() <= b.tag.toLowerCase() ? -1 : 1));
+  return userTags;
+};
+
 const TagManagementPanel = () => {
   const {
     data, isPending, error, setData,
-  } = useAsync(getAllUserTags);
+  } = useAsync(getAvailableTags);
   const dispatchAlert = useAlertSystemDispatch();
 
   const handleInsert = async (tag) => {
@@ -74,37 +80,6 @@ const TagManagementPanel = () => {
       });
     }
   };
-
-  // const handleUpdate = async (tag = undefined, newTag = undefined) => {
-  //   try {
-  //     if (!tag && !newTag) {
-  //       return;
-  //     }
-
-  //     let modifiedTags = tags;
-  //     if (tag && newTag && tag !== newTag) {
-  //       modifiedTags = modifiedTags.filter((t) => t !== tag);
-  //       modifiedTags.push(newTag.toLowerCase());
-  //     } else if (tag && !newTag) {
-  //       modifiedTags = modifiedTags.filter((t) => t !== tag);
-  //     } else if (!tag && newTag) {
-  //       if (tags.includes(newTag)) {
-  //         throw new Error(`Tag already exists: ${newTag}`)
-  //       }
-  //       modifiedTags.push(newTag.toLowerCase());
-  //     } else {
-  //       return;
-  //     }
-
-  //     const updatedData = await UserServices.insertUserTags(modifiedTags);
-  //     setData(updatedData);
-  //   } catch (e) {
-  //     dispatchAlert({
-  //       type: 'WARNING',
-  //       message: e.message,
-  //     });
-  //   }
-  // };
 
   if (isPending) {
     return (

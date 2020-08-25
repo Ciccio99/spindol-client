@@ -19,8 +19,8 @@ const DesktopMenu = () => {
     return (
       <Box display="flex" justifyContent="center" alignItems="center">
         <NavItem to="/dashboard" label="Dashboard" icon={DashboardIcon} />
-        <NavItem to="/data" label="Data" icon={AssessmentIcon} />
         <NavItem to="/daily-diary" label="Daily Diary" icon={AssignmentIcon} />
+        <NavItem to="/data" label="Data" icon={AssessmentIcon} />
         {
           user?.role === ADMIN_ROLE && <NavItem to="/team" label="Team" icon={GroupWorkIcon} />
         }

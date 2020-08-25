@@ -39,12 +39,18 @@ const ModalWrapper = ({ open, handleOnModalClose, children }) => (
   </Modal>
 );
 
+const getOrderedTags = async () => {
+  const tags = await getAllUserTags();
+  tags.sort((a, b) => (a.tag.toLowerCase() <= b.tag.toLowerCase() ? -1 : 1));
+  return tags;
+};
+
 const EditTagsModal = ({
   open, currentTags, handleModal, handleSaveTags,
 }) => {
   const {
     data, isPending, error, setData,
-  } = useAsync(getAllUserTags);
+  } = useAsync(getOrderedTags);
   const dispatchAlertSystem = useAlertSystemDispatch();
   const [selectedTags, setSelectedTags] = useState(currentTags);
   const [tagsChanged, setTagsChanged] = useState(false);
