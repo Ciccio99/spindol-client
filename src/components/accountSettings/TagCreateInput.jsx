@@ -8,12 +8,12 @@ import {
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
-const TagCreateInput = ({ handleUpdate }) => {
+const TagCreateInput = ({ handleInsert }) => {
   const [tagInput, setTagInput] = useState('');
 
   const handleTagCreate = async (e) => {
     e.preventDefault();
-    handleUpdate(undefined, tagInput);
+    handleInsert(tagInput);
     setTagInput('');
   };
 
@@ -27,10 +27,11 @@ const TagCreateInput = ({ handleUpdate }) => {
             type="text"
             placeholder="New Tag"
             label="New Tag"
-            onChange={(e) => { setTagInput(e.target.value.toLowerCase()); }}
+            onChange={(e) => { setTagInput(e.target.value); }}
             variant="outlined"
             size="small"
             fullWidth
+            inputProps={{ maxLength: 30 }}
           />
         </Grid>
         <Grid item xs={12} sm={4}>

@@ -118,10 +118,12 @@ const getTagsHeatMapData = async (startDate, endDate) => {
     const ddMap = {};
     const tagMap = {};
     data.forEach((dd) => {
-      ddMap[moment.utc(dd.date).date()] = dd.tags || [];
-      dd.tags.forEach((tag) => {
-        tagMap[tag] = { tag };
-      });
+      ddMap[moment.utc(dd.date).date()] = dd.diaryTags || [];
+      if (dd.diaryTags) {
+        dd.diaryTags.forEach((tag) => {
+          tagMap[tag._id] = { ...tag };
+        });
+      }
     });
     const tagKeys = Object.keys(tagMap);
     const dateIndex = moment.utc(startDate);
@@ -129,22 +131,23 @@ const getTagsHeatMapData = async (startDate, endDate) => {
       const day = dateIndex.date();
       keys.push(`${day}`);
       if (ddMap[day]) {
-        tagKeys.forEach((tag) => {
-          if (ddMap[day].includes(tag)) {
-            tagMap[tag][day] = 1;
+        tagKeys.forEach((tagId) => {
+          if (ddMap[day].some((mapTag) => mapTag._id === tagId)) {
+            tagMap[tagId][day] = 1;
           } else {
-            tagMap[tag][day] = 0;
+            tagMap[tagId][day] = 0;
           }
         })
       } else {
-        tagKeys.forEach((tag) => {
-          tagMap[tag][day] = 0;
+        tagKeys.forEach((tagId) => {
+          tagMap[tagId][day] = 0;
         });
       }
       dateIndex.add(1, 'day');
     }
-    let heatMapData = Object.values(tagMap);
-    heatMapData.sort((a, b) => a.tag < b.tag ? -1 : 1);
+    let heatMapData = Object.values(tagMap)
+      .sort((a, b) => (a.tag.toLowerCase() <= b.tag.toLowerCase() ? -1 : 1));
+
     return { data: heatMapData, keys };
   } catch (error) {
     throw new ErrorHandler(error);

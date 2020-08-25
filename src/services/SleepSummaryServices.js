@@ -350,7 +350,7 @@ const getTagSleepTableData = async (startDate, endDate, tag) => {
       params: {
         startDate,
         endDate,
-        tags: tag,
+        tags: tag._id,
       },
     });
     if (!data.tagSleepData?.length) {
