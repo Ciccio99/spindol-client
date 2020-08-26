@@ -82,16 +82,6 @@ const EditTagsModal = ({
   };
 
   const handleOnModalClose = () => {
-    // if (selectedTags.length === tags.length) {
-    //   for (let i = 0; i < selectedTags.length; i += 1) {
-    //     if (!tags.includes(selectedTags[i])) {
-    //       handleSaveTags(selectedTags);
-    //       break;
-    //     }
-    //   }
-    // } else {
-    //   handleSaveTags(selectedTags);
-    // }
     if (tagsChanged) {
       handleSaveTags(selectedTags);
     }
@@ -140,7 +130,7 @@ const EditTagsModal = ({
     return (
       <ModalWrapper open={open} handleOnModalClose={handleOnModalClose}>
         <Box display="flex" justifyContent="space-between" px={2} pt={2}>
-          <Typography variant="h6">Edit Day Tags</Typography>
+          <Typography variant="h6">Edit Activity Tags</Typography>
           {
             tagsChanged
               ? <CheckCircleOutlineIcon className={styles.closeSuccessButton} onClick={handleOnModalClose} />
