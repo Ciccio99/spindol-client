@@ -35,6 +35,7 @@ const TagsHeatMapModule = ({ startDate, endDate, viewRange }) => {
           .getTagsHeatMapData(startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'));
         setData(newData);
       } catch (e) {
+        console.log(e);
         setError(e);
       } finally {
         setIsPending(false);

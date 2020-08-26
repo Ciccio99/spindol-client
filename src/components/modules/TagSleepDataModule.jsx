@@ -3,10 +3,11 @@ import {
   Box,
   FormControl,
   MenuItem,
-  InputLabel
+  InputLabel,
+  Typography,
 } from '@material-ui/core';
-import { useUserState } from 'context/userContext';
-import defaultTags from 'constants/defaultTags';
+import { useAsync } from 'react-async';
+import { getAllUserTags } from 'services/TagsServices';
 import PanelModule from 'components/organizers/PanelModule';
 import SelectInput from 'components/SelectInput';
 import TagSleepTable from 'components/chart/TagSleepTable';
@@ -20,42 +21,44 @@ const PanelWrapper = ({ children }) => (
   </PanelModule>
 );
 
-const getAvailableTags = (customTags = []) => {
-  const tagSet = Array.from(new Set(defaultTags.concat(customTags)));
-  tagSet.sort();
-  return tagSet;
+const getAvailableTags = async () => {
+  const userTags = await getAllUserTags();
+  userTags.sort((a, b) => (a.tag.toLowerCase() <= b.tag.toLowerCase() ? -1 : 1));
+  return userTags;
 };
 
 const TagSelector = ({ handleUpdate }) => {
+  const { data, error } = useAsync(getAvailableTags);
   const { isMobile } = useMobile();
-  const label = 'Select a Tag'
-  const user = useUserState();
-  const tagsList = getAvailableTags(user.settings?.tags || []);
-  const [selectedTag, setSelectedTag] = useState(tagsList[0]);
+  const label = 'Select a Tag';
+  const [selectedTag, setSelectedTag] = useState('');
 
   useEffect(() => {
     handleUpdate(selectedTag);
-  }, [selectedTag, handleUpdate])
+  }, [selectedTag, handleUpdate]);
 
   const handleChange = (e) => {
     setSelectedTag(e.target.value);
-  }
+  };
 
   return (
     <Box>
       <FormControl variant="outlined" color="secondary" size={isMobile ? 'small' : 'medium'} fullWidth>
-      <InputLabel htmlFor="tagSelect">{label}</InputLabel>
-      <SelectInput
-        labelId="tagSelect"
-        value={selectedTag}
-        label={label}
-        onChange={handleChange}
-      >
-        {
-          tagsList.map((tag) => (<MenuItem key={tag} value={tag}>{tag}</MenuItem>))
-        }
-      </SelectInput>
+        <InputLabel htmlFor="tagSelect">{label}</InputLabel>
+        <SelectInput
+          labelId="tagSelect"
+          value={selectedTag}
+          label={label}
+          onChange={handleChange}
+        >
+          {
+            data
+              ? data.map((tag) => (<MenuItem key={tag._id} value={tag}>{tag.tag}</MenuItem>))
+              : []
+          }
+        </SelectInput>
       </FormControl>
+      { error && <Typography variant="caption" color="error">Something went wrong, your activity tags could not be loaded.</Typography>}
     </Box>
   );
 };
@@ -72,7 +75,6 @@ const TagSleepDataModule = ({ startDate, endDate }) => {
     </PanelWrapper>
   );
 };
-
 
 
 export default TagSleepDataModule;

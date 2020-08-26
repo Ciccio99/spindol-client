@@ -6,17 +6,28 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
+import moment from 'moment-timezone';
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
 import EditTagsModal from 'components/modals/EditTagsModal';
 import useMobile from 'hooks/useMobile';
 
-const DayTagsSubModule = ({ tags, handleUpdate }) => {
+const getDateSubtitle = (date) => {
+  const now = moment();
+  const givenDate = moment(date);
+  if (now.isSame(givenDate, 'day')) {
+    return 'What activities did you today?';
+  }
+  return `What activities did you do on ${givenDate.format('dddd DD, MMM YYYY')}?`;
+};
+
+
+const DayTagsSubModule = ({ tags, date, handleUpdate }) => {
   const { isMobile } = useMobile();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const sortedTags = tags?.sort() || [];
 
   const handleTagsUpdate = React.useCallback((selectedTags) => {
-    const dto = { tags: selectedTags };
+    const dto = { diaryTags: selectedTags.map((tag) => tag._id) };
     handleUpdate(dto);
   }, [handleUpdate]);
 
@@ -25,7 +36,7 @@ const DayTagsSubModule = ({ tags, handleUpdate }) => {
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Typography variant="subtitle2"><strong>What else did you do today?</strong></Typography>
+        <Typography variant="subtitle2"><strong>{getDateSubtitle(date)}</strong></Typography>
         {
           isMobile
           ? (
@@ -35,7 +46,7 @@ const DayTagsSubModule = ({ tags, handleUpdate }) => {
             <Button size="small" variant="contained" color="secondary" startIcon={<EditTwoToneIcon />}
               onClick={() => { setIsModalOpen(true); }}
             >
-              <Typography variant="caption">Add Tags</Typography>
+              <Typography variant="caption">Add Activity</Typography>
             </Button>
           )
         }
@@ -44,16 +55,16 @@ const DayTagsSubModule = ({ tags, handleUpdate }) => {
       <Box mt={4}>
         {tags && tags.length > 0
         ? (<Grid container alignItems="center" spacing={3}>
-          {sortedTags.map((tag) => (
-            <Grid key={tag} item>
-              <Chip label={tag} color="primary" />
+          {tags.map((tag) => (
+            <Grid key={tag._id} item>
+              <Chip label={tag.tag} color="primary" />
             </Grid>
           ))}
         </Grid>)
         : <Typography variant="subtitle1">Track your day by adding tags!</Typography>
         }
       </Box>
-      <EditTagsModal open={isModalOpen} tags={sortedTags} handleModal={setIsModalOpen} handleSaveTags={handleTagsUpdate}/>
+      <EditTagsModal open={isModalOpen} currentTags={tags} handleModal={setIsModalOpen} handleSaveTags={handleTagsUpdate}/>
     </Box>
   );
 };

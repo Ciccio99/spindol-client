@@ -24,7 +24,7 @@ const PanelWrapper = ({ children }) => (
 const NotificationSettingsModule = () => {
   const dispatchAlert = useAlertSystemDispatch();
   const {
-    data, error, isPending, setData,
+    data, isPending, setData,
   } = useAsync(getCurrentDailyReminder);
   const [dailyEmailReminder, setDailyEmailReminder] = useState(false);
   const [switchEnabled, setSwitchEnabled] = useState(true);
