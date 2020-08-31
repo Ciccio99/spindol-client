@@ -13,6 +13,8 @@ import {
 } from 'services/notification-service';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import PanelModule from 'components/organizers/PanelModule';
+import { Event } from 'utils/Tracking';
+
 const TITLE = 'Manage Notifications';
 
 const PanelWrapper = ({ children }) => (
@@ -33,6 +35,7 @@ const NotificationSettingsModule = () => {
   }, [data]);
 
   const handleChange = (e) => {
+    Event('Account', 'Toggle Daily Email Reminder', `${e.target.checked}`);
     setDailyEmailReminder(e.target.checked);
     (async () => {
       setSwitchEnabled(false);

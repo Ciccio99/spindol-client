@@ -12,6 +12,7 @@ import PanelModule from 'components/organizers/PanelModule';
 import SelectInput from 'components/SelectInput';
 import TagSleepTable from 'components/chart/TagSleepTable';
 import useMobile from 'hooks/useMobile';
+import { Event } from 'utils/Tracking';
 
 const TITLE = 'Tags & Sleep';
 
@@ -38,6 +39,7 @@ const TagSelector = ({ handleUpdate }) => {
   }, [selectedTag, handleUpdate]);
 
   const handleChange = (e) => {
+    Event('Data View', 'Selected Tag', `${e.target.value}`);
     setSelectedTag(e.target.value);
   };
 

@@ -19,12 +19,14 @@ import PersonIcon from '@material-ui/icons/Person';
 import { useUserState } from 'context/userContext';
 import LogoutWrapper from 'components/LogoutWrapper';
 import styles from './Navigation.module.css';
+import { Event } from 'utils/Tracking';
 
 const DrawerMenu = () => {
   const user = useUserState();
   const [anchor, setAnchor] = useState(false);
 
   const toggleDrawer = (open) => (event) => {
+    Event('Drawer Menu', 'Toggled');
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }

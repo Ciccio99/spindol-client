@@ -10,6 +10,7 @@ import ToggleButton from '../../buttons/toggleButton/ToggleButton';
 import SleepTrialTrackerServices from '../../../services/SleepTrialTrackerServices';
 import SleepTrialTrackersContext from '../../../context/sleepTrialTrackersContext';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
+import { Event } from 'utils/Tracking';
 
 const SleepTrialTrackerMin = ({ sleepTrialTracker, date }) => {
   const { dispatchSleepTrialTrackers } = useContext(SleepTrialTrackersContext);
@@ -36,6 +37,7 @@ const SleepTrialTrackerMin = ({ sleepTrialTracker, date }) => {
   }, [trialTracker]);
 
   const submitCheckIn = async (done) => {
+    Event('Sleep Trial Tracker', 'Submit Check In', `${sleepTrialTracker.sleepTrial.name}`);
     const updateStt = await SleepTrialTrackerServices.addCheckIn(
       sleepTrialTracker._id,
       yesterdayDate.format('YYYY-MM-DD'),

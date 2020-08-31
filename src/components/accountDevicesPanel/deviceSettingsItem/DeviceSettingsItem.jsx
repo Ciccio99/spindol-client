@@ -8,6 +8,7 @@ import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import LinkText from '../../linkText/LinkText';
 import LinkOnClick from '../../linkOnClick/LinkOnClick';
 import DeviceServices from '../../../services/DeviceServices';
+import { Event } from 'utils/Tracking';
 
 const capFirst = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
@@ -40,6 +41,7 @@ const DeviceSettingsItem = ({
 
   const disconnectDevice = async () => {
     const success = await DeviceServices.revokeDeviceAccess(device);
+    Event('Account', 'Disconnect Tracker', `${device}`);
     if (success) {
       setConnected(false);
       dispatchAlertSystem({
@@ -86,7 +88,7 @@ const DeviceSettingsItem = ({
           {
             connected
               ? <LinkOnClick onClick={disconnectDevice} errorColor>Disconnect</LinkOnClick>
-              : <LinkText to={redirectUri} external>Connect</LinkText>
+              : <LinkText to={redirectUri} external onClick={(e) => { e.preventDefault(); Event('Account', 'Connecting Tracker Device', `${device}`); }}>Connect</LinkText>
           }
         </Grid>
       </Grid>

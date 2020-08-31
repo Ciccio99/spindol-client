@@ -17,20 +17,24 @@ import MomentUtils from '@date-io/moment';
 import moment from 'moment-timezone';
 import Section from 'components/organizers/Section';
 import DailyDiaryDetailsPanel from 'components/dailyDiaryDetailsPanel/DailyDiaryDetailsPanel';
+import { Event } from 'utils/Tracking';
 import styles from './CheckInsView.module.css';
 
 const CheckInsView = () => {
   const [selectedDate, setSelectedDate] = useState(moment());
 
   const handleDateChange = (date) => {
+    Event('Daily Diary View', 'Date Selected');
     setSelectedDate(date.format('YYYY-MM-DD'));
   };
 
   const handleBackClick = () => {
+    Event('Daily Diary View', 'Date Selected');
     setSelectedDate((prevDate) => moment(prevDate).subtract(1, 'day'));
   };
 
   const handleForwardClick = () => {
+    Event('Daily Diary View', 'Date Selected');
     setSelectedDate((prevDate) => {
       const newDate = moment(prevDate).add(1, 'day');
       if (newDate.isAfter(moment(), 'day')) {

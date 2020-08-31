@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import styles from './SleepTrialCard.module.css';
+import { Event } from 'utils/Tracking';
 
 const SleepTrialCard = ({ sleepTrial, tracked, onStartHandle }) => {
   const [expanded, setExpanded] = useState(false);
@@ -67,7 +68,7 @@ const SleepTrialCard = ({ sleepTrial, tracked, onStartHandle }) => {
         </Grid>
         <Grid item xs={12}>
           <Box my={3}>
-            <ExpansionPanel expanded={expanded} onChange={() => { setExpanded(!expanded); }} elevation={0} classes={{ root: styles.expansionPanelRoot }}>
+            <ExpansionPanel expanded={expanded} onChange={() => { Event('Sleep Trial Tracker', 'Toggled Sleep Trial Details', `${sleepTrial.name}`); setExpanded(!expanded); }} elevation={0} classes={{ root: styles.expansionPanelRoot }}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography variant="body2">View Description Details</Typography>
               </ExpansionPanelSummary>

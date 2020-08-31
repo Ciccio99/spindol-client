@@ -13,6 +13,7 @@ import CompletedSTTModal from 'components/modals/CompletedSTTModal';
 import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
 import SleepTrialTrackersContext from 'context/sleepTrialTrackersContext';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
+import { Event } from 'utils/Tracking';
 
 const TrialTrackerCheckIn = ({ trialTracker }) => {
   const { dispatchSleepTrialTrackers } = useContext(SleepTrialTrackersContext);
@@ -33,6 +34,7 @@ const TrialTrackerCheckIn = ({ trialTracker }) => {
   }, [trialTracker, yesterdayDate]);
 
   const submitCheckIn = async (done) => {
+    Event('Sleep Trial Tracker', 'Submit Check In', `${done}`);
     const sleepTrialTracker = await SleepTrialTrackerServices.addCheckIn(
       trialTracker._id,
       yesterdayDate.format('YYYY-MM-DD'),

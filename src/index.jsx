@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import ReactGA from 'react-ga';
 import { hotjar } from 'react-hotjar';
 import { HelmetProvider } from 'react-helmet-async';
 import config from 'config';
@@ -16,12 +15,11 @@ import {
   AlertSystemProvider,
 } from 'context/alertSystemContext';
 import AlertSystemModule from 'components/alertSystem/AlertSystemModule';
+import { initGA } from 'utils/Tracking';
 
-if (config?.ga?.trackingId) {
-  ReactGA.initialize(config.ga.trackingId);
-} else {
-  ReactGA.initialize('foo', { testMode: true });
-}
+// Initialize Google analytics tracking
+initGA();
+
 if (config?.hotjar?.trackingId) {
   hotjar.initialize(config.hotjar.trackingId);
 }

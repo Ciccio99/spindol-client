@@ -7,11 +7,13 @@ import {
   Typography,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import { Event } from 'utils/Tracking';
 
 const TagCreateInput = ({ handleInsert }) => {
   const [tagInput, setTagInput] = useState('');
 
   const handleTagCreate = async (e) => {
+    Event('Account', 'Create Custom Tag', `${tagInput}`);
     e.preventDefault();
     handleInsert(tagInput);
     setTagInput('');

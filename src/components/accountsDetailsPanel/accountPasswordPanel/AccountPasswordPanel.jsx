@@ -11,6 +11,7 @@ import {
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import { useUserDispatch } from 'context/userContext';
 import UserServices from 'services/UserServices';
+import { Event } from 'utils/Tracking';
 
 const AccountPasswordPanel = () => {
   const initFormState = { password: '', confirmPassword: '', currentPassword: '' };
@@ -35,6 +36,7 @@ const AccountPasswordPanel = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    Event('Account', 'Updated Password');
     setErrorMessage('');
 
     if (formState.password !== formState.confirmPassword) {
