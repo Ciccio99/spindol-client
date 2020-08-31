@@ -10,6 +10,7 @@ import moment from 'moment-timezone';
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
 import EditTagsModal from 'components/modals/EditTagsModal';
 import useMobile from 'hooks/useMobile';
+import { Event } from 'utils/Tracking';
 
 const getDateSubtitle = (date) => {
   const now = moment();
@@ -27,6 +28,7 @@ const DayTagsSubModule = ({ tags, date, handleUpdate }) => {
   const sortedTags = tags?.sort() || [];
 
   const handleTagsUpdate = React.useCallback((selectedTags) => {
+    Event('Daily Diary', 'Edited Activity Tags', `Set ${selectedTags.length} Tags`);
     const dto = { diaryTags: selectedTags.map((tag) => tag._id) };
     handleUpdate(dto);
   }, [handleUpdate]);

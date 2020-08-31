@@ -13,6 +13,7 @@ import MomentUtils from '@date-io/moment';
 import moment from 'moment-timezone';
 import HabitServices from 'services/HabitServices';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
+import { Event } from 'utils/Tracking';
 
 const NAME = 'Waketime';
 
@@ -22,6 +23,7 @@ const WaketimeHabitPanel = ({ habit }) => {
   const [selectedTime, setSelectedTime] = useState(habit ? moment().startOf('day').add(habit.targetValue, 'minutes') : moment());
   const [saveDisabled, setSaveDisabled] = useState(true);
   const upsertHabit = useCallback(async (targetValue) => {
+    Event('Habit Tracker', 'Edited Waketime Goal', `${targetValue}`);
     const { data, error } = await HabitServices
       .upsertWaketimeHabit(targetValue);
     if (data) {

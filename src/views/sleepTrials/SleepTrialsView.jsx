@@ -16,6 +16,7 @@ import SleepTrialCard from 'components/sleepTrial/SleepTrialCard';
 import SleepTrialTypeList from 'components/sleepTrial/sleepTrialTypeList/SleepTrialTypeList';
 import SleepTrialServices from 'services/SleepTrialServices';
 import styles from './SleepTrialsView.module.css';
+import { Event } from 'utils/Tracking';
 
 const SleepTrialsView = ({ handleCloseClick }) => {
   const { sleepTrialTrackers, dispatchSleepTrialTrackers } = useContext(SleepTrialTrackersContext);
@@ -41,6 +42,7 @@ const SleepTrialsView = ({ handleCloseClick }) => {
 
   useEffect(() => {
     const startSleepTrial = async (sleepTrial) => {
+      Event('Sleep Trial Tracker', 'Start Sleep Trial', `${sleepTrial.name}`);
       const sleepTrialTracker = await SleepTrialTrackerServices.create(sleepTrial);
       if (sleepTrialTracker) {
         dispatchSleepTrialTrackers({

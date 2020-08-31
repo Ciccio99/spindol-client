@@ -7,10 +7,12 @@ import {
 import DailyDiaryServices from 'services/DailyDiaryServices';
 import ToggleButtonGroup from 'components/buttons/toggleButton/ToggleButtonGroup';
 import ToggleButton from 'components/buttons/toggleButton/ToggleButton';
+import { Event } from 'utils/Tracking';
 
 const MoodSubModule = ({ mood, handleUpdate, enableStreak }) => {
   const [streak, setStreak] = useState(0);
   const handleMoodUpdate = React.useCallback((selectedMood) => {
+    Event('Daily Diary', 'Edited Mood', selectedMood);
     const dto = { mood: selectedMood };
     handleUpdate(dto);
   }, [handleUpdate]);

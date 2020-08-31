@@ -19,6 +19,7 @@ import {
 } from 'services/TagsServices';
 import TagInput from './TagInput';
 import TagCreateInput from './TagCreateInput';
+import { Event } from 'utils/Tracking';
 
 const TITLE = 'Manage Habit Tags';
 
@@ -53,6 +54,7 @@ const TagManagementPanel = () => {
   };
 
   const handleUpdate = async (id, value) => {
+    Event('Account', 'Update Custom Tag', `${value}`);
     try {
       const updatedTag = await updateTag({ _id: id, tag: value });
       const updatedData = [...data];
@@ -70,6 +72,7 @@ const TagManagementPanel = () => {
   };
 
   const handleDelete = async (id) => {
+    Event('Account', 'Delete Custom Tag');
     try {
       await deleteTag(id);
       setData(data.filter((tag) => tag._id !== id));

@@ -11,6 +11,7 @@ import { useUserState, useUserDispatch } from 'context/userContext';
 
 import UserServices from 'services/UserServices';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
+import { Event } from 'utils/Tracking';
 
 const AccountInfoPanel = () => {
   const initFormState = { email: '', name: '' };
@@ -35,6 +36,7 @@ const AccountInfoPanel = () => {
   };
 
   const handleOnSubmit = (e) => {
+    Event('Account', 'Updated Account Information');
     e.preventDefault();
     const updateBody = {};
     Object.keys(formState).forEach((key) => {

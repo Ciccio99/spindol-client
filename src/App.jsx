@@ -3,7 +3,6 @@ import { BrowserRouter } from 'react-router-dom';
 import {
   Box,
 } from '@material-ui/core';
-import ReactGA from 'react-ga';
 import DeviceServices from 'services/DeviceServices';
 import UserServices from 'services/UserServices';
 import AppRouter from 'routes/AppRouter';
@@ -12,9 +11,9 @@ import devices from 'constants/devices';
 import {
   useUserDispatch,
 } from 'context/userContext';
+import { setUserId, Event } from 'utils/Tracking';
 import Header from './views/header/Header';
 import Footer from './views/footer/Footer';
-
 import SleepTrialTrackersContext from './context/sleepTrialTrackersContext';
 import sleepTrialTrackersReducer from './reducers/sleepTrialTrackersReducer';
 import LoadingCard from './components/loadingCard/LoadingCard';
@@ -44,15 +43,9 @@ function App() {
         } else if (currentUser.accounts.fitbit.connected) {
           await DeviceServices.syncDeviceData(devices.FITBIT);
         }
-        ReactGA.set({
-          userId: currentUser._id,
-          userEmail: currentUser.email,
-        });
-        ReactGA.event({
-          category: 'User',
-          action: 'User Sign In',
-          value: parseInt(currentUser._id, 10),
-        });
+
+        setUserId(currentUser._id);
+        Event('User', 'User Sign In');
       }
       setLoaded(true);
     })();
