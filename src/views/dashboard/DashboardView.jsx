@@ -5,6 +5,7 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
+import moment from 'moment-timezone';
 import { Helmet } from 'react-helmet-async';
 import { useUserState } from 'context/userContext';
 import SleepTrialTrackersContext from 'context/sleepTrialTrackersContext';
@@ -60,7 +61,7 @@ const DashboardView = () => {
           )
         }
         <Section>
-          <DailyDiaryDashboardModule enableStreak />
+          <DailyDiaryDashboardModule date={moment()} tagsDate={moment().subtract(1, 'day')} enableStreak />
         </Section>
         <Section>
           <Grid container>
