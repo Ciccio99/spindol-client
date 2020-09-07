@@ -7,9 +7,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { useAsync } from 'react-async';
-import { useUserState, useUserDispatch } from 'context/userContext';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
-import UserServices from 'services/UserServices';
 import PanelModule from 'components/organizers/PanelModule';
 import {
   getAllUserTags,
@@ -17,9 +15,9 @@ import {
   updateTag,
   deleteTag,
 } from 'services/TagsServices';
+import { Event } from 'utils/Tracking';
 import TagInput from './TagInput';
 import TagCreateInput from './TagCreateInput';
-import { Event } from 'utils/Tracking';
 
 const TITLE = 'Manage Habit Tags';
 
