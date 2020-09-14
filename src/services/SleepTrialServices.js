@@ -1,22 +1,11 @@
+import ErrorHandler from 'utils/ErrorHandler';
 import axios from '../loaders/axios';
 
-const query = async (match={}, sort={}, limit=0, skip=0) => {
-  const queryString = JSON.stringify({ match, sort, limit, skip });
-
+export const getAllSleepTrials = async () => {
   try {
-    const { data } = await axios.get(`/sleepTrial`,
-      {
-        params: { query: queryString },
-      },
-    );
+    const { data } = await axios.get('/sleepTrial');
     return data;
-  } catch (error) {
-    console.log(error);
-    return [];
+  } catch (e) {
+    throw new ErrorHandler(e);
   }
-};
-
-
-export default {
-  query,
 };

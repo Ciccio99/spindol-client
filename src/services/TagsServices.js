@@ -59,3 +59,12 @@ export const deleteTag = async (id) => {
     throw new ErrorHandler(e);
   }
 };
+
+export const getGoalTags = async () => {
+  try {
+    const { data } = await axios.get('/tags', { params: { isGoal: true } });
+    return data;
+  } catch (e) {
+    throw new ErrorHandler(e);
+  }
+};

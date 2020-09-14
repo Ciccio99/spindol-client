@@ -22,7 +22,7 @@ const PanelModule = ({
 
   return (
     <Paper elevation={24} style={{ minHeight: '100%' }} classes={enableCTA ? ({ elevation24: classes.elevation24 }) : {}}>
-      <Box px={4} py={3} display="flex" justifyContent="space-between">
+      <Box px={4} pt={3} pb={1} display="flex" justifyContent="space-between">
         <Box maxWidth={tooltip ? '80%' : '100%'}>
           <Typography variant="h6">{title}</Typography>
           { subtitle && <Typography variant="subtitle2" color="textSecondary">{subtitle}</Typography>}
@@ -41,7 +41,7 @@ const PanelModule = ({
 
       </Box>
       {/* <Divider /> */}
-      <Box p={4} pt={2}>
+      <Box p={4} pt={1}>
         {children}
       </Box>
     </Paper>

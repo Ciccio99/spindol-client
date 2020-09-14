@@ -14,9 +14,9 @@ import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import SleepTrialCard from 'components/sleepTrial/SleepTrialCard';
 import SleepTrialTypeList from 'components/sleepTrial/sleepTrialTypeList/SleepTrialTypeList';
-import SleepTrialServices from 'services/SleepTrialServices';
-import styles from './SleepTrialsView.module.css';
+import { getAllSleepTrials } from 'services/SleepTrialServices';
 import { Event } from 'utils/Tracking';
+import styles from './SleepTrialsView.module.css';
 
 const SleepTrialsView = ({ handleCloseClick }) => {
   const { sleepTrialTrackers, dispatchSleepTrialTrackers } = useContext(SleepTrialTrackersContext);
@@ -30,7 +30,7 @@ const SleepTrialsView = ({ handleCloseClick }) => {
 
     (async () => {
       try {
-        const data = await SleepTrialServices.query();
+        const data = await getAllSleepTrials();
         setSleepTrials(data);
       } catch (error) {
         console.log(error);

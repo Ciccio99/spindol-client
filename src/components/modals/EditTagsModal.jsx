@@ -10,13 +10,22 @@ import {
   Slide,
   TextField,
   LinearProgress,
+  Divider,
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { useAsync } from 'react-async';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import LinkText from 'components/linkText/LinkText';
 import { getAllUserTags, insertTag } from 'services/TagsServices';
+import useMobile from 'hooks/useMobile';
+import TabPanel from 'components/tabPanel/TabPanel';
+import SleepTrialsTab from 'components/common/SleepTrialsTab';
+import { ActivityChip, SleepChip } from 'components/common/TagChips';
+import COLORS from 'constants/colors';
 import styles from './Modals.module.css';
 
 const ModalWrapper = ({ open, handleOnModalClose, children }) => (
@@ -30,8 +39,11 @@ const ModalWrapper = ({ open, handleOnModalClose, children }) => (
     disableRestoreFocus
   >
     <Slide direction="up" in={open}>
-      <Box m={1} display="flex" justifyContent="center" maxWidth="600px" style={{ outline: 0 }}>
-        <Paper>
+      <Box display="flex" justifyContent="center" maxWidth="800px" width="100%" height="100%" style={{ outline: 0 }}>
+        <Paper style={{
+          backgroundColor: COLORS.BG_WHITE, minWidth: '100%', minHeight: '80vh', height: '100%',
+        }}
+        >
           {children}
         </Paper>
       </Box>
@@ -42,7 +54,15 @@ const ModalWrapper = ({ open, handleOnModalClose, children }) => (
 const getOrderedTags = async () => {
   const tags = await getAllUserTags();
   tags.sort((a, b) => (a.tag.toLowerCase() <= b.tag.toLowerCase() ? -1 : 1));
-  return tags;
+  const [sleepTags, activityTags] = tags.reduce((tagsArr, tag) => {
+    if (tag.sleepTrial) {
+      tagsArr[0].push(tag);
+    } else {
+      tagsArr[1].push(tag);
+    }
+    return tagsArr;
+  }, [[], []]);
+  return { sleepTags, activityTags };
 };
 
 const EditTagsModal = ({
@@ -52,9 +72,10 @@ const EditTagsModal = ({
     data, isPending, error, setData,
   } = useAsync(getOrderedTags);
   const dispatchAlertSystem = useAlertSystemDispatch();
+  const [tabValue, setTabValue] = useState(0);
   const [selectedTags, setSelectedTags] = useState(currentTags);
   const [tagsChanged, setTagsChanged] = useState(false);
-  const [tagInput, setTagInput] = useState('');
+
   const [disableCreate, setDisableCreate] = useState(false);
 
   useEffect(() => {
@@ -85,12 +106,11 @@ const EditTagsModal = ({
     if (tagsChanged) {
       handleSaveTags(selectedTags);
     }
-
     handleModal(false);
+    setTabValue(0);
   };
 
-  const handleTagSubmit = async (event) => {
-    event.preventDefault();
+  const handleTagSubmit = async (tagInput) => {
     setDisableCreate(true);
     try {
       if (tagInput === '') {
@@ -98,15 +118,33 @@ const EditTagsModal = ({
       }
 
       const newTag = await insertTag({ tag: tagInput.trim() });
-      setData([...data, newTag]);
+      setData({ sleepTags: data.sleepTags, activityTags: [...data.activityTags, newTag] });
     } catch (e) {
       dispatchAlertSystem({
         type: 'WARNING',
         message: e.message,
       });
     } finally {
-      setTagInput('');
       setDisableCreate(false);
+    }
+  };
+
+  const handleCreateSleepTag = async (sleepTrial) => {
+    try {
+      const dto = {
+        tag: sleepTrial.name,
+        isGoal: true,
+        sleepTrial: sleepTrial._id,
+      };
+      const newSleepTag = await insertTag(dto);
+      setData({ sleepTags: [...data.sleepTags, newSleepTag], activityTags: data.activityTags });
+    } catch (e) {
+      dispatchAlertSystem({
+        type: 'WARNING',
+        message: e.message,
+      });
+    } finally {
+      setTabValue(0);
     }
   };
 
@@ -129,105 +167,194 @@ const EditTagsModal = ({
   if (data) {
     return (
       <ModalWrapper open={open} handleOnModalClose={handleOnModalClose}>
-        <Box display="flex" justifyContent="space-between" px={2} pt={2}>
-          <Typography variant="h6">Edit Activity Tags</Typography>
-          {
-            tagsChanged
-              ? <CheckCircleOutlineIcon className={styles.closeSuccessButton} onClick={handleOnModalClose} />
-              : <CancelOutlinedIcon color="action" className={styles.closeButton} onClick={handleOnModalClose} />
-          }
-        </Box>
-        <Box p={4} display="flex" justifyContent="space-between" flexDirection="column" alignItems="center">
-          <Grid container justify="center" alignItems="center" spacing={2}>
-            {
-              data.map((tag) => {
-                if (selectedTags.some((selectTag) => selectTag._id === tag._id)) {
-                  return (
-                    <Grid item key={tag._id}>
-                      <Chip
-                        label={tag.tag}
-                        color="primary"
-                        variant="default"
-                        onClick={() => { handleTagDeSelect(tag); }}
-                        clickable
-                      />
-                    </Grid>
-                  );
-                }
-                return (
-                  <Grid item key={tag._id}>
-                    <Chip
-                      label={tag.tag}
-                      onClick={() => { handleTagSelect(tag); }}
-                      disableRipple
-                      clickable
-                    />
-                  </Grid>
-                );
-              })
-            }
-          </Grid>
-          <Box mt={4} component="form" onSubmit={handleTagSubmit} autoComplete="off" minWidth="100%">
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs={12} sm={8}>
-                <TextField
-                  value={tagInput}
-                  name="tagInput"
-                  type="text"
-                  label="New Tag"
-                  placeholder="New Tag"
-                  onChange={(e) => { setTagInput(e.target.value); }}
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  inputProps={{ maxLength: 30 }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <Button disabled={!tagInput || disableCreate} type="submit" color="secondary" variant="contained" disableElevation size="large" fullWidth>
-                  <Typography variant="body2">Create</Typography>
-                </Button>
-              </Grid>
-            </Grid>
+        <TabPanel index={0} value={tabValue} style={{ width: '100%' }}>
+          <Box px={2} pt={2} position="relative">
+            <Typography variant="h6" align="center">Edit Activity Tags</Typography>
+            <Box
+              position="absolute"
+              right="2%"
+              top="20%"
+              style={{ cursor: 'pointer' }}
+              onClick={() => { setTabValue(0); }}
+              display="flex"
+              alignItems="center"
+            >
+              {
+                tagsChanged
+                  ? <CheckCircleOutlineIcon className={styles.closeSuccessButton} onClick={handleOnModalClose} />
+                  : <CancelOutlinedIcon color="action" className={styles.closeButton} onClick={handleOnModalClose} />
+              }
+            </Box>
           </Box>
-          <Box mt={4}>
-            <LinkText to={{ pathname: '/settings', hash: 'tags' }}>Manage Habit Tags</LinkText>
+          <EditTagsTab
+            activityTags={data.activityTags}
+            sleepTags={data.sleepTags}
+            handleTagSelect={handleTagSelect}
+            handleTagDeSelect={handleTagDeSelect}
+            selectedTags={selectedTags}
+            handleSetSleepTab={() => { setTabValue(1); }}
+          />
+          <Box p={4} display="flex" flexDirection="column" alignItems="center">
+            <CreateTagForm handleTagSubmit={handleTagSubmit} disableCreate={disableCreate} />
+            <Box mt={4}>
+              <LinkText to={{ pathname: '/settings', hash: 'tags' }}>Manage Habit Tags</LinkText>
+            </Box>
           </Box>
-        </Box>
+        </TabPanel>
+        <TabPanel index={1} value={tabValue}>
+          <Box p={2} pb={0} position="relative">
+            <Box
+              position="absolute"
+              left="2%"
+              top="20%"
+              style={{ cursor: 'pointer' }}
+              onClick={() => { setTabValue(0); }}
+              display="flex"
+              alignItems="center"
+            >
+              <ArrowBackIosIcon fontSize="small" color="primary" />
+              <Typography variant="subtitle2" color="primary">Back</Typography>
+            </Box>
+
+            <Typography variant="h6" align="center">
+              Add Sleep Tag
+            </Typography>
+          </Box>
+          <Box maxHeight="94vh" overflow="auto scroll">
+            <SleepTrialsTab createTagHandle={handleCreateSleepTag} />
+          </Box>
+        </TabPanel>
       </ModalWrapper>
     );
   }
+
   return (
-    <ModalWrapper open={open} handleOnModalClose={handleOnModalClose}>
-      <Box p={4} display="flex" justifyContent="space-between" flexDirection="column" alignItems="center">
-        <Box mt={4} component="form" onSubmit={handleTagSubmit} autoComplete="off" minWidth="100%">
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} sm={8}>
-              <TextField
-                value={tagInput}
-                name="tagInput"
-                type="text"
-                label="New Tag"
-                placeholder="New Tag"
-                onChange={(e) => { setTagInput(e.target.value); }}
-                fullWidth
-                variant="outlined"
-                size="small"
-                inputProps={{ maxLength: 30 }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <Button disabled={!tagInput || disableCreate} type="submit" color="secondary" variant="contained" disableElevation size="large" fullWidth>
-                <Typography variant="body2">Create</Typography>
-              </Button>
-            </Grid>
-          </Grid>
-        </Box>
-        <Box mt={4}>
-          <LinkText to={{ pathname: '/settings', hash: 'tags' }}>Manage Habit Tags</LinkText>
-        </Box>
+    <ModalWrapper open={open} handleOnModalClose={handleOnModalClose} />
+  );
+};
+
+const AddSleepTagButton = ({ onClickHandle }) => {
+  const { isMobile } = useMobile();
+
+  if (isMobile) {
+    return (
+      <AddCircleOutlineTwoToneIcon onClick={onClickHandle} style={{ cursor: 'pointer' }} color="secondary" />
+    );
+  }
+
+  return (
+    <Button
+      variant="contained"
+      color="secondary"
+      startIcon={<AddCircleOutlineTwoToneIcon />}
+      onClick={onClickHandle}
+      disableRipple
+    >
+      <Typography variant="caption">Explore Sleep Tags</Typography>
+    </Button>
+  );
+};
+
+const EditTagsTab = ({
+  activityTags, sleepTags, selectedTags, handleTagSelect, handleTagDeSelect, handleSetSleepTab,
+}) => (
+  <>
+    <Box p={4} pt={2} display="flex" justifyContent="space-between" flexDirection="column" alignItems="center">
+      <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" width="100%">
+        <Typography variant="subtitle1">Sleep Tags</Typography>
+        <AddSleepTagButton onClickHandle={handleSetSleepTab} />
       </Box>
-    </ModalWrapper>
+      <Grid container justify="center" alignItems="center" spacing={2}>
+        {
+            sleepTags.map((tag) => {
+              if (selectedTags.some((selectTag) => selectTag._id === tag._id)) {
+                return (
+                  <Grid item key={tag._id}>
+                    <SleepChip
+                      tag={tag}
+                      isSelected
+                      handleOnClick={() => { handleTagDeSelect(tag); }}
+                    />
+                  </Grid>
+                );
+              }
+              return (
+                <Grid item key={tag._id}>
+                  <SleepChip
+                    tag={tag}
+                    handleOnClick={() => { handleTagSelect(tag); }}
+                  />
+                </Grid>
+              );
+            })
+          }
+      </Grid>
+    </Box>
+    <Divider />
+    <Box p={4} pt={2} display="flex" justifyContent="space-between" flexDirection="column" alignItems="center">
+      <Box mb={2} width="100%">
+        <Typography variant="subtitle1" gutterBottom>Activity Tags</Typography>
+      </Box>
+      <Grid container justify="center" alignItems="center" spacing={2}>
+        {
+            activityTags.map((tag) => {
+              if (selectedTags.some((selectTag) => selectTag._id === tag._id)) {
+                return (
+                  <Grid item key={tag._id}>
+                    <ActivityChip
+                      tag={tag}
+                      isSelected
+                      handleOnClick={() => { handleTagDeSelect(tag); }}
+                    />
+                  </Grid>
+                );
+              }
+              return (
+                <Grid item key={tag._id}>
+                  <ActivityChip
+                    tag={tag}
+                    handleOnClick={() => { handleTagSelect(tag); }}
+                  />
+                </Grid>
+              );
+            })
+          }
+      </Grid>
+    </Box>
+  </>
+);
+
+const CreateTagForm = ({ handleTagSubmit, disableCreate }) => {
+  const [tagInput, setTagInput] = useState('');
+  const submitTagHandle = (e) => {
+    e.preventDefault(tagInput);
+    handleTagSubmit();
+    setTagInput('');
+  };
+  return (
+    <Box mt={4} component="form" onSubmit={submitTagHandle} autoComplete="off" minWidth="100%">
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={12} sm={8}>
+          <TextField
+            value={tagInput}
+            name="tagInput"
+            type="text"
+            label="New Tag"
+            placeholder="New Tag"
+            onChange={(e) => { setTagInput(e.target.value); }}
+            fullWidth
+            variant="outlined"
+            size="small"
+            inputProps={{ maxLength: 30 }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Button disabled={!tagInput || disableCreate} type="submit" color="secondary" variant="contained" disableElevation size="large" fullWidth>
+            <Typography variant="body2">Create</Typography>
+          </Button>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 

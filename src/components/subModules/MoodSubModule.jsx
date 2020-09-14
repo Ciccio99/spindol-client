@@ -9,6 +9,7 @@ import DailyDiaryServices from 'services/DailyDiaryServices';
 import ToggleButtonGroup from 'components/buttons/toggleButton/ToggleButtonGroup';
 import ToggleButton from 'components/buttons/toggleButton/ToggleButton';
 import { Event } from 'utils/Tracking';
+import { StreakBox } from 'components/Streaks';
 
 const getDateSubtitle = (date = moment()) => {
   const givenDate = moment.utc(date);
@@ -74,12 +75,10 @@ const MoodSubModule = ({ date, mood, handleUpdate, enableStreak }) => {
           && (
             <Grid item>
               <Box display="flex" alignItems="center" flexWrap="wrap">
-                <Box px={2} py={1} mr={1} display="inline" borderRadius={5} style={{ backgroundColor: '#FAC856', color: '#FFFFFF' }}>
-                  <Typography variant="subtitle2" display="inline"><strong>{`${streak} Day Streak`}</strong></Typography>
-                </Box>
-                <Box py={1}>
+                <StreakBox value={streak} />
+                {/* <Box py={1}>
                   <Typography variant="subtitle2" display="inline">{' 🔥 Keep it up, you\'re doing great!'}</Typography>
-                </Box>
+                </Box> */}
               </Box>
 
             </Grid>

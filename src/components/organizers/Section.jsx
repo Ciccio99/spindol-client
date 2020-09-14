@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 
 const Section = ({ children }) => (
-  <Box mt={8}>
+  <Box mt={4}>
     {children}
   </Box>
 );

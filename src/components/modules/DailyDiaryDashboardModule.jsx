@@ -72,6 +72,52 @@ const DailyDiaryDashboardModule = ({ date, enableStreak, tagsDate }) => {
     }
   }, [tagsData, dispatchAlertSystem]);
 
+  // const handleGoalComplete = async (goalTag) => {
+  //   console.log('Completed: ', goalTag);
+  //   const updatedTags = tagsData.diaryTags.concat(goalTag);
+  //   const dto = { diaryTags: updatedTags.map((tag) => tag._id) };
+  //   const oldData = tagsData;
+  //   setTagsData({ ...oldData, diaryTags: updatedTags });
+  //   try {
+  //     const { _id } = tagsData;
+  //     const dd = await DailyDiaryServices.update({ _id, ...dto });
+  //     setTagsData(dd);
+  //     dispatchAlertSystem({
+  //       type: 'SUCCESS',
+  //       message: 'Daily Diary Updated',
+  //     });
+  //   } catch (e) {
+  //     setTagsData(oldData);
+  //     dispatchAlertSystem({
+  //       type: 'WARNING',
+  //       message: e.message || 'Update failed: Something went wrong...',
+  //     });
+  //   }
+  // };
+
+  // const handleGoalIncomplete = async (goalTag) => {
+  //   console.log('Incompleted: ', goalTag);
+  //   const updatedTags = tagsData.diaryTags.filter((tag) => tag._id !== goalTag._id);
+  //   const dto = { diaryTags: updatedTags.map((tag) => tag._id) };
+  //   const oldData = tagsData;
+  //   setTagsData({ ...oldData, diaryTags: updatedTags });
+  //   try {
+  //     const { _id } = tagsData;
+  //     const dd = await DailyDiaryServices.update({ _id, ...dto });
+  //     setTagsData(dd);
+  //     dispatchAlertSystem({
+  //       type: 'SUCCESS',
+  //       message: 'Daily Diary Updated',
+  //     });
+  //   } catch (e) {
+  //     setTagsData(oldData);
+  //     dispatchAlertSystem({
+  //       type: 'WARNING',
+  //       message: e.message || 'Update failed: Something went wrong...',
+  //     });
+  //   }
+  // };
+
   useEffect(() => {
     let isMounted = true;
     if (data && isMounted) {
@@ -100,13 +146,17 @@ const DailyDiaryDashboardModule = ({ date, enableStreak, tagsDate }) => {
   if (dailyDiary && tagsData) {
     return (
       <PanelWrapper date={date}>
-        <Box mb={4}>
+        <Box mb={3}>
           <MoodSubModule date={date} mood={dailyDiary.mood} handleUpdate={handleMoodUpdate} enableStreak={enableStreak} />
         </Box>
         <Divider />
-        <Box mt={4}>
+        <Box my={3}>
           <DayTagsSubModule date={tagsData.date} tags={tagsData.diaryTags || []} handleUpdate={handleTagsUpdate} enableVariedDateText={(!!tagsDate)} />
         </Box>
+        {/* <Divider />
+        <Box mt={3}>
+          <GoalSubModule date={tagsData.date} enableVariedDateText={(!!tagsDate)} currentTags={tagsData.diaryTags} handleGoalComplete={handleGoalComplete} handleGoalIncomplete={handleGoalIncomplete} />
+        </Box> */}
       </PanelWrapper>
     );
   }
