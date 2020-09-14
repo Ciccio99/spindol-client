@@ -6,12 +6,15 @@ import COLORS from 'constants/colors';
 
 const useChipStyles = makeStyles((theme) => ({
   activeSleepChipRoot: {
-    background: 'linear-gradient(135deg, rgba(148,121,188,1) 0%, rgba(230,126,86,1) 50%, rgba(250,201,89,1) 100%);',
+    background: COLORS.NIGHTTIME_GRADIENT,
     '&:hover': {
-      background: 'linear-gradient(135deg, rgba(148,121,188,0.85) 0%, rgba(230,126,86,0.85) 50%, rgba(250,201,89,0.85) 100%);',
+      background: COLORS.LIGHT_NIGHTTIME_GRADIENT,
+    },
+    '&:active': {
+      background: COLORS.NIGHTTIME_GRADIENT,
     },
     '&:focus': {
-      background: 'linear-gradient(135deg, rgba(148,121,188,1) 0%, rgba(230,126,86,1) 50%, rgba(250,201,89,1) 100%);',
+      background: COLORS.NIGHTTIME_GRADIENT,
     },
   },
   sleepChipRoot: {
@@ -85,15 +88,15 @@ export const SleepChip = ({ tag, isSelected, handleOnClick }) => {
 const useDisplaySleepChipStyles = makeStyles(() => ({
   root: {
     color: COLORS.WHITE,
-    background: 'linear-gradient(135deg, rgba(148,121,188,1) 0%, rgba(230,126,86,1) 50%, rgba(250,201,89,1) 100%);',
+    background: COLORS.NIGHTTIME_GRADIENT,
     '&:hover': {
-      background: 'linear-gradient(135deg, rgba(148,121,188,0.85) 0%, rgba(230,126,86,0.85) 50%, rgba(250,201,89,0.85) 100%);',
+      background: COLORS.LIGHT_NIGHTTIME_GRADIENT,
     },
     '&:active': {
-      background: 'linear-gradient(135deg, rgba(148,121,188,1) 0%, rgba(230,126,86,1) 50%, rgba(250,201,89,1) 100%);',
+      background: COLORS.NIGHTTIME_GRADIENT,
     },
     '&:focus': {
-      background: 'linear-gradient(135deg, rgba(148,121,188,1) 0%, rgba(230,126,86,1) 50%, rgba(250,201,89,1) 100%);',
+      background: COLORS.NIGHTTIME_GRADIENT,
     },
     cursor: 'pointer',
   },
