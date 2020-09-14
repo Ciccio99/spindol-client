@@ -93,7 +93,7 @@ const DayTagsSubModule = ({
                   startIcon={<EditTwoToneIcon />}
                   onClick={() => { setIsModalOpen(true); }}
                 >
-                  <Typography variant="caption">Add Activity</Typography>
+                  <Typography variant="caption">Add Tags</Typography>
                 </Button>
               </Box>
             )

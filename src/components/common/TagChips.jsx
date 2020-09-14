@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Chip } from '@material-ui/core';
+import { Chip, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SleepGoalDetailsModal from 'components/modals/SleepGoalDetailsModal';
 import COLORS from 'constants/colors';
@@ -106,14 +106,16 @@ export const DisplaySleepChip = ({ tag }) => {
 
   return (
     <>
-      <Chip
-        classes={classes}
-        label={tag.tag}
-        variant="default"
-        clickable
-        onClick={handleOnClick}
-        disableRipple
-      />
+      <Tooltip title="View Details">
+        <Chip
+          classes={classes}
+          label={tag.tag}
+          variant="default"
+          clickable
+          onClick={handleOnClick}
+          disableRipple
+        />
+      </Tooltip>
       {
         tag.sleepTrial
         && <SleepGoalDetailsModal sleepTrial={tag.sleepTrial} open={isOpenInfoModal} handleModalClose={() => { setIsOpenInfoModal(false); }} />
