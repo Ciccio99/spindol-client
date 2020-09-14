@@ -113,10 +113,9 @@ const EditTagsModal = ({
   const handleTagSubmit = async (tagInput) => {
     setDisableCreate(true);
     try {
-      if (tagInput === '') {
+      if (!tagInput || tagInput === '') {
         throw new Error('Tag is empty!');
       }
-
       const newTag = await insertTag({ tag: tagInput.trim() });
       setData({ sleepTags: data.sleepTags, activityTags: [...data.activityTags, newTag] });
     } catch (e) {
@@ -328,7 +327,7 @@ const CreateTagForm = ({ handleTagSubmit, disableCreate }) => {
   const [tagInput, setTagInput] = useState('');
   const submitTagHandle = (e) => {
     e.preventDefault(tagInput);
-    handleTagSubmit();
+    handleTagSubmit(tagInput);
     setTagInput('');
   };
   return (

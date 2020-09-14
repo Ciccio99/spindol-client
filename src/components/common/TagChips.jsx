@@ -89,6 +89,9 @@ const useDisplaySleepChipStyles = makeStyles(() => ({
     '&:hover': {
       background: 'linear-gradient(135deg, rgba(148,121,188,0.85) 0%, rgba(230,126,86,0.85) 50%, rgba(250,201,89,0.85) 100%);',
     },
+    '&:active': {
+      background: 'linear-gradient(135deg, rgba(148,121,188,1) 0%, rgba(230,126,86,1) 50%, rgba(250,201,89,1) 100%);',
+    },
     '&:focus': {
       background: 'linear-gradient(135deg, rgba(148,121,188,1) 0%, rgba(230,126,86,1) 50%, rgba(250,201,89,1) 100%);',
     },
