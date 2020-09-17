@@ -26,6 +26,7 @@
     "moment-timezone": "0.5.28",
     "react": "^16.13.1",
     "react-async": "10.0.1",
+    "react-confetti": "6.0.0",
     "react-dom": "^16.13.1",
     "react-ga": "2.7.0",
     "react-helmet-async": "1.0.6",

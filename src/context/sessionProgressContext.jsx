@@ -5,11 +5,9 @@ const SessionProgressContext = React.createContext();
 const SessionProgressDispatchContext = React.createContext();
 
 const sessionProgressReducer = (state, action) => {
-  console.log('reducer state:', action, state);
   if (action.type === 'INIT') {
     const { lastUpdate } = action.value;
     const diff = lastUpdate ? moment().diff(moment.utc(lastUpdate), 'day') : -1;
-    console.log('diff', diff);
     return {
       ...state, stats: { ...action.value }, signIn: true, initialized: true, completed: (diff === 0),
     };
@@ -28,9 +26,6 @@ const sessionProgressReducer = (state, action) => {
     case 'SESSION_COMPLETE': {
       return { ...state, completed: true };
     }
-    case 'UPDATE':
-      console.log('updating', action.value);
-      return { ...action.value };
     default:
       return state;
   }

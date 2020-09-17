@@ -11,12 +11,31 @@ import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import moment from 'moment-timezone';
+import Confetti from 'react-confetti';
 import { useSessionProgressState, useSessionProgressDispatch } from 'context/sessionProgressContext';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import COLORS from 'constants/colors';
 import UserServices from 'services/UserServices';
 
 const sessionSteps = ['Sign In', 'Add Mood', 'Add Tags'];
+
+const confettiConfig = {
+  recycle: false,
+  numberOfPieces: 1000,
+  gravity: 0.07,
+  tweenDuration: 20000,
+  colors: [COLORS.HYPNOS_BLUE, COLORS.HYPNOS_ORANGE, COLORS.HYPNOS_PURPLE, COLORS.HYPNOS_RED, COLORS.HYPNOS_YELLOW],
+};
+
+const CompleteConfetti = ({ active, handleOnComplete }) => {
+  if (!active) {
+    return null;
+  }
+
+  return (
+    <Confetti run {...confettiConfig} onConfettiComplete={handleOnComplete} />
+  );
+};
 
 const SessionStepConnector = withStyles({
   alternativeLabel: {
@@ -95,6 +114,7 @@ const SessionStepper = () => {
   const classes = useStepperStyles();
   const [activeStep, setActiveStep] = useState(3);
   const [completed, setCompleted] = useState(new Set());
+  const [confettiTime, setConfettiTime] = useState(false);
 
   const completeSession = async (state) => {
     if (state.completed || !state.signIn || !state.mood || !state.tags) {
@@ -124,7 +144,7 @@ const SessionStepper = () => {
 
       await UserServices.updateUserSessionProgress(dto);
       dispatchProgressSession({ type: 'SESSION_COMPLETE' });
-
+      setConfettiTime(true);
       // TODO: Notify user and confetti
       // TODO: Update user with new stats
     } catch (error) {
@@ -156,20 +176,23 @@ const SessionStepper = () => {
   const isStepComplete = (step) => completed.has(step);
 
   return (
-    <Stepper nonLinear alternativeLabel activeStep={activeStep} connector={<SessionStepConnector />} className={classes.paperRoot}>
-      {
-        sessionSteps.map((label, index) => (
-          <Step
-            key={label}
-            completed={isStepComplete(index)}
-          >
-            <StepLabel StepIconComponent={SessionStepIcon}>
-              {label}
-            </StepLabel>
-          </Step>
-        ))
-      }
-    </Stepper>
+    <>
+      <Stepper nonLinear alternativeLabel activeStep={activeStep} connector={<SessionStepConnector />} className={classes.paperRoot}>
+        {
+          sessionSteps.map((label, index) => (
+            <Step
+              key={label}
+              completed={isStepComplete(index)}
+            >
+              <StepLabel StepIconComponent={SessionStepIcon}>
+                {label}
+              </StepLabel>
+            </Step>
+          ))
+        }
+      </Stepper>
+      <CompleteConfetti active={confettiTime} handleOnComplete={() => { setConfettiTime(false); }} />
+    </>
   );
 };
 
