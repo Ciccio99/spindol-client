@@ -11,6 +11,7 @@ import DailyDiaryServices from 'services/DailyDiaryServices';
 import PanelModule from 'components/organizers/PanelModule';
 import MoodSubModule from 'components/subModules/MoodSubModule';
 import DayTagsSubModule from 'components/subModules/DayTagsSubModule';
+import { useSessionProgressState, useSessionProgressDispatch, updateSessionProgress } from 'context/sessionProgressContext';
 
 const PanelWrapper = ({ date, children }) => (
   <PanelModule
@@ -23,6 +24,8 @@ const PanelWrapper = ({ date, children }) => (
 
 const DailyDiaryDashboardModule = ({ date, enableStreak, tagsDate }) => {
   const dispatchAlertSystem = useAlertSystemDispatch();
+  const dispatchSessionProgress = useSessionProgressDispatch();
+  const sessionProgressState = useSessionProgressState();
   const { data, error, isPending } = useAsync(DailyDiaryServices.getDashboardData, { date });
   const {
     data: tagsData, error: tagsError, isPending: tagsIsPending, setData: setTagsData,
@@ -30,6 +33,21 @@ const DailyDiaryDashboardModule = ({ date, enableStreak, tagsDate }) => {
     DailyDiaryServices.getDashboardData, { date: tagsDate || date },
   );
   const [dailyDiary, setDailyDiary] = useState(null);
+
+  useEffect(() => {
+    if (dailyDiary?.mood) {
+      dispatchSessionProgress({ type: 'MOOD_COMPLETE'});
+    }
+  }, [dailyDiary]);
+
+  useEffect(() => {
+    (async () => {
+      if (tagsData?.diaryTags?.length) {
+        dispatchSessionProgress({ type: 'TAGS_COMPLETE'});
+      }
+    })();
+
+  }, [tagsData]);
 
   const handleMoodUpdate = React.useCallback(async (dto) => {
     const oldData = dailyDiary;
@@ -150,13 +168,9 @@ const DailyDiaryDashboardModule = ({ date, enableStreak, tagsDate }) => {
           <MoodSubModule date={date} mood={dailyDiary.mood} handleUpdate={handleMoodUpdate} enableStreak={enableStreak} />
         </Box>
         <Divider />
-        <Box my={3}>
+        <Box mt={3} mb={1}>
           <DayTagsSubModule date={tagsData.date} tags={tagsData.diaryTags || []} handleUpdate={handleTagsUpdate} enableVariedDateText={(!!tagsDate)} />
         </Box>
-        {/* <Divider />
-        <Box mt={3}>
-          <GoalSubModule date={tagsData.date} enableVariedDateText={(!!tagsDate)} currentTags={tagsData.diaryTags} handleGoalComplete={handleGoalComplete} handleGoalIncomplete={handleGoalIncomplete} />
-        </Box> */}
       </PanelWrapper>
     );
   }

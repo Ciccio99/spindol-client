@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import {
   Box,
   Button,
-  Chip,
   Grid,
   Typography,
 } from '@material-ui/core';
 import moment from 'moment-timezone';
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
 import EditTagsModal from 'components/modals/EditTagsModal';
-import { DisplaySleepChip } from 'components/common/TagChips';
+import { DisplaySleepChip, DisplayActivityChip } from 'components/common/TagChips';
 import useMobile from 'hooks/useMobile';
 import { Event } from 'utils/Tracking';
 
@@ -21,7 +20,7 @@ const getDateSubtitle = (date, enableVariedDateText = false) => {
       return (
         <Box>
           <Typography variant="subtitle1" display="inline">
-            {'What activities did you do on '}
+            {'What did you do '}
           </Typography>
           <Typography variant="subtitle1" color="primary" display="inline">
             <strong>today</strong>
@@ -37,7 +36,7 @@ const getDateSubtitle = (date, enableVariedDateText = false) => {
       return (
         <Box>
           <Typography variant="subtitle1" display="inline">
-            {'What activities did you do '}
+            {'What did you do '}
           </Typography>
           <Typography variant="subtitle1" color="primary" display="inline">
             <strong>{`yesterday - ${givenDate.format('dddd, MMM DD')}`}</strong>
@@ -52,7 +51,7 @@ const getDateSubtitle = (date, enableVariedDateText = false) => {
   return (
     <Box>
       <Typography variant="subtitle1" display="inline">
-        {'What activities did you do on '}
+        {'What did you do on '}
       </Typography>
       <Typography variant="subtitle1" color="primary" display="inline">
         <strong>{givenDate.format('dddd, MMM DD')}</strong>
@@ -109,7 +108,7 @@ const DayTagsSubModule = ({
                   {
                     tag.sleepTrial
                       ? <DisplaySleepChip tag={tag} />
-                      : <Chip label={tag.tag} color="primary" />
+                      : <DisplayActivityChip tag={tag} />
                   }
                 </Grid>
               ))}

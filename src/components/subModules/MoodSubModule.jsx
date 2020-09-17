@@ -76,9 +76,6 @@ const MoodSubModule = ({ date, mood, handleUpdate, enableStreak }) => {
             <Grid item>
               <Box display="flex" alignItems="center" flexWrap="wrap">
                 <StreakBox value={streak} />
-                {/* <Box py={1}>
-                  <Typography variant="subtitle2" display="inline">{' 🔥 Keep it up, you\'re doing great!'}</Typography>
-                </Box> */}
               </Box>
 
             </Grid>

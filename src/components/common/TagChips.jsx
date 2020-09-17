@@ -28,7 +28,17 @@ const useChipStyles = makeStyles((theme) => ({
   },
 }));
 
+const useSelectedChipStyles = makeStyles((theme) => ({
+  rootChip: {
+    animation: `$growSelectedChip 0.25s ${theme.transitions.easing.easeInOut}`,
+  },
+  '@keyframes growSelectedChip': {
+    '50%': { transform: 'scale(1.15)' },
+  },
+}));
+
 export const ActivityChip = ({ tag, isSelected, handleOnClick }) => {
+  const classes = useSelectedChipStyles();
   if (isSelected) {
     return (
       <Chip
@@ -38,6 +48,7 @@ export const ActivityChip = ({ tag, isSelected, handleOnClick }) => {
         onClick={handleOnClick}
         clickable
         disableRipple
+        className={classes.rootChip}
       />
     );
   }
@@ -52,20 +63,39 @@ export const ActivityChip = ({ tag, isSelected, handleOnClick }) => {
   );
 };
 
-export const DisplayActivityChip = ({ tag }) => (
-  <Chip
-    label={tag.tag}
-    color="primary"
-    variant="default"
-  />
-);
+
+const useDisplayChip = makeStyles((theme) => ({
+  rootChip: {
+    animation: `$growChip 0.6s ${theme.transitions.easing.sharp}`,
+  },
+  '@keyframes growChip': {
+    '0%': { transform: 'scale(0)' },
+    '70%': { transform: 'scale(1.15)' },
+    '100%': { transform: 'scale(1)' },
+  },
+}));
+
+export const DisplayActivityChip = ({ tag }) => {
+  const classes = useDisplayChip();
+  return (
+    <Chip
+      className={classes.rootChip}
+      label={tag.tag}
+      color="primary"
+      variant="default"
+    />
+  );
+};
 
 export const SleepChip = ({ tag, isSelected, handleOnClick }) => {
   const classes = useChipStyles();
+  const animClasses = useSelectedChipStyles();
+
   if (isSelected) {
     return (
       <Chip
         classes={{ root: classes.activeSleepChipRoot }}
+        className={animClasses.rootChip}
         label={tag.tag}
         color="primary"
         variant="default"
@@ -104,6 +134,7 @@ const useDisplaySleepChipStyles = makeStyles(() => ({
 
 export const DisplaySleepChip = ({ tag }) => {
   const classes = useDisplaySleepChipStyles();
+  const animClasses = useDisplayChip();
   const [isOpenInfoModal, setIsOpenInfoModal] = useState(false);
 
   const handleOnClick = () => {
@@ -115,6 +146,7 @@ export const DisplaySleepChip = ({ tag }) => {
       <Tooltip title="View Details">
         <Chip
           classes={classes}
+          className={animClasses.rootChip}
           label={tag.tag}
           variant="default"
           clickable

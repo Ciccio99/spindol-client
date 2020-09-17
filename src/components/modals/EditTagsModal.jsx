@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   Box,
   Button,
-  Chip,
   Grid,
   Paper,
   Typography,
@@ -12,7 +11,6 @@ import {
   LinearProgress,
   Divider,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import { useAsync } from 'react-async';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';

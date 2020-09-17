@@ -15,6 +15,7 @@ import DailyDiaryDashboardModule from 'components/modules/DailyDiaryDashboardMod
 import SleepComparisonModule from 'components/modules/SleepComparisonModule';
 import HabitModule from 'components/modules/HabitModule';
 import Section from 'components/organizers/Section';
+import SessionStepper from 'components/SessionStepper';
 import ConnectDeviceCTA from 'components/cta/ConnectDevice';
 import useMedium from 'hooks/useMedium';
 
@@ -45,11 +46,11 @@ const DashboardView = () => {
         />
       </Helmet>
       <Container>
-        <Box mt={4}>
+        {/* <Box mt={4}>
           <Typography variant="h5">
             {`Welcome${userFirstName ? ` ${userFirstName}` : ''}!`}
           </Typography>
-        </Box>
+        </Box> */}
         {
           !user.accounts.oura.connected
           && !user.accounts.withings.connected
@@ -60,6 +61,9 @@ const DashboardView = () => {
           </Section>
           )
         }
+        <Section>
+          <SessionStepper />
+        </Section>
         <Section>
           <DailyDiaryDashboardModule date={moment()} tagsDate={moment().subtract(1, 'day')} enableStreak />
         </Section>

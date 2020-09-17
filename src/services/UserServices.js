@@ -92,6 +92,11 @@ const update = async (userDTO) => {
   return data.user;
 };
 
+const updateUserSessionProgress = async (sessionDTO) => {
+  const { data } = await axios.patch('/users/me/session-stats', sessionDTO);
+  return data;
+}
+
 const insertUserTags = async (tags) => {
   try {
     const dto = { tags };
@@ -123,4 +128,5 @@ export default {
   update,
   insertUserTags,
   getAdmins,
+  updateUserSessionProgress,
 };

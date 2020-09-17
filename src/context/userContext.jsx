@@ -38,7 +38,7 @@ const useUserState = () => {
 const useUserDispatch = () => {
   const context = React.useContext(UserDispatchContext);
   if (context === undefined) {
-    throw new Error('useUserDispatch must be used withing a UserProvider');
+    throw new Error('useUserDispatch must be used within a UserProvider');
   }
   return context;
 };

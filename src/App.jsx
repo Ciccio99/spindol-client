@@ -11,6 +11,11 @@ import devices from 'constants/devices';
 import {
   useUserDispatch,
 } from 'context/userContext';
+import {
+  useSessionProgressState,
+  useSessionProgressDispatch,
+  updateSessionProgress,
+} from 'context/sessionProgressContext';
 import { setUserId, Event } from 'utils/Tracking';
 import Header from './views/header/Header';
 import Footer from './views/footer/Footer';
@@ -23,6 +28,8 @@ import LoadingCard from './components/loadingCard/LoadingCard';
 
 function App() {
   const dispatchUser = useUserDispatch();
+  const sessionProgressState = useSessionProgressState();
+  const dispatchSessionProgress = useSessionProgressDispatch();
   const [sleepTrialTrackers, dispatchSleepTrialTrackers] = useReducer(
     sleepTrialTrackersReducer, [],
   );
@@ -35,6 +42,10 @@ function App() {
         dispatchUser({
           type: 'USER_LOGIN',
           user: currentUser,
+        });
+        dispatchSessionProgress({
+          type: 'INIT',
+          value: currentUser?.stats?.sessionStats || {},
         });
         if (currentUser.accounts.oura.connected) {
           await DeviceServices.syncDeviceData(devices.OURA);
@@ -49,7 +60,7 @@ function App() {
       }
       setLoaded(true);
     })();
-  }, [dispatchUser]);
+  }, [dispatchUser, dispatchSessionProgress]);
 
   return (
     <SleepTrialTrackersContext.Provider

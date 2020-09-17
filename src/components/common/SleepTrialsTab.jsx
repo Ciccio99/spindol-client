@@ -207,7 +207,7 @@ const useSleepTrialsPageStyles = makeStyles(() => ({
   },
 }));
 
-const SleepTrialsPage = ({ createTagHandle }) => {
+const SleepTrialsTab = ({ createTagHandle }) => {
   const { data, isPending, error } = useAsync(getAllSleepTrials);
   const classes = useSleepTrialsPageStyles();
   const [filters, setFilters] = useState({ sleepTrialType: '', areaEffect: '' });
@@ -260,4 +260,4 @@ const SleepTrialsPage = ({ createTagHandle }) => {
   );
 };
 
-export default SleepTrialsPage;
+export default React.memo(SleepTrialsTab);
