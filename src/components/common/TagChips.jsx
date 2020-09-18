@@ -70,7 +70,7 @@ const useDisplayChip = makeStyles((theme) => ({
   },
   '@keyframes growChip': {
     '0%': { transform: 'scale(0)' },
-    '70%': { transform: 'scale(1.15)' },
+    '60%': { transform: 'scale(1.15)' },
     '100%': { transform: 'scale(1)' },
   },
 }));

@@ -126,7 +126,7 @@ const EditTagsModal = ({
     }
   };
 
-  const handleCreateSleepTag = async (sleepTrial) => {
+  const handleCreateSleepTag = React.useCallback(async (sleepTrial) => {
     try {
       const dto = {
         tag: sleepTrial.name,
@@ -143,7 +143,7 @@ const EditTagsModal = ({
     } finally {
       setTabValue(0);
     }
-  };
+  }, [data]);
 
   if (isPending) {
     return (

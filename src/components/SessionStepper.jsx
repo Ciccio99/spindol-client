@@ -64,7 +64,7 @@ const SessionStepConnector = withStyles({
   },
 })(StepConnector);
 
-const useStepIconStyles = makeStyles((theme) => ({
+const useStepIconStyles = makeStyles(() => ({
   root: {
     backgroundColor: COLORS.GRAY,
     zIndex: 1,
@@ -149,17 +149,20 @@ const SessionStepper = () => {
         dto.currentStreak = 1;
       }
 
-      if (state.stats.highScore && dto.currentStreak > state.stats.highScore) {
-        dto.highScore = dto.currentStreak;
+      if (state.stats.highScore) {
+        if (dto.currentStreak > state.stats.highScore) {
+          dto.highScore = dto.currentStreak;
+        }
       } else {
         dto.highScore = dto.currentStreak;
       }
+
       dto.lastUpdate = moment().format('YYYY-MM-DD');
 
       const updatedStats = await UserServices.updateUserSessionProgress(dto);
       dispatchProgressSession({ type: 'UPDATE_STATS', value: updatedStats });
       dispatchProgressSession({ type: 'SESSION_COMPLETE' });
-      setConfettiTime(true);
+      setTimeout(() => { setConfettiTime(true); }, 500);
       // TODO: Update user with new stats
     } catch (error) {
       dispatchAlert({
@@ -193,6 +196,10 @@ const SessionStepper = () => {
 
   const isStepComplete = (step) => completed.has(step);
 
+  if (!sessionProgressState.initialized) {
+    return null;
+  }
+
   if (isMobile) {
     return (
       <>
@@ -200,7 +207,7 @@ const SessionStepper = () => {
           {
             sessionProgressState.completed
             && (
-              <Grid item sm={12} className={animClasses.anim}>
+              <Grid item xs={12} className={animClasses.anim}>
                 <Box pl={4}>
                   <Typography variant="subtitle1">Great Job Today</Typography>
                   <Typography variant="caption">Check in tomorrow to keep up your streak!</Typography>
@@ -242,8 +249,8 @@ const SessionStepper = () => {
         {
           sessionProgressState.completed
           && (
-            <Grid item sm={5} className={animClasses.anim}>
-              <Box pl={4}>
+            <Grid item xs={sessionProgressState.completed ? 4 : 0}>
+              <Box pl={4} className={animClasses.anim}>
                 <Typography variant="h6">Great Job Today</Typography>
                 <Typography variant="caption">Check in tomorrow to keep up your streak!</Typography>
                 <Box mt={1}>
@@ -256,7 +263,7 @@ const SessionStepper = () => {
             </Grid>
           )
           }
-        <Grid item sm={sessionProgressState.completed ? 7 : 12}>
+        <Grid item xs={sessionProgressState.completed ? 8 : 12} className={animClasses.gridSizeTransition}>
           <Stepper nonLinear alternativeLabel activeStep={activeStep} connector={<SessionStepConnector />} className={classes.paperRoot}>
             {
               sessionSteps.map((label, index) => (
