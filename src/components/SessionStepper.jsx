@@ -152,6 +152,8 @@ const SessionStepper = () => {
       if (state.stats.highScore) {
         if (dto.currentStreak > state.stats.highScore) {
           dto.highScore = dto.currentStreak;
+        } else {
+          dto.highScore = state.stats.highScore;
         }
       } else {
         dto.highScore = dto.currentStreak;

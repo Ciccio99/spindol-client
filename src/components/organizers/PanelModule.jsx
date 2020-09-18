@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import clsx from 'clsx';
 import styles from './Organizers.module.css';
 
 const useStyles = makeStyles({
@@ -21,7 +22,11 @@ const PanelModule = ({
   const classes = useStyles();
 
   return (
-    <Paper elevation={24} style={{ minHeight: '100%' }} classes={enableCTA ? ({ elevation24: classes.elevation24 }) : {}}>
+    <Paper
+      elevation={24}
+      style={{ minHeight: '100%' }}
+      className={clsx({ [classes.elevation24]: enableCTA })}
+    >
       <Box px={4} pt={3} pb={1} display="flex" justifyContent="space-between">
         <Box maxWidth={tooltip ? '80%' : '100%'}>
           <Typography variant="h6">{title}</Typography>
