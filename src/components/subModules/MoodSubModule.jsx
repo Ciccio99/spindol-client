@@ -70,17 +70,6 @@ const MoodSubModule = ({ date, mood, handleUpdate, enableStreak }) => {
           {getDateSubtitle(date)}
           {/* <Typography variant="subtitle2"><strong>How did your sleep make you feel this morning?</strong></Typography> */}
         </Grid>
-        {
-          streak > 0
-          && (
-            <Grid item>
-              <Box display="flex" alignItems="center" flexWrap="wrap">
-                <StreakBox value={streak} />
-              </Box>
-
-            </Grid>
-          )
-          }
         <ToggleButtonGroup item container xs={12} sm={12} spacing={1} alignItems="center" justify="space-between" onChange={handleMoodUpdate} value={mood || null}>
           <ToggleButton value="excellent" xs={6} sm={2}>Excellent</ToggleButton>
           <ToggleButton value="good" xs={6} sm={2}>Good</ToggleButton>

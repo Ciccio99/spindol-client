@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
+  Grid,
+  Typography,
+  Box,
   Stepper,
   Step,
   StepLabel,
@@ -16,6 +19,7 @@ import { useSessionProgressState, useSessionProgressDispatch } from 'context/ses
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import COLORS from 'constants/colors';
 import UserServices from 'services/UserServices';
+import { StreakBox, HighStreakBox } from 'components/Streaks';
 
 const sessionSteps = ['Sign In', 'Add Mood', 'Add Tags'];
 
@@ -106,12 +110,23 @@ const useStepperStyles = makeStyles((theme) => ({
   },
 }));
 
+const useAnimationStyles = makeStyles((theme) => ({
+  anim: {
+    animation: `$grow 0.6s ${theme.transitions.easing.sharp}`,
+  },
+  '@keyframes grow': {
+    '0%': { transform: 'scale(0)' },
+    '70%': { transform: 'scale(1.15)' },
+    '100%': { transform: 'scale(1)' },
+  },
+}));
 
 const SessionStepper = () => {
   const sessionProgressState = useSessionProgressState();
   const dispatchProgressSession = useSessionProgressDispatch();
   const dispatchAlert = useAlertSystemDispatch();
   const classes = useStepperStyles();
+  const animClasses = useAnimationStyles();
   const [activeStep, setActiveStep] = useState(3);
   const [completed, setCompleted] = useState(new Set());
   const [confettiTime, setConfettiTime] = useState(false);
@@ -126,26 +141,23 @@ const SessionStepper = () => {
 
       if (!state.stats.currentStreak) {
         dto.currentStreak = 1;
-      } else if (moment().diff(moment.utc(state.stats.lastUpdate), 'days') === 1) {
+      } else if (moment().diff(moment(moment.utc(state.stats.lastUpdate).format('YYYY-MM-DD')), 'day') === 1) {
         dto.currentStreak = state.stats.currentStreak + 1;
       } else {
         dto.currentStreak = 1;
       }
 
-      if (state.stats.highScore) {
-        if (dto.currentStreak > state.stats.highScore) {
-          dto.highScore = dto.currentStreak;
-        }
+      if (state.stats.highScore && dto.currentStreak > state.stats.highScore) {
+        dto.highScore = dto.currentStreak;
       } else {
         dto.highScore = dto.currentStreak;
       }
-
       dto.lastUpdate = moment().format('YYYY-MM-DD');
 
-      await UserServices.updateUserSessionProgress(dto);
+      const updatedStats = await UserServices.updateUserSessionProgress(dto);
+      dispatchProgressSession({ type: 'UPDATE_STATS', value: updatedStats });
       dispatchProgressSession({ type: 'SESSION_COMPLETE' });
       setConfettiTime(true);
-      // TODO: Notify user and confetti
       // TODO: Update user with new stats
     } catch (error) {
       dispatchAlert({
@@ -156,6 +168,10 @@ const SessionStepper = () => {
   };
 
   useEffect(() => {
+    if (sessionProgressState.completed) {
+      setCompleted(new Set([0, 1, 2]));
+      return;
+    }
     const compSet = new Set();
     if (sessionProgressState.signIn) {
       compSet.add(0);
@@ -168,29 +184,51 @@ const SessionStepper = () => {
     }
     setCompleted(compSet);
     (async () => {
+      console.log(sessionProgressState);
       await completeSession(sessionProgressState);
     })();
-  }, [sessionProgressState]);
+  }, [sessionProgressState.mood, sessionProgressState.signIn, sessionProgressState.tags]);
 
 
   const isStepComplete = (step) => completed.has(step);
 
   return (
     <>
-      <Stepper nonLinear alternativeLabel activeStep={activeStep} connector={<SessionStepConnector />} className={classes.paperRoot}>
+      <Grid container alignItems="center">
         {
-          sessionSteps.map((label, index) => (
-            <Step
-              key={label}
-              completed={isStepComplete(index)}
-            >
-              <StepLabel StepIconComponent={SessionStepIcon}>
-                {label}
-              </StepLabel>
-            </Step>
-          ))
-        }
-      </Stepper>
+          sessionProgressState.completed
+          && (
+            <Grid item sm={5} className={animClasses.anim}>
+              <Box pl={4}>
+                <Typography variant="h6">Great Job Today</Typography>
+                <Typography variant="caption">Check in tomorrow to keep up your streak!</Typography>
+                <Box mt={1}>
+                  <Grid container alignItems="center" spacing={1}>
+                    <Grid item><StreakBox value={sessionProgressState.stats.currentStreak} /></Grid>
+                    <Grid item><HighStreakBox value={sessionProgressState.stats.highScore} /></Grid>
+                  </Grid>
+                </Box>
+              </Box>
+            </Grid>
+          )
+          }
+        <Grid item sm={ sessionProgressState.completed ? 7 : 12}>
+          <Stepper nonLinear alternativeLabel activeStep={activeStep} connector={<SessionStepConnector />} className={classes.paperRoot}>
+            {
+              sessionSteps.map((label, index) => (
+                <Step
+                  key={label}
+                  completed={isStepComplete(index)}
+                >
+                  <StepLabel StepIconComponent={SessionStepIcon}>
+                    {label}
+                  </StepLabel>
+                </Step>
+              ))
+            }
+          </Stepper>
+        </Grid>
+      </Grid>
       <CompleteConfetti active={confettiTime} handleOnComplete={() => { setConfettiTime(false); }} />
     </>
   );

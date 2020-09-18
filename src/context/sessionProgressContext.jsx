@@ -7,10 +7,14 @@ const SessionProgressDispatchContext = React.createContext();
 const sessionProgressReducer = (state, action) => {
   if (action.type === 'INIT') {
     const { lastUpdate } = action.value;
-    const diff = lastUpdate ? moment().diff(moment.utc(lastUpdate), 'day') : -1;
-    return {
-      ...state, stats: { ...action.value }, signIn: true, initialized: true, completed: (diff === 0),
-    };
+    const diff = lastUpdate ? moment().diff(moment(moment.utc(lastUpdate).format('YYYY-MM-DD')), 'day') : -1;
+    const initState = { ...state, stats: { ...action.value }, signIn: true, initialized: true, completed: (diff === 0) };
+    if (initState.completed) {
+      initState.signIn = true;
+      initState.mood = true;
+      initState.tags = true;
+    }
+    return initState;
   }
   if (!state.initialized) {
     return state;
@@ -23,6 +27,14 @@ const sessionProgressReducer = (state, action) => {
       return { ...state, mood: true };
     case 'TAGS_COMPLETE':
       return { ...state, tags: true };
+    case 'UPDATE_STATS':
+      return { ...state, stats: action.value };
+    case 'UPDATING': {
+      return { ...state, updating: true };
+    }
+    case 'DONE_UPDATING': {
+      return { ...state, updating: false };
+    }
     case 'SESSION_COMPLETE': {
       return { ...state, completed: true };
     }
