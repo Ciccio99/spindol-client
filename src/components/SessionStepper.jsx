@@ -20,6 +20,7 @@ import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import COLORS from 'constants/colors';
 import UserServices from 'services/UserServices';
 import { StreakBox, HighStreakBox } from 'components/Streaks';
+import useMobile from 'hooks/useMobile';
 
 const sessionSteps = ['Sign In', 'Add Mood', 'Add Tags'];
 
@@ -103,7 +104,7 @@ const SessionStepIcon = ({ active, completed, icon }) => {
   );
 };
 
-const useStepperStyles = makeStyles((theme) => ({
+const useStepperStyles = makeStyles(() => ({
   paperRoot: {
     backgroundColor: COLORS.BG_WHITE,
     padding: 0,
@@ -127,7 +128,8 @@ const SessionStepper = () => {
   const dispatchAlert = useAlertSystemDispatch();
   const classes = useStepperStyles();
   const animClasses = useAnimationStyles();
-  const [activeStep, setActiveStep] = useState(3);
+  const { isMobile } = useMobile();
+  const [activeStep] = useState(3);
   const [completed, setCompleted] = useState(new Set());
   const [confettiTime, setConfettiTime] = useState(false);
 
@@ -184,13 +186,55 @@ const SessionStepper = () => {
     }
     setCompleted(compSet);
     (async () => {
-      console.log(sessionProgressState);
       await completeSession(sessionProgressState);
     })();
   }, [sessionProgressState.mood, sessionProgressState.signIn, sessionProgressState.tags]);
 
 
   const isStepComplete = (step) => completed.has(step);
+
+  if (isMobile) {
+    return (
+      <>
+        <Grid container alignItems="center" spacing={4}>
+          {
+            sessionProgressState.completed
+            && (
+              <Grid item sm={12} className={animClasses.anim}>
+                <Box pl={4}>
+                  <Typography variant="subtitle1">Great Job Today</Typography>
+                  <Typography variant="caption">Check in tomorrow to keep up your streak!</Typography>
+                  <Box mt={1}>
+                    <Grid container justify="space-between" alignItems="center" spacing={3}>
+                      <Grid item><StreakBox value={sessionProgressState.stats.currentStreak} /></Grid>
+                      <Grid item><HighStreakBox value={sessionProgressState.stats.highScore} /></Grid>
+                    </Grid>
+                  </Box>
+                </Box>
+              </Grid>
+            )
+            }
+          <Grid item xs={12}>
+            <Stepper nonLinear alternativeLabel activeStep={activeStep} connector={<SessionStepConnector />} className={classes.paperRoot}>
+              {
+                sessionSteps.map((label, index) => (
+                  <Step
+                    key={label}
+                    completed={isStepComplete(index)}
+                  >
+                    <StepLabel StepIconComponent={SessionStepIcon}>
+                      {label}
+                    </StepLabel>
+                  </Step>
+                ))
+              }
+            </Stepper>
+          </Grid>
+        </Grid>
+        <CompleteConfetti active={confettiTime} handleOnComplete={() => { setConfettiTime(false); }} />
+      </>
+    );
+  }
 
   return (
     <>
@@ -212,7 +256,7 @@ const SessionStepper = () => {
             </Grid>
           )
           }
-        <Grid item sm={ sessionProgressState.completed ? 7 : 12}>
+        <Grid item sm={sessionProgressState.completed ? 7 : 12}>
           <Stepper nonLinear alternativeLabel activeStep={activeStep} connector={<SessionStepConnector />} className={classes.paperRoot}>
             {
               sessionSteps.map((label, index) => (
