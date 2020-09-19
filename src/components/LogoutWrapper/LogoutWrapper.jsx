@@ -24,7 +24,7 @@ const LogoutWrapper = ({ children }) => {
       } catch (error) {
         dispatchAlert({
           type: 'ERROR',
-          message: error.response.data.message,
+          message: error.response?.data?.message || 'Something went wrong...',
         });
       } finally {
         dispatchUser({
