@@ -21,6 +21,7 @@ import COLORS from 'constants/colors';
 import UserServices from 'services/UserServices';
 import { StreakBox, HighStreakBox } from 'components/Streaks';
 import useMobile from 'hooks/useMobile';
+import { Event } from 'utils/Tracking';
 
 const sessionSteps = ['Sign In', 'Add Mood', 'Add Tags'];
 
@@ -165,6 +166,7 @@ const SessionStepper = () => {
       dispatchProgressSession({ type: 'UPDATE_STATS', value: updatedStats });
       dispatchProgressSession({ type: 'SESSION_COMPLETE' });
       setTimeout(() => { setConfettiTime(true); }, 500);
+      Event('Daily Check-In', 'Check-In Complete');
       // TODO: Update user with new stats
     } catch (error) {
       dispatchAlert({

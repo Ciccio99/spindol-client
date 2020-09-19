@@ -25,6 +25,7 @@ import SleepTrialsTab from 'components/common/SleepTrialsTab';
 import { ActivityChip, SleepChip } from 'components/common/TagChips';
 import COLORS from 'constants/colors';
 import styles from './Modals.module.css';
+import { Event } from 'utils/Tracking';
 
 const ModalWrapper = ({ open, handleOnModalClose, children }) => (
   <Modal
@@ -166,7 +167,7 @@ const EditTagsModal = ({
       <ModalWrapper open={open} handleOnModalClose={handleOnModalClose}>
         <TabPanel index={0} value={tabValue} style={{ width: '100%' }}>
           <Box px={2} pt={2} position="relative">
-            <Typography variant="h6" align="center">Edit Activity Tags</Typography>
+            <Typography variant="h6" align="center">Edit Daily Tags</Typography>
             <Box
               position="absolute"
               right="2%"

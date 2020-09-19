@@ -90,52 +90,6 @@ const DailyDiaryDashboardModule = ({ date, enableStreak, tagsDate }) => {
     }
   }, [tagsData, dispatchAlertSystem]);
 
-  // const handleGoalComplete = async (goalTag) => {
-  //   console.log('Completed: ', goalTag);
-  //   const updatedTags = tagsData.diaryTags.concat(goalTag);
-  //   const dto = { diaryTags: updatedTags.map((tag) => tag._id) };
-  //   const oldData = tagsData;
-  //   setTagsData({ ...oldData, diaryTags: updatedTags });
-  //   try {
-  //     const { _id } = tagsData;
-  //     const dd = await DailyDiaryServices.update({ _id, ...dto });
-  //     setTagsData(dd);
-  //     dispatchAlertSystem({
-  //       type: 'SUCCESS',
-  //       message: 'Daily Diary Updated',
-  //     });
-  //   } catch (e) {
-  //     setTagsData(oldData);
-  //     dispatchAlertSystem({
-  //       type: 'WARNING',
-  //       message: e.message || 'Update failed: Something went wrong...',
-  //     });
-  //   }
-  // };
-
-  // const handleGoalIncomplete = async (goalTag) => {
-  //   console.log('Incompleted: ', goalTag);
-  //   const updatedTags = tagsData.diaryTags.filter((tag) => tag._id !== goalTag._id);
-  //   const dto = { diaryTags: updatedTags.map((tag) => tag._id) };
-  //   const oldData = tagsData;
-  //   setTagsData({ ...oldData, diaryTags: updatedTags });
-  //   try {
-  //     const { _id } = tagsData;
-  //     const dd = await DailyDiaryServices.update({ _id, ...dto });
-  //     setTagsData(dd);
-  //     dispatchAlertSystem({
-  //       type: 'SUCCESS',
-  //       message: 'Daily Diary Updated',
-  //     });
-  //   } catch (e) {
-  //     setTagsData(oldData);
-  //     dispatchAlertSystem({
-  //       type: 'WARNING',
-  //       message: e.message || 'Update failed: Something went wrong...',
-  //     });
-  //   }
-  // };
-
   useEffect(() => {
     let isMounted = true;
     if (data && isMounted) {

@@ -70,7 +70,12 @@ const DayTagsSubModule = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleTagsUpdate = React.useCallback((selectedTags) => {
-    Event('Daily Diary', 'Edited Activity Tags', `Set ${selectedTags.length} Tags`);
+
+    if (selectedTags.some((tag) => !!tag.sleepTrial)) {
+      Event('Daily Diary', 'Edited Sleep & Activity Tags', `Set ${selectedTags.length} Tags`);
+    } else {
+      Event('Daily Diary', 'Edited Activity Tags', `Set ${selectedTags.length} Tags`);
+    }
     handleUpdate(selectedTags);
   }, [handleUpdate]);
 
