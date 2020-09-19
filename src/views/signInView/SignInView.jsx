@@ -21,6 +21,10 @@ import { Helmet } from 'react-helmet-async';
 import ReactGA from 'react-ga';
 import UserServices from 'services/UserServices';
 import { useUserDispatch } from 'context/userContext';
+import { setUserId, Event } from 'utils/Tracking';
+import {
+  useSessionProgressDispatch,
+} from 'context/sessionProgressContext';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -43,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignInView = () => {
+  const dispatchSessionProgress = useSessionProgressDispatch();
   const classes = useStyles();
   const dispatchUser = useUserDispatch();
   const [email, setEmail] = useState('');
@@ -67,15 +72,14 @@ const SignInView = () => {
         type: 'USER_LOGIN',
         user,
       });
-      ReactGA.set({
-        userId: user._id,
-        userEmail: user.email,
+      dispatchSessionProgress({
+        type: 'INIT',
+        value: user?.stats?.sessionStats || {},
       });
-      ReactGA.event({
-        category: 'User',
-        action: 'User Sign In',
-        value: parseInt(user._id, 10),
-      });
+
+      setUserId(user._id);
+      Event('User', 'User Sign In');
+
       history.replace(from);
     }
   };

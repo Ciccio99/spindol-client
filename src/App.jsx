@@ -12,9 +12,7 @@ import {
   useUserDispatch,
 } from 'context/userContext';
 import {
-  useSessionProgressState,
   useSessionProgressDispatch,
-  updateSessionProgress,
 } from 'context/sessionProgressContext';
 import { setUserId, Event } from 'utils/Tracking';
 import Header from './views/header/Header';
@@ -28,7 +26,6 @@ import LoadingCard from './components/loadingCard/LoadingCard';
 
 function App() {
   const dispatchUser = useUserDispatch();
-  const sessionProgressState = useSessionProgressState();
   const dispatchSessionProgress = useSessionProgressDispatch();
   const [sleepTrialTrackers, dispatchSleepTrialTrackers] = useReducer(
     sleepTrialTrackersReducer, [],
