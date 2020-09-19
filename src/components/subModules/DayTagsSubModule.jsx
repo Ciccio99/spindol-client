@@ -2,26 +2,25 @@ import React, { useState } from 'react';
 import {
   Box,
   Button,
-  Chip,
   Grid,
   Typography,
 } from '@material-ui/core';
 import moment from 'moment-timezone';
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
 import EditTagsModal from 'components/modals/EditTagsModal';
+import { DisplaySleepChip, DisplayActivityChip } from 'components/common/TagChips';
 import useMobile from 'hooks/useMobile';
 import { Event } from 'utils/Tracking';
 
 const getDateSubtitle = (date, enableVariedDateText = false) => {
-  const givenDate = moment.utc(date);
+  const givenDate = moment(moment.utc(date).format('YYYY-MM-DD'));
   if (enableVariedDateText) {
     const now = moment();
-
     if (now.diff(givenDate, 'day') === 0) {
       return (
         <Box>
           <Typography variant="subtitle1" display="inline">
-            {'What activities did you do on '}
+            {'What did you do '}
           </Typography>
           <Typography variant="subtitle1" color="primary" display="inline">
             <strong>today</strong>
@@ -32,14 +31,15 @@ const getDateSubtitle = (date, enableVariedDateText = false) => {
         </Box>
       );
     }
+
     if (now.diff(givenDate, 'day') === 1) {
       return (
         <Box>
           <Typography variant="subtitle1" display="inline">
-            {'What activities did you do '}
+            {'What did you do '}
           </Typography>
           <Typography variant="subtitle1" color="primary" display="inline">
-            <strong>yesterday ({givenDate.format('ddd, MMM DD')})</strong>
+            <strong>{`yesterday - ${givenDate.format('dddd, MMM DD')}`}</strong>
           </Typography>
           <Typography variant="subtitle1" display="inline">
             ?
@@ -51,7 +51,7 @@ const getDateSubtitle = (date, enableVariedDateText = false) => {
   return (
     <Box>
       <Typography variant="subtitle1" display="inline">
-        {'What activities did you do on '}
+        {'What did you do on '}
       </Typography>
       <Typography variant="subtitle1" color="primary" display="inline">
         <strong>{givenDate.format('dddd, MMM DD')}</strong>
@@ -70,14 +70,19 @@ const DayTagsSubModule = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleTagsUpdate = React.useCallback((selectedTags) => {
-    Event('Daily Diary', 'Edited Activity Tags', `Set ${selectedTags.length} Tags`);
+
+    if (selectedTags.some((tag) => !!tag.sleepTrial)) {
+      Event('Daily Diary', 'Edited Sleep & Activity Tags', `Set ${selectedTags.length} Tags`);
+    } else {
+      Event('Daily Diary', 'Edited Activity Tags', `Set ${selectedTags.length} Tags`);
+    }
     handleUpdate(selectedTags);
   }, [handleUpdate]);
 
 
   return (
     <Box>
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box display="flex" justifyContent="space-between">
         {getDateSubtitle(date, enableVariedDateText)}
         {
           isMobile
@@ -85,31 +90,36 @@ const DayTagsSubModule = ({
               <EditTwoToneIcon onClick={() => { setIsModalOpen(true); }} style={{ cursor: 'pointer' }} color="secondary" />
             )
             : (
-              <Button
-                size="small"
-                variant="contained"
-                color="secondary"
-                startIcon={<EditTwoToneIcon />}
-                onClick={() => { setIsModalOpen(true); }}
-              >
-                <Typography variant="caption">Add Activity</Typography>
-              </Button>
+              <Box>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  startIcon={<EditTwoToneIcon />}
+                  onClick={() => { setIsModalOpen(true); }}
+                >
+                  <Typography variant="caption">Add Tags</Typography>
+                </Button>
+              </Box>
             )
         }
 
       </Box>
-      <Box mt={4}>
+      <Box mt={2}>
         {tags && tags.length > 0
           ? (
             <Grid container alignItems="center" spacing={3}>
               {tags.map((tag) => (
                 <Grid key={tag._id} item>
-                  <Chip label={tag.tag} color="primary" />
+                  {
+                    tag.sleepTrial
+                      ? <DisplaySleepChip tag={tag} />
+                      : <DisplayActivityChip tag={tag} />
+                  }
                 </Grid>
               ))}
             </Grid>
           )
-          : <Typography variant="subtitle1">See what impacts your sleep by adding activity tags!</Typography>}
+          : <Typography variant="subtitle2" color="textSecondary">See what impacts your sleep by adding activity tags!</Typography>}
       </Box>
       <EditTagsModal open={isModalOpen} currentTags={tags} handleModal={setIsModalOpen} handleSaveTags={handleTagsUpdate} />
     </Box>

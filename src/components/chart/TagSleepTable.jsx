@@ -28,7 +28,7 @@ const TagSleepTable = ({ startDate, endDate, tag }) => {
     (async () => {
       try {
         const newData = await SleepSummaryServices
-          .getTagSleepTableData(startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'), tag);
+          .getTagSleepTableData(startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'), tag._id);
         setData(newData);
         setError(null);
       } catch (e) {

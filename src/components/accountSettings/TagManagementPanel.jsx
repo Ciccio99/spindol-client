@@ -19,7 +19,7 @@ import { Event } from 'utils/Tracking';
 import TagInput from './TagInput';
 import TagCreateInput from './TagCreateInput';
 
-const TITLE = 'Manage Habit Tags';
+const TITLE = 'Manage Tags';
 
 const PanelWrapper = ({ children }) => (
   <PanelModule title={TITLE}>
@@ -30,6 +30,7 @@ const PanelWrapper = ({ children }) => (
 const getAvailableTags = async () => {
   const userTags = await getAllUserTags();
   userTags.sort((a, b) => (a.tag.toLowerCase() <= b.tag.toLowerCase() ? -1 : 1));
+
   return userTags;
 };
 
@@ -105,10 +106,24 @@ const TagManagementPanel = () => {
           <TagCreateInput handleInsert={handleInsert} />
         </Box>
         <Divider />
-        <Box mt={2}>
+        <Box mt={2} pb={2}>
+          <Typography variant="h6" gutterBottom>Sleep Tags</Typography>
           <Grid container spacing={2}>
             {
-              data.map((tag) => (
+              data.filter((tag) => (tag.sleepTrial)).map((tag) => (
+                <Grid key={tag._id} item xs={12} sm={6}>
+                  <TagInput tag={tag} handleUpdate={handleUpdate} handleDelete={handleDelete} />
+                </Grid>
+              ))
+            }
+          </Grid>
+        </Box>
+        <Divider />
+        <Box my={2}>
+          <Typography variant="h6" gutterBottom>Activity Tags</Typography>
+          <Grid container spacing={2}>
+            {
+              data.filter((tag) => (!tag.sleepTrial)).map((tag) => (
                 <Grid key={tag._id} item xs={12} sm={6}>
                   <TagInput tag={tag} handleUpdate={handleUpdate} handleDelete={handleDelete} />
                 </Grid>

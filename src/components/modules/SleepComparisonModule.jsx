@@ -44,7 +44,7 @@ const StatsDisplay = ({ date }) => {
   }
 
   if (data.todayStats && data.baselineStats) {
-    const enableCTA = moment().diff(moment(user.createdAt), 'days') < 3 && moment(data.lastSyncDate).isSame(moment(), 'day');
+    const enableCTA = moment().diff(moment(user.createdAt), 'days') < 3 && moment(data.lastSyncDate, 'MMM DD, YYYY').isSame(moment(), 'day');
     return (
       <PanelModule title={TITLE} subtitle={getSubtitle(data.lastSyncDate)} enableCTA={enableCTA}>
         <Box>

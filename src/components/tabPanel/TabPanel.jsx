@@ -10,11 +10,9 @@ const TabPanel = ({ children, value, index, ...other }) => {
       hidden={ value !== index}
       {...other}
     >
-      { value === index && (
-        <Box>
-          {children}
-        </Box>
-      )}
+      <Box hidden={ value !== index}>
+        {children}
+      </Box>
     </div>
   );
 };

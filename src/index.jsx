@@ -14,6 +14,9 @@ import {
 import {
   AlertSystemProvider,
 } from 'context/alertSystemContext';
+import {
+  SessionProgressProvider,
+} from 'context/sessionProgressContext';
 import AlertSystemModule from 'components/alertSystem/AlertSystemModule';
 import { initGA } from 'utils/Tracking';
 
@@ -45,7 +48,9 @@ ReactDOM.render(
         <CssBaseline>
           <UserProvider>
             <AlertSystemProvider>
-              <App />
+              <SessionProgressProvider>
+                <App />
+              </SessionProgressProvider>
               <AlertSystemModule />
             </AlertSystemProvider>
           </UserProvider>
