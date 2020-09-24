@@ -1,43 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import {
   Box,
   Typography,
   LinearProgress,
 } from '@material-ui/core';
+import { useAsync } from 'react-async';
 import SleepSummaryServices from 'services/SleepSummaryServices';
 import ComparisonTable from 'components/common/ComparisonTable';
 
-// Load in Sleep data that have the tag
-// Load in sleep data that dont have the tag
-// Display comparison table between the two
-// Check for missing data and display a message for each
-// i.e. Not tag sleep, not baseline sleep (cus you performed the tag each day)
-// What happens if you performed a tag every day for a month? WHere should the baseline data come from?
-// Should it just be your current baseline or should we collect any  sleep data (even outside of the date ranges) to create the baseline?
+const getTableData = async ({
+  startDate, endDate, tag1, tag2,
+}) => {
+  if (!startDate || !endDate || !tag1) {
+    return undefined;
+  }
+  const tag1Data = await SleepSummaryServices
+    .getTagSleepTableData(startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'), tag1);
 
-const TagSleepTable = ({ startDate, endDate, tag }) => {
-  const [data, setData] = useState(null);
-  const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState(null);
+  if (tag2) {
+    const tag2Data = await SleepSummaryServices
+      .getTagSleepTableData(startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'), tag2);
+    tag1Data.baselineStats = tag2Data.newStats;
+    tag1Data.stats2Count = tag2Data.newStatsCount;
+  }
 
-  useEffect(() => {
-    if (!startDate || !endDate || !tag) {
-      return;
-    }
-    setIsPending(true);
-    (async () => {
-      try {
-        const newData = await SleepSummaryServices
-          .getTagSleepTableData(startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'), tag._id);
-        setData(newData);
-        setError(null);
-      } catch (e) {
-        setError(e);
-      } finally {
-        setIsPending(false);
-      }
-    })();
-  }, [startDate, endDate, tag]);
+  return tag1Data;
+};
+
+const TagSleepTable = ({
+  startDate, endDate, tag1, tag2,
+}) => {
+  const reqParams = useMemo(() => ({
+    startDate,
+    endDate,
+    tag1,
+    tag2,
+  }), [startDate, endDate, tag1, tag2]);
+  const { data, isPending, error } = useAsync(getTableData, {
+    watch: reqParams,
+    ...reqParams,
+  });
 
   if (!data && isPending) {
     return <LinearProgress color="secondary" />;
@@ -46,15 +48,19 @@ const TagSleepTable = ({ startDate, endDate, tag }) => {
   if (error) {
     return <Box mt={4}><Typography>{error.message}</Typography></Box>;
   }
+
   if (data) {
     return (
       <>
         {isPending && <Box mb={4}><LinearProgress color="primary" /></Box>}
         <ComparisonTable
           keys={data.keys}
-          newStats={data.newStats}
-          newLabel={`Tag Sleep (${data.newStatsCount} data point${data.newStatsCount === 1 ? '' : 's'})`}
-          baselineStats={data.baselineStats}
+          stats1={data.newStats}
+          stats1Label={tag1.tag}
+          stats1CountLabel={`(${data.newStatsCount} data point${data.newStatsCount === 1 ? '' : 's'})`}
+          stats2={data.baselineStats}
+          stats2Label={tag2 ? tag2.tag : undefined}
+          stats2CountLabel={tag2 ? `(${data.stats2Count} data point${data.stats2Count === 1 ? '' : 's'})` : undefined}
         />
       </>
     );

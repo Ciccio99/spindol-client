@@ -6,6 +6,7 @@ import {
   InputLabel,
   Typography,
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { useAsync } from 'react-async';
 import { getAllUserTags } from 'services/TagsServices';
 import PanelModule from 'components/organizers/PanelModule';
@@ -28,11 +29,22 @@ const getAvailableTags = async () => {
   return userTags;
 };
 
-const TagSelector = ({ handleUpdate }) => {
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 200,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
+
+const TagSelector = ({ handleUpdate, disabled }) => {
+  const classes = useStyles();
   const { data, error } = useAsync(getAvailableTags);
   const { isMobile } = useMobile();
-  const label = 'Select a Tag';
   const [selectedTag, setSelectedTag] = useState('');
+  const label = 'Select a Tag';
 
   useEffect(() => {
     handleUpdate(selectedTag);
@@ -44,15 +56,18 @@ const TagSelector = ({ handleUpdate }) => {
   };
 
   return (
-    <Box>
-      <FormControl variant="outlined" color="secondary" size={isMobile ? 'small' : 'medium'} fullWidth>
+    <>
+      <FormControl variant="outlined" color="secondary" className={classes.formControl} size={isMobile ? 'small' : 'medium'}>
         <InputLabel htmlFor="tagSelect">{label}</InputLabel>
         <SelectInput
           labelId="tagSelect"
           value={selectedTag}
           label={label}
           onChange={handleChange}
+          disabled={disabled}
+          fullWidth
         >
+          <MenuItem value="">None</MenuItem>
           {
             data
               ? data.map((tag) => (<MenuItem key={tag._id} value={tag}>{tag.tag}</MenuItem>))
@@ -61,18 +76,24 @@ const TagSelector = ({ handleUpdate }) => {
         </SelectInput>
       </FormControl>
       { error && <Typography variant="caption" color="error">Something went wrong, your activity tags could not be loaded.</Typography>}
-    </Box>
+    </>
   );
 };
 
 const TagSleepDataModule = ({ startDate, endDate }) => {
-  const [selectedTag, setSelectedTag] = useState(undefined);
+  const [selectedTag1, setSelectedTag1] = useState(undefined);
+  const [selectedTag2, setSelectedTag2] = useState(undefined);
 
   return (
     <PanelWrapper>
-      <TagSelector handleUpdate={setSelectedTag} />
-      <Box mt={6}>
-        <TagSleepTable startDate={startDate} endDate={endDate} tag={selectedTag} />
+      <Box display="flex" justifyContent="space-between" flexWrap="wrap" alignItems="center">
+        <TagSelector handleUpdate={setSelectedTag1} />
+        {
+          selectedTag1 && <TagSelector handleUpdate={setSelectedTag2} disabled={!selectedTag1} />
+        }
+      </Box>
+      <Box mt={4}>
+        <TagSleepTable startDate={startDate} endDate={endDate} tag1={selectedTag1} tag2={selectedTag2} />
       </Box>
     </PanelWrapper>
   );
