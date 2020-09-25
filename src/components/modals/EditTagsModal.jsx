@@ -316,52 +316,6 @@ const EditTagsTab = ({
               );
             })
           }
-          {
-            activityTags.map((tag) => {
-              if (selectedTags.some((selectTag) => selectTag._id === tag._id)) {
-                return (
-                  <Grid item key={tag._id}>
-                    <ActivityChip
-                      tag={tag}
-                      isSelected
-                      handleOnClick={() => { handleTagDeSelect(tag); }}
-                    />
-                  </Grid>
-                );
-              }
-              return (
-                <Grid item key={tag._id}>
-                  <ActivityChip
-                    tag={tag}
-                    handleOnClick={() => { handleTagSelect(tag); }}
-                  />
-                </Grid>
-              );
-            })
-          }
-          {
-            activityTags.map((tag) => {
-              if (selectedTags.some((selectTag) => selectTag._id === tag._id)) {
-                return (
-                  <Grid item key={tag._id}>
-                    <ActivityChip
-                      tag={tag}
-                      isSelected
-                      handleOnClick={() => { handleTagDeSelect(tag); }}
-                    />
-                  </Grid>
-                );
-              }
-              return (
-                <Grid item key={tag._id}>
-                  <ActivityChip
-                    tag={tag}
-                    handleOnClick={() => { handleTagSelect(tag); }}
-                  />
-                </Grid>
-              );
-            })
-          }
       </Grid>
     </Box>
   </Box>
