@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Switch,
-  Container,
   Box,
   Grid,
   Typography,
@@ -9,14 +8,10 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import { Helmet } from 'react-helmet-async';
 import moment from 'moment-timezone';
 import dateViews from 'constants/dateViews';
-import ViewHeader from 'components/ViewHeader';
 import useMedium from 'hooks/useMedium';
-import Section from 'components/organizers/Section';
-import TagSleepDataModule from 'components/modules/TagSleepDataModule';
-import TagsHeatMapModule from 'components/modules/TagsHeatMapModule';
+
 
 const useStylesArrows = makeStyles((theme) => ({
   root: {
@@ -41,7 +36,7 @@ const useStylesSwitch = makeStyles((theme) => ({
   },
 }));
 
-const DataView = () => {
+const DateRangePicker = ({ handleDatesUpdate, handleRangeUpdate }) => {
   const classesArrows = useStylesArrows();
   const classesGridItem = useStylesGridItem();
   const classesSwitch = useStylesSwitch();
@@ -52,6 +47,14 @@ const DataView = () => {
     month: moment().format('MMMM'),
     year: moment().format('YYYY'),
   });
+
+  useEffect(() => {
+    handleDatesUpdate(viewDates);
+  }, [viewDates, handleDatesUpdate]);
+
+  useEffect(() => {
+    handleRangeUpdate(viewRange);
+  }, [viewRange, handleRangeUpdate]);
 
   const handleArrowClick = (step) => {
     setViewDates((prevState) => {
@@ -82,46 +85,30 @@ const DataView = () => {
   };
 
   return (
-    <Container>
-      <Helmet>
-        <title>Hypnos.ai - Data</title>
-        <meta
-          name="description"
-          content="Hypnos.ai helps you track and improve your sleep habits. Use the Data view to see information about your daily tags and sleep."
-        />
-      </Helmet>
-      <ViewHeader label="Your Data" />
-      <Box my={4}>
-        <Box display="flex" justifyContent="center" alignItems="center" minHeight={65}>
-          <ArrowBackIosIcon onClick={() => { handleArrowClick(-1); }} classes={classesArrows} />
-          <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" mx={3} minWidth={240}>
-            <DateLabel viewDates={viewDates} viewRange={viewRange} />
-          </Box>
-          <ArrowForwardIosIcon onClick={() => { handleArrowClick(1); }} classes={classesArrows} />
+    <div>
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight={65}>
+        <ArrowBackIosIcon onClick={() => { handleArrowClick(-1); }} classes={classesArrows} />
+        <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" mx={3} minWidth={240}>
+          <DateLabel viewDates={viewDates} viewRange={viewRange} />
         </Box>
-        <Box mt={2}>
-          <Grid container justify="center" alignItems="center" spacing={1}>
-            <Grid item classes={classesGridItem}>Weekly</Grid>
-            <Grid item classes={classesGridItem}>
-              <Switch checked={viewRange === dateViews.M} onChange={handleViewToggle} name="dateViewRange" disableRipple classes={classesSwitch} />
-            </Grid>
-            <Grid item classes={classesGridItem}>Monthly</Grid>
-          </Grid>
-        </Box>
+        <ArrowForwardIosIcon onClick={() => { handleArrowClick(1); }} classes={classesArrows} />
       </Box>
-      <Section>
-        <TagSleepDataModule startDate={viewDates.startDate} endDate={viewDates.endDate} />
-      </Section>
-      <Section>
-        <TagsHeatMapModule startDate={viewDates.startDate} endDate={viewDates.endDate} viewRange={viewRange} />
-      </Section>
-    </Container>
+      <Box mt={2}>
+        <Grid container justify="center" alignItems="center" spacing={1}>
+          <Grid item classes={classesGridItem}>Weekly</Grid>
+          <Grid item classes={classesGridItem}>
+            <Switch checked={viewRange === dateViews.M} onChange={handleViewToggle} name="dateViewRange" disableRipple classes={classesSwitch} />
+          </Grid>
+          <Grid item classes={classesGridItem}>Monthly</Grid>
+        </Grid>
+      </Box>
+    </div>
   );
 };
 
+
 const DateLabel = ({ viewDates, viewRange }) => {
   const { isMedium } = useMedium();
-
 
   if (viewRange === dateViews.M) {
     return (
@@ -139,4 +126,4 @@ const DateLabel = ({ viewDates, viewRange }) => {
   );
 };
 
-export default DataView;
+export default DateRangePicker;

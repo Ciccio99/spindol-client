@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TagSelector = ({ handleUpdate, disabled }) => {
+const TagSelector = ({ handleUpdate, noneLabel, disabled }) => {
   const classes = useStyles();
   const { data, error } = useAsync(getAvailableTags);
   const { isMobile } = useMobile();
@@ -67,7 +67,7 @@ const TagSelector = ({ handleUpdate, disabled }) => {
           disabled={disabled}
           fullWidth
         >
-          <MenuItem value="">None</MenuItem>
+          <MenuItem value="">{noneLabel || 'None'}</MenuItem>
           {
             data
               ? data.map((tag) => (<MenuItem key={tag._id} value={tag}>{tag.tag}</MenuItem>))
@@ -89,7 +89,7 @@ const TagSleepDataModule = ({ startDate, endDate }) => {
       <Box display="flex" justifyContent="space-between" flexWrap="wrap" alignItems="center">
         <TagSelector handleUpdate={setSelectedTag1} />
         {
-          selectedTag1 && <TagSelector handleUpdate={setSelectedTag2} disabled={!selectedTag1} />
+          selectedTag1 && <TagSelector handleUpdate={setSelectedTag2} noneLabel="Baseline" disabled={!selectedTag1} />
         }
       </Box>
       <Box mt={4}>

@@ -195,7 +195,7 @@ const SessionStepper = () => {
     (async () => {
       await completeSession(sessionProgressState);
     })();
-  }, [sessionProgressState.mood, sessionProgressState.signIn, sessionProgressState.tags]);
+  }, [sessionProgressState.mood, sessionProgressState.signIn, sessionProgressState.tags, sessionProgressState.completed, completeSession]);
 
 
   const isStepComplete = (step) => completed.has(step);

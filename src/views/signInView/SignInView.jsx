@@ -18,7 +18,6 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { Helmet } from 'react-helmet-async';
-import ReactGA from 'react-ga';
 import UserServices from 'services/UserServices';
 import { useUserDispatch } from 'context/userContext';
 import { setUserId, Event } from 'utils/Tracking';
