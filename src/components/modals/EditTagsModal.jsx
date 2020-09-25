@@ -25,7 +25,6 @@ import SleepTrialsTab from 'components/common/SleepTrialsTab';
 import { ActivityChip, SleepChip } from 'components/common/TagChips';
 import COLORS from 'constants/colors';
 import styles from './Modals.module.css';
-import { Event } from 'utils/Tracking';
 
 const ModalWrapper = ({ open, handleOnModalClose, children }) => (
   <Modal
@@ -165,7 +164,7 @@ const EditTagsModal = ({
   if (data) {
     return (
       <ModalWrapper open={open} handleOnModalClose={handleOnModalClose}>
-        <TabPanel index={0} value={tabValue} style={{ width: '100%' }}>
+        <TabPanel index={0} value={tabValue} style={{ width: '100%', height: '100%', position: 'relative' }}>
           <Box px={2} pt={2} position="relative">
             <Typography variant="h6" align="center">Edit Daily Tags</Typography>
             <Box
@@ -192,9 +191,9 @@ const EditTagsModal = ({
             selectedTags={selectedTags}
             handleSetSleepTab={() => { setTabValue(1); }}
           />
-          <Box p={4} display="flex" flexDirection="column" alignItems="center">
+          <Box p={4} pt={0} style={{ backgroundColor: COLORS.BG_WHITE, borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px' }} position="absolute" width="inherit" bottom={0} left="0" right="0" display="flex" flexDirection="column" alignItems="center">
             <CreateTagForm handleTagSubmit={handleTagSubmit} disableCreate={disableCreate} />
-            <Box mt={4}>
+            <Box mt={2}>
               <LinkText to={{ pathname: '/settings', hash: 'tags' }}>Manage Habit Tags</LinkText>
             </Box>
           </Box>
@@ -256,7 +255,7 @@ const AddSleepTagButton = ({ onClickHandle }) => {
 const EditTagsTab = ({
   activityTags, sleepTags, selectedTags, handleTagSelect, handleTagDeSelect, handleSetSleepTab,
 }) => (
-  <>
+  <Box pb={10} maxHeight={useMobile().isMobile ? '76vh' : '81vh'} overflow="auto scroll">
     <Box p={4} pt={2} display="flex" justifyContent="space-between" flexDirection="column" alignItems="center">
       <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" width="100%">
         <Typography variant="subtitle1">Sleep Tags</Typography>
@@ -317,9 +316,55 @@ const EditTagsTab = ({
               );
             })
           }
+          {
+            activityTags.map((tag) => {
+              if (selectedTags.some((selectTag) => selectTag._id === tag._id)) {
+                return (
+                  <Grid item key={tag._id}>
+                    <ActivityChip
+                      tag={tag}
+                      isSelected
+                      handleOnClick={() => { handleTagDeSelect(tag); }}
+                    />
+                  </Grid>
+                );
+              }
+              return (
+                <Grid item key={tag._id}>
+                  <ActivityChip
+                    tag={tag}
+                    handleOnClick={() => { handleTagSelect(tag); }}
+                  />
+                </Grid>
+              );
+            })
+          }
+          {
+            activityTags.map((tag) => {
+              if (selectedTags.some((selectTag) => selectTag._id === tag._id)) {
+                return (
+                  <Grid item key={tag._id}>
+                    <ActivityChip
+                      tag={tag}
+                      isSelected
+                      handleOnClick={() => { handleTagDeSelect(tag); }}
+                    />
+                  </Grid>
+                );
+              }
+              return (
+                <Grid item key={tag._id}>
+                  <ActivityChip
+                    tag={tag}
+                    handleOnClick={() => { handleTagSelect(tag); }}
+                  />
+                </Grid>
+              );
+            })
+          }
       </Grid>
     </Box>
-  </>
+  </Box>
 );
 
 const CreateTagForm = ({ handleTagSubmit, disableCreate }) => {
@@ -330,7 +375,7 @@ const CreateTagForm = ({ handleTagSubmit, disableCreate }) => {
     setTagInput('');
   };
   return (
-    <Box mt={4} component="form" onSubmit={submitTagHandle} autoComplete="off" minWidth="100%">
+    <Box mt={2} component="form" onSubmit={submitTagHandle} autoComplete="off" minWidth="100%">
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={12} sm={8}>
           <TextField
