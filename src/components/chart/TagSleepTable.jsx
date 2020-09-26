@@ -46,7 +46,7 @@ const TagSleepTable = ({
   }
 
   if (error) {
-    return <Box mt={4}><Typography>{error.message}</Typography></Box>;
+    return <Typography variant="subtitle2" color="error">{error.message}</Typography>;
   }
 
   if (data) {

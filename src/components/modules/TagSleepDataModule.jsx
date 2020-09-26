@@ -1,13 +1,9 @@
 import React from 'react';
 import {
-  Box,
   Typography,
 } from '@material-ui/core';
-
 import PanelModule from 'components/organizers/PanelModule';
-
 import TagSleepTable from 'components/chart/TagSleepTable';
-
 
 const TITLE = 'Tags Sleep Impact';
 
@@ -28,9 +24,7 @@ const TagSleepDataModule = ({ startDate, endDate, tag1, tag2 }) => {
 
   return (
     <PanelWrapper>
-      <Box>
-        <TagSleepTable startDate={startDate} endDate={endDate} tag1={tag1} tag2={tag2} />
-      </Box>
+      <TagSleepTable startDate={startDate} endDate={endDate} tag1={tag1} tag2={tag2} />
     </PanelWrapper>
   );
 };
