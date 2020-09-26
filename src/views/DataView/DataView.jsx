@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import {
+  Box,
+  Grid,
   Container,
 } from '@material-ui/core';
 import { Helmet } from 'react-helmet-async';
@@ -10,6 +12,7 @@ import Section from 'components/organizers/Section';
 import TagSleepDataModule from 'components/modules/TagSleepDataModule';
 import TagsHeatMapModule from 'components/modules/TagsHeatMapModule';
 import DateRangePicker from 'views/DataView/DateRangePicker';
+import TagComparisonSelectors from 'views/DataView/TagComparisonSelectors';
 
 const DataView = () => {
   const [viewRange, setViewRange] = useState(dateViews.M);
@@ -19,6 +22,8 @@ const DataView = () => {
     month: moment().format('MMMM'),
     year: moment().format('YYYY'),
   });
+  const [selectedTag1, setSelectedTag1] = useState();
+  const [selectedTag2, setSelectedTag2] = useState();
 
   return (
     <Container>
@@ -30,9 +35,18 @@ const DataView = () => {
         />
       </Helmet>
       <ViewHeader label="Your Data" />
-      <DateRangePicker handleDatesUpdate={setViewDates} handleRangeUpdate={setViewRange} />
+      <Box mt={4}>
+        <Grid container spacing={2} justify="space-between" alignItems="center">
+          <Grid item xs={12} sm="auto">
+            <DateRangePicker handleDatesUpdate={setViewDates} handleRangeUpdate={setViewRange} />
+          </Grid>
+          <Grid item xs={12} sm="auto">
+            <TagComparisonSelectors handleTag1Change={setSelectedTag1} handleTag2Change={setSelectedTag2} />
+          </Grid>
+        </Grid>
+      </Box>
       <Section>
-        <TagSleepDataModule startDate={viewDates.startDate} endDate={viewDates.endDate} />
+        <TagSleepDataModule startDate={viewDates.startDate} endDate={viewDates.endDate} tag1={selectedTag1} tag2={selectedTag2} />
       </Section>
       <Section>
         <TagsHeatMapModule startDate={viewDates.startDate} endDate={viewDates.endDate} viewRange={viewRange} />

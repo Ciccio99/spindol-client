@@ -12,7 +12,6 @@ import moment from 'moment-timezone';
 import dateViews from 'constants/dateViews';
 import useMedium from 'hooks/useMedium';
 
-
 const useStylesArrows = makeStyles((theme) => ({
   root: {
     fill: theme.palette.text.secondary,
@@ -40,6 +39,7 @@ const DateRangePicker = ({ handleDatesUpdate, handleRangeUpdate }) => {
   const classesArrows = useStylesArrows();
   const classesGridItem = useStylesGridItem();
   const classesSwitch = useStylesSwitch();
+  const { isMedium } = useMedium();
   const [viewRange, setViewRange] = useState(dateViews.M);
   const [viewDates, setViewDates] = useState({
     startDate: moment().startOf(dateViews.M),
@@ -85,7 +85,7 @@ const DateRangePicker = ({ handleDatesUpdate, handleRangeUpdate }) => {
   };
 
   return (
-    <div>
+    <Box width={isMedium ? '100%' : 'auto'}>
       <Box display="flex" justifyContent="center" alignItems="center" minHeight={65}>
         <ArrowBackIosIcon onClick={() => { handleArrowClick(-1); }} classes={classesArrows} />
         <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" mx={3} minWidth={240}>
@@ -93,7 +93,7 @@ const DateRangePicker = ({ handleDatesUpdate, handleRangeUpdate }) => {
         </Box>
         <ArrowForwardIosIcon onClick={() => { handleArrowClick(1); }} classes={classesArrows} />
       </Box>
-      <Box mt={2}>
+      <Box>
         <Grid container justify="center" alignItems="center" spacing={1}>
           <Grid item classes={classesGridItem}>Weekly</Grid>
           <Grid item classes={classesGridItem}>
@@ -102,7 +102,7 @@ const DateRangePicker = ({ handleDatesUpdate, handleRangeUpdate }) => {
           <Grid item classes={classesGridItem}>Monthly</Grid>
         </Grid>
       </Box>
-    </div>
+    </Box>
   );
 };
 
@@ -113,8 +113,8 @@ const DateLabel = ({ viewDates, viewRange }) => {
   if (viewRange === dateViews.M) {
     return (
       <>
-        <Typography variant="h6">{`${viewDates.month} ${viewDates.year}`}</Typography>
-        <Typography variant="subtitle2" color="textSecondary">{`${viewDates.startDate.format('ddd DD')} - ${viewDates.endDate.format('ddd DD')}`}</Typography>
+        <Typography variant="subtitle1">{`${viewDates.month} ${viewDates.year}`}</Typography>
+        <Typography variant="caption" color="textSecondary">{`${viewDates.startDate.format('ddd DD')} - ${viewDates.endDate.format('ddd DD')}`}</Typography>
       </>
     );
   }

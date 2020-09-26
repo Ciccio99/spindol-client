@@ -35,7 +35,7 @@ const NavItem = ({to, label, icon}) => {
   const Icon = icon;
   return (
       <NavLink to={to} className={styles.navLink} activeClassName={styles.navLinkActive}>
-      <Box p={2} display="flex" justifyContent="center" alignItems="center">
+      <Box p={2} pb={1} display="flex" justifyContent="center" alignItems="center">
         { icon && <Icon style={{ paddingRight: '8px' }}/>}
         <Typography variant="subtitle1" noWrap>{label}</Typography>
       </Box>

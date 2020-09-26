@@ -15,14 +15,12 @@ import BedtimeHabitPanel from 'components/habits/BedtimeHabitPanel';
 import WaketimeHabitPanel from 'components/habits/WaketimeHabitPanel';
 import HabitHeatMap from 'components/chart/HabitHeatMap';
 import dateViews from 'constants/dateViews';
-import useMobile from 'hooks/useMobile';
 import styles from './HabitModule.module.css';
 
 const TITLE = 'Sleep Habit Tracker  ';
 const SUBTITLE = 'Measure how often you achieve your bedtime & waketime habits.';
 
 const HabitModule = () => {
-  const { isMobile } = useMobile();
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');

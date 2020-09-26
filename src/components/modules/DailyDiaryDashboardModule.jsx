@@ -41,8 +41,8 @@ const DailyDiaryDashboardModule = ({ date, enableStreak, tagsDate }) => {
 
   useEffect(() => {
     if (tagsData?.diaryTags?.length) {
-        dispatchSessionProgress({ type: 'TAGS_COMPLETE'});
-      }
+      dispatchSessionProgress({ type: 'TAGS_COMPLETE'});
+    }
   }, [tagsData, dispatchSessionProgress]);
 
   const handleMoodUpdate = React.useCallback(async (dto) => {

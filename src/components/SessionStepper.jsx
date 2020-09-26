@@ -134,14 +134,15 @@ const SessionStepper = () => {
   const [completed, setCompleted] = useState(new Set());
   const [confettiTime, setConfettiTime] = useState(false);
 
-  const completeSession = async (state) => {
+  const completeSession = React.useCallback(async (state) => {
     if (state.completed || !state.signIn || !state.mood || !state.tags) {
       return;
     }
 
     try {
+      dispatchProgressSession({ type: 'SESSION_COMPLETE' });
+      
       const dto = {};
-
       if (!state.stats.currentStreak) {
         dto.currentStreak = 1;
       } else if (moment().diff(moment(moment.utc(state.stats.lastUpdate).format('YYYY-MM-DD')), 'day') === 1) {
@@ -149,7 +150,6 @@ const SessionStepper = () => {
       } else {
         dto.currentStreak = 1;
       }
-
       if (state.stats.highScore) {
         if (dto.currentStreak > state.stats.highScore) {
           dto.highScore = dto.currentStreak;
@@ -163,8 +163,8 @@ const SessionStepper = () => {
       dto.lastUpdate = moment().format('YYYY-MM-DD');
 
       const updatedStats = await UserServices.updateUserSessionProgress(dto);
+
       dispatchProgressSession({ type: 'UPDATE_STATS', value: updatedStats });
-      dispatchProgressSession({ type: 'SESSION_COMPLETE' });
       setTimeout(() => { setConfettiTime(true); }, 500);
       Event('Daily Check-In', 'Check-In Complete');
       // TODO: Update user with new stats
@@ -174,7 +174,7 @@ const SessionStepper = () => {
         message: error.message,
       });
     }
-  };
+  }, [dispatchProgressSession, setConfettiTime, dispatchAlert]);
 
   useEffect(() => {
     if (sessionProgressState.completed) {
@@ -195,7 +195,7 @@ const SessionStepper = () => {
     (async () => {
       await completeSession(sessionProgressState);
     })();
-  }, [sessionProgressState.mood, sessionProgressState.signIn, sessionProgressState.tags, sessionProgressState.completed, completeSession]);
+  }, [sessionProgressState, completeSession]);
 
 
   const isStepComplete = (step) => completed.has(step);

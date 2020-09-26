@@ -357,7 +357,7 @@ const getTagSleepTableData = async (startDate, endDate, tag) => {
       throw new Error(`No sleep data available for your ${tag.tag} tag!`);
     }
     if (!data.baselineSleepData?.length) {
-      throw new Error(`No baseline sleep data available for your ${tag.tag} tag - you\'ve performed ${tag.tag} every day throughout this date range.`);
+      throw new Error(`No baseline sleep data available for your ${tag.tag} tag - you've performed ${tag.tag} every day throughout this date range.`);
     }
 
     const comparisonData = toComparisonFormat(data.tagSleepData, data.baselineSleepData);
