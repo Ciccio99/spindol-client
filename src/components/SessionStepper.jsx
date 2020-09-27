@@ -212,7 +212,7 @@ const SessionStepper = () => {
             sessionProgressState.completed
             && (
               <Grid item xs={12} className={animClasses.anim}>
-                <Box pl={4}>
+                <Box px={4}>
                   <Typography variant="subtitle1">Great Job Today</Typography>
                   <Typography variant="caption">Check in tomorrow to keep up your streak!</Typography>
                   <Box mt={1}>

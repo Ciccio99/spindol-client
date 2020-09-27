@@ -68,7 +68,6 @@ const MoodSubModule = ({ date, mood, handleUpdate, enableStreak }) => {
       <Grid container justify="space-between" alignItems="center" spacing={4}>
         <Grid item>
           {getDateSubtitle(date)}
-          {/* <Typography variant="subtitle2"><strong>How did your sleep make you feel this morning?</strong></Typography> */}
         </Grid>
         <ToggleButtonGroup item container xs={12} sm={12} spacing={1} alignItems="center" justify="space-between" onChange={handleMoodUpdate} value={mood || null}>
           <ToggleButton value="excellent" xs={6} sm={2}>Excellent</ToggleButton>

@@ -7,11 +7,36 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
-import colors from 'constants/colors';
+import COLORS from 'constants/colors';
 import useMobile from 'hooks/useMobile';
 
+const PercentLabel = ({ value }) => {
+  if (value < 1 && value > -1) {
+    return (
+      <Typography
+        variant="subtitle2"
+        noWrap
+        display="inline"
+        style={{ color: COLORS.GRAY }}
+      >
+        {` (${value}%)`}
+      </Typography>
+    );
+  }
+  return (
+    <Typography
+      variant="subtitle2"
+      noWrap
+      display="inline"
+      style={{ color: value >= 0 ? COLORS.GREEN : COLORS.RED }}
+    >
+      {` (${value}%)`}
+    </Typography>
+  );
+};
+
 const ComparisonTable = ({
-  keys, newStats, baselineStats, newLabel, baselineLabel,
+  keys, stats1, stats2, stats1Label, stats1CountLabel, stats2Label, stats2CountLabel,
 }) => {
   const { isMobile } = useMobile();
 
@@ -19,39 +44,38 @@ const ComparisonTable = ({
     <Table style={{ tableLayout: 'fixed' }}>
       <TableHead>
         <TableRow>
-          <TableCell variant="body" padding="checkbox" align="left">{newLabel || 'New Data'}</TableCell>
+          <TableCell variant="body" padding="checkbox" align="left">
+            <Typography variant="subtitle1">{stats1Label || 'New Data'}</Typography>
+            <Typography variant="caption" noWrap>{stats1CountLabel}</Typography>
+          </TableCell>
           <TableCell variant="body" padding="checkbox" align="center" />
-          <TableCell variant="body" padding="checkbox" align="right">{baselineLabel || 'Baseline'}</TableCell>
+          <TableCell variant="body" padding="checkbox" align="right">
+            <Typography variant="subtitle1">{stats2Label || 'Baseline'}</Typography>
+            <Typography variant="caption" noWrap>{stats2CountLabel}</Typography>
+          </TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {keys.map((key) => (
           <TableRow key={key}>
             <TableCell align="left" variant="head" padding={isMobile ? 'none' : 'default'}>
-              <Typography color="primary" variant="subtitle1" display="inline" noWrap>
+              <Typography color="primary" variant="subtitle1" display={isMobile ? undefined : 'inline'} noWrap>
                 <strong>
-                  {`${newStats[key].stat}${newStats[key].units ? ` ${newStats[key].units}` : ''}`}
+                  {`${stats1[key].stat}${stats1[key].units ? ` ${stats1[key].units}` : ''}`}
                 </strong>
               </Typography>
               {
-                newStats[key].diffPercent
-                && (
-                <Typography
-                  variant="subtitle2"
-                  noWrap
-                  display="inline"
-                  style={{ color: newStats[key].diffPercent >= 0 ? colors.GREEN : colors.RED }}
-                >
-                  {` (${newStats[key].diffPercent}%)`}
-                </Typography>
-                )
+                stats1[key].diffPercent && <PercentLabel value={stats1[key].diffPercent} />
               }
             </TableCell>
-            <TableCell align="center"><Typography variant="caption">{baselineStats[key].description}</Typography></TableCell>
+            <TableCell align="center"><Typography variant="caption">{stats2[key].description}</Typography></TableCell>
             <TableCell align="right" variant="head" padding={isMobile ? 'none' : 'default'}>
-              <Typography color="primary" variant="subtitle1">
-                <strong>{`${baselineStats[key].stat}${baselineStats[key].units ? ` ${baselineStats[key].units}` : ''}`}</strong>
+              <Typography color="primary" variant="subtitle1" display={isMobile ? undefined : 'inline'} noWrap>
+                <strong>{`${stats2[key].stat}${stats2[key].units ? ` ${stats2[key].units}` : ''}`}</strong>
               </Typography>
+              {
+                stats2[key].diffPercent && <PercentLabel value={stats2[key].diffPercent} />
+              }
             </TableCell>
           </TableRow>
         ))}
