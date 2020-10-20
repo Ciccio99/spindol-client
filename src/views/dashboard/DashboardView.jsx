@@ -3,38 +3,21 @@ import {
   Container,
   Box,
   Grid,
-  Typography,
 } from '@material-ui/core';
 import moment from 'moment-timezone';
 import { Helmet } from 'react-helmet-async';
 import { useUserState } from 'context/userContext';
-import SleepTrialTrackersContext from 'context/sleepTrialTrackersContext';
-import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
-import SleepTrialTrackerPanel from 'components/sleepTrialTracker/SleepTrialTrackerPanel';
 import DailyDiaryDashboardModule from 'components/modules/DailyDiaryDashboardModule';
 import SleepComparisonModule from 'components/modules/SleepComparisonModule';
-import HabitModule from 'components/modules/HabitModule';
 import Section from 'components/organizers/Section';
 import SessionStepper from 'components/SessionStepper';
 import ConnectDeviceCTA from 'components/cta/ConnectDevice';
 import useMedium from 'hooks/useMedium';
+import 'components/dashboard/WeekMoodModule';
+import WeekMoodModule from 'components/dashboard/WeekMoodModule';
 
 const DashboardView = () => {
   const user = useUserState();
-  const { isMedium } = useMedium();
-  const { sleepTrialTrackers, dispatchSleepTrialTrackers } = useContext(SleepTrialTrackersContext);
-  const userFirstName = user.name ? user.name.split(' ')[0] : '';
-
-  useEffect(() => {
-    (async () => {
-      const trialTrackersData = await SleepTrialTrackerServices.querySleepTrialTracker();
-
-      dispatchSleepTrialTrackers({
-        type: 'POPULATE',
-        sleepTrialTrackers: trialTrackersData,
-      });
-    })();
-  }, [dispatchSleepTrialTrackers, user]);
 
   return (
     <Box mb={4}>
@@ -46,11 +29,6 @@ const DashboardView = () => {
         />
       </Helmet>
       <Container>
-        {/* <Box mt={4}>
-          <Typography variant="h5">
-            {`Welcome${userFirstName ? ` ${userFirstName}` : ''}!`}
-          </Typography>
-        </Box> */}
         {
           !user.accounts.oura.connected
           && !user.accounts.withings.connected
@@ -61,13 +39,19 @@ const DashboardView = () => {
           </Section>
           )
         }
-        <Section>
+        {/* <Section>
           <SessionStepper />
-        </Section>
+        </Section> */}
         <Section>
           <DailyDiaryDashboardModule date={moment()} tagsDate={moment().subtract(1, 'day')} enableStreak />
         </Section>
         <Section>
+          <WeekMoodModule />
+        </Section>
+        <Section>
+          <SleepComparisonModule />
+        </Section>
+        {/* <Section>
           <Grid container>
             <Grid component={Grid} item xs={12} md={6}>
               <Box mr={isMedium ? 0 : 4} height={isMedium ? 'auto' : '100%'}>
@@ -80,10 +64,7 @@ const DashboardView = () => {
               </Box>
             </Grid>
           </Grid>
-        </Section>
-        <Section>
-          <SleepTrialTrackerPanel trialTrackers={sleepTrialTrackers} />
-        </Section>
+        </Section> */}
       </Container>
     </Box>
   );

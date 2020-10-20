@@ -17,7 +17,6 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Helmet } from 'react-helmet-async';
 import UserServices from 'services/UserServices';
-import ReactGA from 'react-ga';
 import { useUserDispatch } from 'context/userContext';
 import { setUserId, Event } from 'utils/Tracking';
 import {

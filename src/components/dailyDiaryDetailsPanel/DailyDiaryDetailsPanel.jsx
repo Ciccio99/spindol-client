@@ -7,7 +7,6 @@ import DailyDiaryServices from 'services/DailyDiaryServices';
 import Section from 'components/organizers/Section';
 import SleepComparisonModule from 'components/modules/SleepComparisonModule';
 import DailyDiaryDashboardModule from 'components/modules/DailyDiaryDashboardModule';
-import CurrentTrialsModule from 'components/modules/CurrentTrialsModule';
 
 const DailyDiaryDetailsPanel = ({ selectedDate }) => {
   const dispatchAlertSystem = useAlertSystemDispatch();
@@ -52,9 +51,6 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
           <DailyDiaryDashboardModule date={selectedDate} />
         </Section>
         <Section>
-          <CurrentTrialsModule date={selectedDate} />
-        </Section>
-        <Section>
           <SleepComparisonModule date={selectedDate} />
         </Section>
       </>
@@ -65,9 +61,6 @@ const DailyDiaryDetailsPanel = ({ selectedDate }) => {
     <>
       <Section>
         <DailyDiaryDashboardModule date={selectedDate} />
-      </Section>
-      <Section>
-        <CurrentTrialsModule date={selectedDate} />
       </Section>
       <Section>
         <SleepComparisonModule date={selectedDate} />

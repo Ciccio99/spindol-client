@@ -11,6 +11,7 @@ import EditTagsModal from 'components/modals/EditTagsModal';
 import { DisplaySleepChip, DisplayActivityChip } from 'components/common/TagChips';
 import useMobile from 'hooks/useMobile';
 import { Event } from 'utils/Tracking';
+import HypnosButton from 'components/common/Button';
 
 const getDateSubtitle = (date, enableVariedDateText = false) => {
   const givenDate = moment(moment.utc(date).format('YYYY-MM-DD'));
@@ -91,14 +92,14 @@ const DayTagsSubModule = ({
             )
             : (
               <Box>
-                <Button
+                <HypnosButton
                   variant="contained"
                   color="secondary"
                   startIcon={<EditTwoToneIcon />}
                   onClick={() => { setIsModalOpen(true); }}
                 >
                   <Typography variant="caption">Add Tags</Typography>
-                </Button>
+                </HypnosButton>
               </Box>
             )
         }

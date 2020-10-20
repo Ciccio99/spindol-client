@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   Box,
   Grid,
   Typography,
 } from '@material-ui/core';
 import moment from 'moment-timezone';
-import DailyDiaryServices from 'services/DailyDiaryServices';
 import ToggleButtonGroup from 'components/buttons/toggleButton/ToggleButtonGroup';
 import ToggleButton from 'components/buttons/toggleButton/ToggleButton';
 import { Event } from 'utils/Tracking';
-import { StreakBox } from 'components/Streaks';
 
 const getDateSubtitle = (date = moment()) => {
   const givenDate = moment.utc(date);
@@ -45,23 +43,12 @@ const getDateSubtitle = (date = moment()) => {
   );
 };
 
-const MoodSubModule = ({ date, mood, handleUpdate, enableStreak }) => {
-  const [streak, setStreak] = useState(0);
+const MoodSubModule = ({ date, mood, handleUpdate }) => {
   const handleMoodUpdate = React.useCallback((selectedMood) => {
     Event('Daily Diary', 'Edited Mood', selectedMood);
     const dto = { mood: selectedMood };
     handleUpdate(dto);
   }, [handleUpdate]);
-
-  useEffect(() => {
-    if (!enableStreak) {
-      return;
-    }
-    (async () => {
-      const data = await DailyDiaryServices.getReportingStreak();
-      setStreak(data);
-    })();
-  }, [enableStreak, mood]);
 
   return (
     <Box>

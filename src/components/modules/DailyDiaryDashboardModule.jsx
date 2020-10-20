@@ -11,7 +11,7 @@ import DailyDiaryServices from 'services/DailyDiaryServices';
 import PanelModule from 'components/organizers/PanelModule';
 import MoodSubModule from 'components/subModules/MoodSubModule';
 import DayTagsSubModule from 'components/subModules/DayTagsSubModule';
-import { useSessionProgressState, useSessionProgressDispatch, updateSessionProgress } from 'context/sessionProgressContext';
+import { useSessionProgressDispatch } from 'context/sessionProgressContext';
 
 const PanelWrapper = ({ date, children }) => (
   <PanelModule
@@ -25,7 +25,6 @@ const PanelWrapper = ({ date, children }) => (
 const DailyDiaryDashboardModule = ({ date, enableStreak, tagsDate }) => {
   const dispatchAlertSystem = useAlertSystemDispatch();
   const dispatchSessionProgress = useSessionProgressDispatch();
-  const sessionProgressState = useSessionProgressState();
   const { data, error, isPending } = useAsync(DailyDiaryServices.getDashboardData, { date });
   const {
     data: tagsData, error: tagsError, isPending: tagsIsPending, setData: setTagsData,
@@ -38,16 +37,13 @@ const DailyDiaryDashboardModule = ({ date, enableStreak, tagsDate }) => {
     if (dailyDiary?.mood) {
       dispatchSessionProgress({ type: 'MOOD_COMPLETE'});
     }
-  }, [dailyDiary]);
+  }, [dailyDiary, dispatchSessionProgress]);
 
   useEffect(() => {
-    (async () => {
-      if (tagsData?.diaryTags?.length) {
-        dispatchSessionProgress({ type: 'TAGS_COMPLETE'});
-      }
-    })();
-
-  }, [tagsData]);
+    if (tagsData?.diaryTags?.length) {
+      dispatchSessionProgress({ type: 'TAGS_COMPLETE'});
+    }
+  }, [tagsData, dispatchSessionProgress]);
 
   const handleMoodUpdate = React.useCallback(async (dto) => {
     const oldData = dailyDiary;
@@ -129,7 +125,7 @@ const DailyDiaryDashboardModule = ({ date, enableStreak, tagsDate }) => {
     );
   }
 
-  return null;
+  return <PanelWrapper date={date} />
 };
 
 DailyDiaryDashboardModule.defaultProps = {
