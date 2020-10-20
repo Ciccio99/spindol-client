@@ -141,7 +141,7 @@ const SessionStepper = () => {
 
     try {
       dispatchProgressSession({ type: 'SESSION_COMPLETE' });
-      
+
       const dto = {};
       if (!state.stats.currentStreak) {
         dto.currentStreak = 1;
@@ -165,9 +165,9 @@ const SessionStepper = () => {
       const updatedStats = await UserServices.updateUserSessionProgress(dto);
 
       dispatchProgressSession({ type: 'UPDATE_STATS', value: updatedStats });
-      setTimeout(() => { setConfettiTime(true); }, 500);
+      setTimeout(() => { setConfettiTime(true); }, 250);
       Event('Daily Check-In', 'Check-In Complete');
-      // TODO: Update user with new stats
+      // TODO: Update local user with new stats
     } catch (error) {
       dispatchAlert({
         type: 'WARNING',

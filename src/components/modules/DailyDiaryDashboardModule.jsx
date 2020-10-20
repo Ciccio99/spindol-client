@@ -125,7 +125,7 @@ const DailyDiaryDashboardModule = ({ date, enableStreak, tagsDate }) => {
     );
   }
 
-  return null;
+  return <PanelWrapper date={date} />
 };
 
 DailyDiaryDashboardModule.defaultProps = {

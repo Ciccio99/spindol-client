@@ -10,11 +10,18 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import clsx from 'clsx';
 import styles from './Organizers.module.css';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
+  anim: {
+    animation: `$appear 0.4s ${theme.transitions.easing.easeInOut}`,
+  },
   elevation24: {
     boxShadow: 'rgba(230, 126, 86, 0.75) 0px 2px 24px 5px',
   },
-});
+  '@keyframes appear': {
+    '0%': { opacity: 0 },
+    '100%': { opacity: 1 },
+  },
+}));
 
 const PanelModule = ({
   children, title, subtitle, tooltip, enableCTA,
@@ -25,11 +32,11 @@ const PanelModule = ({
     <Paper
       elevation={24}
       style={{ minHeight: '100%' }}
-      className={clsx({ [classes.elevation24]: enableCTA })}
+      className={clsx(classes.anim, { [classes.elevation24]: enableCTA })}
     >
       <Box px={4} pt={3} pb={1} display="flex" justifyContent="space-between">
         <Box maxWidth={tooltip ? '80%' : '100%'}>
-          <Typography variant="h6">{title}</Typography>
+          <Typography variant="subtitle1" style={{ fontWeight: 600 }}>{title}</Typography>
           { subtitle && <Typography variant="subtitle2" color="textSecondary">{subtitle}</Typography>}
         </Box>
         {
@@ -46,7 +53,7 @@ const PanelModule = ({
 
       </Box>
       {/* <Divider /> */}
-      <Box p={4} pt={1}>
+      <Box p={4} pt={4}>
         {children}
       </Box>
     </Paper>

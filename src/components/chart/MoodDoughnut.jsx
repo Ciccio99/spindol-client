@@ -28,6 +28,10 @@ const MoodDoughnut = ({ dailyDiaries }) => {
       moodCount[dd.mood] += 1;
     });
 
+    if (chart) {
+      chart.destroy();
+    }
+
     const newChart = new Chart(chartRef.current, {
       type: 'doughnut',
       data: {
@@ -48,11 +52,14 @@ const MoodDoughnut = ({ dailyDiaries }) => {
         aspectRatio: 1.25,
         maintainAspectRatio: false,
         rotation: Math.PI,
+        legend: {
+          display: false,
+        },
         plugins: {
           datalabels: {
             color: '#FFFFFF',
             font: {
-              size: 14,
+              size: 24,
               weight: 600,
             },
             display(context) {

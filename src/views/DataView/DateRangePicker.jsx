@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Switch,
   Box,
-  Grid,
   Typography,
+  Radio,
+  FormControlLabel,
+  FormControl,
+  RadioGroup,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
+import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import moment from 'moment-timezone';
 import dateViews from 'constants/dateViews';
 import useMedium from 'hooks/useMedium';
@@ -19,27 +21,10 @@ const useStylesArrows = makeStyles((theme) => ({
   },
 }));
 
-const useStylesGridItem = makeStyles(() => ({
-  item: {
-    minWidth: '72px',
-    textAlign: 'center',
-  },
-}));
-
-const useStylesSwitch = makeStyles((theme) => ({
-  switchBase: {
-    color: theme.palette.primary.main,
-  },
-  track: {
-    backgroundColor: theme.palette.primary.main,
-  },
-}));
-
 const DateRangePicker = ({ handleDatesUpdate, handleRangeUpdate }) => {
   const classesArrows = useStylesArrows();
-  const classesGridItem = useStylesGridItem();
-  const classesSwitch = useStylesSwitch();
   const { isMedium } = useMedium();
+  const labelPlacement = 'end';
   const [viewRange, setViewRange] = useState(dateViews.M);
   const [viewDates, setViewDates] = useState({
     startDate: moment().startOf(dateViews.M),
@@ -69,12 +54,12 @@ const DateRangePicker = ({ handleDatesUpdate, handleRangeUpdate }) => {
     });
   };
 
-  const handleViewToggle = (event) => {
-    const newDateView = event.target.checked ? dateViews.M : dateViews.W;
+  const handleRangeChange = (event) => {
+    const newDateView = event.target.value;
     setViewRange(newDateView);
-    setViewDates((prevState) => {
-      const startDate = moment(prevState.startDate).startOf(newDateView);
-      const endDate = moment(startDate).endOf(newDateView);
+    setViewDates(() => {
+      const startDate = moment().startOf(newDateView);
+      const endDate = moment().endOf(newDateView);
       return {
         startDate,
         endDate,
@@ -87,20 +72,20 @@ const DateRangePicker = ({ handleDatesUpdate, handleRangeUpdate }) => {
   return (
     <Box width={isMedium ? '100%' : 'auto'}>
       <Box display="flex" justifyContent="center" alignItems="center" minHeight={65}>
-        <ArrowBackIosIcon onClick={() => { handleArrowClick(-1); }} classes={classesArrows} />
-        <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" mx={3} minWidth={240}>
+        <ArrowBackIosOutlinedIcon onClick={() => { handleArrowClick(-1); }} classes={classesArrows} />
+        <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" mx={1} minWidth={240}>
           <DateLabel viewDates={viewDates} viewRange={viewRange} />
         </Box>
-        <ArrowForwardIosIcon onClick={() => { handleArrowClick(1); }} classes={classesArrows} />
+        <ArrowForwardIosOutlinedIcon onClick={() => { handleArrowClick(1); }} classes={classesArrows} />
       </Box>
-      <Box>
-        <Grid container justify="center" alignItems="center" spacing={1}>
-          <Grid item classes={classesGridItem}>Weekly</Grid>
-          <Grid item classes={classesGridItem}>
-            <Switch checked={viewRange === dateViews.M} onChange={handleViewToggle} name="dateViewRange" disableRipple classes={classesSwitch} />
-          </Grid>
-          <Grid item classes={classesGridItem}>Monthly</Grid>
-        </Grid>
+      <Box display="flex" justifyContent="center">
+        <FormControl component="fieldset">
+          <RadioGroup row value={viewRange} onChange={handleRangeChange}>
+            <FormControlLabel value={dateViews.W} control={<Radio />} label="Week" labelPlacement={labelPlacement} />
+            <FormControlLabel value={dateViews.M} control={<Radio />} label="Month" labelPlacement={labelPlacement} />
+            <FormControlLabel value={dateViews.Y} control={<Radio />} label="Year" labelPlacement={labelPlacement} />
+          </RadioGroup>
+        </FormControl>
       </Box>
     </Box>
   );
@@ -108,22 +93,29 @@ const DateRangePicker = ({ handleDatesUpdate, handleRangeUpdate }) => {
 
 
 const DateLabel = ({ viewDates, viewRange }) => {
-  const { isMedium } = useMedium();
-
-  if (viewRange === dateViews.M) {
-    return (
-      <>
-        <Typography variant="subtitle1">{`${viewDates.month} ${viewDates.year}`}</Typography>
-        <Typography variant="caption" color="textSecondary">{`${viewDates.startDate.format('ddd DD')} - ${viewDates.endDate.format('ddd DD')}`}</Typography>
-      </>
-    );
+  switch (viewRange) {
+    case dateViews.W:
+      return (
+        <>
+          <Typography variant="subtitle1">{`${viewDates.startDate.format('MMM DD')} - ${viewDates.endDate.format('MMM DD')}`}</Typography>
+          <Typography variant="caption">{viewDates.year}</Typography>
+        </>
+      );
+    case dateViews.Y:
+      return (
+        <>
+          <Typography variant="subtitle1">{viewDates.year}</Typography>
+          <Typography variant="caption" color="textSecondary">{`${viewDates.startDate.format('MMM')} - ${viewDates.endDate.format('MMM')}`}</Typography>
+        </>
+      );
+    default:
+      return (
+        <>
+          <Typography variant="subtitle1">{`${viewDates.month} ${viewDates.year}`}</Typography>
+          <Typography variant="caption" color="textSecondary">{`${viewDates.startDate.format('ddd DD')} - ${viewDates.endDate.format('ddd DD')}`}</Typography>
+        </>
+      );
   }
-
-  return (
-    <>
-      <Typography variant={isMedium ? 'subtitle2' : 'h6'}>{`${viewDates.startDate.format('MMM DD, YYYY')} - ${viewDates.endDate.format('MMM DD, YYYY')}`}</Typography>
-    </>
-  );
 };
 
 export default DateRangePicker;

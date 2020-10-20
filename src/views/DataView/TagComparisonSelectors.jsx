@@ -9,7 +9,6 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useAsync } from 'react-async';
-
 import useMobile from 'hooks/useMobile';
 import SelectInput from 'components/SelectInput';
 import { Event } from 'utils/Tracking';
@@ -17,7 +16,6 @@ import { getAllUserTags } from 'services/TagsServices';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    // margin: theme.spacing(1),
     minWidth: 200,
   },
   select1: {
@@ -93,36 +91,29 @@ const TagComparisonSelectors = ({ handleTag1Change, handleTag2Change }) => {
             </SelectInput>
           </FormControl>
         </Grid>
-        {
-          selectedTag1
-          && (
-          <>
-            <Grid item xs={12} sm="auto">
-              <Typography variant="subtitle2" color="textSecondary" align="center">v.s.</Typography>
-            </Grid>
-            <Grid item xs={12} sm="auto">
-              <FormControl variant="outlined" fullWidth color="secondary" className={classes.formControl} size="small">
-                <InputLabel htmlFor="tagSelect">{label}</InputLabel>
-                <SelectInput
-                  labelId="tagSelect"
-                  value={selectedTag2}
-                  label={label}
-                  onChange={handleChange2}
-                  fullWidth
-                  className={classes.select2}
-                >
-                  <MenuItem value="">Baseline</MenuItem>
-                  {
-                    data
-                      ? data.map((tag) => (<MenuItem key={tag._id} value={tag}>{tag.tag}</MenuItem>))
-                      : []
-                  }
-                </SelectInput>
-              </FormControl>
-            </Grid>
-          </>
-          )
-        }
+        <Grid item xs={12} sm="auto">
+          <Typography variant="subtitle2" color="textSecondary" align="center">v.s.</Typography>
+        </Grid>
+        <Grid item xs={12} sm="auto">
+          <FormControl disabled={!selectedTag1} variant="outlined" fullWidth color="secondary" className={classes.formControl} size="small">
+            <InputLabel htmlFor="tagSelect">{label}</InputLabel>
+            <SelectInput
+              labelId="tagSelect"
+              value={selectedTag2}
+              label={label}
+              onChange={handleChange2}
+              fullWidth
+              className={classes.select2}
+            >
+              <MenuItem value="">Baseline</MenuItem>
+              {
+                data
+                  ? data.map((tag) => (<MenuItem key={tag._id} value={tag}>{tag.tag}</MenuItem>))
+                  : []
+              }
+            </SelectInput>
+          </FormControl>
+        </Grid>
         <Grid item xs={12}>
           { error && <Typography variant="caption" color="error">Something went wrong, your activity tags could not be loaded.</Typography>}
         </Grid>

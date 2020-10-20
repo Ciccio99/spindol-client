@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import {
-  Box,
   Typography,
   LinearProgress,
 } from '@material-ui/core';
@@ -52,7 +51,8 @@ const TagSleepTable = ({
   if (data) {
     return (
       <>
-        {isPending && <Box mb={4}><LinearProgress color="primary" /></Box>}
+        {isPending && <div style={{ height: '4px' }}><LinearProgress color="secondary" /></div>}
+        {!isPending && <div style={{ height: '4px' }} />}
         <ComparisonTable
           keys={data.keys}
           stats1={data.newStats}

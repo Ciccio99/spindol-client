@@ -19,6 +19,40 @@ const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   }
 };
 
+export const getSleepByDateRange = async (startDate, endDate) => {
+  const queryString = JSON.stringify({
+    match: {
+      date: { $gte: startDate, $lte: endDate },
+    }, sort: {date: 1}, limit: 0, skip: 0,
+  });
+
+  try {
+    const { data } = await axios.get('/sleepSummary',
+      {
+        params: { query: queryString },
+      });
+    return data;
+  } catch (error) {
+    throw new ErrorHandler(error);
+  }
+}
+
+export const getAllSleep = async () => {
+  const queryString = JSON.stringify({
+    match: {}, sort: {date: 1}, limit: 0, skip: 0,
+  });
+
+  try {
+    const { data } = await axios.get('/sleepSummary',
+      {
+        params: { query: queryString },
+      });
+    return data;
+  } catch (error) {
+    throw new ErrorHandler(error);
+  }
+}
+
 const getSleepTeamMember = async (id, dateStart, dateEnd) => {
   try {
     const { data } = await axios.get('/sleepSummary/teams', {
@@ -108,7 +142,7 @@ const getToday = async () => {
   return sleepSummaries[0];
 };
 
-const getSleepHoursDuration = (sleepSummary) => {
+export const getSleepHoursDuration = (sleepSummary) => {
   const startDate = new Date(sleepSummary.startDateTime);
   const endDate = new Date(sleepSummary.endDateTime);
   const diffTime = Math.abs(endDate - startDate);
@@ -381,4 +415,5 @@ export default {
   getFatigueScore,
   getSleepTeamMember,
   getTagSleepTableData,
+  getSleepByDateRange,
 };

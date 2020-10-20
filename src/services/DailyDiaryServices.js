@@ -6,7 +6,6 @@ const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   const queryString = JSON.stringify({
     match, sort, limit, skip,
   });
-
   try {
     const { data } = await axios.get('/dailyDiary',
       { params: { query: queryString } });
@@ -14,6 +13,34 @@ const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   } catch (error) {
     console.log(error);
     return [];
+  }
+};
+
+export const getDiariesByDateRange = async (startDate, endDate) => {
+  try {
+    const queryString = JSON.stringify({
+      match: {
+        date: { $gte: startDate, $lte: endDate },
+      }, sort: {date: 1}, limit: 0, skip: 0,
+    });
+    const { data } = await axios.get('/dailyDiary',
+      { params: { query: queryString } });
+    return data;
+  } catch (e) {
+    throw new ErrorHandler(e);
+  }
+};
+
+export const getAllDiaries = async () => {
+  try {
+    const queryString = JSON.stringify({
+      match: {}, sort: {date: 1}, limit: 0, skip: 0,
+    });
+    const { data } = await axios.get('/dailyDiary',
+      { params: { query: queryString } });
+    return data;
+  } catch (e) {
+    throw new ErrorHandler(e);
   }
 };
 
@@ -164,4 +191,5 @@ export default {
   getReportingStreak,
   getDashboardData,
   getTagsHeatMapData,
+  getDiariesByDateRange,
 };
