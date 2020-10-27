@@ -6,34 +6,51 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import useMobile from 'hooks/useMobile';
 import COLORS from 'constants/colors';
 
-const useStyles = makeStyles(() => ({
+
+const useStyles = makeStyles((theme) => ({
   grayText: { color: COLORS.GRAY },
   redText: { color: COLORS.RED },
   greenText: { color: COLORS.GREEN },
+  textCaps: {
+    textTransform: 'uppercase',
+  },
+  card: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    minHeight: '140px',
+  },
+  cardMobile: {
+    minHeight: '120px',
+  },
+  bottomContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
 }));
 
 const SleepCard = ({
   stat, compareStat, units, description, diff, diffUnit,
 }) => {
+  const { isMobile } = useMobile();
   const classes = useStyles();
 
   return (
     <Paper elevation={24}>
-      <Box p={2} minHeight="200px" display="flex" flexDirection="column" justifyContent="space-between">
-        <Typography variant="caption">{description}</Typography>
-        <Box>
-          <div>
-            <Typography variant="h4" display="inline">{stat}</Typography>
-            <Typography variant="h6" color="textSecondary" display="inline">{` ${units}`}</Typography>
-          </div>
-          <Box display="flex" justifyContent="space-between">
-            <Typography variant="caption" color="textSecondary" display="inline">{`Avg: ${compareStat} ${units}`}</Typography>
-            <DiffLabel diff={diff} diffUnit={diffUnit} />
-          </Box>
-        </Box>
-      </Box>
+      <div className={clsx(classes.card, { [classes.cardMobile]: isMobile })}>
+        <div>
+          <Typography variant="body1" gutterBottom>{description}</Typography>
+          <Typography variant="h2">{`${stat} ${units || ''}`}</Typography>
+        </div>
+        <div className={clsx(classes.bottomContainer)}>
+          <Typography className={clsx(classes.textCaps)} variant="body1" color="textSecondary" display="inline">{`AVG: ${compareStat} ${units || ''}`}</Typography>
+          { diff ? <DiffLabel diff={diff} diffUnit={diffUnit} /> : null }
+        </div>
+      </div>
     </Paper>
   );
 };
@@ -46,16 +63,16 @@ const DiffLabel = ({ diff, diffUnit }) => {
 
   return (
     <Typography
-      variant="caption"
+      variant="body1"
       noWrap
       display="inline"
-      className={clsx({
-        [classes.grayText]: (diff > -1 && diff < 1),
-        [classes.greenText]: (diff >= 1),
-        [classes.redText]: (diff <= 1),
+      className={clsx(classes.textCaps, {
+        [classes.grayText]: (diff === 0),
+        [classes.greenText]: (diff > 0),
+        [classes.redText]: (diff < 0),
       })}
     >
-      {`${diff}% ${diffUnit}`}
+      {`${diff}${diffUnit.toLowerCase() === 'bpm' ? '%' : ''} ${diffUnit}`}
     </Typography>
   );
 };

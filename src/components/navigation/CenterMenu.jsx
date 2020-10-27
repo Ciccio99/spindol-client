@@ -16,7 +16,7 @@ import COLORS from 'constants/colors';
 
 const useStyles = makeStyles((theme) => ({
   navLink: {
-    color: COLORS.LIGHT_GRAY,
+    color: COLORS.GRAY,
     textDecoration: 'none',
     cursor: 'pointer',
   },
@@ -55,7 +55,7 @@ const NavItem = ({to, label, icon}) => {
   return (
     <NavLink to={to} className={clsx(classes.navLink)} activeClassName={clsx(classes.activeNavLink)}>
       <div className={clsx(classes.linkDiv)}>
-        <Typography variant="subtitle2" noWrap>{label}</Typography>
+        <Typography variant="body1" noWrap>{label}</Typography>
       </div>
     </NavLink>
   )

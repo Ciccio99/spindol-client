@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import logo from 'assets/sleepwell-logo-transpbg.png';
 import useMedium from 'hooks/useMedium';
 import DesktopMenu from 'components/navigation/DesktopMenu';
 import CenterMenu from 'components/navigation/CenterMenu';
@@ -68,9 +67,8 @@ const DesktopNavBar = ({ children }) => {
         <Grid item>
           <NavLink className={classes.logoNav} exact to="/">
             <Box display="flex" alignItems="center">
-              {/* <img src={logo} alt="SleepWell Logo" height="35px" /> */}
-              <Typography color="textPrimary" variant="h6" display="inline">Hypnos.ai</Typography>
-              <Chip label="beta" color="primary" variant="outlined" size="small" style={{ marginLeft: '0.5rem' }} />
+              <Typography color="textPrimary" variant="h2" display="inline">Hypnos.ai</Typography>
+              {/* <Chip label="beta" color="primary" variant="outlined" size="small" style={{ marginLeft: '0.5rem' }} /> */}
               <HeadwayWidget />
             </Box>
           </NavLink>
@@ -91,8 +89,7 @@ const MobileNavigation = () => (
           <Grid item>
             <NavLink className={styles.navLink} exact to="/">
               <Box display="flex" alignItems="center">
-                <img src={logo} alt="SleepWell Logo" height="30px" />
-                <Typography className={styles.logoName} color="textPrimary" variant="subtitle1" display="inline">Hypnos.ai</Typography>
+                <Typography className={styles.logoName} color="textPrimary" variant="h2" display="inline">Hypnos.ai</Typography>
                 <Chip label="beta" color="primary" variant="outlined" size="small" style={{ marginLeft: '0.5rem' }} />
                 <HeadwayWidget />
               </Box>

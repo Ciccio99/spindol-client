@@ -18,6 +18,7 @@ const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
 
 export const getDiariesByDateRange = async (startDate, endDate) => {
   try {
+    
     const queryString = JSON.stringify({
       match: {
         date: { $gte: startDate, $lte: endDate },

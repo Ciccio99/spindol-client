@@ -20,8 +20,12 @@ import Footer from './views/footer/Footer';
 import SleepTrialTrackersContext from './context/sleepTrialTrackersContext';
 import sleepTrialTrackersReducer from './reducers/sleepTrialTrackersReducer';
 import LoadingCard from './components/loadingCard/LoadingCard';
+import { useQueryCache } from 'react-query';
+
+
 
 function App() {
+  const queryCache = useQueryCache();
   const dispatchUser = useUserDispatch();
   const dispatchSessionProgress = useSessionProgressDispatch();
   const [sleepTrialTrackers, dispatchSleepTrialTrackers] = useReducer(
@@ -41,6 +45,7 @@ function App() {
           type: 'INIT',
           value: currentUser?.stats?.sessionStats || {},
         });
+        queryCache.setQueryData('sessionStats', currentUser?.stats?.sessionStats || {});
         if (currentUser.accounts.oura.connected) {
           await DeviceServices.syncDeviceData(devices.OURA);
         } else if (currentUser.accounts.withings.connected) {

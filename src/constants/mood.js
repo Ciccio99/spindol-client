@@ -7,6 +7,21 @@ import {
   EmptyFaceIcon,
 } from 'components/common/FaceIcons';
 
+import awesomeFace from 'assets/emoticons/awesome-face.svg';
+import goodFace from 'assets/emoticons/good-face.svg';
+import mehFace from 'assets/emoticons/meh-face.svg';
+import badFace from 'assets/emoticons/bad-face.svg';
+import awfulFace from 'assets/emoticons/awful-face.svg';
+import emptyFace from 'assets/emoticons/empty-face.svg';
+
+export const MOODS = {
+  EXCELLENT: 'excellent',
+  GOOD: 'good',
+  MEH: 'meh',
+  BAD: 'bad',
+  AWFUL: 'awful',
+};
+
 export const MOOD_VALUES = {
   excellent: 4,
   good: 3,
@@ -45,5 +60,22 @@ export const getMoodIcon = (mood) => {
       return AwfulFaceIcon;
     default:
       return EmptyFaceIcon;
+  }
+};
+
+export const getMoodSvg = (mood) => {
+  switch (mood) {
+    case 'excellent':
+      return awesomeFace;
+    case 'good':
+      return goodFace;
+    case 'meh':
+      return mehFace;
+    case 'bad':
+      return badFace;
+    case 'awful':
+      return awfulFace;
+    default:
+      return emptyFace;
   }
 };
