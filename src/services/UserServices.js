@@ -77,6 +77,15 @@ const tokenSignIn = async () => {
   }
 };
 
+export const getUserMe = async () => {
+  try {
+    const { data } = await axios.get('/users/me');
+    return data;
+  } catch (error) {
+    throw new ErrorHandler(error);
+  }
+}
+
 const logout = async () => {
   try {
     await axios.post(`/users/logout`);

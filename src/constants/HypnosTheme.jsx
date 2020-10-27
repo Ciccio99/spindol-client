@@ -7,9 +7,7 @@ import COLORS from 'constants/colors';
 const customTheme = {
   typography: {
     fontFamily: [
-      // "'Exo 2'",
       'Sora',
-      'Work Sans',
       '-apple-system',
       'BlinkMacSystemFont',
       'Segoe UI',
@@ -21,27 +19,43 @@ const customTheme = {
       'Droid Sans',
       'Helvetica Neue',
       'sans-serif',
+      'Antic Didone',
     ],
     fontStyle: 'normal',
     htmlFontSize: 16,
     fontSize: 16,
+    body1: {
+      fontWeight: 400,
+      fontSize: '0.875rem',
+    },
+    subtitle1: {
+      fontWeight: 400,
+      fontSize: '1rem',
+    },
     subtitle2: {
       fontWeight: 500,
-      fontSize: '0.8rem',
+      fontSize: '0.875rem',
+    },
+    h1: {
+      fontWeight: 400,
+      fontSize: '2rem',
     },
     h2: {
-      fontWeight: 600,
-      letterSpacing: '1.5px',
+      fontWeight: 400,
+      fontSize: '1.5rem',
     },
     h3: {
-      fontWeight: 700,
-      fontSize: '3rem',
-      letterSpacing: '1.5px',
+      fontWeight: 400,
+      fontSize: '2rem',
+      fontFamily: 'Antic Didone',
+    },
+    h4: {
+      fontWeight: 500,
+      fontSize: '0.75rem',
     },
     h5: {
       fontWeight: 700,
-      fontSize: 32,
-      letterSpacing: '1.5px',
+      fontSize: '1rem',
     },
     h6: {
       fontWeight: 400,
@@ -49,6 +63,8 @@ const customTheme = {
     },
     button: {
       fontWeight: 400,
+      fontSize: '0.875rem',
+      color: '#224887',
     },
   },
   palette: {
@@ -78,7 +94,7 @@ const customTheme = {
     },
   },
   shape: {
-    // borderRadius: 5,
+    borderRadius: 0,
     // borderRadiusSmall: 10,
   },
   overrides: {

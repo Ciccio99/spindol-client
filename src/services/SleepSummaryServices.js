@@ -68,7 +68,7 @@ const getSleepTeamMember = async (id, dateStart, dateEnd) => {
   }
 };
 
-const getDashboardComparisonData = async ({ searchDate }) => {
+export const getDashboardComparisonData = async ({ searchDate }) => {
   const todayDate = searchDate ? moment(searchDate) : moment();
 
   try {
@@ -77,7 +77,7 @@ const getDashboardComparisonData = async ({ searchDate }) => {
         date: { $lt: todayDate.format('YYYY-MM-DD') },
       },
       sort: { date: 'desc' },
-      limit: 7,
+      limit: 14,
       skip: 0,
     });
     const baselineReq = axios.get('/sleepSummary', {
@@ -118,9 +118,31 @@ const getDashboardComparisonData = async ({ searchDate }) => {
     } else if (baselineStats) {
       keys = keys.concat(Object.keys(baselineStats));
     }
+    const series = todaySleepSummaries.concat(baselineSleepSummaries);
+    // Calculate stats
+    const sleepStats = series.reduce((stats, sleepSummary, index) => {
+      const sleepDuration = getSleepHoursDuration(sleepSummary);
+      if (!sleepDuration) {
+        return stats;
+      }
+      if (index === 0) {
+        stats.min = sleepDuration;
+        stats.max = sleepDuration;
+        return stats;
+      }
+      if (sleepDuration < stats.min) {
+        stats.min = sleepDuration;
+      }
+      if (sleepDuration > stats.max) {
+        stats.max = sleepDuration
+      }
+      return stats;
+    }, { min: 0, max: 0 });
     const data = {
       baselineStats,
       todayStats,
+      series,
+      sleepStats,
       keys,
       lastSyncDate: moment.utc(todaySleepSummaries[0]?.date || baselineSleepSummaries[0]?.date).format('MMM DD, YYYY'),
     };
@@ -287,9 +309,11 @@ const getSleepSummaryAvgStats = (sleepSummaries, oldSleepSummaries = undefined) 
     const oldAvgHr = getAvgAvgHeartRate(oldSleepSummaries);
     // const oldAvgBedtimeMins = getAvgBedtime(oldSleepSummaries);
 
-    stats.sleepDuration.diffPercent = Math.round(((avgSleepDuration - oldSleepDuration) * 100) / oldSleepDuration).toFixed(0);
-    stats.remDuration.diffPercent = Math.round(((avgRemDuration - oldRemDuration) * 100) / oldRemDuration).toFixed(0);
-    stats.deepDuration.diffPercent = Math.round(((avgDeepDuration - oldDeepDuration) * 100) / oldDeepDuration).toFixed(0);
+    // stats.sleepDuration.diffPercent = Math.round(((avgSleepDuration - oldSleepDuration) * 100) / oldSleepDuration).toFixed(0);
+
+    stats.sleepDuration.diffPercent = (avgSleepDuration - oldSleepDuration).toFixed(1);
+    stats.remDuration.diffPercent = (avgRemDuration - oldRemDuration).toFixed(1);
+    stats.deepDuration.diffPercent = (avgDeepDuration - oldDeepDuration).toFixed(1);
     if (avgHr) {
       stats.avgHr.diffPercent = Math.round(((oldAvgHr - avgHr) * 100) / oldAvgHr).toFixed(0);
     }

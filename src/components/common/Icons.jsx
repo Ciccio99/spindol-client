@@ -2,6 +2,9 @@ import React from 'react';
 import {
   SvgIcon,
 } from '@material-ui/core';
+import flame from 'assets/flame.svg';
+
+const DEFAULT_SIZE = 50;
 
 export const MenuIcon = (props) => (
   <SvgIcon {...props}>
@@ -9,6 +12,6 @@ export const MenuIcon = (props) => (
   </SvgIcon>
 );
 
-export const TempIcon = (props) => (
-  <SvgIcon {...props}/>
+export const FlameIcon = ({ size }) => (
+  <img src={flame} width={size || DEFAULT_SIZE} height={size || DEFAULT_SIZE} alt="flame icon" />
 );

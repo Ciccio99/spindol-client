@@ -65,21 +65,25 @@ const FooterDesktop = () => {
   return (
     <footer className={clsx(classes.footer, { [classes.footerMedium]: (isMedium && user._id) })}>
       <div className={clsx(classes.footerInner)}>
-        <Grid container spacing={2} justify="space-between" alignItems="center">
-          <Grid item xs={12} md={4}>
+        <Box width="100%" display="flex" justifyContent="space-between" alignItems="center">
+          <div>
             <Typography variant="h6">Hypnos.ai</Typography>
-          </Grid>
-          <Grid item xs={12} md={4} container spacing={4} justify="center">
-            <Grid item xs={12} sm="auto"><FooterLink to="https://community.hypnos.ai" external>Community</FooterLink></Grid>
-            <Grid item xs={12} sm="auto"><FooterLink to="/terms-of-service">Terms of Service</FooterLink></Grid>
-            <Grid item xs={12} sm="auto"><FooterLink to="/privacy-policy">Privacy Policy</FooterLink></Grid>
-          </Grid>
-          <Grid item xs={12} md={4} container spacing={4} justify="flex-end">
-            <Grid item xs={12} sm="auto"><Copyright /></Grid>
-            <Grid item xs={12} sm="auto"><FooterLink to="https://twitter.com/hypnos_ai" external>Twitter</FooterLink></Grid>
-            <Grid item xs={12} sm="auto"><FooterLink to="https://www.facebook.com/hypnosai/" external>Facebook</FooterLink></Grid>
-          </Grid>
-        </Grid>
+          </div>
+          <div>
+            <Grid container spacing={4} justify="center">
+              <Grid item xs={12} sm="auto"><FooterLink to="https://community.hypnos.ai" external>Community</FooterLink></Grid>
+              <Grid item xs={12} sm="auto"><FooterLink to="/terms-of-service">Terms of Service</FooterLink></Grid>
+              <Grid item xs={12} sm="auto"><FooterLink to="/privacy-policy">Privacy Policy</FooterLink></Grid>
+            </Grid>
+          </div>
+          <div>
+            <Grid container spacing={4} justify="flex-end">
+              <Grid item xs={12} sm="auto"><Copyright /></Grid>
+              <Grid item xs={12} sm="auto"><FooterLink to="https://twitter.com/hypnos_ai" external>Twitter</FooterLink></Grid>
+              <Grid item xs={12} sm="auto"><FooterLink to="https://www.facebook.com/hypnosai/" external>Facebook</FooterLink></Grid>
+            </Grid>
+          </div>
+        </Box>
       </div>
     </footer>
   );
@@ -119,7 +123,7 @@ const FooterLink = ({
   if (external) {
     return (
       <a href={to} className={clsx(classes.navLink, { [classes.navLinkMobile]: isMobile })} target="_blank" rel="noopener noreferrer">
-        <Typography variant="subtitle2">
+        <Typography variant="body1">
           {children}
         </Typography>
       </a>
@@ -127,7 +131,7 @@ const FooterLink = ({
   }
   return (
     <NavLink to={to} className={clsx(classes.navLink, { [classes.navLinkMobile]: isMobile })}>
-      <Typography variant="subtitle2">
+      <Typography variant="body1">
         {children}
       </Typography>
     </NavLink>

@@ -5,7 +5,6 @@ import {
   Button,
   List,
   ListItem,
-  ListItemIcon,
   ListItemText,
   Divider,
   SwipeableDrawer,
@@ -13,30 +12,21 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import ForumIcon from '@material-ui/icons/Forum';
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import PersonIcon from '@material-ui/icons/Person';
 import { useUserState } from 'context/userContext';
 import LogoutWrapper from 'components/LogoutWrapper';
 import { MenuIcon } from 'components/common/Icons';
 import COLORS from 'constants/colors';
-import styles from './Navigation.module.css';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   buttonRoot: {
     '&:hover': {
       backgroundColor: 'inherit',
     },
   },
   navLink: {
-    color: COLORS.LIGHT_GRAY,
+    color: COLORS.GRAY,
     textDecoration: 'none',
     cursor: 'pointer',
-    '& span': {
-      // fontSize: theme.typography.subtitle2.fontSize,
-    },
   },
 }));
 
@@ -128,5 +118,6 @@ const NonAuthList = ({ onToggle }) => {
       </List>
     </Box>
   );
-  };
+};
+
 export default React.memo(DrawerMenu);

@@ -15,6 +15,8 @@ import ConnectDeviceCTA from 'components/cta/ConnectDevice';
 import useMedium from 'hooks/useMedium';
 import 'components/dashboard/WeekMoodModule';
 import WeekMoodModule from 'components/dashboard/WeekMoodModule';
+import StreakModule from 'components/dashboard/StreakModule';
+import SleepModule from 'components/dashboard/SleepModule';
 
 const DashboardView = () => {
   const user = useUserState();
@@ -42,15 +44,21 @@ const DashboardView = () => {
         {/* <Section>
           <SessionStepper />
         </Section> */}
-        <Section>
+        {/* <Section>
           <DailyDiaryDashboardModule date={moment()} tagsDate={moment().subtract(1, 'day')} enableStreak />
+        </Section> */}
+        <Section>
+          <Grid container justify="space-between" spacing={6}>
+            <Grid item xs={12} sm={7} md={8} lg={8}><WeekMoodModule /></Grid>
+            <Grid item xs={12} sm={5} md={4} lg={4}><StreakModule /></Grid>
+          </Grid>
         </Section>
         <Section>
-          <WeekMoodModule />
+          <SleepModule />
         </Section>
-        <Section>
+        {/* <Section>
           <SleepComparisonModule />
-        </Section>
+        </Section> */}
         {/* <Section>
           <Grid container>
             <Grid component={Grid} item xs={12} md={6}>
