@@ -9,6 +9,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import moment from 'moment-timezone';
+import useMobile from 'hooks/useMobile';
 import useSleepComparison from 'hooks/useSleepComparison';
 import useSleepMoodCorrelation from 'hooks/useSleepMoodCorrelation';
 import SleepCard from 'components/common/SleepCard';
@@ -17,7 +18,7 @@ import { MOODS, getMoodIcon } from 'constants/mood';
 
 const useStyles = makeStyles((theme) => ({
   totalSleepBg: {
-    background: props => `linear-gradient(90deg, ${COLORS.LIGHT_BLUE} ${props.percentage}%, rgba(0,0,0,0) ${100 - props.percentage}%)`,
+    background: props => `linear-gradient(90deg, ${COLORS.LIGHT_GREEN} ${props.percentage}%, rgba(0,0,0,0) ${100 - props.percentage}%)`,
   },
   avgText: {
     color: COLORS.DARK_BLUE,
@@ -72,7 +73,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SleepModule = () => {
-  const { isLoading, isError, data, error } = useSleepComparison(moment().subtract(1, 'day'));
+  const classes = useStyles();
+  const { isLoading, isError, data, error } = useSleepComparison();
 
   // TODO: Need a loading state?
 
@@ -80,7 +82,7 @@ const SleepModule = () => {
     return (
       <div>
         <Box mb={2}>
-          <Typography variant="subtitle1">Your sleep from last night</Typography>
+          <Typography variant="subtitle1">Your sleep from <span className={clsx(classes.textHighlight)}>last night</span></Typography>
         </Box>
         <SleepTotalCard
           total={data.todayStats.sleepDuration.stat}
@@ -119,6 +121,7 @@ const SleepTotalCard = ({ total, avg, delta, min, max }) => {
   const percentage = (total / max).toFixed(2) * 100;
   const classes = useStyles({ percentage });
   const { data } = useSleepMoodCorrelation();
+  const { isMobile } = useMobile();
 
   return (
     <Paper elevation={24} style={{ position: 'relative' }}>
@@ -142,7 +145,7 @@ const SleepTotalCard = ({ total, avg, delta, min, max }) => {
         <div>
           <Typography variant="h2">{`${total} hrs`}</Typography>
           <Typography className={clsx(classes.avgText)} variant="subtitle1" display="inline">{`AVG: ${avg} HRS`}</Typography>
-          <Typography className={clsx(classes.diffText)} variant="subtitle1" display="inline">{`${delta} HOURS`}</Typography>
+          <Typography className={clsx(classes.diffText)} variant="subtitle1" display={isMobile ? 'default' : 'inline'}>{`${delta} HOURS`}</Typography>
         </div>
       </Box>
     </Paper>
@@ -209,11 +212,5 @@ const MoodSvg = ({ mood, duration, count, xPercentage }) => {
   </>
   );
 };
-
-const Line = ({ height, ...props }) => (
-  <svg {...props} width="3" height={height || 50 } viewBox="0 0 3 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="0" y1="0" x2="0" y2="200" stroke="#FFFFFF" strokeWidth="5"/>
-  </svg>
-);
 
 export default SleepModule;
