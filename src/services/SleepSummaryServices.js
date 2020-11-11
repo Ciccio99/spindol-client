@@ -53,21 +53,6 @@ export const getAllSleep = async () => {
   }
 }
 
-const getSleepTeamMember = async (id, dateStart, dateEnd) => {
-  try {
-    const { data } = await axios.get('/sleepSummary/teams', {
-      params: {
-        owner: id,
-        rangeDateStart: dateStart,
-        rangeDateEnd: dateEnd,
-      }
-    });
-    return data;
-  } catch (error) {
-    throw new ErrorHandler(error);
-  }
-};
-
 export const getDashboardComparisonData = async ({ searchDate }) => {
   const todayDate = searchDate ? moment(searchDate) : moment();
 
@@ -437,7 +422,6 @@ export default {
   getSleepSummaryStats,
   getSleepHoursDuration,
   getFatigueScore,
-  getSleepTeamMember,
   getTagSleepTableData,
   getSleepByDateRange,
 };

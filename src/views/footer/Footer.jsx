@@ -2,14 +2,12 @@ import React from 'react';
 import {
   Typography,
   Box,
-  Container,
   Grid,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 import Copyright from 'components/copyright/Copyright';
-import logo from 'assets/hypnos-logo-text-xs.png';
 import useMedium from 'hooks/useMedium';
 import useMobile from 'hooks/useMobile';
 import { useUserState } from 'context/userContext';

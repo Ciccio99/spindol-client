@@ -5,8 +5,7 @@ import {
   Typography
 } from '@material-ui/core';
 import PanelModule from 'components/organizers/PanelModule';
-import { MOOD_VALUES, VALUES_MOOD, MOOD_COLOR, getMoodIcon } from 'constants/mood';
-import awesomeFace from 'assets/emoticons/awesome-face.svg';
+import { MOOD_VALUES, VALUES_MOOD, getMoodIcon } from 'constants/mood';
 
 const getTagInfo = (series, tag) => {
   let count = 0;

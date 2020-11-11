@@ -5,12 +5,10 @@ import {
 } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavAction from 'components/BottomNavAction';
 import { useUserState } from 'context/userContext';
-import { ADMIN_ROLE } from 'constants/Roles';
 
 const useStyles = makeStyles((theme) => ({
   bottomNav: {
@@ -30,7 +28,6 @@ const pathMap = [
   '/dashboard',
   '/daily-diary',
   '/data',
-  '/team',
 ];
 
 const BottomNav = () => {
@@ -57,7 +54,6 @@ const BottomNav = () => {
         <BottomNavAction label="Dashboard" icon={<DashboardIcon />} disableRipple component={NavLink} to={pathMap[0]} />
         <BottomNavAction label="Diary" icon={<AssignmentIcon />} disableRipple component={NavLink} to={pathMap[1]} />
         <BottomNavAction label="Data" icon={<AssessmentIcon />} disableRipple component={NavLink} to={pathMap[2]} />
-        { user.role === ADMIN_ROLE && <BottomNavAction label="Team" icon={<GroupWorkIcon />} disableRipple component={NavLink} to={pathMap[3]} />}
       </BottomNavigation>
     );
   }

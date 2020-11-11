@@ -5,11 +5,9 @@ import { getSleepByDateRange } from 'services/SleepSummaryServices';
 const startDate = moment().subtract(9, 'days').format('YYYY-MM-DD');
 const endDate = moment().format('YYYY-MM-DD');
 
-const useDashboardSleep = () => {
-  return useQuery('dashboardSleep', async () => {
-    const data = await getSleepByDateRange(startDate, endDate);
-    return data;
-  });
-};
+const useDashboardSleep = () => useQuery('dashboardSleep', async () => {
+  const data = await getSleepByDateRange(startDate, endDate);
+  return data;
+});
 
 export default useDashboardSleep;

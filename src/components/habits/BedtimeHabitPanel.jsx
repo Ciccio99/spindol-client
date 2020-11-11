@@ -84,6 +84,7 @@ const BedtimeHabitPanel = ({ habit }) => {
                 value={selectedTime}
                 onChange={handleTimeOnChange}
                 size="small"
+                disableToolbar
               />
             </MuiPickersUtilsProvider>
           </Grid>

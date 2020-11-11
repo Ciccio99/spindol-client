@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import AdminRoute from 'routes/AdminRoute';
 import ProtectedRoute from 'routes/ProtectedRoute';
 import PublicRoute from 'routes/PublicRoute';
 import SignInView from 'views/signInView/SignInView';
@@ -14,7 +13,6 @@ import TermsOfService from 'views/legal/TermsOfService';
 import PrivacyPolicy from 'views/legal/PrivacyPolicy';
 import Home from 'views/home/Home';
 import usePageTracker from 'hooks/usePageTracker';
-import TeamView from 'views/TeamView';
 import DataView from 'views/DataView';
 
 const AppRouter = () => {
@@ -32,7 +30,6 @@ const AppRouter = () => {
         <ProtectedRoute path="/dashboard" component={DashboardView} />
         <ProtectedRoute path="/daily-diary" component={CheckInsView} />
         <ProtectedRoute path="/data" component={DataView} />
-        <AdminRoute path="/team" component={TeamView} />
         <ProtectedRoute path="/sleep-trial-report/:id" component={SleepTrialReportView} />
         <ProtectedRoute path="/settings" component={AccountSettings} />
         <Route component={NotFound} />

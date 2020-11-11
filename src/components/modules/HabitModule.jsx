@@ -141,7 +141,7 @@ const HabitModule = () => {
           && (
             <Typography variant="subtitle2" gutterBottom>
               <span role="img" aria-label="warning" style={{ color: '#FAC856' }}>⚠️</span>
-              {' You haven\'t set any sleep habit goals yet! Set your Bedtime & Waketime goals to track how consistent you are at maintaing your sleep habits.'}
+              {' You haven\'t set any sleep habit goals yet! Set your Bedtime & Waketime goals to track how consistent you are at maintaining your sleep habits.'}
             </Typography>
           )
         }

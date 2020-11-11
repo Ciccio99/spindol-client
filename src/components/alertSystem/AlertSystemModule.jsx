@@ -38,7 +38,7 @@ const AlertSystemModule = () => {
       <MuiAlert
         severity={alertSystemState.severity}
         onClose={handleAlertClose}
-        elevation={1}
+        elevation={24}
         variant="filled"
       >
         {alertSystemState.message}

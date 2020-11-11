@@ -8,10 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import { useUserState } from 'context/userContext';
-import { ADMIN_ROLE } from 'constants/Roles';
 import COLORS from 'constants/colors';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,9 +38,6 @@ const DesktopMenu = () => {
         <NavItem to="/dashboard" label="Dashboard" icon={DashboardIcon} />
         <NavItem to="/daily-diary" label="Daily Diary" icon={AssignmentIcon} />
         <NavItem to="/data" label="Data" icon={AssessmentIcon} />
-        {
-          user?.role === ADMIN_ROLE && <NavItem to="/team" label="Team" icon={GroupWorkIcon} />
-        }
       </Box>
     );
   }

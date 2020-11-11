@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Box, Grid, LinearProgress, Typography,
+  Grid, LinearProgress, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -11,7 +11,6 @@ import Section from 'components/organizers/Section';
 import TagSleepDataModule from 'components/modules/TagSleepDataModule';
 import DateRangePicker from 'views/DataView/DateRangePicker';
 import TagComparisonSelectors from 'views/DataView/TagComparisonSelectors';
-import TagsMoodImpactModule from 'components/data/TagsMoodImpactModule';
 import { getAllDiaries } from 'services/DailyDiaryServices';
 import { getAllSleep } from 'services/SleepSummaryServices';
 import DateMap from 'utils/DateMap';
@@ -150,12 +149,6 @@ const DataExploreTabPanel = () => {
         <Section>
           <TagSleepDataModule startDate={viewDates.startDate} endDate={viewDates.endDate} tag1={selectedTag1} tag2={selectedTag2} />
         </Section>
-        {/* <Section>
-          <TagsSleepImpactGraphModule series={prunedData.series} baselineSeries={prunedData.series} tag1={selectedTag1} tag2={selectedTag2} />
-        </Section> */}
-        {/* <Section>
-          <TagsMoodImpactModule series={prunedData.series} baselineSeries={prunedData.baselineSeries} tag1={selectedTag1} tag2={selectedTag2} />
-        </Section> */}
         {
           (selectedTag1 || selectedTag2)
           && (
@@ -190,10 +183,6 @@ const DataExploreTabPanel = () => {
             </Section>
           )
         }
-
-        {/* <Section>
-          <TagsHeatMapModule startDate={viewDates.startDate} endDate={viewDates.endDate} viewRange={viewRange} />
-        </Section> */}
       </>
     );
   }

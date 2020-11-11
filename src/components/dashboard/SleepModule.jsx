@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import moment from 'moment-timezone';
 import useMobile from 'hooks/useMobile';
 import useSleepComparison from 'hooks/useSleepComparison';
 import useSleepMoodCorrelation from 'hooks/useSleepMoodCorrelation';
@@ -18,7 +17,7 @@ import { MOODS, getMoodIcon } from 'constants/mood';
 
 const useStyles = makeStyles((theme) => ({
   totalSleepBg: {
-    background: props => `linear-gradient(90deg, ${COLORS.LIGHT_GREEN} ${props.percentage}%, rgba(0,0,0,0) ${100 - props.percentage}%)`,
+    background: props => `linear-gradient(90deg, ${COLORS.LIGHT_GREEN} ${props.percentage}%, ${COLORS.WHITE} ${props.percentage}%)`,
   },
   avgText: {
     color: COLORS.DARK_BLUE,
@@ -34,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
   sleepMoodLineInverse: {
     stroke: COLORS.LIGHT_GREEN,
+  },
+  popover: {
+    pointerEvents: 'none',
   },
   moodFace: {
     position: 'absolute',
@@ -74,9 +76,10 @@ const useStyles = makeStyles((theme) => ({
 
 const SleepModule = () => {
   const classes = useStyles();
-  const { isLoading, isError, data, error } = useSleepComparison();
+  const { data } = useSleepComparison();
 
   // TODO: Need a loading state?
+  // TODO: Error state?
 
   if (data?.todayStats) {
     return (
@@ -145,7 +148,7 @@ const SleepTotalCard = ({ total, avg, delta, min, max }) => {
         <div>
           <Typography variant="h2">{`${total} hrs`}</Typography>
           <Typography className={clsx(classes.avgText)} variant="subtitle1" display="inline">{`AVG: ${avg} HRS`}</Typography>
-          <Typography className={clsx(classes.diffText)} variant="subtitle1" display={isMobile ? 'default' : 'inline'}>{`${delta} HOURS`}</Typography>
+          <Typography className={clsx(classes.diffText)} variant="subtitle1" display={isMobile ? 'block' : 'inline'}>{`${delta} HOURS`}</Typography>
         </div>
       </Box>
     </Paper>
@@ -170,8 +173,12 @@ const MoodSvg = ({ mood, duration, count, xPercentage }) => {
   const MoodIcon = getMoodIcon(mood);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
+  const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -186,12 +193,15 @@ const MoodSvg = ({ mood, duration, count, xPercentage }) => {
           [classes.moodFaceClicked]: Boolean(anchorEl),
         })}
         size={40}
-        onClick={handleClick}
+        // onClick={handleClick}
+        onMouseEnter={handlePopoverOpen}
+        onMouseLeave={handlePopoverClose}
       />
       <Popover
+        className={classes.popover}
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
-        onClose={() => { setAnchorEl(null); }}
+        onClose={handlePopoverClose}
         anchorOrigin={{
           vertical: 'center',
           horizontal: 'left',
@@ -201,6 +211,7 @@ const MoodSvg = ({ mood, duration, count, xPercentage }) => {
           horizontal: 'right',
         }}
         elevation={24}
+        disableRestoreFocus
       >
         <Box p={2} maxWidth={280}>
           <Box mb={1}>

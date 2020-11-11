@@ -84,7 +84,7 @@ const DailyDiaryDashboardModule = ({ date, enableStreak, tagsDate }) => {
         message: e.message || 'Update failed: Something went wrong...',
       });
     }
-  }, [tagsData, dispatchAlertSystem]);
+  }, [tagsData, setTagsData, dispatchAlertSystem]);
 
   useEffect(() => {
     let isMounted = true;

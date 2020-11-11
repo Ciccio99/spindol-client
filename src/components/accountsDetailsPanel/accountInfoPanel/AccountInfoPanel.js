@@ -36,8 +36,8 @@ const AccountInfoPanel = () => {
   };
 
   const handleOnSubmit = (e) => {
-    Event('Account', 'Updated Account Information');
     e.preventDefault();
+    Event('Account', 'Updated Account Information');
     const updateBody = {};
     Object.keys(formState).forEach((key) => {
       if (formState[key]) {
