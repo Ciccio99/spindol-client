@@ -16,6 +16,7 @@ import StreakModule from 'components/dashboard/StreakModule';
 import SleepModule from 'components/dashboard/SleepModule';
 import SleepChartModule from 'components/dashboard/SleepChartModule';
 import SleepGoalsModule from 'components/dashboard/SleepGoalsModule';
+import JournalModule from 'components/dashboard/JournalModule';
 
 const useStyles = makeStyles((theme) => ({
   gridItemTopMargin: {
@@ -48,6 +49,7 @@ const DashboardView = () => {
           </Section>
           )
         }
+        <JournalModule />
         <Section>
           <Grid container justify="space-between" spacing={isMobile ? 0 : 6}>
             <Grid item xs={12} sm={7} md={8} lg={8}>

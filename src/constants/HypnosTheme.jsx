@@ -36,6 +36,14 @@ const customTheme = {
       fontWeight: 500,
       fontSize: '0.875rem',
     },
+    overline: {
+      fontSize: '4.5rem',
+      fontWeight: 600,
+      lineHeight: 1.167,
+      letterSpacing: '0.01562em',
+      textTransform: 'none',
+      display: 'block',
+    },
     h1: {
       fontWeight: 400,
       fontSize: '2rem',
@@ -65,6 +73,7 @@ const customTheme = {
       fontWeight: 400,
       fontSize: '0.875rem',
       color: '#224887',
+      textTransform: 'none',
     },
   },
   palette: {
@@ -113,7 +122,7 @@ const customTheme = {
 };
 
 const fontSizesOptions = {
-  factor: 1.1,
+  factor: 2,
 };
 
 const HypnosTheme = ({ children }) => {
@@ -122,7 +131,7 @@ const HypnosTheme = ({ children }) => {
 
   useEffect(() => {
     if (isMobile) {
-      customTheme.spacing = 4;
+      customTheme.spacing = 6;
       let newTheme = createMuiTheme(customTheme);
       newTheme = responsiveFontSizes(newTheme, fontSizesOptions);
       setTheme(newTheme);

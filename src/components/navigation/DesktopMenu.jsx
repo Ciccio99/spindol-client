@@ -31,20 +31,15 @@ const DesktopMenu = () => {
     <div className={clsx(classes.menuDiv)}>
       <Grid container spacing={2} justify="flex-end" alignItems="center" wrap="nowrap">
         {[
-          <Grid item key="signin">
-            <NavLink to="signin" className={clsx(classes.navLink)} activeClassName={clsx(classes.activeNavLink)}>
-              <Typography variant="body1" noWrap>Sign In</Typography>
-            </NavLink>
-          </Grid>,
           <Grid item key="community">
             <a className={styles.navLink} href="https://community.hypnos.ai" target="_blank" rel="noopener noreferrer">
               <Typography variant="body1" className={clsx(classes.navLink)}>Community</Typography>
             </a>
           </Grid>,
-          <Grid item key="requestAccess">
-            <Button variant="contained" color="primary" size="small" href="https://sleepwell.typeform.com/to/FnZPZk" target="_blank" rel="noopener noreferrer">
-              <Typography variant="body1" noWrap>Request Access</Typography>
-            </Button>
+          <Grid item key="signin">
+            <NavLink to="signin" className={clsx(classes.navLink)} activeClassName={clsx(classes.activeNavLink)}>
+              <Typography variant="body1" noWrap>Sign In</Typography>
+            </NavLink>
           </Grid>,
         ]}
       </Grid>

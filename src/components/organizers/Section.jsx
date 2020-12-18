@@ -9,11 +9,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Section = ({ children }) => {
+const Section = ({ children, ...rest }) => {
   const classes = useStyles();
 
   return (
-    <div className={clsx(classes.section)}>
+    <div className={clsx(classes.section)} {...rest}>
       {children}
     </div>
   );

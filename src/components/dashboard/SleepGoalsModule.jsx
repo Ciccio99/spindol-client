@@ -13,6 +13,7 @@ import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import useDashboardHabits from 'hooks/useDashboardHabits';
 import useActiveHabits from 'hooks/useActiveHabits';
 import useMobile from 'hooks/useMobile';
+import useMedium from 'hooks/useMedium';
 import { upsertBedtimeHabit, upsertWaketimeHabit } from 'services/HabitServices';
 import { isValidTime } from 'utils/time';
 import HABITS from 'constants/Habits';
@@ -25,7 +26,7 @@ import bedtimeSvgSmol from 'assets/illus-bedtime-smol.svg';
 const useStyles = makeStyles((theme) => ({
   textHighlight: { color: COLORS.RED },
   cellPadding: {
-    padding: `${theme.spacing(2)}px 0`,
+    padding: `${theme.spacing(1)}px 0`,
   },
   cellHeaderPadding: {
     padding: `${theme.spacing(1)}px 0`,
@@ -153,8 +154,9 @@ const SleepGoalsModule = () => {
 const HabitCircle = ({ habit }) => {
   const classes = useStyles();
   const { isMobile } = useMobile();
+  const { isMedium } = useMedium();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const radius = isMobile ? 12 : 32;
+  const radius = isMobile ? 12 : isMedium ? 36 : 45;
 
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);

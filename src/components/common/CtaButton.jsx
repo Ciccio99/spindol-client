@@ -3,14 +3,14 @@ import {
   Typography,
   ButtonBase,
 } from '@material-ui/core';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import COLORS from 'constants/colors';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+    padding: `${theme.spacing(2)}px ${theme.spacing(3)}px`,
     background: '#FFFFFF',
     border: '1px solid #E5E5E5',
     boxSizing: 'border-box',
@@ -25,18 +25,19 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   buttonText: {
+    fontSize: '1.25rem',
+    fontWeight: 600,
     color: 'inherit',
   },
 }));
 
-const HypnosButton = ({ text, className, ...other }) => {
+const CtaButton = ({ text, className, ...other }) => {
   const classes = useStyles();
   return (
-    // <ButtonBase classes={{ root: classes.root }} {...other} disableRipple>
     <ButtonBase className={clsx(classes.root, className)} {...other} disableRipple>
       <Typography className={classes.buttonText} variant="button">{text}</Typography>
     </ButtonBase>
   );
 };
 
-export default HypnosButton;
+export default CtaButton;

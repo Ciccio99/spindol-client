@@ -17,6 +17,8 @@ import BottomNav from 'components/navigation/BottomNav';
 import DrawerMenu from 'components/navigation/DrawerMenu';
 import HeadwayWidget from 'components/common/HeadwayWidget';
 import { useUserState } from 'context/userContext';
+import hypnosYellowDotSvg from 'assets/hypnos-yellow-dot.svg';
+import { HypnosYellowIcon } from 'components/common/Icons';
 import COLORS from 'constants/colors';
 import styles from './Header.module.css';
 
@@ -67,7 +69,7 @@ const DesktopNavBar = ({ children }) => {
         <Grid item>
           <NavLink className={classes.logoNav} exact to="/">
             <Box display="flex" alignItems="center">
-              <Typography color="textPrimary" variant="h2" display="inline">Hypnos.ai</Typography>
+              <HypnosYellowIcon />
               {/* <Chip label="beta" color="primary" variant="outlined" size="small" style={{ marginLeft: '0.5rem' }} /> */}
               <HeadwayWidget />
             </Box>
@@ -89,7 +91,7 @@ const MobileNavigation = () => (
           <Grid item>
             <NavLink className={styles.navLink} exact to="/">
               <Box display="flex" alignItems="center">
-                <Typography className={styles.logoName} color="textPrimary" variant="h2" display="inline">Hypnos.ai</Typography>
+                <HypnosYellowIcon />
                 <Chip label="beta" color="primary" variant="outlined" size="small" style={{ marginLeft: '0.5rem' }} />
                 <HeadwayWidget />
               </Box>

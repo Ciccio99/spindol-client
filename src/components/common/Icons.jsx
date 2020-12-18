@@ -3,6 +3,9 @@ import {
   SvgIcon,
 } from '@material-ui/core';
 import flame from 'assets/flame.svg';
+import crossCircle from 'assets/cross-circle.svg';
+import hypnosYellowDotSvg from 'assets/hypnos-yellow-dot.svg';
+import { ReactComponent as SleepingCat } from 'assets/icons/sleeping-cat.svg';
 
 const DEFAULT_SIZE = 50;
 
@@ -12,6 +15,18 @@ export const MenuIcon = (props) => (
   </SvgIcon>
 );
 
-export const FlameIcon = ({ size }) => (
-  <img src={flame} width={size || DEFAULT_SIZE} height={size || DEFAULT_SIZE} alt="flame icon" />
+export const FlameIcon = ({ size, ...props }) => (
+  <img src={flame} width={size || DEFAULT_SIZE} height={size || DEFAULT_SIZE} alt="flame icon" {...props} />
+);
+
+export const CancelIcon = ({ size, ...props }) => (
+  <img src={crossCircle} width={size || DEFAULT_SIZE} height={size || DEFAULT_SIZE} alt="cancel icon" {...props} />
+);
+
+export const HypnosYellowIcon = ({ size, ...props }) => (
+  <img src={hypnosYellowDotSvg} width={size || 100} alt="Hypnos Logo" {...props} />
+);
+
+export const SleepingCatIcon = ({ size, ...props }) => (
+  <SleepingCat width={size || DEFAULT_SIZE} height={size || DEFAULT_SIZE} alt="Sleeping Cat Icon" {...props} />
 );

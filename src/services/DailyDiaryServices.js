@@ -16,9 +16,21 @@ const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   }
 };
 
+export const getTodayDiary = async () => {
+  try {
+    const searchDate = moment().format('YYYY-MM-DD');
+    const queryString = JSON.stringify({ date: searchDate });
+    const { data } = await axios.get('/dailyDiary/getByDate',
+      { params: { query: queryString } });
+    return data;
+  } catch (error) {
+    throw new ErrorHandler(error);
+  }
+};
+
 export const getDiariesByDateRange = async (startDate, endDate) => {
   try {
-    
+
     const queryString = JSON.stringify({
       match: {
         date: { $gte: startDate, $lte: endDate },
@@ -121,6 +133,16 @@ const update = async (dto) => {
   const body = dto;
   try {
     const { data } = await axios.patch(`/dailyDiary/${body._id}`, body);
+    return data;
+  } catch (error) {
+    throw new ErrorHandler(error);
+  }
+};
+
+export const updateDiaryJournal = async (id, journalEntry) => {
+  const body = { _id: id, journalEntry };
+  try {
+    const { data } = await axios.patch(`/dailyDiary/${id}`, body);
     return data;
   } catch (error) {
     throw new ErrorHandler(error);
