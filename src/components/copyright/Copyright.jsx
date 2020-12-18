@@ -8,7 +8,7 @@ const Copyright = () => (
   <Typography variant="caption" color="textSecondary" noWrap>
     {'© '}
     <Link color="inherit" href="https://sleepwell.ai/" target="_blank">
-      Sleepwell.ai
+      Hypnos.ai
     </Link>
     {' '}
     {new Date().getFullYear()}

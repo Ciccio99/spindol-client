@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   footerInner: {
     backgroundColor: COLORS.WHITE,
-    marginTop: theme.spacing(18),
+    // marginTop: theme.spacing(18),
     minHeight: '72px',
     padding: `0 ${theme.spacing(2)}px`,
     display: 'flex',

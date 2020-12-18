@@ -22,6 +22,7 @@ import sleepJournalSvg from 'assets/sleep-journal.svg';
 import yellowBackground from 'assets/yellow-background.png';
 import pinkBackground from 'assets/pink-background.png';
 import dashboardBreakdown from 'assets/dashboard-breakdown.png';
+import shapesEmojisPattern from 'assets/shapes-emojis-pattern.png';
 import illusAnalyzeSvg from 'assets/illus-analyze.svg';
 import illusTrackingSvg from 'assets/illus-tracking.svg';
 import illusCycle from 'assets/illus-cycle.svg';
@@ -73,6 +74,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: `url(${pinkBackground})`,
     backgroundSize: 'cover',
   },
+  patternBackground: {
+    width: '100vw',
+    marginLeft: 'calc(-50vw + 50%)',
+    backgroundImage: `url(${shapesEmojisPattern})`,
+    backgroundSize: 'repeat',
+  },
   stepsTextContainer: {
     display: 'flex',
     justifyContent: 'center',
@@ -88,7 +95,10 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   animalIcon: {
-    maxWidth: '250px',
+    maxWidth: '85%',
+  },
+  animalIconSmall: {
+    maxWidth: '70%',
   },
   marginTop: {
     marginTop: `${theme.spacing(4)}px`,
@@ -142,7 +152,16 @@ const Home = () => {
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <Box display="flex" justifyContent="center">
-                    <img className={clsx(classes.animalIcon, { [classes.marginTop]: isMedium })} alt="sleeping koala" width="85%" height="85%" src={sleepingKoalaSvg} />
+                    <img
+                      className={clsx(classes.animalIcon, {
+                        [classes.marginTop]: isMedium,
+                        [classes.animalIconSmall]: isMedium,
+                      })}
+                      alt="sleeping koala"
+                      width="85%"
+                      height="85%"
+                      src={sleepingKoalaSvg}
+                    />
                   </Box>
                 </Grid>
               </Grid>
@@ -282,6 +301,13 @@ const Home = () => {
           </Box>
         </Section>
       </div>
+      <Section>
+        <Box py={8} px={4} display="flex" justifyContent="center" alignItems="center">
+          <a className={styles.navLink} href="https://sleepwell.typeform.com/to/FnZPZk" target="_blank" rel="noopener noreferrer">
+            <CtaButton text="Support us on Kickstarter" />
+          </a>
+        </Box>
+      </Section>
     </Container>
   );
 };
