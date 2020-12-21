@@ -11,6 +11,7 @@ import Copyright from 'components/copyright/Copyright';
 import useMedium from 'hooks/useMedium';
 import useMobile from 'hooks/useMobile';
 import { useUserState } from 'context/userContext';
+import { HypnosYellowIcon } from 'components/common/Icons';
 import COLORS from 'constants/colors';
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +45,10 @@ const useStyles = makeStyles((theme) => ({
   navLinkMobile: {
     padding: '12px 0',
   },
+  logoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 }));
 
 const Footer = () => {
@@ -64,8 +69,9 @@ const FooterDesktop = () => {
     <footer className={clsx(classes.footer, { [classes.footerMedium]: (isMedium && user._id) })}>
       <div className={clsx(classes.footerInner)}>
         <Box width="100%" display="flex" justifyContent="space-between" alignItems="center">
-          <div>
-            <Typography variant="h6">Hypnos.ai</Typography>
+          <div className={classes.logoContainer}>
+            {/* <Typography variant="h6">Hypnos.ai</Typography> */}
+            <HypnosYellowIcon />
           </div>
           <div>
             <Grid container spacing={4} justify="center">

@@ -35,6 +35,8 @@ import HypnosButton from 'components/common/Button';
 import CtaButton from 'components/common/CtaButton';
 import styles from './Home.module.css';
 
+import ActiveBackground from 'components/common/ActiveBackground';
+
 const useStyles = makeStyles((theme) => ({
   heroContainer: {
     width: '100vw',
@@ -122,12 +124,49 @@ const Home = () => {
           content="Hypnos.ai helps you track and improve your sleep habits. Use sleep data from sleep trackers to correlate how different sleep habits affect your sleep. Discover which sleep trial best improves your sleep and overall happiness."
         />
       </Helmet>
+
+
+      <ActiveBackground>
+      <Container>
+          <Section>
+            <Box py={4}>
+              <Grid container alignItems="center" spacing={4}>
+                <Grid item xs={12} md={12}>
+                  <Box mb={4} overflow="visible">
+                    <Typography className={classes.heroText} variant="overline">
+                      Discover
+                    </Typography>
+                    <Typography className={classes.heroText} variant="overline">
+                      which habits
+                    </Typography>
+                    <Typography className={classes.heroText} variant="overline">
+                      impact your sleep
+                    </Typography>
+                  </Box>
+                  <Box mt={4}>
+                    <Typography variant="subtitle1" className={classes.heroSubtitle}>
+                      For most people, what matters most when it comes to sleep is their daily habits and activities. This is where trackers and their apps fall short and where Hypnos comes in.
+                    </Typography>
+                  </Box>
+                  <Box mt={6} display="flex" justifyContent={isMedium ? 'center' : 'start'}>
+                    <a className={styles.navLink} href="https://sleepwell.typeform.com/to/FnZPZk" target="_blank" rel="noopener noreferrer">
+                      <CtaButton text="Support us on Kickstarter" />
+                    </a>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Box>
+          </Section>
+        </Container>
+      </ActiveBackground>
+
+{/*
       <div className={classes.heroContainer}>
         <Container>
           <Section>
             <Box py={4}>
               <Grid container alignItems="center" spacing={4}>
-                <Grid item xs={12} md={8}>
+                <Grid item xs={12} md={12}>
                   <Box mb={4} overflow="visible">
                     <Typography className={classes.heroText} variant="overline">
                       Discover
@@ -168,7 +207,8 @@ const Home = () => {
             </Box>
           </Section>
         </Container>
-      </div>
+      </div> */}
+
       <Section>
         <Box p={4} pt={6}>
           <Box pb={8} display="flex" flexDirection="column" alignItems="center">

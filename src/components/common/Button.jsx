@@ -3,7 +3,7 @@ import {
   Typography,
   ButtonBase,
 } from '@material-ui/core';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import COLORS from 'constants/colors';
 
@@ -27,16 +27,22 @@ const useStyles = makeStyles((theme) => ({
   buttonText: {
     color: 'inherit',
   },
+  fullWidth: {
+    width: '100%',
+  },
 }));
 
-const HypnosButton = ({ text, className, ...other }) => {
+const Button = ({ text, className, fullWidth, ...other }) => {
   const classes = useStyles();
   return (
-    // <ButtonBase classes={{ root: classes.root }} {...other} disableRipple>
-    <ButtonBase className={clsx(classes.root, className)} {...other} disableRipple>
+    <ButtonBase
+      className={clsx(classes.root, className, { [classes.fullWidth]: fullWidth })}
+      disableRipple
+      {...other}
+    >
       <Typography className={classes.buttonText} variant="button">{text}</Typography>
     </ButtonBase>
   );
 };
 
-export default HypnosButton;
+export default Button;

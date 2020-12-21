@@ -32,4 +32,5 @@ export default {
   LIGHT_GREEN: '#A7C5C3',
   LIGHT_PURPLE: '#F4D8FE',
   LIGHT_PEACH: '#FFF7F8',
+  PASTEl_BLUE: '#A6B7FD',
 };
