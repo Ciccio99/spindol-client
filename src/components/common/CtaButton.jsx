@@ -10,23 +10,20 @@ import COLORS from 'constants/colors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: `${theme.spacing(2)}px ${theme.spacing(3)}px`,
-    background: '#FFFFFF',
-    border: '1px solid #E5E5E5',
-    boxSizing: 'border-box',
-    boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.05)',
-    borderRadius: '40px',
-    color: COLORS.DARK_BLUE,
+    padding: `${theme.spacing(2)}px ${theme.spacing(4)}px`,
+    background: COLORS.DARK_BLUE,
+    color: COLORS.WHITE,
     textTransform: 'none',
     transition: 'all 0.25s ease-in-out',
     '&:hover': {
-      backgroundColor: COLORS.DARK_BLUE,
-      color: COLORS.WHITE,
+      // backgroundColor: COLORS.WHITE,
+      // color: COLORS.DARK_BLUE,
+      filter: 'drop-shadow(6px 6px 0px rgba(0, 0, 0, 0.1))',
     },
   },
   buttonText: {
-    fontSize: '1.25rem',
-    fontWeight: 600,
+    fontSize: '1rem',
+    fontWeight: 500,
     color: 'inherit',
   },
 }));

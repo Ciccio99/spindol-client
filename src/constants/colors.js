@@ -18,6 +18,7 @@ export default {
   LIGHT_SUNRISE_GRADIENT: 'linear-gradient(135deg, rgba(148,121,188,0.85) 0%, rgba(230,126,86,0.85) 50%, rgba(250,201,89,0.85) 100%);',
   // Timmy Design Colors
   PEACH: '#FFDAD0',
+  DARK_PEACH: '#FFD9D0',
   BLUE: '#1E8AF4',
   BLACK: '#121212',
   GRAY: '#888888',
@@ -33,4 +34,9 @@ export default {
   LIGHT_PURPLE: '#F4D8FE',
   LIGHT_PEACH: '#FFF7F8',
   PASTEl_BLUE: '#A6B7FD',
+  PEACH_1: '#FFF0E8',
+  PEACH_2: '#FFEBE4',
+  PEACH_3: '#FFD9D0',
+  PINK: '#FFDCF6',
+  GRAY_BACKGROUND: '#F7F7F9',
 };

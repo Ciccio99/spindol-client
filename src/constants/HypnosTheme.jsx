@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import useMobile from 'hooks/useMobile';
+import BREAKPOINTS from 'constants/breakpoints';
 import COLORS from 'constants/colors';
 
 const customTheme = {
@@ -37,10 +38,10 @@ const customTheme = {
       fontSize: '0.875rem',
     },
     overline: {
-      fontSize: '4.5rem',
-      fontWeight: 600,
-      lineHeight: 1.167,
-      letterSpacing: '0.01562em',
+      fontFamily: 'Antic Didone',
+      fontSize: '3.5rem',
+      fontWeight: 400,
+      lineHeight: 1.17,
       textTransform: 'none',
       display: 'block',
     },
@@ -74,6 +75,15 @@ const customTheme = {
       fontSize: '0.875rem',
       color: '#224887',
       textTransform: 'none',
+    },
+  },
+  breakpoints: {
+    values: {
+      xs: BREAKPOINTS.xs,
+      sm: BREAKPOINTS.sm,
+      md: BREAKPOINTS.md,
+      lg: BREAKPOINTS.lg,
+      xl: BREAKPOINTS.xl,
     },
   },
   palette: {
