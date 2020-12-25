@@ -5,13 +5,15 @@ import COLORS from 'constants/colors';
 import blob2 from 'assets/blobs/shape_blob-02.svg';
 import rectangle3 from 'assets/blobs/shape_rectangle-03.svg';
 import blob1 from 'assets/blobs/shape_blob-01.svg';
-import hexagon from 'assets/blobs/shape_hexagon.svg';
+import hexagon1 from 'assets/blobs/shape_hexagon-01.svg';
+import hexagon2 from 'assets/blobs/shape_hexagon-02.svg';
 import semicircle1 from 'assets/blobs/shape_semicircle-01.svg';
 import rectangle2 from 'assets/blobs/shape_rectangle-02.svg';
 import semicircle3 from 'assets/blobs/shape_semicircle-03.svg';
 import blob5 from 'assets/blobs/shape_blob-05.svg';
 import rectangle1 from 'assets/blobs/shape_rectangle-01.svg';
-import circle from 'assets/blobs/shape_circle.svg';
+import circle1 from 'assets/blobs/shape_circle-01.svg';
+import circle2 from 'assets/blobs/shape_circle-02.svg';
 
 const useStyles = makeStyles(() => ({
   fullWidth: {
@@ -36,21 +38,21 @@ const ActiveBackground = ({ background, fullWidth, translateX, translateY, child
 
   return (
     <div className={clsx(classes.backgroundContainer, { [classes.fullWidth]: fullWidth })}>
-      <MovingBlob x={130} y={155} translateX={translateX} translateY={translateY} asset={semicircle3} />
-      <MovingBlob x={412} y={75} translateX={translateX} translateY={translateY} asset={blob1} />
-      <MovingBlob x={850} y={149} translateX={translateX} translateY={translateY} asset={rectangle2} />
-      <MovingBlob x={1200} y={75} translateX={translateX} translateY={translateY} asset={rectangle1} />
-      <MovingBlob x={1443} y={183} translateX={translateX} translateY={translateY} asset={circle} />
+      <MovingBlob x={76} y={177} translateX={translateX} translateY={translateY} asset={semicircle3} />
+      <MovingBlob x={416} y={75} translateX={translateX} translateY={translateY} asset={blob1} />
+      <MovingBlob x={724} y={160} translateX={translateX} translateY={translateY} asset={rectangle2} />
+      <MovingBlob x={1077} y={75} translateX={translateX} translateY={translateY} asset={rectangle1} />
+      <MovingBlob x={1443} y={183} translateX={translateX} translateY={translateY} asset={circle1} />
 
-      <MovingBlob x={464} y={411} translateX={translateX} translateY={translateY} asset={hexagon} />
-      <MovingBlob x={883} y={475} translateX={translateX} translateY={translateY} asset={circle} />
+      <MovingBlob x={464} y={411} translateX={translateX} translateY={translateY} asset={hexagon1} />
+      <MovingBlob x={883} y={440} translateX={translateX} translateY={translateY} asset={circle2} />
       <MovingBlob x={1226} y={453} translateX={translateX} translateY={translateY} asset={blob5} />
 
       <MovingBlob x={123} y={589} translateX={translateX} translateY={translateY} asset={blob1} />
-      <MovingBlob x={369} y={724} translateX={translateX} translateY={translateY} asset={semicircle3} />
-      <MovingBlob x={775} y={952} translateX={translateX} translateY={translateY} asset={blob1} />
-      <MovingBlob x={1445} y={800} translateX={translateX} translateY={translateY} asset={rectangle2} />
-      <MovingBlob x={1498} y={817} translateX={translateX} translateY={translateY} asset={hexagon} />
+      <MovingBlob x={400} y={724} translateX={translateX} translateY={translateY} asset={semicircle3} />
+      <MovingBlob x={775} y={800} translateX={translateX} translateY={translateY} asset={blob1} />
+      <MovingBlob x={1229} y={824} translateX={translateX} translateY={translateY} asset={rectangle2} />
+      <MovingBlob x={1498} y={598} translateX={translateX} translateY={translateY} asset={hexagon2} />
       {/* <MovingBlob x={35} y={100} asset={blob2} />
       <MovingBlob x={410} y={39} asset={blob1} />
       <MovingBlob x={850} y={100} asset={hexagon} />
@@ -74,8 +76,6 @@ const useBlobStyles = makeStyles(() => ({
   blob: {
     position: 'absolute',
     zIndex: 0,
-
-    mixBlendMode: 'soft-light',
   },
 }));
 

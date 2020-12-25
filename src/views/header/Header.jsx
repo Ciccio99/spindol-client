@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -11,23 +11,29 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import useMedium from 'hooks/useMedium';
+import useScrollY from 'hooks/useScrollY';
 import DesktopMenu from 'components/navigation/DesktopMenu';
 import CenterMenu from 'components/navigation/CenterMenu';
 import BottomNav from 'components/navigation/BottomNav';
 import DrawerMenu from 'components/navigation/DrawerMenu';
 import HeadwayWidget from 'components/common/HeadwayWidget';
 import { useUserState } from 'context/userContext';
-import hypnosYellowDotSvg from 'assets/hypnos-yellow-dot.svg';
 import { HypnosYellowIcon } from 'components/common/Icons';
 import COLORS from 'constants/colors';
 import styles from './Header.module.css';
 
 const useStyles = makeStyles((theme) => ({
-  header: {
+  stickyHeader: {
+    justifyContent: 'center',
     backgroundColor: COLORS.WHITE,
     height: '48px',
     maxHeight: '48px',
     padding: `0 ${theme.spacing(2)}px`,
+    transition: 'all 0.30s ease-in-out',
+  },
+  transparentHeader: {
+    backgroundColor: 'transparent',
+    borderColor: 'transparent',
   },
   logoNav: {
     textDecoration: 'none',
@@ -62,15 +68,16 @@ const Header = () => {
 
 const DesktopNavBar = ({ children }) => {
   const classes = useStyles();
+  const location = useLocation();
+  const { isScrolled } = useScrollY(50);
 
   return (
-    <AppBar className={clsx(classes.header)} position="sticky" elevation={0} color="inherit">
-      <Grid container alignItems="center" justify="space-between" wrap="nowrap" style={{ margin: 'auto 0' }}>
+    <AppBar className={clsx(classes.stickyHeader, { [classes.transparentHeader]: !isScrolled && location.pathname === '/' })} position="sticky" elevation={0} color="inherit">
+      <Grid container alignItems="center" justify="space-between" wrap="nowrap">
         <Grid item>
           <NavLink className={classes.logoNav} exact to="/">
             <Box display="flex" alignItems="center">
               <HypnosYellowIcon />
-              {/* <Chip label="beta" color="primary" variant="outlined" size="small" style={{ marginLeft: '0.5rem' }} /> */}
               <HeadwayWidget />
             </Box>
           </NavLink>
@@ -92,7 +99,6 @@ const MobileNavigation = () => (
             <NavLink className={styles.navLink} exact to="/">
               <Box display="flex" alignItems="center">
                 <HypnosYellowIcon />
-                <Chip label="beta" color="primary" variant="outlined" size="small" style={{ marginLeft: '0.5rem' }} />
                 <HeadwayWidget />
               </Box>
             </NavLink>
