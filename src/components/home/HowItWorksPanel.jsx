@@ -23,9 +23,11 @@ const useStyles = makeStyles((theme) => ({
   imgContainer: {
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
+    marginBottom: theme.spacing(7),
+    height: 125,
+    display: 'flex',
   },
   stepsImg: {
-    paddingBottom: theme.spacing(7),
   },
 }));
 
@@ -50,51 +52,51 @@ const HowItWorksPanel = () => {
         </Typography>
       </Box>
       <Grid container alignItems="stretch">
-        <Grid item xs={12} sm={6} md={3} style={{ display: 'flex' }}>
-          <Box height="60vh" width="100%" p={px} pt={10} style={{ background: COLORS.PINK }} display="flex" justifyContent="flex-end" flexDirection="column">
+        <Grid item xs={12} sm={6} md={3} style={{ background: COLORS.PINK }}>
+          <Box width="100%" p={px} pt={10} display="flex" flexDirection="column">
             <div className={classes.imgContainer}>
               <img alt="Step 1 - Connect Tracker" src={howWorks1} className={classes.stepsImg} />
             </div>
             <Typography variant="h4" className={classes.countNumber}>01</Typography>
             <Typography variant="h2" className={classes.textBottomPadding}>Connect your favorite sleep tracker</Typography>
             <Typography variant="subtitle1" color="textPrimary">
-              What matters most for a majority of people when it comes to sleep is their daily habits and activities.
+              No need to get a new sleep tracker, use the one you already own. We currently support Oura, Withings. With support for Fitbit, Whoop and Apple Healthkit coming soon.
             </Typography>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Box height="60vh" width="100%" p={px} pt={10} display="flex" style={{ background: COLORS.PEACH_1 }} justifyContent="flex-end" flexDirection="column">
+        <Grid item xs={12} sm={6} md={3} style={{ background: COLORS.PEACH_1 }}>
+          <Box width="100%" p={px} pt={10} display="flex" flexDirection="column">
             <div className={classes.imgContainer}>
               <img alt="Step 2 - Track your sleep nightly" src={howWorks2} className={classes.stepsImg} />
             </div>
             <Typography variant="h4" className={classes.countNumber}>02</Typography>
-            <Typography variant="h2" className={classes.textBottomPadding}>Connect your favorite sleep tracker</Typography>
+            <Typography variant="h2" className={classes.textBottomPadding}>We track your sleep nightly</Typography>
             <Typography variant="subtitle1" color="textPrimary">
-              What matters most for a majority of people when it comes to sleep is their daily habits and activities.
+              Every night, we automatically take in your sleep tracker data. No need to manually import any sleep data.
             </Typography>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Box height="60vh" width="100%" p={px} pt={10} display="flex" style={{ background: COLORS.PEACH_3 }} justifyContent="flex-end" flexDirection="column">
+        <Grid item xs={12} sm={6} md={3} style={{ background: COLORS.PEACH_3 }}>
+          <Box width="100%" p={px} pt={10} display="flex" flexDirection="column">
             <div className={classes.imgContainer}>
               <img alt="Step 3 - Analyze your Data" src={howWorks3} className={classes.stepsImg} />
             </div>
             <Typography variant="h4" className={classes.countNumber}>03</Typography>
-            <Typography variant="h2" className={classes.textBottomPadding}>Connect your favorite sleep tracker</Typography>
+            <Typography variant="h2" className={classes.textBottomPadding}>Then we analyze the data for you</Typography>
             <Typography variant="subtitle1" color="textPrimary">
-              What matters most for a majority of people when it comes to sleep is their daily habits and activities.
+              We utilize your activities, mood and sleep data to crunch the numbers on how your habits impact you.
             </Typography>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Box height="60vh" width="100%" p={px} pt={10} display="flex" style={{ background: COLORS.PEACH_2 }} justifyContent="flex-end" flexDirection="column">
+        <Grid item xs={12} sm={6} md={3} style={{ background: COLORS.PEACH_2 }}>
+          <Box width="100%" p={px} pt={10} display="flex" flexDirection="column">
             <div className={classes.imgContainer}>
               <img alt="Step 4 - Provide insights and repeat" src={howWorks4} className={classes.stepsImg} />
             </div>
             <Typography variant="h4" className={classes.countNumber}>04</Typography>
-            <Typography variant="h2" className={classes.textBottomPadding}>Connect your favorite sleep tracker</Typography>
+            <Typography variant="h2" className={classes.textBottomPadding}>Finally, we provide you insight and repeat the process.</Typography>
             <Typography variant="subtitle1" color="textPrimary">
-              What matters most for a majority of people when it comes to sleep is their daily habits and activities.
+              With new insights, comes personal improvements. Keep utilizing Hypnos to keep a pulse on your mood, habits and sleep.
             </Typography>
           </Box>
         </Grid>
