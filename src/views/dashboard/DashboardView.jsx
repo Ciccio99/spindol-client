@@ -34,7 +34,7 @@ const DashboardView = () => {
   return (
     <Box mb={4}>
       <Helmet>
-        <title>Hypnos.ai - Dashboard</title>
+        <title>Hypnos - Dashboard</title>
         <meta
           name="description"
           content="Hypnos.ai helps you track and improve your sleep habits. Use the dashboard to set your daily mood, check in to your sleep trials and see what your sleep has been lately."

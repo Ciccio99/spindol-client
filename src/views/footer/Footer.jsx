@@ -17,6 +17,7 @@ import COLORS from 'constants/colors';
 const useStyles = makeStyles((theme) => ({
   footer: {
     marginTop: 'auto',
+    paddingTop: theme.spacing(1),
     width: '100%',
   },
   footerMedium: {
@@ -24,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
   },
   footerInner: {
     backgroundColor: COLORS.WHITE,
-    // marginTop: theme.spacing(18),
     minHeight: '72px',
     padding: `0 ${theme.spacing(2)}px`,
     display: 'flex',
@@ -74,16 +74,17 @@ const FooterDesktop = () => {
           </div>
           <div>
             <Grid container spacing={4} justify="center">
-              <Grid item xs={12} sm="auto"><FooterLink to="https://community.hypnos.ai" external>Community</FooterLink></Grid>
-              <Grid item xs={12} sm="auto"><FooterLink to="/terms-of-service">Terms of Service</FooterLink></Grid>
-              <Grid item xs={12} sm="auto"><FooterLink to="/privacy-policy">Privacy Policy</FooterLink></Grid>
+              <Grid item xs={8} md="auto"><FooterLink to="https://community.hypnos.ai" external>Community</FooterLink></Grid>
+              <Grid item xs={8} md="auto"><FooterLink to="/terms-of-service">Terms of Service</FooterLink></Grid>
+              <Grid item xs={8} md="auto"><FooterLink to="/privacy-policy">Privacy Policy</FooterLink></Grid>
             </Grid>
           </div>
           <div>
             <Grid container spacing={4} justify="flex-end">
-              <Grid item xs={12} sm="auto"><Copyright /></Grid>
-              <Grid item xs={12} sm="auto"><FooterLink to="https://twitter.com/hypnos_ai" external>Twitter</FooterLink></Grid>
-              <Grid item xs={12} sm="auto"><FooterLink to="https://www.facebook.com/hypnosai/" external>Facebook</FooterLink></Grid>
+              <Grid item xs={8} md="auto"><FooterLink to="https://twitter.com/hypnos_ai" external>Twitter</FooterLink></Grid>
+              <Grid item xs={8} md="auto"><FooterLink to="https://www.instagram.com/hypnos_ai/" external>Instagram</FooterLink></Grid>
+              <Grid item xs={8} md="auto"><FooterLink to="https://www.facebook.com/hypnosai/" external>Facebook</FooterLink></Grid>
+              <Grid item xs={8} md="auto"><Copyright /></Grid>
             </Grid>
           </div>
         </Box>
@@ -106,12 +107,14 @@ const FooterMobile = () => {
           <div style={{ margin: '12px 0' }}><FooterLink to="/privacy-policy" isMobile>Privacy Policy</FooterLink></div>
         </div>
         <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
-          <Copyright />
-          <Box display="flex" justifyContent="flex-end" alignItems="center">
-            <div style={{ margin: '0 12px' }}><FooterLink to="https://twitter.com/hypnos_ai" external isMobile>Twitter</FooterLink></div>
+
+          <Box display="flex" justifyContent="flex-start" alignItems="center">
+            <div><FooterLink to="https://twitter.com/hypnos_ai" external isMobile>Twitter</FooterLink></div>
+            <div style={{ margin: '0 12px' }}><FooterLink to="https://www.instagram.com/hypnos_ai/" external isMobile>Instagram</FooterLink></div>
             <div style={{ margin: '0 12px' }}><FooterLink to="https://www.facebook.com/hypnosai/" external isMobile>Facebook</FooterLink></div>
           </Box>
         </Box>
+        <Copyright />
 
       </div>
     </footer>

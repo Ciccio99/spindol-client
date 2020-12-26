@@ -43,7 +43,7 @@ const AccountSettings = () => {
   return (
     <Container>
       <Helmet>
-        <title>Hypnos.ai - Account Settings</title>
+        <title>Hypnos - Account Settings</title>
         <meta
           name="description"
           content="Hypnos.ai helps you track and improve your sleep habits. Settings for your account details, such as name, email, connecting sleep trackers."

@@ -11,7 +11,7 @@ import Section from 'components/organizers/Section';
 const PrivacyPolicy = () => (
   <Container maxWidth="lg">
     <Helmet>
-      <title>Hypnos.ai - Privacy Policy</title>
+      <title>Hypnos - Privacy Policy</title>
       <meta
         name="description"
         content="Hypnos.ai helps you track and improve your sleep habits. Discover which sleep trial best improves your sleep and overall happiness. Here's our privacy policy."

@@ -18,7 +18,7 @@ const DataView = () => {
   return (
     <Container>
       <Helmet>
-        <title>Hypnos.ai - Data</title>
+        <title>Hypnos - Data</title>
         <meta
           name="description"
           content="Hypnos.ai helps you track and improve your sleep habits. Use the Data view to see information about your daily tags and sleep."

@@ -47,7 +47,7 @@ const CheckInsView = () => {
   return (
     <Container>
       <Helmet>
-        <title>Hypnos.ai - Daily Diary</title>
+        <title>Hypnos - Daily Diary</title>
         <meta
           name="description"
           content="Hypnos.ai helps you track and improve your sleep habits. Use the Daily Diary to edit your mood and sleep trial checkins for specific dates. You can also see what your sleep stats was for those specific dates."

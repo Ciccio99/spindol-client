@@ -11,7 +11,7 @@ import Section from 'components/organizers/Section';
 const TermsOfService = () => (
   <Container maxWidth="lg">
     <Helmet>
-      <title>Hypnos.ai - Terms of Service</title>
+      <title>Hypnos - Terms of Service</title>
       <meta
         name="description"
         content="Hypnos.ai helps you track and improve your sleep habits. Discover which sleep trial best improves your sleep and overall happiness. Here's our terms of service."

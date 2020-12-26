@@ -75,7 +75,7 @@ const RegisterView = () => {
   return (
     <Container component="main" maxWidth="xs">
       <Helmet>
-        <title>Hypnos.ai - Account Registration</title>
+        <title>Hypnos - Register</title>
         <meta
           name="description"
           content="Hypnos.ai helps you track and improve your sleep habits. Discover which sleep trial best improves your sleep and overall happiness. Register an account with Hypnos.ai today, and start improving your sleep."
