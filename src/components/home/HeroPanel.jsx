@@ -2,12 +2,13 @@ import React from 'react';
 import { Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import useMedium from 'hooks/useMedium';
+import COLORS from 'constants/colors';
 import ActiveBackground from 'components/common/ActiveBackground';
 import CtaButton from 'components/common/CtaButton';
-import COLORS from 'constants/colors';
-import useMedium from 'hooks/useMedium';
+import pencilIcon from 'assets/ic_pencil.svg';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   halfHorizontalPage: {
     minWidth: '50vw',
   },
@@ -16,6 +17,9 @@ const useStyles = makeStyles(() => ({
   },
   fullPageHeight: {
     minHeight: '100vh',
+  },
+  pencilIcon: {
+    marginLeft: theme.spacing(1),
   },
 }));
 
@@ -30,11 +34,12 @@ const HeroPanelDesktop = () => {
 
   return (
     <Box display="flex" width="100vw" mt="-48px" className={classes.fullPageHeight}>
-      <Box className={clsx(classes.halfHorizontalPage,classes.heroBackground)} px={5} display="flex" flexDirection="column" justifyContent="center">
+      <Box className={clsx(classes.halfHorizontalPage, classes.heroBackground)} px={5} display="flex" flexDirection="column" justifyContent="center">
         <Box maxWidth={560}>
           <Box maxWidth={460}>
             <Typography variant="overline">
               A sleep journal that helps you get better sleep
+              <span><img width={32} height={32} src={pencilIcon} alt="Pencil Icon" className={classes.pencilIcon} /></span>
             </Typography>
           </Box>
           <Box mt={3}>
@@ -67,17 +72,12 @@ const HeroPanelMobile = () => {
     <Box display="flex" flexDirection="column" width="100vw" className={clsx(classes.heroBackground)}>
       <Box px={2} pb={7} mt={5} display="flex" flexDirection="column">
         <Box maxWidth={560}>
-          <div>
+          <Box maxWidth={350}>
             <Typography variant="overline">
-              A sleep journal
+              A sleep journal that helps you get better sleep
+              <span><img width={24} height={24} src={pencilIcon} alt="Pencil Icon" className={classes.pencilIcon} /></span>
             </Typography>
-            <Typography variant="overline">
-              that helps you get
-            </Typography>
-            <Typography variant="overline">
-              better sleep
-            </Typography>
-          </div>
+          </Box>
           <Box mt={5}>
             <Typography variant="subtitle1" style={{ maxWidth: 'inherit', color: COLORS.BLACK }}>
               What matters most for a majority of people when it comes to sleep is their daily habits and activities. Hypnos helps extend beyond your average sleep tracker with useful, actionable insights
