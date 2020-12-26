@@ -19,6 +19,8 @@ import SleepGoalsModule from 'components/dashboard/SleepGoalsModule';
 import JournalModule from 'components/dashboard/JournalModule';
 // Temporary while check-in experience is being made
 import DailyDiaryDashboardModule from 'components/modules/DailyDiaryDashboardModule';
+import moment from 'moment-timezone';
+
 
 const useStyles = makeStyles((theme) => ({
   gridItemTopMargin: {
@@ -30,6 +32,7 @@ const DashboardView = () => {
   const user = useUserState();
   const { isMobile } = useMobile();
   const classes = useStyles();
+  const yesterdayDate = moment().subtract(1, 'day').format('YYYY-MM-DD');
 
   return (
     <Box mb={4}>
@@ -53,7 +56,7 @@ const DashboardView = () => {
         }
         <JournalModule />
         <Section>
-          <DailyDiaryDashboardModule />
+          <DailyDiaryDashboardModule tagsDate={yesterdayDate} />
         </Section>
         <Section>
           <Grid container justify="space-between" spacing={isMobile ? 0 : 6}>
