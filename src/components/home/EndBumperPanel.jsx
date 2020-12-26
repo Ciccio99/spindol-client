@@ -21,7 +21,7 @@ const EndBumperPanel = () => {
   const classes = useStyles();
   const { isMedium } = useMedium();
   return (
-    <ActiveBackground background={COLORS.DARK_PEACH} mobileScale={0.65} translateX={-200} translateY={-200}>
+    <ActiveBackground background={COLORS.DARK_PEACH} mobileScale={0.65} scale={1.2} translateX={-100} translateY={-200}>
       <Box width="100%" py={12} px={isMedium ? 3 : 4} display="flex" flexDirection="column" justifyContent="center" alignItems="center">
         <Typography variant="overline" align="center" className={clsx(classes.text, { [classes.textMobile]: isMedium })}>
           Sleep is important and it’s very personal. We want to make sure people find what works best for them – help us help everyone get better sleep.

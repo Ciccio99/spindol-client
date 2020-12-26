@@ -41,7 +41,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ActiveBackground = (props) => {
-  const { children, mobileScale = 1, background, ...otherProps } = props;
+  const { children, mobileScale = 1, scale = 1, background, ...otherProps } = props;
   const classes = useStyles({ background });
   const { isMobile } = useMobile();
 
@@ -50,7 +50,7 @@ const ActiveBackground = (props) => {
       {
         isMobile
           ? <BlobsContainerMobile {...otherProps} scale={mobileScale} />
-          : <BlobsContainerDesktop {...otherProps} />
+          : <BlobsContainerDesktop {...otherProps} scale={scale} />
       }
 
       {children}
@@ -75,7 +75,7 @@ const BlobsContainerDesktop = ({ fullWidth, translateX, translateY, scale }) => 
       <MovingBlob x={123} y={589} scale={scale} translateX={translateX} translateY={translateY} asset={blob2} />
       <MovingBlob x={400} y={724} scale={scale} translateX={translateX} translateY={translateY} asset={semicircle3} />
       <MovingBlob x={775} y={800} scale={scale} translateX={translateX} translateY={translateY} asset={blob1} />
-      <MovingBlob x={1229} y={824} scale={scale} translateX={translateX} translateY={translateY} asset={rectangle3} />
+      <MovingBlob x={1229} y={824} scale={scale} translateX={translateX} translateY={translateY} asset={rectangle1} />
       <MovingBlob x={1498} y={598} scale={scale} translateX={translateX} translateY={translateY} asset={hexagon2} />
     </div>
   );
