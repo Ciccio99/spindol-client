@@ -22,6 +22,7 @@ import COLORS from 'constants/colors';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
+    marginBottom: theme.spacing(16),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -88,7 +89,6 @@ const SignInView = () => {
       </Helmet>
       <CssBaseline />
       <div className={classes.paper}>
-        {/* <img className={classes.avatar} src={getMoodSvg('excellent')} alt="excellent smiley face" /> */}
         <Typography variant="h3" className={classes.title}>
           Sign In
         </Typography>
@@ -96,7 +96,7 @@ const SignInView = () => {
 
         <form className={classes.form} onSubmit={login}>
           <Paper elevation={24}>
-            <Box px={6} py={4} pb={6} minWidth="40vw">
+            <Box px={6} py={4} pb={6}>
               <Grid container direction="column" spacing={3}>
                 <Grid item xs={12}>
                   <HypnosInput
@@ -168,6 +168,6 @@ const HypnosInput = (props) => {
   return (
     <InputBase classes={classes} className={className} {...otherProps} />
   );
-}
+};
 
 export default SignInView;
