@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(2),
   },
   countNumber: {
-    color: COLORS.RED,
+    color: COLORS.DARK_BLUE,
     paddingBottom: theme.spacing(1),
   },
   imgContainer: {
@@ -26,8 +26,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(7),
     height: 125,
     display: 'flex',
-  },
-  stepsImg: {
   },
 }));
 

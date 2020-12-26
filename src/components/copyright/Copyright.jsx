@@ -7,7 +7,7 @@ import {
 const Copyright = () => (
   <Typography variant="caption" color="textSecondary" noWrap>
     {'© '}
-    <Link color="inherit" href="https://sleepwell.ai/" target="_blank">
+    <Link color="inherit" href="https://sleepwell.ai/" target="_blank" rel="noopener noreferrer">
       Hypnos.ai
     </Link>
     {' '}

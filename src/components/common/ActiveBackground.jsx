@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import useMobile from 'hooks/useMobile';
 import COLORS from 'constants/colors';
 import blob2 from 'assets/blobs/shape_blob-02.svg';
-import rectangle3 from 'assets/blobs/shape_rectangle-03.svg';
 import blob1 from 'assets/blobs/shape_blob-01.svg';
 import hexagon1 from 'assets/blobs/shape_hexagon-01.svg';
 import hexagon2 from 'assets/blobs/shape_hexagon-02.svg';
