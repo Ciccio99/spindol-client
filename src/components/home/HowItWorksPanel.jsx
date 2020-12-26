@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const pDict = {
-  xs: 2,
+  xs: 3,
   sm: 3,
   md: 3,
   lg: 5,
@@ -51,7 +51,7 @@ const HowItWorksPanel = () => {
       </Box>
       <Grid container alignItems="stretch">
         <Grid item xs={12} sm={6} md={3} style={{ display: 'flex' }}>
-          <Box height="100%" width="100%" p={px} pt={10} style={{ background: COLORS.PINK }} display="flex" justifyContent="flex-end" flexDirection="column">
+          <Box height="60vh" width="100%" p={px} pt={10} style={{ background: COLORS.PINK }} display="flex" justifyContent="flex-end" flexDirection="column">
             <div className={classes.imgContainer}>
               <img alt="Step 1 - Connect Tracker" src={howWorks1} className={classes.stepsImg} />
             </div>
@@ -63,7 +63,7 @@ const HowItWorksPanel = () => {
           </Box>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <Box height="100%" width="100%" p={px} pt={10} display="flex" style={{ background: COLORS.PEACH_1 }} justifyContent="flex-end" flexDirection="column">
+          <Box height="60vh" width="100%" p={px} pt={10} display="flex" style={{ background: COLORS.PEACH_1 }} justifyContent="flex-end" flexDirection="column">
             <div className={classes.imgContainer}>
               <img alt="Step 2 - Track your sleep nightly" src={howWorks2} className={classes.stepsImg} />
             </div>
@@ -75,7 +75,7 @@ const HowItWorksPanel = () => {
           </Box>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <Box height="100%" width="100%" p={px} pt={10} display="flex" style={{ background: COLORS.PEACH_3 }} justifyContent="flex-end" flexDirection="column">
+          <Box height="60vh" width="100%" p={px} pt={10} display="flex" style={{ background: COLORS.PEACH_3 }} justifyContent="flex-end" flexDirection="column">
             <div className={classes.imgContainer}>
               <img alt="Step 3 - Analyze your Data" src={howWorks3} className={classes.stepsImg} />
             </div>
@@ -87,7 +87,7 @@ const HowItWorksPanel = () => {
           </Box>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <Box height="100%" width="100%" p={px} pt={10} display="flex" style={{ background: COLORS.PEACH_2 }} justifyContent="flex-end" flexDirection="column">
+          <Box height="60vh" width="100%" p={px} pt={10} display="flex" style={{ background: COLORS.PEACH_2 }} justifyContent="flex-end" flexDirection="column">
             <div className={classes.imgContainer}>
               <img alt="Step 4 - Provide insights and repeat" src={howWorks4} className={classes.stepsImg} />
             </div>

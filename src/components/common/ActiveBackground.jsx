@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import useMobile from 'hooks/useMobile';
 import COLORS from 'constants/colors';
 import blob2 from 'assets/blobs/shape_blob-02.svg';
 import rectangle3 from 'assets/blobs/shape_rectangle-03.svg';
@@ -21,53 +22,86 @@ const useStyles = makeStyles(() => ({
     marginLeft: 'calc(-50vw + 50%)',
   },
   backgroundContainer: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    overflow: 'hidden',
+    zIndex: -1,
+  },
+  container: {
     background: (props) => `${props.background || COLORS.LIGHT_BLUE}`,
     width: '100%',
     height: '100%',
     position: 'relative',
-    overflow: 'hidden',
+    zIndex: 0,
   },
-  blob: {
-    zIndex: -1,
-  },
-
 }));
 
-const ActiveBackground = ({ background, fullWidth, translateX, translateY, children }) => {
+const ActiveBackground = (props) => {
+  const { children, mobileScale = 1, background, ...otherProps } = props;
   const classes = useStyles({ background });
+  const { isMobile } = useMobile();
+
+  return (
+    <div className={classes.container}>
+      {
+        isMobile
+          ? <BlobsContainerMobile {...otherProps} scale={mobileScale} />
+          : <BlobsContainerDesktop {...otherProps} />
+      }
+
+      {children}
+    </div>
+  );
+};
+
+const BlobsContainerDesktop = ({ fullWidth, translateX, translateY, scale }) => {
+  const classes = useStyles();
+  return (
+    <div className={clsx(classes.backgroundContainer, { [classes.fullWidth]: fullWidth })}>
+      <MovingBlob x={76} y={177} scale={scale} translateX={translateX} translateY={translateY} asset={semicircle3} />
+      <MovingBlob x={416} y={75} scale={scale} translateX={translateX} translateY={translateY} asset={blob1} />
+      <MovingBlob x={724} y={160} scale={scale} translateX={translateX} translateY={translateY} asset={rectangle2} />
+      <MovingBlob x={1077} y={75} scale={scale} translateX={translateX} translateY={translateY} asset={rectangle1} />
+      <MovingBlob x={1443} y={183} scale={scale} translateX={translateX} translateY={translateY} asset={circle1} />
+
+      <MovingBlob x={464} y={411} scale={scale} translateX={translateX} translateY={translateY} asset={hexagon1} />
+      <MovingBlob x={883} y={440} scale={scale} translateX={translateX} translateY={translateY} asset={circle1} />
+      <MovingBlob x={1226} y={453} scale={scale} translateX={translateX} translateY={translateY} asset={blob5} />
+
+      <MovingBlob x={123} y={589} scale={scale} translateX={translateX} translateY={translateY} asset={blob1} />
+      <MovingBlob x={400} y={724} scale={scale} translateX={translateX} translateY={translateY} asset={semicircle3} />
+      <MovingBlob x={775} y={800} scale={scale} translateX={translateX} translateY={translateY} asset={blob1} />
+      <MovingBlob x={1229} y={824} scale={scale} translateX={translateX} translateY={translateY} asset={rectangle2} />
+      <MovingBlob x={1498} y={598} scale={scale} translateX={translateX} translateY={translateY} asset={hexagon2} />
+    </div>
+  );
+};
+
+const BlobsContainerMobile = ({ fullWidth, translateX, translateY, scale }) => {
+  const classes = useStyles();
 
   return (
     <div className={clsx(classes.backgroundContainer, { [classes.fullWidth]: fullWidth })}>
-      <MovingBlob x={76} y={177} translateX={translateX} translateY={translateY} asset={semicircle3} />
-      <MovingBlob x={416} y={75} translateX={translateX} translateY={translateY} asset={blob1} />
-      <MovingBlob x={724} y={160} translateX={translateX} translateY={translateY} asset={rectangle2} />
-      <MovingBlob x={1077} y={75} translateX={translateX} translateY={translateY} asset={rectangle1} />
-      <MovingBlob x={1443} y={183} translateX={translateX} translateY={translateY} asset={circle1} />
+      <MovingBlob x={76} y={177} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={semicircle3} />
+      <MovingBlob x={416} y={75} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={blob1} />
+      <MovingBlob x={724} y={160} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={rectangle2} />
+      <MovingBlob x={1077} y={75} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={rectangle1} />
+      <MovingBlob x={1443} y={183} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={circle1} />
 
-      <MovingBlob x={464} y={411} translateX={translateX} translateY={translateY} asset={hexagon1} />
-      <MovingBlob x={883} y={440} translateX={translateX} translateY={translateY} asset={circle2} />
-      <MovingBlob x={1226} y={453} translateX={translateX} translateY={translateY} asset={blob5} />
+      <MovingBlob x={464} y={411} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={hexagon1} />
+      <MovingBlob x={883} y={440} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={circle1} />
+      <MovingBlob x={1226} y={453} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={blob5} />
 
-      <MovingBlob x={123} y={589} translateX={translateX} translateY={translateY} asset={blob1} />
-      <MovingBlob x={400} y={724} translateX={translateX} translateY={translateY} asset={semicircle3} />
-      <MovingBlob x={775} y={800} translateX={translateX} translateY={translateY} asset={blob1} />
-      <MovingBlob x={1229} y={824} translateX={translateX} translateY={translateY} asset={rectangle2} />
-      <MovingBlob x={1498} y={598} translateX={translateX} translateY={translateY} asset={hexagon2} />
-      {/* <MovingBlob x={35} y={100} asset={blob2} />
-      <MovingBlob x={410} y={39} asset={blob1} />
-      <MovingBlob x={850} y={100} asset={hexagon} />
-      <MovingBlob x={1160} y={35} asset={semicircle3} />
-      <MovingBlob x={1600} y={75} asset={circle} /> */}
-      {/* split */}
-      {/* <MovingBlob x={-100} y={430} asset={rectangle3} />
-      <MovingBlob x={200} y={400} asset={semicircle1} />
-      <MovingBlob x={600} y={380} asset={rectangle2} />
-      <MovingBlob x={1050} y={420} asset={blob5} />
-      <MovingBlob x={1400} y={320} asset={rectangle1} />
-      <MovingBlob x={1750} y={380} asset={blob2} /> */}
-      {/* Split */}
-
-      {children}
+      <MovingBlob x={123} y={589} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={blob1} />
+      <MovingBlob x={400} y={724} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={semicircle3} />
+      <MovingBlob x={775} y={800} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={blob1} />
+      <MovingBlob x={1229} y={824} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={rectangle2} />
+      <MovingBlob x={1498} y={598} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={hexagon2} />
     </div>
   );
 };
@@ -75,13 +109,20 @@ const ActiveBackground = ({ background, fullWidth, translateX, translateY, child
 const useBlobStyles = makeStyles(() => ({
   blob: {
     position: 'absolute',
+    maxWidth: 200,
+    width: '100%',
     zIndex: 0,
+  },
+  mobileBlob: {
+    width: '30%',
   },
 }));
 
 const getPosition = () => ((Math.random() * 2) - 1) * 30;
 
-const MovingBlob = ({ x = 0, y = 0, asset = undefined, translateX = 0, translateY = 0 }) => {
+const MovingBlob = ({
+  x = 0, y = 0, asset = undefined, scale = 1, translateX = 0, translateY = 0,
+}) => {
   const classes = useBlobStyles();
   const maxTime = 5;
   const minTime = 2;
@@ -109,10 +150,10 @@ const MovingBlob = ({ x = 0, y = 0, asset = undefined, translateX = 0, translate
     <img
       alt="Blob"
       src={asset}
-      className={clsx(classes.blob, classes.rotateLeft)}
+      className={clsx(classes.blob, { [classes.mobileBlob]: true })}
       style={{
-        left: x + translateX,
-        top: y + translateY,
+        left: ((x + translateX) * scale),
+        top: ((y + translateY) * scale),
         transform: `translate3d(${xPos}px, ${yPos}px, 0)`,
         transition: `transform ${timeInterval}ms ease-in-out`,
       }}

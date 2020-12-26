@@ -92,13 +92,9 @@ const DayTagsSubModule = ({
             : (
               <Box>
                 <HypnosButton
-                  variant="contained"
-                  color="secondary"
-                  startIcon={<EditTwoToneIcon />}
+                  text="Add Activities"
                   onClick={() => { setIsModalOpen(true); }}
-                >
-                  <Typography variant="caption">Add Tags</Typography>
-                </HypnosButton>
+                />
               </Box>
             )
         }

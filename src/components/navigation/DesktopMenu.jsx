@@ -12,7 +12,7 @@ import styles from './Navigation.module.css';
 
 const useStyles = makeStyles((theme) => ({
   navLink: {
-    color: COLORS.GRAY,
+    color: COLORS.BLACK,
     textDecoration: 'none',
     cursor: 'pointer',
   },

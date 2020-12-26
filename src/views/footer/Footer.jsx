@@ -70,7 +70,6 @@ const FooterDesktop = () => {
       <div className={clsx(classes.footerInner)}>
         <Box width="100%" display="flex" justifyContent="space-between" alignItems="center">
           <div className={classes.logoContainer}>
-            {/* <Typography variant="h6">Hypnos.ai</Typography> */}
             <HypnosYellowIcon />
           </div>
           <div>
@@ -100,7 +99,7 @@ const FooterMobile = () => {
   return (
     <footer className={clsx(classes.footer, { [classes.footerMedium]: (!!user._id) })}>
       <div className={clsx(classes.footerInner, classes.footerInnerMobile)}>
-        <Typography variant="h6">Hypnos.ai</Typography>
+        <HypnosYellowIcon />
         <div>
           <div style={{ margin: '12px 0' }}><FooterLink to="https://community.hypnos.ai" external isMobile>Community</FooterLink></div>
           <div style={{ margin: '12px 0' }}><FooterLink to="/terms-of-service" isMobile>Terms of Service</FooterLink></div>

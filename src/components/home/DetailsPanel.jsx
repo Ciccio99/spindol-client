@@ -3,6 +3,7 @@ import { Box, Typography, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import useMedium from 'hooks/useMedium';
+import useBreakpoint from 'hooks/useBreakpoint';
 import COLORS from 'constants/colors';
 import insights1Svg from 'assets/home/01_insight.svg';
 import insights2Svg from 'assets/home/02_insight.svg';
@@ -26,25 +27,37 @@ const useStyles = makeStyles(() => ({
     transform: 'translate(28.8%)',
   },
   translate1Mobile: {
-    transform: 'translate(7.2%)',
+    transform: 'translate(11%)',
   },
   translate2Mobile: {
-    transform: 'translate(14.4%)',
+    transform: 'translate(22%)',
   },
   translateMoodTag: {
-    transform: 'translate(0, -100px)',
+    transform: 'translate(0, -25%)',
   },
   translateSleepWakeTime: {
-    transform: 'translate(0, -40px)',
+    transform: 'translate(0, -22%)',
   },
 }));
+
+
+const pDict = {
+  xs: 3,
+  sm: 3,
+  md: 3,
+  lg: 6,
+  xl: 6,
+};
+
 
 const DetailsPanel = () => {
   const classes = useStyles();
   const { isMedium } = useMedium();
+  const { breakpoint } = useBreakpoint();
+  const px = React.useMemo(() => pDict[breakpoint], [breakpoint]);
 
   return (
-    <Box p={6} pb={14} width="100%" className={classes.grayBackground}>
+    <Box p={px} pt={px + 1} pb={14} width="100%" className={classes.grayBackground}>
       <Box width="100%">
         <Typography variant="overline">
           One place for
@@ -80,7 +93,7 @@ const DetailsPanel = () => {
             <Box display="flex" justifyContent="center">
               <Box maxWidth={480}>
                 <Typography variant="h1" gutterBottom>
-                  We give you insight and recommendation on your sleep and activity
+                  We give you insights and recommendations on your sleep and activity
                 </Typography>
                 <Typography variant="subtitle1" color="textPrimary">
                   Using your sleep tracker data and the information you provide us we help you improve your sleep.
@@ -95,7 +108,7 @@ const DetailsPanel = () => {
           <Grid item xs={12} md={6}>
             <Box maxWidth={400}>
               <Typography variant="h1" gutterBottom>
-                Get better at waking up and getting to bed on time.
+                Get better at waking up and getting to bed on time
               </Typography>
               <Typography variant="subtitle1" color="textPrimary">
                 We track when you wake up and fall asleep so we can help guide you to reaching your goals.
@@ -126,7 +139,7 @@ const DetailsPanel = () => {
           </Grid>
         </Grid>
       </Box>
-      <Box mt={isMedium ? 5 : 16}>
+      <Box mt={isMedium ? 5 : 6}>
         <Grid container spacing={6} direction={isMedium ? 'column-reverse' : null}>
           <Grid item xs={12} md={6}>
             <Box maxWidth={480}>

@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import useMobile from 'hooks/useMobile';
 import COLORS from 'constants/colors';
 
 
@@ -16,10 +17,11 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'none',
     transition: 'all 0.25s ease-in-out',
     '&:hover': {
-      // backgroundColor: COLORS.WHITE,
-      // color: COLORS.DARK_BLUE,
       filter: 'drop-shadow(6px 6px 0px rgba(0, 0, 0, 0.1))',
     },
+  },
+  rootMobile: {
+    padding: `${theme.spacing(3)}px ${theme.spacing(5)}px`,
   },
   buttonText: {
     fontSize: '1rem',
@@ -30,8 +32,10 @@ const useStyles = makeStyles((theme) => ({
 
 const CtaButton = ({ text, className, ...other }) => {
   const classes = useStyles();
+  const { isMobile } = useMobile();
+
   return (
-    <ButtonBase className={clsx(classes.root, className)} {...other} disableRipple>
+    <ButtonBase className={clsx(classes.root, className, { [classes.rootMobile]: isMobile })} {...other} disableRipple>
       <Typography className={classes.buttonText} variant="button">{text}</Typography>
     </ButtonBase>
   );

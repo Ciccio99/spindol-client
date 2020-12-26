@@ -22,11 +22,11 @@ const useStyles = makeStyles((theme) => ({
     color: COLORS.RED,
   },
   linkDiv: {
-    margin: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+    margin: `${theme.spacing(1)}px ${theme.spacing(1)}px`,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
 }));
 
 const DesktopMenu = () => {
@@ -45,7 +45,7 @@ const DesktopMenu = () => {
   return null;
 };
 
-const NavItem = ({to, label, icon}) => {
+const NavItem = ({ to, label, icon }) => {
   const classes = useStyles();
   return (
     <NavLink to={to} className={clsx(classes.navLink)} activeClassName={clsx(classes.activeNavLink)}>
@@ -53,7 +53,7 @@ const NavItem = ({to, label, icon}) => {
         <Typography variant="body1" noWrap>{label}</Typography>
       </div>
     </NavLink>
-  )
+  );
 };
 
 export default DesktopMenu;

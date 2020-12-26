@@ -78,9 +78,9 @@ const AuthList = ({ onToggle, user }) => {
         <ListItem button component={NavLink} to="/settings">
           <ListItemText className={clsx(classes.navLink)}>Account</ListItemText>
         </ListItem>
-        <ListItem button component="a" href={`https://sleepwell.typeform.com/to/zNgvJ7?email=${user.email}`} target="_blank" rel="noopener noreferrer">
+        {/* <ListItem button component="a" href={`https://sleepwell.typeform.com/to/zNgvJ7?email=${user.email}`} target="_blank" rel="noopener noreferrer">
           <ListItemText className={clsx(classes.navLink)}>Feedback</ListItemText>
-        </ListItem>
+        </ListItem> */}
         <ListItem button component="a" href="https://community.hypnos.ai" target="_blank" rel="noopener noreferrer">
           <ListItemText className={clsx(classes.navLink)}>Community</ListItemText>
         </ListItem>
@@ -108,12 +108,6 @@ const NonAuthList = ({ onToggle }) => {
         </ListItem>
         <ListItem button component="a" href="https://community.hypnos.ai" target="_blank" rel="noopener noreferrer">
           <ListItemText className={clsx(classes.navLink)}>Community</ListItemText>
-        </ListItem>
-        <Divider />
-        <ListItem>
-          <Button variant="contained" disableElevation color="primary" size="small" href="https://sleepwell.typeform.com/to/FnZPZk" target="_blank" rel="noopener noreferrer">
-            <Typography variant="subtitle1">Request Access</Typography>
-          </Button>
         </ListItem>
       </List>
     </Box>
