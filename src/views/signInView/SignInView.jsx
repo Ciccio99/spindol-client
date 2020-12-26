@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
-import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
-  // Button,
   CssBaseline,
-  TextField,
-  // FormControlLabel,
-  // Checkbox,
   Paper,
-  Link,
   Grid,
   Box,
   Typography,
@@ -16,16 +11,11 @@ import {
   LinearProgress,
   InputBase,
 } from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { Helmet } from 'react-helmet-async';
 import UserServices from 'services/UserServices';
 import { useUserDispatch } from 'context/userContext';
 import { setUserId, Event } from 'utils/Tracking';
-import {
-  useSessionProgressDispatch,
-} from 'context/sessionProgressContext';
-import { getMoodSvg } from 'constants/mood';
 import Button from 'components/common/Button';
 import COLORS from 'constants/colors';
 
@@ -56,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignInView = () => {
-  const dispatchSessionProgress = useSessionProgressDispatch();
   const classes = useStyles();
   const dispatchUser = useUserDispatch();
   const [email, setEmail] = useState('');
@@ -81,11 +70,6 @@ const SignInView = () => {
         type: 'USER_LOGIN',
         user,
       });
-      dispatchSessionProgress({
-        type: 'INIT',
-        value: user?.stats?.sessionStats || {},
-      });
-
       setUserId(user._id);
       Event('User', 'User Sign In');
 

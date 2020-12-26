@@ -10,7 +10,6 @@ import clsx from 'clsx';
 import { useAsync } from 'react-async';
 import { MOOD_VALUES, VALUES_MOOD, MOOD_COLOR, getMoodIcon } from 'constants/mood';
 import PanelModule from 'components/organizers/PanelModule';
-import MoodDoughnut from 'components/chart/MoodDoughnut';
 
 const TITLE = 'Tags Mood Impact';
 
@@ -133,12 +132,6 @@ const TagsMoodImpactModule = ({ series, baselineSeries, tag1, tag2 }) => {
                 </Typography>
               }
             </Grid>
-            <Grid item xs={12} md={6}>
-              {
-                data.data1Diaries.length !== 0
-                && <MoodDoughnut dailyDiaries={data.data1Diaries} />
-              }
-            </Grid>
           </Grid>
           <Grid item container xs={12} sm={6} spacing={2}>
             <Grid item xs={12} md={6}>
@@ -156,12 +149,6 @@ const TagsMoodImpactModule = ({ series, baselineSeries, tag1, tag2 }) => {
                 <Typography variant="subtitle2" color="error">
                   {`No available data for "${tag2 ? `${tag2.tag} tag` : 'Baseline'}"`}
                 </Typography>
-              }
-            </Grid>
-            <Grid item xs={12} md={6}>
-              {
-                data.data2Diaries.length !== 0
-                && <MoodDoughnut dailyDiaries={data.data2Diaries} />
               }
             </Grid>
           </Grid>

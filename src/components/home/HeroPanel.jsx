@@ -6,7 +6,6 @@ import ActiveBackground from 'components/common/ActiveBackground';
 import CtaButton from 'components/common/CtaButton';
 import COLORS from 'constants/colors';
 import useMedium from 'hooks/useMedium';
-import mobileBg from 'assets/img_hero_bg-mobile.svg';
 
 const useStyles = makeStyles(() => ({
   halfHorizontalPage: {

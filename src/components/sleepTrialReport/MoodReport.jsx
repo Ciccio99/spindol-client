@@ -6,8 +6,6 @@ import {
   Divider,
   Paper,
 } from '@material-ui/core';
-import MoodDoughnut from 'components/chart/MoodDoughnut';
-import MoodLine from 'components/chart/MoodLine';
 
 const MoodReport = ({ dailyDiaries, checkIns }) => (
   <Paper elevation={24}>
@@ -22,7 +20,6 @@ const MoodReport = ({ dailyDiaries, checkIns }) => (
             <Box mb={1}>
               <Typography variant="subtitle2">Mood Count</Typography>
             </Box>
-            <MoodDoughnut dailyDiaries={dailyDiaries} />
           </Box>
         </Grid>
         <Grid item sm={12} md={6}>
@@ -30,7 +27,6 @@ const MoodReport = ({ dailyDiaries, checkIns }) => (
             <Box mb={1}>
               <Typography variant="subtitle2">Mood Throughout Trial</Typography>
             </Box>
-            <MoodLine dailyDiaries={dailyDiaries} checkIns={checkIns} />
           </Box>
         </Grid>
 

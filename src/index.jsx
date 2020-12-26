@@ -14,9 +14,6 @@ import {
 import {
   AlertSystemProvider,
 } from 'context/alertSystemContext';
-import {
-  SessionProgressProvider,
-} from 'context/sessionProgressContext';
 import AlertSystemModule from 'components/alertSystem/AlertSystemModule';
 import { initGA } from 'utils/Tracking';
 import { QueryCache, ReactQueryCacheProvider } from 'react-query'
@@ -53,9 +50,7 @@ ReactDOM.render(
           <ReactQueryCacheProvider queryCache={queryCache}>
             <UserProvider>
               <AlertSystemProvider>
-                <SessionProgressProvider>
-                  <App />
-                </SessionProgressProvider>
+                <App />
                 <AlertSystemModule />
               </AlertSystemProvider>
             </UserProvider>

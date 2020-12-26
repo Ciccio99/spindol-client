@@ -19,9 +19,6 @@ import { Helmet } from 'react-helmet-async';
 import UserServices from 'services/UserServices';
 import { useUserDispatch } from 'context/userContext';
 import { setUserId, Event } from 'utils/Tracking';
-import {
-  useSessionProgressDispatch,
-} from 'context/sessionProgressContext';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -54,7 +51,6 @@ const RegisterView = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const dispatchSessionProgress = useSessionProgressDispatch();
 
   const signUp = async (e) => {
     e.preventDefault();
@@ -68,10 +64,6 @@ const RegisterView = () => {
       dispatchUser({
         type: 'USER_LOGIN',
         user,
-      });
-      dispatchSessionProgress({
-        type: 'INIT',
-        value: user?.stats?.sessionStats || {},
       });
       setUserId(user._id);
       Event('User', 'Created Account', `UserId: ${user._id}`);

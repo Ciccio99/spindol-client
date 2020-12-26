@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import ProtectedRoute from 'routes/ProtectedRoute';
 import PublicRoute from 'routes/PublicRoute';
 import SignInView from 'views/signInView/SignInView';
-import RegisterView from 'views/registerView/RegisterView';
+// import RegisterView from 'views/registerView/RegisterView';
 import DashboardView from 'views/dashboard/DashboardView';
 import AccountSettings from 'views/accountSettings/AccountSettings';
 import CheckInsView from 'views/checkins/CheckInsView';
@@ -23,8 +23,8 @@ const AppRouter = () => {
       <Switch>
         <PublicRoute exact path="/" component={Home} />
         <PublicRoute path="/signin" authRedirectTo="/dashboard" component={SignInView} />
-        <PublicRoute path="/register/:token" authRedirectTo="/dashboard" component={RegisterView} />
-        <PublicRoute path="/register" authRedirectTo="/dashboard" component={RegisterView} />
+        {/* <PublicRoute path="/register/:token" authRedirectTo="/dashboard" component={RegisterView} /> */}
+        {/* <PublicRoute path="/register" authRedirectTo="/dashboard" component={RegisterView} /> */}
         <PublicRoute path="/terms-of-service" component={TermsOfService} />
         <PublicRoute path="/privacy-policy" component={PrivacyPolicy} />
         <ProtectedRoute path="/dashboard" component={DashboardView} />

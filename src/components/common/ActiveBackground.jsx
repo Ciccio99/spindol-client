@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import useMobile from 'hooks/useMobile';
@@ -8,7 +8,6 @@ import rectangle3 from 'assets/blobs/shape_rectangle-03.svg';
 import blob1 from 'assets/blobs/shape_blob-01.svg';
 import hexagon1 from 'assets/blobs/shape_hexagon-01.svg';
 import hexagon2 from 'assets/blobs/shape_hexagon-02.svg';
-import semicircle1 from 'assets/blobs/shape_semicircle-01.svg';
 import rectangle2 from 'assets/blobs/shape_rectangle-02.svg';
 import semicircle3 from 'assets/blobs/shape_semicircle-03.svg';
 import blob5 from 'assets/blobs/shape_blob-05.svg';
@@ -67,16 +66,16 @@ const BlobsContainerDesktop = ({ fullWidth, translateX, translateY, scale }) => 
       <MovingBlob x={416} y={75} scale={scale} translateX={translateX} translateY={translateY} asset={blob1} />
       <MovingBlob x={724} y={160} scale={scale} translateX={translateX} translateY={translateY} asset={rectangle2} />
       <MovingBlob x={1077} y={75} scale={scale} translateX={translateX} translateY={translateY} asset={rectangle1} />
-      <MovingBlob x={1443} y={183} scale={scale} translateX={translateX} translateY={translateY} asset={circle1} />
+      <MovingBlob x={1443} y={183} scale={scale} translateX={translateX} translateY={translateY} asset={circle2} />
 
       <MovingBlob x={464} y={411} scale={scale} translateX={translateX} translateY={translateY} asset={hexagon1} />
       <MovingBlob x={883} y={440} scale={scale} translateX={translateX} translateY={translateY} asset={circle1} />
       <MovingBlob x={1226} y={453} scale={scale} translateX={translateX} translateY={translateY} asset={blob5} />
 
-      <MovingBlob x={123} y={589} scale={scale} translateX={translateX} translateY={translateY} asset={blob1} />
+      <MovingBlob x={123} y={589} scale={scale} translateX={translateX} translateY={translateY} asset={blob2} />
       <MovingBlob x={400} y={724} scale={scale} translateX={translateX} translateY={translateY} asset={semicircle3} />
       <MovingBlob x={775} y={800} scale={scale} translateX={translateX} translateY={translateY} asset={blob1} />
-      <MovingBlob x={1229} y={824} scale={scale} translateX={translateX} translateY={translateY} asset={rectangle2} />
+      <MovingBlob x={1229} y={824} scale={scale} translateX={translateX} translateY={translateY} asset={rectangle3} />
       <MovingBlob x={1498} y={598} scale={scale} translateX={translateX} translateY={translateY} asset={hexagon2} />
     </div>
   );
@@ -91,7 +90,7 @@ const BlobsContainerMobile = ({ fullWidth, translateX, translateY, scale }) => {
       <MovingBlob x={416} y={75} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={blob1} />
       <MovingBlob x={724} y={160} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={rectangle2} />
       <MovingBlob x={1077} y={75} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={rectangle1} />
-      <MovingBlob x={1443} y={183} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={circle1} />
+      <MovingBlob x={1443} y={183} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={circle2} />
 
       <MovingBlob x={464} y={411} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={hexagon1} />
       <MovingBlob x={883} y={440} scale={scale} translateX={translateX * scale} translateY={translateY * scale} asset={circle1} />

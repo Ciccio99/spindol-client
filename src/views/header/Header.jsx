@@ -5,8 +5,6 @@ import {
   Toolbar,
   Grid,
   Box,
-  Typography,
-  Chip,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';

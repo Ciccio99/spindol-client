@@ -4,17 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import useMedium from 'hooks/useMedium';
 import CtaButton from 'components/common/CtaButton';
-import pinkBackground from 'assets/pink-background.png';
 import ActiveBackground from 'components/common/ActiveBackground';
 import COLORS from 'constants/colors';
 
 const useStyles = makeStyles(() => ({
-  pinkBackground: {
-    // background: COLORS.PEACH,
-    // backgroundImage: `url(${pinkBackground})`,
-    // backgroundSize: 'cover',
-    // backgroundPosition: 'center',
-  },
   text: {
     fontSize: '48px',
     maxWidth: 1120,
@@ -29,7 +22,7 @@ const EndBumperPanel = () => {
   const { isMedium } = useMedium();
   return (
     <ActiveBackground background={COLORS.DARK_PEACH} mobileScale={0.65} translateX={-200} translateY={-200}>
-      <Box width="100%" py={12} px={isMedium ? 3 : 4} className={classes.pinkBackground} display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+      <Box width="100%" py={12} px={isMedium ? 3 : 4} display="flex" flexDirection="column" justifyContent="center" alignItems="center">
         <Typography variant="overline" align="center" className={clsx(classes.text, { [classes.textMobile]: isMedium })}>
           Sleep is important and it’s very personal. We want to make sure people find what works best for them – help us help everyone get better sleep.
         </Typography>

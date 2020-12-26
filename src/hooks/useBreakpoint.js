@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import BREAK_POINTS from 'constants/breakpoints';
 
 const getBreakpoint = (width) => {

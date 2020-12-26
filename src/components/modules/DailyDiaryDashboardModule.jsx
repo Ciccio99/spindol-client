@@ -3,6 +3,7 @@ import {
   Box,
   Divider,
   LinearProgress,
+  Typography,
 } from '@material-ui/core';
 import moment from 'moment-timezone';
 import { useAsync } from 'react-async';
@@ -11,20 +12,20 @@ import DailyDiaryServices from 'services/DailyDiaryServices';
 import PanelModule from 'components/organizers/PanelModule';
 import MoodSubModule from 'components/subModules/MoodSubModule';
 import DayTagsSubModule from 'components/subModules/DayTagsSubModule';
-import { useSessionProgressDispatch } from 'context/sessionProgressContext';
 
 const PanelWrapper = ({ date, children }) => (
   <PanelModule
-    title="Daily Diary Check-In"
+    title="Daily Check-In"
     subtitle={moment(date || undefined).format('dddd DD, MMM YYYY')}
   >
+    <Typography variant="subtitle2">(This will soon be replaced with a new check in experience)</Typography>
     {children}
   </PanelModule>
 );
 
 const DailyDiaryDashboardModule = ({ date, enableStreak, tagsDate }) => {
   const dispatchAlertSystem = useAlertSystemDispatch();
-  const dispatchSessionProgress = useSessionProgressDispatch();
+
   const { data, error, isPending } = useAsync(DailyDiaryServices.getDashboardData, { date });
   const {
     data: tagsData, error: tagsError, isPending: tagsIsPending, setData: setTagsData,
@@ -32,18 +33,6 @@ const DailyDiaryDashboardModule = ({ date, enableStreak, tagsDate }) => {
     DailyDiaryServices.getDashboardData, { date: tagsDate || date },
   );
   const [dailyDiary, setDailyDiary] = useState(null);
-
-  useEffect(() => {
-    if (dailyDiary?.mood) {
-      dispatchSessionProgress({ type: 'MOOD_COMPLETE'});
-    }
-  }, [dailyDiary, dispatchSessionProgress]);
-
-  useEffect(() => {
-    if (tagsData?.diaryTags?.length) {
-      dispatchSessionProgress({ type: 'TAGS_COMPLETE'});
-    }
-  }, [tagsData, dispatchSessionProgress]);
 
   const handleMoodUpdate = React.useCallback(async (dto) => {
     const oldData = dailyDiary;

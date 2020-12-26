@@ -19,19 +19,19 @@ import ToggleButton from '../buttons/toggleButton/ToggleButton';
 import styles from './DailyDiaryCheckIn.module.css';
 
 const MOOD_ICON = {
-  'excellent': <SentimentVerySatisfied htmlColor='#5EBC88' fontSize='medium'/>,
-  'good': <SentimentSatisfiedAlt htmlColor='#B0D25A' fontSize='medium'/>,
-  'meh': <SentimentSatisfied htmlColor='#FFC929' fontSize='medium'/>,
-  'bad': <SentimentDissatisfied htmlColor='#F68B3B' fontSize='medium'/>,
-  'awful': <SentimentVeryDissatisfied htmlColor='#DF1D3D' fontSize='medium'/>,
+  excellent: <SentimentVerySatisfied htmlColor="#5EBC88" fontSize="medium" />,
+  good: <SentimentSatisfiedAlt htmlColor="#B0D25A" fontSize="medium" />,
+  meh: <SentimentSatisfied htmlColor="#FFC929" fontSize="medium" />,
+  bad: <SentimentDissatisfied htmlColor="#F68B3B" fontSize="medium" />,
+  awful: <SentimentVeryDissatisfied htmlColor="#DF1D3D" fontSize="medium" />,
 };
 
 const MOOD_COLOR = {
-  'excellent': styles.excellent,
-  'good': styles.good,
-  'meh': styles.meh,
-  'bad': styles.bad,
-  'awful': styles.awful,
+  excellent: styles.excellent,
+  good: styles.good,
+  meh: styles.meh,
+  bad: styles.bad,
+  awful: styles.awful,
 };
 
 const DailyDiaryCheckIn = ({ dailyDiary }) => {
@@ -42,27 +42,32 @@ const DailyDiaryCheckIn = ({ dailyDiary }) => {
     //   return true;
     // }
     // return false;
-  }
+  };
 
 
   return (
     <Box boxShadow={0} className={styles.panel} borderRadius={25} p={1} mb={3}>
-      <Typography variant='subtitle2'>{moment(dailyDiary.date).utc().format('dddd MMM D, YYYY')}</Typography>
-      <Grid container alignItems='center' spacing={2}>
+      <Typography variant="subtitle2">{moment(dailyDiary.date).utc().format('dddd MMM D, YYYY')}</Typography>
+      <Grid container alignItems="center" spacing={2}>
         <Grid item xs={12}>
-          <Typography variant='h6'>You felt <span className={MOOD_COLOR[dailyDiary.mood]}>{dailyDiary.mood}</span> on this day.</Typography>
+          <Typography variant="h6">
+            You felt
+            <span className={MOOD_COLOR[dailyDiary.mood]}>{dailyDiary.mood}</span>
+            {' '}
+            on this day.
+          </Typography>
         </Grid>
-        <Grid item container xs={12} justify='space-between'>
+        <Grid item container xs={12} justify="space-between">
           <Grid item><Typography>SleepTrial One</Typography></Grid>
           <Grid item>Button1 Button2</Grid>
         </Grid>
-        <Grid item container xs={12} justify='space-between'>
+        <Grid item container xs={12} justify="space-between">
           <Grid item><Typography>SleepTrial Two</Typography></Grid>
           <Grid item>Button1 Button2</Grid>
         </Grid>
       </Grid>
 
-          {/* <Box className={styles.panel} p={1} borderRadius={25}>
+      {/* <Box className={styles.panel} p={1} borderRadius={25}>
           <Grid  container alignContent='center' alignItems='center'>
             <Grid item>{MOOD_ICON[dailyDiary.mood]}</Grid>
             <Grid item>
@@ -70,7 +75,7 @@ const DailyDiaryCheckIn = ({ dailyDiary }) => {
             </Grid>
           </Grid>
           </Box> */}
-        {/* <ToggleButtonGroup item container xs={12} sm={12} spacing={1} alignItems='center' justify='space-between' onChange={submitDailyDiary} value={dailyDiary ? dailyDiary.mood : null}>
+      {/* <ToggleButtonGroup item container xs={12} sm={12} spacing={1} alignItems='center' justify='space-between' onChange={submitDailyDiary} value={dailyDiary ? dailyDiary.mood : null}>
           <ToggleButton value='awful' xs={6} sm={2}>Awful</ToggleButton>
           <ToggleButton value='bad' xs={6} sm={2}>Bad</ToggleButton>
           <ToggleButton value='meh' xs={6} sm={2}>Meh</ToggleButton>

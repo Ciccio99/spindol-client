@@ -8,7 +8,7 @@ import moment from 'moment-timezone';
 import { CancelIcon } from 'components/common/Icons';
 import useTodayDiary from 'hooks/useTodayDiary';
 import { updateDiaryJournal } from 'services/DailyDiaryServices';
-import { useQueryCache, useMutation, queryCache } from 'react-query';
+import { useQueryCache, useMutation } from 'react-query';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import COLORS from 'constants/colors';
 
@@ -75,9 +75,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/*
+  TODO: Remove scrolling from the close/preview mode journal module
+*/
+
 const todayDate = moment();
 export default function JournalModule() {
   const classes = useStyles();
+  const queryCache = useQueryCache();
   const { data, isLoading } = useTodayDiary();
   const dispatchAlert = useAlertSystemDispatch();
   const [journalInput, setJournalInput] = useState('');
@@ -111,15 +116,16 @@ export default function JournalModule() {
     },
   );
 
-  useEffect(() => {
-    console.log('Running journal data effect');
-    if (data?.journalEntry?.length > 0) {
-      setJournalInput(data.journalEntry);
-    }
-  }, [data]);
+  // Was used for initial load, may not be necessary anymore with the logical Or assignment of value in render return
+  // useEffect(() => {
+  //   // console.log('Running journal data effect');
+  //   if (data?.journalEntry?.length > 0) {
+  //     setJournalInput(data.journalEntry);
+  //   }
+  // }, [data]);
 
   useEffect(() => {
-    console.log('Focused: ', journalFocus);
+    // console.log('Focused: ', journalFocus);
     if (journalFocus && journalInput.length > 0) {
       setJournalExpanded(true);
       setEnableMultiline(true);
@@ -142,7 +148,7 @@ export default function JournalModule() {
   };
 
   const handleOnKeyDown = (event) => {
-    console.log(event);
+    // console.log(event);
     if (event.keyCode === 27) {
       event.preventDefault();
       handleCloseJournal();
@@ -176,10 +182,10 @@ export default function JournalModule() {
                     rows={enableMultiline ? null : 1}
                     fullWidth
                     placeholder="Last night, I dreamed..."
-                    value={journalInput}
+                    value={journalInput || data?.journalEntry || ''}
                     onChange={handleOnJournalInput}
                     onFocus={() => { setJournalFocus(true); }}
-                    onBlur={() => { console.log('losing focus')/*setJournalFocus(false);*/ }}
+                    // onBlur={() => { console.log('losing focus')/*setJournalFocus(false);*/ }}
                   />
                 )
             }

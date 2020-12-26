@@ -5,6 +5,7 @@ import {
   Divider,
   Tabs,
   Tab,
+  Typography,
 } from '@material-ui/core';
 import { Helmet } from 'react-helmet-async';
 import Section from 'components/organizers/Section';
@@ -24,6 +25,7 @@ const DataView = () => {
         />
       </Helmet>
       {/* <ViewHeader label="Data" /> */}
+      <Typography variant="subtitle2" align="center">* Data Page still in development *</Typography>
       <Box
         component={Tabs}
         value={tabValue}
@@ -32,23 +34,23 @@ const DataView = () => {
         scrollButtons="off"
         indicatorColor="primary"
         textColor="primary"
-        mt={4}
+        mt={2}
       >
         <Tab label="Data Explore" disableRipple />
-        <Tab label="Trends" disableRipple />
-        <Tab label="Trends of Yesteryear" disableRipple />
+        {/* <Tab label="Trends" disableRipple />
+        <Tab label="Trends of Yesteryear" disableRipple /> */}
       </Box>
       <Divider />
       <Section>
         <TabPanel value={tabValue} index={0}>
           <DataExploreTabPanel />
         </TabPanel>
-        <TabPanel value={tabValue} index={1}>
+        {/* <TabPanel value={tabValue} index={1}>
           Trends
         </TabPanel>
         <TabPanel value={tabValue} index={2}>
           Trends History
-        </TabPanel>
+        </TabPanel> */}
       </Section>
 
     </Container>

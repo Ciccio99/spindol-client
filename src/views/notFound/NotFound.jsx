@@ -18,7 +18,7 @@ const NotFound = () => (
       <Box mt={3} display="flex" flexDirection="column" justifyContent="center" alignItems="center">
         <Typography variant="h6">
           {'Let\'s get you back '}
-          <Link to="/dashboard">home</Link>
+          <Link to="/">home</Link>
         </Typography>
       </Box>
     </Box>
