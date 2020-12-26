@@ -6,7 +6,6 @@ const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   const queryString = JSON.stringify({
     match, sort, limit, skip,
   });
-
   try {
     const { data } = await axios.get('/dailyDiary',
       { params: { query: queryString } });
@@ -14,6 +13,47 @@ const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   } catch (error) {
     console.log(error);
     return [];
+  }
+};
+
+export const getTodayDiary = async () => {
+  try {
+    const searchDate = moment().format('YYYY-MM-DD');
+    const queryString = JSON.stringify({ date: searchDate });
+    const { data } = await axios.get('/dailyDiary/getByDate',
+      { params: { query: queryString } });
+    return data;
+  } catch (error) {
+    throw new ErrorHandler(error);
+  }
+};
+
+export const getDiariesByDateRange = async (startDate, endDate) => {
+  try {
+
+    const queryString = JSON.stringify({
+      match: {
+        date: { $gte: startDate, $lte: endDate },
+      }, sort: {date: 1}, limit: 0, skip: 0,
+    });
+    const { data } = await axios.get('/dailyDiary',
+      { params: { query: queryString } });
+    return data;
+  } catch (e) {
+    throw new ErrorHandler(e);
+  }
+};
+
+export const getAllDiaries = async () => {
+  try {
+    const queryString = JSON.stringify({
+      match: {}, sort: {date: 1}, limit: 0, skip: 0,
+    });
+    const { data } = await axios.get('/dailyDiary',
+      { params: { query: queryString } });
+    return data;
+  } catch (e) {
+    throw new ErrorHandler(e);
   }
 };
 
@@ -99,6 +139,16 @@ const update = async (dto) => {
   }
 };
 
+export const updateDiaryJournal = async (id, journalEntry) => {
+  const body = { _id: id, journalEntry };
+  try {
+    const { data } = await axios.patch(`/dailyDiary/${id}`, body);
+    return data;
+  } catch (error) {
+    throw new ErrorHandler(error);
+  }
+};
+
 const getDashboardData = async ({ date = moment() }) => {
   try {
     const searchDate = moment(date).format('YYYY-MM-DD');
@@ -164,4 +214,5 @@ export default {
   getReportingStreak,
   getDashboardData,
   getTagsHeatMapData,
+  getDiariesByDateRange,
 };

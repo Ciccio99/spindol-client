@@ -143,7 +143,7 @@ const EditTagsModal = ({
     } finally {
       setTabValue(0);
     }
-  }, [data]);
+  }, [data, setData, dispatchAlertSystem]);
 
   if (isPending) {
     return (

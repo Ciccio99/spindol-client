@@ -1,12 +1,21 @@
 import React from 'react';
-import {
-  Box,
-} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 
-const Section = ({ children }) => (
-  <Box mt={4}>
-    {children}
-  </Box>
-);
+const useStyles = makeStyles((theme) => ({
+  section: {
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(4),
+  },
+}));
 
+const Section = ({ children, ...rest }) => {
+  const classes = useStyles();
+
+  return (
+    <div className={clsx(classes.section)} {...rest}>
+      {children}
+    </div>
+  );
+};
 export default Section;

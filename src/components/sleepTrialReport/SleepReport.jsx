@@ -6,7 +6,6 @@ import {
   Divider,
   Paper,
 } from '@material-ui/core';
-import SleepQualityBar from 'components/chart/SleepQualityBar';
 import SleepCheckInStats from './SleepCheckInStats';
 
 const SleepReport = ({ dailyDiaries, sleepTrialTracker }) => {
@@ -42,7 +41,7 @@ const SleepReport = ({ dailyDiaries, sleepTrialTracker }) => {
         </Box>
         <Divider />
         <Box p={4}>
-          <SleepQualityBar sleepSummaries={sleepSummaries} />
+    
           <Box mt={8}>
             <SleepCheckInStats
               sleepSummaries={sleepSummaries}

@@ -29,16 +29,6 @@ const DesktopMenu = () => {
               <Typography variant="subtitle1" noWrap>Daily Diary</Typography>
             </NavLink>
           </Grid>
-            {
-              user?.role === ADMIN_ROLE
-              && (
-                <Grid item key="Team">
-                  <NavLink to="/team" className={styles.navLink} activeClassName={styles.navLinkActive}>
-                    <Typography variant="subtitle1">Team</Typography>
-                  </NavLink>
-                </Grid>
-              )
-            }
           <Grid item key="settings">
             <NavLink key="settings" to="/settings" className={styles.navLink} activeClassName={styles.navLinkActive}>
               <Typography variant="subtitle1">Account</Typography>

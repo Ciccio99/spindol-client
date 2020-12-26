@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import {
-  Box,
   Typography,
   LinearProgress,
 } from '@material-ui/core';
@@ -46,13 +45,14 @@ const TagSleepTable = ({
   }
 
   if (error) {
-    return <Box mt={4}><Typography>{error.message}</Typography></Box>;
+    return <Typography variant="subtitle2" color="error">{error.message}</Typography>;
   }
 
   if (data) {
     return (
       <>
-        {isPending && <Box mb={4}><LinearProgress color="primary" /></Box>}
+        {isPending && <div style={{ height: '4px' }}><LinearProgress color="secondary" /></div>}
+        {!isPending && <div style={{ height: '4px' }} />}
         <ComparisonTable
           keys={data.keys}
           stats1={data.newStats}

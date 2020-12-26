@@ -17,12 +17,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Helmet } from 'react-helmet-async';
 import UserServices from 'services/UserServices';
-import ReactGA from 'react-ga';
 import { useUserDispatch } from 'context/userContext';
 import { setUserId, Event } from 'utils/Tracking';
-import {
-  useSessionProgressDispatch,
-} from 'context/sessionProgressContext';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -55,7 +51,6 @@ const RegisterView = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const dispatchSessionProgress = useSessionProgressDispatch();
 
   const signUp = async (e) => {
     e.preventDefault();
@@ -70,10 +65,6 @@ const RegisterView = () => {
         type: 'USER_LOGIN',
         user,
       });
-      dispatchSessionProgress({
-        type: 'INIT',
-        value: user?.stats?.sessionStats || {},
-      });
       setUserId(user._id);
       Event('User', 'Created Account', `UserId: ${user._id}`);
 
@@ -84,7 +75,7 @@ const RegisterView = () => {
   return (
     <Container component="main" maxWidth="xs">
       <Helmet>
-        <title>Hypnos.ai - Account Registration</title>
+        <title>Hypnos - Register</title>
         <meta
           name="description"
           content="Hypnos.ai helps you track and improve your sleep habits. Discover which sleep trial best improves your sleep and overall happiness. Register an account with Hypnos.ai today, and start improving your sleep."

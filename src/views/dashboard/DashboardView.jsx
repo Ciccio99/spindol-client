@@ -1,56 +1,46 @@
-import React, { useEffect, useContext } from 'react';
+import React from 'react';
 import {
   Container,
   Box,
   Grid,
-  Typography,
 } from '@material-ui/core';
-import moment from 'moment-timezone';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import { Helmet } from 'react-helmet-async';
 import { useUserState } from 'context/userContext';
-import SleepTrialTrackersContext from 'context/sleepTrialTrackersContext';
-import SleepTrialTrackerServices from 'services/SleepTrialTrackerServices';
-import SleepTrialTrackerPanel from 'components/sleepTrialTracker/SleepTrialTrackerPanel';
-import DailyDiaryDashboardModule from 'components/modules/DailyDiaryDashboardModule';
-import SleepComparisonModule from 'components/modules/SleepComparisonModule';
-import HabitModule from 'components/modules/HabitModule';
 import Section from 'components/organizers/Section';
-import SessionStepper from 'components/SessionStepper';
 import ConnectDeviceCTA from 'components/cta/ConnectDevice';
-import useMedium from 'hooks/useMedium';
+import useMobile from 'hooks/useMobile';
+import WeekMoodModule from 'components/dashboard/WeekMoodModule';
+import StreakModule from 'components/dashboard/StreakModule';
+import SleepModule from 'components/dashboard/SleepModule';
+import SleepChartModule from 'components/dashboard/SleepChartModule';
+import SleepGoalsModule from 'components/dashboard/SleepGoalsModule';
+import JournalModule from 'components/dashboard/JournalModule';
+// Temporary while check-in experience is being made
+import DailyDiaryDashboardModule from 'components/modules/DailyDiaryDashboardModule';
+
+const useStyles = makeStyles((theme) => ({
+  gridItemTopMargin: {
+    marginTop: theme.spacing(8),
+  },
+}));
 
 const DashboardView = () => {
   const user = useUserState();
-  const { isMedium } = useMedium();
-  const { sleepTrialTrackers, dispatchSleepTrialTrackers } = useContext(SleepTrialTrackersContext);
-  const userFirstName = user.name ? user.name.split(' ')[0] : '';
-
-  useEffect(() => {
-    (async () => {
-      const trialTrackersData = await SleepTrialTrackerServices.querySleepTrialTracker();
-
-      dispatchSleepTrialTrackers({
-        type: 'POPULATE',
-        sleepTrialTrackers: trialTrackersData,
-      });
-    })();
-  }, [dispatchSleepTrialTrackers, user]);
+  const { isMobile } = useMobile();
+  const classes = useStyles();
 
   return (
     <Box mb={4}>
       <Helmet>
-        <title>Hypnos.ai - Dashboard</title>
+        <title>Hypnos - Dashboard</title>
         <meta
           name="description"
           content="Hypnos.ai helps you track and improve your sleep habits. Use the dashboard to set your daily mood, check in to your sleep trials and see what your sleep has been lately."
         />
       </Helmet>
       <Container>
-        {/* <Box mt={4}>
-          <Typography variant="h5">
-            {`Welcome${userFirstName ? ` ${userFirstName}` : ''}!`}
-          </Typography>
-        </Box> */}
         {
           !user.accounts.oura.connected
           && !user.accounts.withings.connected
@@ -61,28 +51,28 @@ const DashboardView = () => {
           </Section>
           )
         }
+        <JournalModule />
         <Section>
-          <SessionStepper />
+          <DailyDiaryDashboardModule />
         </Section>
         <Section>
-          <DailyDiaryDashboardModule date={moment()} tagsDate={moment().subtract(1, 'day')} enableStreak />
-        </Section>
-        <Section>
-          <Grid container>
-            <Grid component={Grid} item xs={12} md={6}>
-              <Box mr={isMedium ? 0 : 4} height={isMedium ? 'auto' : '100%'}>
-                <SleepComparisonModule />
-              </Box>
+          <Grid container justify="space-between" spacing={isMobile ? 0 : 6}>
+            <Grid item xs={12} sm={7} md={8} lg={8}>
+              <WeekMoodModule />
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Box mt={isMedium ? 8 : 0} height={isMedium ? 'auto' : '100%'}>
-                <HabitModule />
-              </Box>
-            </Grid>
+            {/* <Grid item xs={12} sm={5} md={4} lg={4} className={clsx({ [classes.gridItemTopMargin]: isMobile })}>
+              <StreakModule />
+            </Grid> */}
           </Grid>
         </Section>
         <Section>
-          <SleepTrialTrackerPanel trialTrackers={sleepTrialTrackers} />
+          <SleepGoalsModule />
+        </Section>
+        <Section>
+          <SleepChartModule />
+        </Section>
+        <Section>
+          <SleepModule />
         </Section>
       </Container>
     </Box>

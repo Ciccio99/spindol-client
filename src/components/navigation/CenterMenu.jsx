@@ -4,13 +4,30 @@ import {
   Box,
   Typography,
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import { useUserState } from 'context/userContext';
-import styles from './Navigation.module.css';
-import { ADMIN_ROLE } from 'constants/Roles';
+import COLORS from 'constants/colors';
+
+const useStyles = makeStyles((theme) => ({
+  navLink: {
+    color: COLORS.GRAY,
+    textDecoration: 'none',
+    cursor: 'pointer',
+  },
+  activeNavLink: {
+    color: COLORS.RED,
+  },
+  linkDiv: {
+    margin: `${theme.spacing(1)}px ${theme.spacing(1)}px`,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+}));
 
 const DesktopMenu = () => {
   const user = useUserState();
@@ -21,9 +38,6 @@ const DesktopMenu = () => {
         <NavItem to="/dashboard" label="Dashboard" icon={DashboardIcon} />
         <NavItem to="/daily-diary" label="Daily Diary" icon={AssignmentIcon} />
         <NavItem to="/data" label="Data" icon={AssessmentIcon} />
-        {
-          user?.role === ADMIN_ROLE && <NavItem to="/team" label="Team" icon={GroupWorkIcon} />
-        }
       </Box>
     );
   }
@@ -31,16 +45,15 @@ const DesktopMenu = () => {
   return null;
 };
 
-const NavItem = ({to, label, icon}) => {
-  const Icon = icon;
+const NavItem = ({ to, label, icon }) => {
+  const classes = useStyles();
   return (
-      <NavLink to={to} className={styles.navLink} activeClassName={styles.navLinkActive}>
-      <Box p={2} display="flex" justifyContent="center" alignItems="center">
-        { icon && <Icon style={{ paddingRight: '8px' }}/>}
-        <Typography variant="subtitle1" noWrap>{label}</Typography>
-      </Box>
+    <NavLink to={to} className={clsx(classes.navLink)} activeClassName={clsx(classes.activeNavLink)}>
+      <div className={clsx(classes.linkDiv)}>
+        <Typography variant="body1" noWrap>{label}</Typography>
+      </div>
     </NavLink>
-  )
+  );
 };
 
 export default DesktopMenu;

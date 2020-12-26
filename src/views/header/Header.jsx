@@ -1,92 +1,102 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
   Grid,
   Box,
-  Typography,
-  Chip,
 } from '@material-ui/core';
-import logo from 'assets/sleepwell-logo-transpbg.png';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import useMedium from 'hooks/useMedium';
+import useScrollY from 'hooks/useScrollY';
 import DesktopMenu from 'components/navigation/DesktopMenu';
 import CenterMenu from 'components/navigation/CenterMenu';
 import BottomNav from 'components/navigation/BottomNav';
 import DrawerMenu from 'components/navigation/DrawerMenu';
 import HeadwayWidget from 'components/common/HeadwayWidget';
 import { useUserState } from 'context/userContext';
+import { HypnosYellowIcon } from 'components/common/Icons';
+import COLORS from 'constants/colors';
 import styles from './Header.module.css';
+
+const useStyles = makeStyles((theme) => ({
+  stickyHeader: {
+    justifyContent: 'center',
+    backgroundColor: COLORS.WHITE,
+    height: '48px',
+    maxHeight: '48px',
+    padding: `0 ${theme.spacing(2)}px`,
+    transition: 'all 0.30s ease-in-out',
+  },
+  transparentHeader: {
+    backgroundColor: 'transparent',
+    borderColor: 'transparent',
+  },
+  logoNav: {
+    textDecoration: 'none',
+  },
+}));
 
 const Header = () => {
   const user = useUserState();
   const { isMedium } = useMedium();
 
   if (user._id) {
-    return isMedium ? <MobileNavigation /> : <AuthDesktopNavigation />;
-  }
-
-  return isMedium ? <MobileNavigation /> : <DesktopNavigation />;
-};
-
-const DesktopNavigation = () => (
-  <AppBar position="sticky" elevation={0} color="default">
-    <Toolbar>
-      <Grid container alignItems="center" justify="space-between" wrap="nowrap" style={{ marginTop: '-1px' }}>
-        <Grid item>
-          <NavLink className={styles.navLink} exact to="/">
-            <Box display="flex" alignItems="center">
-              <img src={logo} alt="SleepWell Logo" height="45px" />
-              <Typography className={styles.logoName} color="textPrimary" variant="h6" display="inline">Hypnos.ai</Typography>
-              <Chip label="beta" color="primary" variant="outlined" size="small" style={{ marginLeft: '0.5rem' }} />
-              <HeadwayWidget />
-            </Box>
-          </NavLink>
-        </Grid>
-        <Grid item>
-          <DesktopMenu />
-        </Grid>
-      </Grid>
-    </Toolbar>
-  </AppBar>
-);
-
-const AuthDesktopNavigation = () => (
-  <AppBar position="sticky" elevation={0} color="default">
-    <Toolbar>
-      <Grid container alignItems="center" justify="space-between" wrap="nowrap" style={{ marginTop: '-1px' }}>
-        <Grid item>
-          <NavLink className={styles.navLink} exact to="/">
-            <Box display="flex" alignItems="center">
-              <img src={logo} alt="SleepWell Logo" height="45px" />
-              <Typography className={styles.logoName} color="textPrimary" variant="h6" display="inline">Hypnos.ai</Typography>
-              <Chip label="beta" color="primary" variant="outlined" size="small" style={{ marginLeft: '0.5rem' }} />
-              <HeadwayWidget />
-            </Box>
-          </NavLink>
-        </Grid>
-        <Grid item>
+    return isMedium
+      ? <MobileNavigation />
+      : (
+        <DesktopNavBar>
           <Box display="flex" justifyContent="flex-end">
             <CenterMenu />
             <DrawerMenu />
           </Box>
+        </DesktopNavBar>
+      );
+  }
+
+  return isMedium
+    ? <MobileNavigation />
+    : (
+      <DesktopNavBar>
+        <DesktopMenu />
+      </DesktopNavBar>
+    );
+};
+
+const DesktopNavBar = ({ children }) => {
+  const classes = useStyles();
+  const location = useLocation();
+  const { isScrolled } = useScrollY(50);
+
+  return (
+    <AppBar className={clsx(classes.stickyHeader, { [classes.transparentHeader]: !isScrolled && location.pathname === '/' })} position="sticky" elevation={0} color="inherit">
+      <Grid container alignItems="center" justify="space-between" wrap="nowrap">
+        <Grid item>
+          <NavLink className={classes.logoNav} exact to="/">
+            <Box display="flex" alignItems="center">
+              <HypnosYellowIcon />
+              <HeadwayWidget />
+            </Box>
+          </NavLink>
+        </Grid>
+        <Grid item>
+          {children}
         </Grid>
       </Grid>
-    </Toolbar>
-  </AppBar>
-);
+    </AppBar>
+  );
+};
 
 const MobileNavigation = () => (
   <>
-    <AppBar position="sticky" elevation={0} color="default">
+    <AppBar position="sticky" elevation={0} color="inherit">
       <Toolbar>
         <Grid container alignItems="center" justify="space-between" wrap="nowrap" style={{ marginTop: '-1px' }}>
           <Grid item>
             <NavLink className={styles.navLink} exact to="/">
               <Box display="flex" alignItems="center">
-                <img src={logo} alt="SleepWell Logo" height="30px" />
-                <Typography className={styles.logoName} color="textPrimary" variant="subtitle1" display="inline">Hypnos.ai</Typography>
-                <Chip label="beta" color="primary" variant="outlined" size="small" style={{ marginLeft: '0.5rem' }} />
+                <HypnosYellowIcon />
                 <HeadwayWidget />
               </Box>
             </NavLink>

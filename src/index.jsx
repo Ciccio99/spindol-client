@@ -14,14 +14,15 @@ import {
 import {
   AlertSystemProvider,
 } from 'context/alertSystemContext';
-import {
-  SessionProgressProvider,
-} from 'context/sessionProgressContext';
 import AlertSystemModule from 'components/alertSystem/AlertSystemModule';
 import { initGA } from 'utils/Tracking';
+import { QueryCache, ReactQueryCacheProvider } from 'react-query'
+import { ReactQueryDevtools } from "react-query-devtools";
 
 // Initialize Google analytics tracking
 initGA();
+
+const queryCache = new QueryCache();
 
 if (config?.hotjar?.trackingId) {
   hotjar.initialize(config.hotjar.trackingId);
@@ -46,14 +47,15 @@ ReactDOM.render(
     <HelmetProvider>
       <HypnosTheme>
         <CssBaseline>
-          <UserProvider>
-            <AlertSystemProvider>
-              <SessionProgressProvider>
+          <ReactQueryCacheProvider queryCache={queryCache}>
+            <UserProvider>
+              <AlertSystemProvider>
                 <App />
-              </SessionProgressProvider>
-              <AlertSystemModule />
-            </AlertSystemProvider>
-          </UserProvider>
+                <AlertSystemModule />
+              </AlertSystemProvider>
+            </UserProvider>
+            <ReactQueryDevtools />
+          </ReactQueryCacheProvider>
         </CssBaseline>
       </HypnosTheme>
     </HelmetProvider>

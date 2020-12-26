@@ -4,7 +4,6 @@ import {
   Box,
   Container,
   Divider,
-  Typography,
   Tabs,
   Tab,
 } from '@material-ui/core';
@@ -44,15 +43,12 @@ const AccountSettings = () => {
   return (
     <Container>
       <Helmet>
-        <title>Hypnos.ai - Account Settings</title>
+        <title>Hypnos - Account Settings</title>
         <meta
           name="description"
           content="Hypnos.ai helps you track and improve your sleep habits. Settings for your account details, such as name, email, connecting sleep trackers."
         />
       </Helmet>
-      <Box mt={4}>
-        <Typography variant="h5">Account Settings</Typography>
-      </Box>
       <Box
         component={Tabs}
         value={tabValue}
@@ -61,7 +57,7 @@ const AccountSettings = () => {
         scrollButtons="off"
         indicatorColor="secondary"
         textColor="secondary"
-        mt={4}
+        mt={2}
       >
         <Tab label="Account" disableRipple />
         <Tab label="Devices" disableRipple />

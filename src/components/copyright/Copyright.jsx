@@ -5,10 +5,10 @@ import {
 } from '@material-ui/core';
 
 const Copyright = () => (
-  <Typography variant="caption" color="textSecondary">
+  <Typography variant="caption" color="textSecondary" noWrap>
     {'© '}
-    <Link color="inherit" href="https://sleepwell.ai/" target="_blank">
-      Sleepwell.ai
+    <Link color="inherit" href="https://sleepwell.ai/" target="_blank" rel="noopener noreferrer">
+      Hypnos.ai
     </Link>
     {' '}
     {new Date().getFullYear()}

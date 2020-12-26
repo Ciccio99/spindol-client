@@ -1,53 +1,52 @@
 import React, { useState } from 'react';
-import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
-  Avatar,
-  Button,
   CssBaseline,
-  TextField,
-  // FormControlLabel,
-  // Checkbox,
-  Link,
+  Paper,
   Grid,
-  // Box,
+  Box,
   Typography,
   Container,
   FormHelperText,
   LinearProgress,
+  InputBase,
 } from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { Helmet } from 'react-helmet-async';
-import ReactGA from 'react-ga';
 import UserServices from 'services/UserServices';
 import { useUserDispatch } from 'context/userContext';
 import { setUserId, Event } from 'utils/Tracking';
-import {
-  useSessionProgressDispatch,
-} from 'context/sessionProgressContext';
+import Button from 'components/common/Button';
+import COLORS from 'constants/colors';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
+    marginBottom: theme.spacing(16),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
+  title: {
+    paddingBottom: theme.spacing(4),
+  },
   avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.light,
+    margin: theme.spacing(2),
   },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
+  formContainer: {
+    minWidth: "50vw",
+  },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    maxWidth: '80%',
   },
 }));
 
 const SignInView = () => {
-  const dispatchSessionProgress = useSessionProgressDispatch();
   const classes = useStyles();
   const dispatchUser = useUserDispatch();
   const [email, setEmail] = useState('');
@@ -72,11 +71,6 @@ const SignInView = () => {
         type: 'USER_LOGIN',
         user,
       });
-      dispatchSessionProgress({
-        type: 'INIT',
-        value: user?.stats?.sessionStats || {},
-      });
-
       setUserId(user._id);
       Event('User', 'User Sign In');
 
@@ -85,79 +79,94 @@ const SignInView = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
       <Helmet>
-        <title>Hypnos.ai - Sign In</title>
+        <title>Hypnos - Sign In</title>
         <meta
           name="description"
-          content="Hypnos.ai helps you track and improve your sleep habits. Discover which sleep trial best improves your sleep and overall happiness. Sign in to you Hypnos.ai here."
+          content="A sleep journal that helps you get better sleep. Sign in to Hypnos here."
         />
       </Helmet>
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography variant="h3" className={classes.title}>
           Sign In
         </Typography>
         {errorMessage ? <FormHelperText error>{errorMessage}</FormHelperText> : null}
+
         <form className={classes.form} onSubmit={login}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
-          {loading ? <LinearProgress color="secondary" /> : null}
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            {/* <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid> */}
-            <Grid item>
-              <Link to="/register" component={RouterLink} variant="body2">
-                Don't have an account? Register now!
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
+          <Paper elevation={24}>
+            <Box px={6} py={4} pb={6}>
+              <Grid container direction="column" spacing={3}>
+                <Grid item xs={12}>
+                  <HypnosInput
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    placeholder="Email"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <HypnosInput
+                    required
+                    fullWidth
+                    name="password"
+                    placeholder="Password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Grid>
+                {loading ? <Grid item xs={12}><LinearProgress color="secondary" /></Grid> : null}
+              </Grid>
+            </Box>
+        </Paper>
+      <Box display="flex" justifyContent='center'>
+        <Button
+          text="Sign In →"
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+        />
+      </Box>
+
+      </form>
+
       </div>
     </Container>
+  );
+};
+
+const useInputStyles = makeStyles((theme) => ({
+  root: {
+    padding: `${theme.spacing(1)}px ${theme.spacing(3)}px`,
+    borderBottom: `1px solid ${COLORS.LIGHT_GRAY}`,
+  },
+  input: {
+    '&::placeholder': {
+      color: COLORS.BLACK,
+      opacity: 0.5,
+      fontSize: theme.typography.subtitle1.fontSize,
+    },
+  },
+}));
+
+const HypnosInput = (props) => {
+  const { className, ...otherProps } = props;
+  const classes = useInputStyles();
+  return (
+    <InputBase classes={classes} className={className} {...otherProps} />
   );
 };
 

@@ -79,7 +79,7 @@ const SleepTrialReportView = () => {
   return (
     <Container>
       <Helmet>
-        <title>Hypnos.ai - Sleep Trial Report</title>
+        <title>Hypnos - Sleep Trial Report</title>
         <meta
           name="description"
           content="Hypnos.ai helps you track and improve your sleep habits. See how your sleep trial correlated with your mood and sleep data in your sleep trial report."

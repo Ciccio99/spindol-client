@@ -8,12 +8,14 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Grid,
 } from '@material-ui/core';
 import moment from 'moment-timezone';
 import { useAsync } from 'react-async';
 import PanelModule from 'components/organizers/PanelModule';
 import SleepSummaryServices from 'services/SleepSummaryServices';
 import { useUserState } from 'context/userContext';
+import SleepCard from 'components/common/SleepCard';
 
 const TITLE = 'Sleep';
 const green = { color: '#5DBD88' };
@@ -44,6 +46,28 @@ const StatsDisplay = ({ date }) => {
   }
 
   if (data.todayStats && data.baselineStats) {
+    return (
+      <Grid container spacing={2}>
+        {
+          data.keys.map((key) => (
+            <Grid item xs={3} key={key}>
+              <SleepCard
+                description={data.todayStats[key].description}
+                units={data.todayStats[key].units}
+                stat={data.todayStats[key].stat}
+                compareStat={data.baselineStats[key].stat}
+                diff={data.todayStats[key].diffPercent}
+                diffUnit={data.todayStats[key].units}
+              />
+            </Grid>
+          ))
+        }
+      </Grid>
+    );
+  }
+
+  if (data.todayStats && data.baselineStats) {
+    console.log('%j', data);
     const enableCTA = moment().diff(moment(user.createdAt), 'days') < 3 && moment(data.lastSyncDate, 'MMM DD, YYYY').isSame(moment(), 'day');
     return (
       <PanelModule title={TITLE} subtitle={getSubtitle(data.lastSyncDate)} enableCTA={enableCTA}>

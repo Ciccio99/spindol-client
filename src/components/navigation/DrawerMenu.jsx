@@ -5,28 +5,36 @@ import {
   Button,
   List,
   ListItem,
-  ListItemIcon,
   ListItemText,
   Divider,
   SwipeableDrawer,
-  Typography,
 } from '@material-ui/core';
-import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import ForumIcon from '@material-ui/icons/Forum';
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import PersonIcon from '@material-ui/icons/Person';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import { useUserState } from 'context/userContext';
 import LogoutWrapper from 'components/LogoutWrapper';
-import styles from './Navigation.module.css';
-import { Event } from 'utils/Tracking';
+import { MenuIcon } from 'components/common/Icons';
+import COLORS from 'constants/colors';
+
+const useStyles = makeStyles(() => ({
+  buttonRoot: {
+    '&:hover': {
+      backgroundColor: 'inherit',
+    },
+  },
+  navLink: {
+    color: COLORS.GRAY,
+    textDecoration: 'none',
+    cursor: 'pointer',
+  },
+}));
 
 const DrawerMenu = () => {
+  const classes = useStyles();
   const user = useUserState();
   const [anchor, setAnchor] = useState(false);
 
   const toggleDrawer = (open) => (event) => {
-    Event('Drawer Menu', 'Toggled');
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
@@ -36,8 +44,8 @@ const DrawerMenu = () => {
 
   return (
     <Box display="flex" justifyContent="flex-end">
-      <Button aria-controls="header-menu" aria-haspopup="true" onClick={toggleDrawer(true)} disableRipple>
-        <MenuRoundedIcon fontSize="large" />
+      <Button classes={{ root: classes.buttonRoot }} aria-controls="header-menu" aria-haspopup="true" onClick={toggleDrawer(true)} disableRipple>
+        <MenuIcon />
       </Button>
       <SwipeableDrawer
         anchor="right"
@@ -56,59 +64,53 @@ const DrawerMenu = () => {
   );
 };
 
-const AuthList = ({ onToggle, user }) => (
-  <Box
-    role="presentation"
-    onClick={onToggle(false)}
-    onKeyDown={onToggle(false)}
-  >
-    <List>
-      <ListItem button component={NavLink} to="/settings">
-        <ListItemIcon><PersonIcon className={styles.navLink} /></ListItemIcon>
-        <ListItemText className={styles.navLink}>Account</ListItemText>
-      </ListItem>
-      <ListItem button component="a" href={`https://sleepwell.typeform.com/to/zNgvJ7?email=${user.email}`} target="_blank" rel="noopener noreferrer">
-        <ListItemIcon><FeedbackIcon className={styles.navLink} /></ListItemIcon>
-        <ListItemText className={styles.navLink}>Feedback</ListItemText>
-      </ListItem>
-      <ListItem button component="a" href="https://community.hypnos.ai" target="_blank" rel="noopener noreferrer">
-        <ListItemIcon><ForumIcon className={styles.navLink} /></ListItemIcon>
-        <ListItemText className={styles.navLink}>Community</ListItemText>
-      </ListItem>
-      <Divider />
-      <LogoutWrapper>
-        <ListItem button>
-          <ListItemIcon><ExitToAppIcon className={styles.logout} /></ListItemIcon>
-          <ListItemText className={styles.logout}>Logout</ListItemText>
-        </ListItem>
-      </LogoutWrapper>
-    </List>
-  </Box>
-);
+const AuthList = ({ onToggle, user }) => {
+  const classes = useStyles();
 
-const NonAuthList = ({ onToggle }) => (
-  <Box
-    role="presentation"
-    onClick={onToggle(false)}
-    onKeyDown={onToggle(false)}
-  >
-    <List>
-      <ListItem button component={NavLink} to="/signin" color="primary">
-        <ListItemIcon><ExitToAppIcon className={styles.navLink} /></ListItemIcon>
-        <ListItemText className={styles.navLink}>Sign In</ListItemText>
-      </ListItem>
-      <ListItem button component="a" href="https://community.hypnos.ai" target="_blank" rel="noopener noreferrer">
-        <ListItemIcon><ForumIcon className={styles.navLink} /></ListItemIcon>
-        <ListItemText className={styles.navLink}>Community</ListItemText>
-      </ListItem>
-      <Divider />
-      <ListItem>
-        <Button variant="contained" disableElevation color="primary" size="small" href="https://sleepwell.typeform.com/to/FnZPZk" target="_blank" rel="noopener noreferrer">
-          <Typography variant="subtitle1">Request Access</Typography>
-        </Button>
-      </ListItem>
-    </List>
-  </Box>
-);
+  return (
+    <Box
+      role="presentation"
+      onClick={onToggle(false)}
+      onKeyDown={onToggle(false)}
+    >
+      <List>
+        <ListItem button component={NavLink} to="/settings">
+          <ListItemText className={clsx(classes.navLink)}>Account</ListItemText>
+        </ListItem>
+        {/* <ListItem button component="a" href={`https://sleepwell.typeform.com/to/zNgvJ7?email=${user.email}`} target="_blank" rel="noopener noreferrer">
+          <ListItemText className={clsx(classes.navLink)}>Feedback</ListItemText>
+        </ListItem> */}
+        <ListItem button component="a" href="https://community.hypnos.ai" target="_blank" rel="noopener noreferrer">
+          <ListItemText className={clsx(classes.navLink)}>Community</ListItemText>
+        </ListItem>
+        <Divider />
+        <LogoutWrapper>
+          <ListItem button>
+            <ListItemText className={clsx(classes.navLink)}>Logout</ListItemText>
+          </ListItem>
+        </LogoutWrapper>
+      </List>
+    </Box>
+  );
+};
+const NonAuthList = ({ onToggle }) => {
+  const classes = useStyles();
+  return (
+    <Box
+      role="presentation"
+      onClick={onToggle(false)}
+      onKeyDown={onToggle(false)}
+    >
+      <List>
+        <ListItem button component={NavLink} to="/signin" color="primary">
+          <ListItemText className={clsx(classes.navLink)}>Sign In</ListItemText>
+        </ListItem>
+        <ListItem button component="a" href="https://community.hypnos.ai" target="_blank" rel="noopener noreferrer">
+          <ListItemText className={clsx(classes.navLink)}>Community</ListItemText>
+        </ListItem>
+      </List>
+    </Box>
+  );
+};
 
 export default React.memo(DrawerMenu);

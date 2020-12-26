@@ -11,9 +11,6 @@ import devices from 'constants/devices';
 import {
   useUserDispatch,
 } from 'context/userContext';
-import {
-  useSessionProgressDispatch,
-} from 'context/sessionProgressContext';
 import { setUserId, Event } from 'utils/Tracking';
 import Header from './views/header/Header';
 import Footer from './views/footer/Footer';
@@ -21,12 +18,8 @@ import SleepTrialTrackersContext from './context/sleepTrialTrackersContext';
 import sleepTrialTrackersReducer from './reducers/sleepTrialTrackersReducer';
 import LoadingCard from './components/loadingCard/LoadingCard';
 
-// TODO: Upgrade to cleaner context system store https://kentcdodds.com/blog/how-to-use-react-context-effectively
-// TODO: REactGA improvement https://medium.com/@malith.dev/track-users-in-your-react-app-with-google-analytics-6364ebfcbae8#:~:text=That's%20it.,%2D%3EEvents%2D%3EOverview.
-
 function App() {
   const dispatchUser = useUserDispatch();
-  const dispatchSessionProgress = useSessionProgressDispatch();
   const [sleepTrialTrackers, dispatchSleepTrialTrackers] = useReducer(
     sleepTrialTrackersReducer, [],
   );
@@ -40,10 +33,7 @@ function App() {
           type: 'USER_LOGIN',
           user: currentUser,
         });
-        dispatchSessionProgress({
-          type: 'INIT',
-          value: currentUser?.stats?.sessionStats || {},
-        });
+
         if (currentUser.accounts.oura.connected) {
           await DeviceServices.syncDeviceData(devices.OURA);
         } else if (currentUser.accounts.withings.connected) {
@@ -57,7 +47,7 @@ function App() {
       }
       setLoaded(true);
     })();
-  }, [dispatchUser, dispatchSessionProgress]);
+  }, [dispatchUser]);
 
   return (
     <SleepTrialTrackersContext.Provider

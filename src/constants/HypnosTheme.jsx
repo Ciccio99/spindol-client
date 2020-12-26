@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import useMobile from 'hooks/useMobile';
+import BREAKPOINTS from 'constants/breakpoints';
+import COLORS from 'constants/colors';
 
 const customTheme = {
   typography: {
     fontFamily: [
-      // "'Exo 2'",
-      'Work Sans',
+      'Sora',
       '-apple-system',
       'BlinkMacSystemFont',
       'Segoe UI',
@@ -19,31 +20,70 @@ const customTheme = {
       'Droid Sans',
       'Helvetica Neue',
       'sans-serif',
+      'Antic Didone',
     ],
     fontStyle: 'normal',
     htmlFontSize: 16,
     fontSize: 16,
+    body1: {
+      fontWeight: 400,
+      fontSize: '0.875rem',
+    },
+    subtitle1: {
+      fontWeight: 400,
+      fontSize: '1rem',
+    },
+    subtitle2: {
+      fontWeight: 500,
+      fontSize: '0.875rem',
+    },
+    overline: {
+      fontFamily: 'Antic Didone',
+      fontSize: '3.5rem',
+      fontWeight: 400,
+      lineHeight: 1.17,
+      textTransform: 'none',
+      display: 'block',
+    },
+    h1: {
+      fontWeight: 400,
+      fontSize: '2rem',
+    },
     h2: {
-      fontWeight: 600,
-      letterSpacing: '1.5px',
+      fontWeight: 400,
+      fontSize: '1.5rem',
     },
     h3: {
-      fontWeight: 700,
-      fontSize: '3rem',
-      letterSpacing: '1.5px',
+      fontWeight: 400,
+      fontSize: '2rem',
+      fontFamily: 'Antic Didone',
+    },
+    h4: {
+      fontWeight: 500,
+      fontSize: '0.75rem',
     },
     h5: {
       fontWeight: 700,
-      fontSize: 32,
-      letterSpacing: '1.5px',
+      fontSize: '1rem',
     },
     h6: {
-      fontWeight: 500,
+      fontWeight: 400,
       fontSize: '1.5rem',
-      letterSpacing: '1.5px',
     },
     button: {
-      fontWeight: 700,
+      fontWeight: 400,
+      fontSize: '0.875rem',
+      color: '#224887',
+      textTransform: 'none',
+    },
+  },
+  breakpoints: {
+    values: {
+      xs: BREAKPOINTS.xs,
+      sm: BREAKPOINTS.sm,
+      md: BREAKPOINTS.md,
+      lg: BREAKPOINTS.lg,
+      xl: BREAKPOINTS.xl,
     },
   },
   palette: {
@@ -66,17 +106,22 @@ const customTheme = {
       contrastText: '#fff',
     },
     background: {
-      default: '#F5F5F5',
+      default: '#FFF8F8',
     },
     action: {
       focusOpacity: 0,
     },
   },
   shape: {
-    borderRadius: 25,
-    borderRadiusSmall: 10,
+    borderRadius: 0,
+    // borderRadiusSmall: 10,
   },
   overrides: {
+    MuiPaper: {
+      root: {
+        border: `1px solid ${COLORS.BORDER_GRAY}`,
+      },
+    },
     MuiOutlinedInput: {
       root: {
         borderRadius: '10px',
@@ -87,7 +132,7 @@ const customTheme = {
 };
 
 const fontSizesOptions = {
-  factor: 1.1,
+  factor: 2,
 };
 
 const HypnosTheme = ({ children }) => {
@@ -96,7 +141,7 @@ const HypnosTheme = ({ children }) => {
 
   useEffect(() => {
     if (isMobile) {
-      customTheme.spacing = 4;
+      customTheme.spacing = 6;
       let newTheme = createMuiTheme(customTheme);
       newTheme = responsiveFontSizes(newTheme, fontSizesOptions);
       setTheme(newTheme);
@@ -109,7 +154,7 @@ const HypnosTheme = ({ children }) => {
   }, [isMobile]);
 
 
-  theme.shadows[24] = 'rgba(209, 230, 255, 0.57) 0px 2px 24px 1px;';
+  theme.shadows[24] = '6px 6px 0px rgba(0, 0, 0, 0.05);';
 
   return (
     <ThemeProvider theme={theme}>

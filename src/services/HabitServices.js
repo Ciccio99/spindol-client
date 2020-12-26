@@ -1,12 +1,40 @@
 import moment from 'moment-timezone';
 import axios from 'loaders/axios';
 import handleError from 'utils/handleError';
+import ErrorHandler from 'utils/ErrorHandler';
 import HabitUtils from 'utils/HabitUtils';
 import dateViews from 'constants/dateViews';
 
 const DATA_TYPES = {
   BEDTIME: 'bedtime',
   WAKETIME: 'waketime',
+};
+
+export const getActiveHabits = async () => {
+  const data = await axios.get('/habits', {
+    params: {
+      active: true,
+    },
+  });
+  return data;
+};
+
+export const getHabitsByDate = async (start, end) => {
+  try {
+    if (!start || !end) {
+      throw new Error('Must include start and end dates.');
+    }
+    const { data } = await axios.get('/habits', {
+      params: {
+        rangeDateStart: start,
+        rangeDateEnd: end,
+        limit: 0,
+      },
+    });
+    return data;
+  } catch (error) {
+    throw new ErrorHandler(error);
+  }
 };
 
 const getDashboardData = async (startDate, endDate, dateView = dateViews.M) => {
@@ -77,7 +105,7 @@ const upsert = async (name, dataType, startDate, targetValue) => {
   }
 };
 
-const upsertBedtimeHabit = async (targetValue) => {
+export const upsertBedtimeHabit = async (targetValue) => {
   const dto = {
     name: 'Bedtime',
     startDate: moment().format('YYYY-MM-DD'),
@@ -93,7 +121,7 @@ const upsertBedtimeHabit = async (targetValue) => {
   }
 };
 
-const upsertWaketimeHabit = async (targetValue) => {
+export const upsertWaketimeHabit = async (targetValue) => {
   const dto = {
     name: 'Waketime',
     startDate: moment().format('YYYY-MM-DD'),
