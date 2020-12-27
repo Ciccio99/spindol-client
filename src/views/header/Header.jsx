@@ -14,7 +14,6 @@ import DesktopMenu from 'components/navigation/DesktopMenu';
 import CenterMenu from 'components/navigation/CenterMenu';
 import BottomNav from 'components/navigation/BottomNav';
 import DrawerMenu from 'components/navigation/DrawerMenu';
-import HeadwayWidget from 'components/common/HeadwayWidget';
 import { useUserState } from 'context/userContext';
 import { HypnosYellowIcon } from 'components/common/Icons';
 import COLORS from 'constants/colors';
@@ -76,7 +75,6 @@ const DesktopNavBar = ({ children }) => {
           <NavLink className={classes.logoNav} exact to="/">
             <Box display="flex" alignItems="center">
               <HypnosYellowIcon />
-              <HeadwayWidget />
             </Box>
           </NavLink>
         </Grid>
@@ -97,7 +95,6 @@ const MobileNavigation = () => (
             <NavLink className={styles.navLink} exact to="/">
               <Box display="flex" alignItems="center">
                 <HypnosYellowIcon />
-                <HeadwayWidget />
               </Box>
             </NavLink>
           </Grid>
