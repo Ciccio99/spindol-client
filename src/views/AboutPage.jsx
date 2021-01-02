@@ -31,7 +31,7 @@ const AboutPage = () => {
       <Box height="30vh" mt="-48px">
         <ActiveBackground background={COLORS.DARK_PEACH} translateX={-150} translateY={-200} scale={1.2} mobileScale={0.7}>
           <Box width="100%" height="100%" display="flex" justifyContent="center" alignItems="center">
-            <Typography variant="overline" align="center" >Who made Hypnos?</Typography>
+            <Typography variant="overline" align="center">Who Made Hypnos?</Typography>
           </Box>
         </ActiveBackground>
       </Box>
