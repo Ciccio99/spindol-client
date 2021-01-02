@@ -81,7 +81,7 @@ const AboutPage = () => {
             </Grid>
           </Grid>
           <Box mt={8} display="flex" justifyContent="center" width="100%">
-            <img src={hypnosTeam} alt="Hypnos team in SF" width="80%%" />
+            <img src={hypnosTeam} alt="Hypnos team in SF" width="90%" />
           </Box>
         </Box>
       </Box>
