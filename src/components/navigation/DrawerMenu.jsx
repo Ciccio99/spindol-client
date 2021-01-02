@@ -77,9 +77,6 @@ const AuthList = ({ onToggle, user }) => {
         <ListItem button component={NavLink} to="/settings">
           <ListItemText className={clsx(classes.navLink)}>Account</ListItemText>
         </ListItem>
-        {/* <ListItem button component="a" href={`https://sleepwell.typeform.com/to/zNgvJ7?email=${user.email}`} target="_blank" rel="noopener noreferrer">
-          <ListItemText className={clsx(classes.navLink)}>Feedback</ListItemText>
-        </ListItem> */}
         <ListItem button component="a" href="https://community.hypnos.ai" target="_blank" rel="noopener noreferrer">
           <ListItemText className={clsx(classes.navLink)}>Community</ListItemText>
         </ListItem>
@@ -102,12 +99,19 @@ const NonAuthList = ({ onToggle }) => {
       onKeyDown={onToggle(false)}
     >
       <List>
-        <ListItem button component={NavLink} to="/signin" color="primary">
-          <ListItemText className={clsx(classes.navLink)}>Sign In</ListItemText>
+        <ListItem button component="a" href="https://sleepwell.typeform.com/to/FnZPZk" target="_blank" rel="noopener noreferrer">
+          <ListItemText className={clsx(classes.navLink)}>Request Access</ListItemText>
+        </ListItem>
+        <ListItem button component={NavLink} to="/about" color="primary">
+          <ListItemText className={clsx(classes.navLink)}>About</ListItemText>
         </ListItem>
         <ListItem button component="a" href="https://community.hypnos.ai" target="_blank" rel="noopener noreferrer">
           <ListItemText className={clsx(classes.navLink)}>Community</ListItemText>
         </ListItem>
+        <ListItem button component={NavLink} to="/signin" color="primary">
+          <ListItemText className={clsx(classes.navLink)}>Sign In</ListItemText>
+        </ListItem>
+
       </List>
     </Box>
   );

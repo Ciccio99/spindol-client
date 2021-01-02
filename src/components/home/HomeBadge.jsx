@@ -10,7 +10,7 @@ import backToTopArrow from 'assets/ic_back-to-top.svg';
 const useStyles = makeStyles(() => ({
   badge: {
     position: 'fixed',
-    bottom: 25,
+    bottom: 75,
     right: 25,
     zIndex: 1,
     pointerEvents: 'none',

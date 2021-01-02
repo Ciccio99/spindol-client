@@ -14,6 +14,7 @@ import PrivacyPolicy from 'views/legal/PrivacyPolicy';
 import Home from 'views/home/Home';
 import usePageTracker from 'hooks/usePageTracker';
 import DataView from 'views/DataView';
+import AboutPage from 'views/AboutPage';
 
 const AppRouter = () => {
   usePageTracker();
@@ -23,6 +24,7 @@ const AppRouter = () => {
       <Switch>
         <PublicRoute exact path="/" component={Home} />
         <PublicRoute path="/signin" authRedirectTo="/dashboard" component={SignInView} />
+        <PublicRoute path="/about" component={AboutPage} />
         {/* <PublicRoute path="/register/:token" authRedirectTo="/dashboard" component={RegisterView} /> */}
         {/* <PublicRoute path="/register" authRedirectTo="/dashboard" component={RegisterView} /> */}
         <PublicRoute path="/terms-of-service" component={TermsOfService} />
