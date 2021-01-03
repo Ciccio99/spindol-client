@@ -4,7 +4,9 @@ import {
   Box,
   Typography,
 } from '@material-ui/core';
+import { Helmet } from 'react-helmet-async';
 import { makeStyles } from '@material-ui/core/styles';
+import useMobile from 'hooks/useMobile';
 import ActiveBackground from 'components/common/ActiveBackground';
 import hypnosTeam from 'assets/hypnos-team.jpeg';
 import COLORS from 'constants/colors';
@@ -25,10 +27,18 @@ const useStyles = makeStyles(() => ({
 
 const AboutPage = () => {
   const classes = useStyles();
+  const { isMobile } = useMobile();
 
   return (
     <>
-      <Box height="30vh" mt="-48px">
+      <Helmet>
+        <title>Hypnos - About</title>
+        <meta
+          name="description"
+          content="Hypnos.ai helps you track and improve your sleep habits. Use sleep data from sleep trackers to correlate how different sleep habits affect your sleep. Discover which sleep trial best improves your sleep and overall happiness."
+        />
+      </Helmet>
+      <Box height="30vh" mt={isMobile ? 0 : '-48px'}>
         <ActiveBackground background={COLORS.DARK_PEACH} translateX={-150} translateY={-200} scale={1.2} mobileScale={0.7}>
           <Box width="100%" height="100%" display="flex" justifyContent="center" alignItems="center">
             <Typography variant="overline" align="center">Who Made Hypnos?</Typography>
