@@ -15,28 +15,28 @@ import Home from 'views/home/Home';
 import usePageTracker from 'hooks/usePageTracker';
 import DataView from 'views/DataView';
 import AboutPage from 'views/AboutPage';
+import CheckIn from 'views/CheckIn';
 
 const AppRouter = () => {
   usePageTracker();
 
   return (
-    <div>
-      <Switch>
-        <PublicRoute exact path="/" component={Home} />
-        <PublicRoute path="/signin" authRedirectTo="/dashboard" component={SignInView} />
-        <PublicRoute path="/about" component={AboutPage} />
-        {/* <PublicRoute path="/register/:token" authRedirectTo="/dashboard" component={RegisterView} /> */}
-        {/* <PublicRoute path="/register" authRedirectTo="/dashboard" component={RegisterView} /> */}
-        <PublicRoute path="/terms-of-service" component={TermsOfService} />
-        <PublicRoute path="/privacy-policy" component={PrivacyPolicy} />
-        <ProtectedRoute path="/dashboard" component={DashboardView} />
-        <ProtectedRoute path="/daily-diary" component={CheckInsView} />
-        <ProtectedRoute path="/data" component={DataView} />
-        <ProtectedRoute path="/sleep-trial-report/:id" component={SleepTrialReportView} />
-        <ProtectedRoute path="/settings" component={AccountSettings} />
-        <Route component={NotFound} />
-      </Switch>
-    </div>
+    <Switch>
+      <PublicRoute exact path="/" component={Home} />
+      <PublicRoute path="/signin" authRedirectTo="/dashboard" component={SignInView} />
+      <PublicRoute path="/about" component={AboutPage} />
+      {/* <PublicRoute path="/register/:token" authRedirectTo="/dashboard" component={RegisterView} /> */}
+      {/* <PublicRoute path="/register" authRedirectTo="/dashboard" component={RegisterView} /> */}
+      <PublicRoute path="/terms-of-service" component={TermsOfService} />
+      <PublicRoute path="/privacy-policy" component={PrivacyPolicy} />
+      <ProtectedRoute path="/check-in" component={CheckIn} />
+      <ProtectedRoute path="/dashboard" component={DashboardView} />
+      <ProtectedRoute path="/daily-diary" component={CheckInsView} />
+      <ProtectedRoute path="/data" component={DataView} />
+      <ProtectedRoute path="/sleep-trial-report/:id" component={SleepTrialReportView} />
+      <ProtectedRoute path="/settings" component={AccountSettings} />
+      <Route component={NotFound} />
+    </Switch>
   );
 };
 
