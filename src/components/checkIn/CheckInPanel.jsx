@@ -4,8 +4,8 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import useTodayDiary from 'hooks/useTodayDiary';
-import { useMutation } from 'react-query';
+// import useTodayDiary from 'hooks/useTodayDiary';
+// import { useMutation } from 'react-query';
 import COLORS from 'constants/colors';
 import { MOODS, getMoodSvg } from 'constants/mood';
 
@@ -30,16 +30,16 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const CHECK_IN_STATE = {
-  MOOD: 0,
-  ACTIVITIES: 1,
-};
+// const CHECK_IN_STATE = {
+//   MOOD: 0,
+//   ACTIVITIES: 1,
+// };
 
 const CheckInPanel = () => {
-  const classes = useStyles();
-  const [checkInState, setCheckInState] = useState(CHECK_IN_STATE.MOOD);
-  const { data, isLoading } = useTodayDiary();
-  const [saveDailyDiary] = useMutation((newData) => {});
+  // const classes = useStyles();
+  // const [checkInState, setCheckInState] = useState(CHECK_IN_STATE.MOOD);
+  // const { data, isLoading } = useTodayDiary();
+  // const [saveDailyDiary] = useMutation((newData) => {});
   // console.log(data);
 
   return (
