@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(2),
   },
   countNumber: {
-    color: COLORS.DARK_BLUE,
+    color: COLORS.RED,
     paddingBottom: theme.spacing(1),
   },
   imgContainer: {

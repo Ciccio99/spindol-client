@@ -8,6 +8,7 @@ const usePageTracker = () => {
     const unlisten = listen((location) => {
       ReactGA.set({ page: location.pathname });
       ReactGA.pageview(location.pathname);
+      window.Intercom('update');
     });
 
     return unlisten;

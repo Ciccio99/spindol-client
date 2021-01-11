@@ -16,7 +16,7 @@ import useViewport from 'hooks/useViewport';
 const Container = ({ children }) => (
   <Box>
     <Box mb={2}>
-      <Typography variant="subtitle1">Your mood over the <span style={{ color: COLORS.RED}}>last 6 days</span></Typography>
+      <Typography variant="subtitle1">Your mood over the <span style={{ color: COLORS.RED}}>last 7 days</span></Typography>
     </Box>
     <Box display="flex" flexWrap="wrap">
       {children}

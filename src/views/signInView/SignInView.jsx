@@ -152,6 +152,7 @@ const useInputStyles = makeStyles((theme) => ({
   root: {
     padding: `${theme.spacing(1)}px ${theme.spacing(3)}px`,
     borderBottom: `1px solid ${COLORS.LIGHT_GRAY}`,
+    caretColor: COLORS.RED,
   },
   input: {
     '&::placeholder': {

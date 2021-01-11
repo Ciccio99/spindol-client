@@ -67,9 +67,17 @@ const DesktopNavBar = ({ children }) => {
   const classes = useStyles();
   const location = useLocation();
   const { isScrolled } = useScrollY(50);
+  const transparentRoutes = ['/', '/about'];
 
   return (
-    <AppBar className={clsx(classes.stickyHeader, { [classes.transparentHeader]: !isScrolled && location.pathname === '/' })} position="sticky" elevation={0} color="inherit">
+    <AppBar
+      className={clsx(classes.stickyHeader, {
+        [classes.transparentHeader]: !isScrolled && transparentRoutes.some((route) => route === location.pathname),
+      })}
+      position="sticky"
+      elevation={0}
+      color="inherit"
+    >
       <Grid container alignItems="center" justify="space-between" wrap="nowrap">
         <Grid item>
           <NavLink className={classes.logoNav} exact to="/">
