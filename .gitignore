@@ -29,3 +29,5 @@ server.key
 # Dev
 .vscode/
 /.vscode
+
+.vercel
