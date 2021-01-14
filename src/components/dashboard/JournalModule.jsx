@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import moment from 'moment-timezone';
 import { CancelIcon } from 'components/common/Icons';
-import useTodayDiary from 'hooks/useTodayDiary';
+import useDailyDiary from 'hooks/useDailyDiary';
 import { updateDiaryJournal } from 'services/DailyDiaryServices';
 import { useQueryCache, useMutation } from 'react-query';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
@@ -83,7 +83,7 @@ const todayDate = moment();
 export default function JournalModule() {
   const classes = useStyles();
   const queryCache = useQueryCache();
-  const { data, isLoading } = useTodayDiary();
+  const { data, isLoading } = useDailyDiary(todayDate);
   const dispatchAlert = useAlertSystemDispatch();
   const [journalInput, setJournalInput] = useState('');
   const [journalFocus, setJournalFocus] = useState(false);
@@ -94,15 +94,16 @@ export default function JournalModule() {
     (journalEntry) => updateDiaryJournal(data._id, journalEntry),
     {
       onMutate: (value) => {
-        queryCache.cancelQueries('dailyDiary');
-        const oldDiary = queryCache.getQueryData('dailyDiary');
+        const dateString = todayDate.format('YYYY-MM-DD');
+        queryCache.cancelQueries(['dailyDiary', dateString]);
+        const oldDiary = queryCache.getQueryData(['dailyDiary', dateString]);
 
-        queryCache.setQueryData('dailyDiary', (oldData) => ({
+        queryCache.setQueryData(['dailyDiary', dateString], (oldData) => ({
           ...oldData,
           journalEntry: value,
         }));
 
-        return () => queryCache.setQueryData('dailyDiary', oldDiary);
+        return () => queryCache.setQueryData(['dailyDiary', dateString], oldDiary);
       },
       onError: (error, values, rollback) => {
         dispatchAlert({

@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import COLORS from 'constants/colors';
 import { MOODS, getMoodSvg } from 'constants/mood';
 import StepperButton from 'components/checkIn/StepperButton';
+import moment from 'moment-timezone';
 
 const useStyles = makeStyles(() => ({
   moodCard: {
@@ -27,18 +28,21 @@ const useStyles = makeStyles(() => ({
   moodImg: {
     maxWidth: '28vw',
   },
+  accentText: {
+    color: COLORS.RED,
+  },
 }));
 
 
-const MoodPanel = ({ data, setData, navigation }) => {
+const MoodPanel = ({ initData, setData, navigation }) => {
   const classes = useStyles();
   const { next } = navigation;
-  const { mood } = data;
+  const { mood } = initData;
   const [moodState, setMoodState] = useState(mood || MOODS.EXCELLENT);
 
   useEffect(() => {
     setMoodState(mood || MOODS.EXCELLENT);
-  }, [data]);
+  }, [initData]);
 
   const onSelectHandle = (selectedMood) => {
     setMoodState(mood);
@@ -51,7 +55,15 @@ const MoodPanel = ({ data, setData, navigation }) => {
   return (
     <>
       <Box width="100%" height="100vh" mt="-48px" px={2} pb={3} pt={10} display="flex">
-        <Box height="100%" display="flex" flexDirection="column" justifyContent="flex-end">
+        <Box height="100%" display="flex" flexDirection="column" justifyContent="space-between">
+          <Box width="100%" pt={4} pb={2} px={2}>
+            <Box maxWidth={245}>
+              <Typography className={classes.accentText} variant="h4" gutterBottom>
+                {moment(initData.date).format('MMM DD')}
+              </Typography>
+              <Typography variant="subtitle1" color="textPrimary">How’d you feel waking up this morning?</Typography>
+            </Box>
+          </Box>
           <Grid container direction="column" spacing={2}>
             {
               Object.keys(MOODS).map((moodKey) => (

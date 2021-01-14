@@ -53,9 +53,6 @@ const CheckInsView = () => {
           content="Hypnos.ai helps you track and improve your sleep habits. Use the Daily Diary to edit your mood and sleep trial checkins for specific dates. You can also see what your sleep stats was for those specific dates."
         />
       </Helmet>
-      <Box mt={4}>
-        <Typography variant="h5">Your Daily Diary</Typography>
-      </Box>
       <Box mt={4} mb={4}>
         <Grid container spacing={2} alignItems="center" wrap="nowrap">
           <Grid item>

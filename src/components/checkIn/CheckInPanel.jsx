@@ -30,7 +30,7 @@ const CheckInPanel = () => {
     return '...loading';
   }
 
-  const props = { data, setData, navigation };
+  const props = { initData: diaryData, setData, navigation };
 
   switch (id) {
     case 'mood':
