@@ -60,6 +60,7 @@ export default function Journal({ date = undefined }) {
           header={journalDate.format('MMM DD, YYYY')}
           onSave={saveJournalEntry}
           isEditable
+          clickToEditor
         />
       </Container>
     </div>
