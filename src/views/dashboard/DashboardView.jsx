@@ -4,34 +4,35 @@ import {
   Box,
   Grid,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
+// import { makeStyles } from '@material-ui/core/styles';
+// import clsx from 'clsx';
 import { Helmet } from 'react-helmet-async';
 import { useUserState } from 'context/userContext';
 import Section from 'components/organizers/Section';
 import ConnectDeviceCTA from 'components/cta/ConnectDevice';
 import useMobile from 'hooks/useMobile';
 import WeekMoodModule from 'components/dashboard/WeekMoodModule';
-import StreakModule from 'components/dashboard/StreakModule';
+// import StreakModule from 'components/dashboard/StreakModule';
 import SleepModule from 'components/dashboard/SleepModule';
 import SleepChartModule from 'components/dashboard/SleepChartModule';
 import SleepGoalsModule from 'components/dashboard/SleepGoalsModule';
-import JournalModule from 'components/dashboard/JournalModule';
+import Journal from 'components/dashboard/Journal';
+
 // Temporary while check-in experience is being made
 import DailyDiaryDashboardModule from 'components/modules/DailyDiaryDashboardModule';
 import moment from 'moment-timezone';
 
 
-const useStyles = makeStyles((theme) => ({
-  gridItemTopMargin: {
-    marginTop: theme.spacing(8),
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   gridItemTopMargin: {
+//     marginTop: theme.spacing(8),
+//   },
+// }));
 
 const DashboardView = () => {
   const user = useUserState();
   const { isMobile } = useMobile();
-  const classes = useStyles();
+  // const classes = useStyles();
   const yesterdayDate = moment().subtract(1, 'day').format('YYYY-MM-DD');
 
   return (
@@ -54,7 +55,7 @@ const DashboardView = () => {
           </Section>
           )
         }
-        <JournalModule />
+        <Journal />
         <Section>
           <DailyDiaryDashboardModule tagsDate={yesterdayDate} />
         </Section>

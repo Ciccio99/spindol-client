@@ -17,9 +17,9 @@ import COLORS from 'constants/colors';
 const useStyles = makeStyles((theme) => ({
   footer: {
     marginTop: 'auto',
-    paddingTop: theme.spacing(1),
     width: '100%',
     backgroundColor: COLORS.WHITE,
+    zIndex: 1,
   },
   footerMedium: {
     marginBottom: '78px',

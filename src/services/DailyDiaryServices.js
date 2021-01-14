@@ -56,8 +56,7 @@ export const getAllDiaries = async () => {
     throw new ErrorHandler(e);
   }
 };
-
-const getByDate = async (searchDate) => {
+export const getByDate = async (searchDate) => {
   const date = moment(searchDate).format('YYYY-MM-DD');
   const queryString = JSON.stringify({ date });
   try {

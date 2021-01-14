@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useTodayDiary from 'hooks/useTodayDiary';
-import { useMutation } from 'react-query';
+// import { useMutation } from 'react-query';
 import useStep from 'hooks/useStep';
 import MoodPanel from 'components/checkIn/MoodPanel';
 import ActivitiesPanel from 'components/checkIn/ActivitiesPanel';
@@ -22,15 +22,15 @@ const CheckInPanel = () => {
     if (!isDiaryLoading) {
       setData(diaryData || data);
     }
-  }, [diaryData]);
+  }, [diaryData, data, isDiaryLoading]);
 
-  const [saveDailyDiary] = useMutation((newData) => {});
+  // const [saveDailyDiary] = useMutation((newData) => {});
 
   if (isDiaryLoading || isActivitiesLoading) {
     return '...loading';
   }
 
-  const props = { data, setData, navigation };
+  const props = { initData: diaryData, setData, navigation };
 
   switch (id) {
     case 'mood':

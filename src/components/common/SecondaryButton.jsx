@@ -11,8 +11,9 @@ import COLORS from 'constants/colors';
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
-    background: COLORS.DARK_BLUE,
-    color: COLORS.WHITE,
+    background: COLORS.WHITE,
+    color: COLORS.DARK_BLUE,
+    border: `1px solid ${COLORS.LIGHT_GRAY}`,
     textTransform: 'none',
     transition: 'all 0.25s ease-in-out',
     '&:hover': {

@@ -29,7 +29,7 @@ const AppRouter = () => {
       {/* <PublicRoute path="/register" authRedirectTo="/dashboard" component={RegisterView} /> */}
       <PublicRoute path="/terms-of-service" component={TermsOfService} />
       <PublicRoute path="/privacy-policy" component={PrivacyPolicy} />
-      {/* <ProtectedRoute path="/check-in" component={CheckIn} /> */}
+      <ProtectedRoute path="/check-in" component={CheckIn} />
       <ProtectedRoute path="/dashboard" component={DashboardView} />
       <ProtectedRoute path="/daily-diary" component={CheckInsView} />
       <ProtectedRoute path="/data" component={DataView} />
