@@ -117,16 +117,7 @@ export default function JournalModule() {
     },
   );
 
-  // Was used for initial load, may not be necessary anymore with the logical Or assignment of value in render return
-  // useEffect(() => {
-  //   // console.log('Running journal data effect');
-  //   if (data?.journalEntry?.length > 0) {
-  //     setJournalInput(data.journalEntry);
-  //   }
-  // }, [data]);
-
   useEffect(() => {
-    // console.log('Focused: ', journalFocus);
     if (journalFocus && journalInput.length > 0) {
       setJournalExpanded(true);
       setEnableMultiline(true);

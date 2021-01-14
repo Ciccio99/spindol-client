@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-  Box, Grid, Paper, Typography,
+  Box, Paper, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -30,8 +30,6 @@ const useStyles = makeStyles(() => ({
     color: COLORS.RED,
   },
 }));
-
-const getIdArr = (activities) => activities.map((activity) => activity._id);
 
 const markPreSelectedActivities = (activities, selectedActivities) => {
   const userActivities = activities;

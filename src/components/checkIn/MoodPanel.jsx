@@ -42,7 +42,7 @@ const MoodPanel = ({ initData, setData, navigation }) => {
 
   useEffect(() => {
     setMoodState(mood || MOODS.EXCELLENT);
-  }, [initData]);
+  }, [mood]);
 
   const onSelectHandle = (selectedMood) => {
     setMoodState(mood);

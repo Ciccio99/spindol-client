@@ -3,7 +3,6 @@ import {
   Box,
   Container,
   Divider,
-  Typography,
   Grid,
 } from '@material-ui/core';
 import {

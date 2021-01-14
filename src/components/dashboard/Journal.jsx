@@ -1,14 +1,25 @@
 import React from 'react';
+import { Container } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment-timezone';
 import useDailyDiary from 'hooks/useDailyDiary';
 import { updateDiaryJournal } from 'services/DailyDiaryServices';
 import { useQueryCache, useMutation } from 'react-query';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
-import { Paper } from '@material-ui/core';
-import Section from 'components/organizers/Section';
 import JournalPreview from 'components/common/JournalPreview';
+import COLORS from 'constants/colors';
 
-export default function Journal({ date = null }) {
+const useStyles = makeStyles((theme) => ({
+  background: {
+    background: COLORS.WHITE,
+    paddingTop: theme.spacing(2),
+    width: '100vw',
+    marginLeft: 'calc(-50vw + 50%)',
+  }
+}));
+
+export default function Journal({ date = undefined }) {
+  const classes = useStyles();
   const journalDate = moment(date);
   const dispatchAlert = useAlertSystemDispatch();
   const queryCache = useQueryCache();
@@ -42,15 +53,15 @@ export default function Journal({ date = null }) {
   );
 
   return (
-    <Section>
-      <Paper elevation={24}>
+    <div className={classes.background}>
+      <Container>
         <JournalPreview
           text={isLoading ? 'Loading...' : (data?.journalEntry || '')}
           header={journalDate.format('MMM DD, YYYY')}
           onSave={saveJournalEntry}
           isEditable
         />
-      </Paper>
-    </Section>
+      </Container>
+    </div>
   );
 };
