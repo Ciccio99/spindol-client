@@ -72,11 +72,6 @@ const HamburgerMenu = () => {
 
                 </MenuItem>
               </NavLink>,
-              <MenuItem key="community" onClick={handleClose}>
-                <a className={styles.navLink} href="https://community.hypnos.ai" target="_blank" rel="noopener noreferrer">
-                  <Typography variant="subtitle1" className={styles.navLink}>Community</Typography>
-                </a>
-              </MenuItem>,
               <MenuItem key="requestAccess" onClick={handleClose}>
                 <Button variant="contained" disableElevation color="primary" size="small" href="https://sleepwell.typeform.com/to/FnZPZk" target="_blank" rel="noopener noreferrer">
                   <Typography variant="subtitle1">Request Access</Typography>
@@ -92,11 +87,6 @@ const HamburgerMenu = () => {
               <MenuItem key="feedback">
                 <a className={styles.navLink} href={`https://sleepwell.typeform.com/to/zNgvJ7?email=${user.email}`} target="_blank" rel="noopener noreferrer">
                   <Typography variant="subtitle1" className={styles.navLink}>Feedback</Typography>
-                </a>
-              </MenuItem>,
-              <MenuItem key="community" onClick={handleClose}>
-                <a className={styles.navLink} href="https://community.hypnos.ai" target="_blank" rel="noopener noreferrer">
-                  <Typography variant="subtitle1" className={styles.navLink}>Community</Typography>
                 </a>
               </MenuItem>,
               <MenuItem key="logout" onClick={handleLogoutClick}>
