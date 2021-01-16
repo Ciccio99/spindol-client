@@ -75,7 +75,7 @@ const FooterDesktop = () => {
           </div>
           <div>
             <Grid container spacing={4} justify="center">
-              <Grid item xs={8} md="auto"><FooterLink to="https://community.hypnos.ai" external>Community</FooterLink></Grid>
+
               <Grid item xs={8} md="auto"><FooterLink to="/terms-of-service">Terms of Service</FooterLink></Grid>
               <Grid item xs={8} md="auto"><FooterLink to="/privacy-policy">Privacy Policy</FooterLink></Grid>
             </Grid>
@@ -103,7 +103,6 @@ const FooterMobile = () => {
       <div className={clsx(classes.footerInner, classes.footerInnerMobile)}>
         <HypnosYellowIcon />
         <div>
-          <div style={{ margin: '12px 0' }}><FooterLink to="https://community.hypnos.ai" external isMobile>Community</FooterLink></div>
           <div style={{ margin: '12px 0' }}><FooterLink to="/terms-of-service" isMobile>Terms of Service</FooterLink></div>
           <div style={{ margin: '12px 0' }}><FooterLink to="/privacy-policy" isMobile>Privacy Policy</FooterLink></div>
         </div>

@@ -35,11 +35,6 @@ const DesktopMenu = () => {
               <Typography variant="body1" noWrap>About</Typography>
             </NavLink>
           </Grid>,
-          <Grid item key="community">
-            <a className={styles.navLink} href="https://community.hypnos.ai" target="_blank" rel="noopener noreferrer">
-              <Typography variant="body1" className={clsx(classes.navLink)}>Community</Typography>
-            </a>
-          </Grid>,
           <Grid item key="request-access">
             <a className={styles.navLink} href="https://sleepwell.typeform.com/to/FnZPZk" target="_blank" rel="noopener noreferrer">
               <Typography variant="body1" className={clsx(classes.navLink)}>Request Access</Typography>
