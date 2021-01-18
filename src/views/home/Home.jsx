@@ -11,7 +11,7 @@ import HomeBadge from 'components/home/HomeBadge';
 const Home = () => (
   <Box width="100vw">
     <Helmet>
-      <title>Hypnos - Sleep Journal</title>
+      <title>Spindol - Sleep Journal</title>
       <meta
         name="description"
         content="Hypnos.ai helps you track and improve your sleep habits. Use sleep data from sleep trackers to correlate how different sleep habits affect your sleep. Discover which sleep trial best improves your sleep and overall happiness."
