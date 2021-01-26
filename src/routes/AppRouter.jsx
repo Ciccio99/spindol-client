@@ -7,14 +7,9 @@ import SignInView from 'views/signInView/SignInView';
 import DashboardView from 'views/dashboard/DashboardView';
 import AccountSettings from 'views/accountSettings/AccountSettings';
 import CheckInsView from 'views/checkins/CheckInsView';
-import SleepTrialReportView from 'views/sleepTrialReport/SleepTrialReportView';
 import NotFound from 'views/notFound/NotFound';
-import TermsOfService from 'views/legal/TermsOfService';
-import PrivacyPolicy from 'views/legal/PrivacyPolicy';
-import Home from 'views/home/Home';
 import usePageTracker from 'hooks/usePageTracker';
 import DataView from 'views/DataView';
-import AboutPage from 'views/AboutPage';
 import CheckIn from 'views/CheckIn';
 
 const AppRouter = () => {
@@ -22,18 +17,16 @@ const AppRouter = () => {
 
   return (
     <Switch>
-      <PublicRoute exact path="/" component={Home} />
-      <PublicRoute path="/signin" authRedirectTo="/dashboard" component={SignInView} />
-      <PublicRoute path="/about" component={AboutPage} />
+      <ProtectedRoute exact path="/" component={DashboardView} />
+      <PublicRoute path="/signin" authRedirectTo="/" component={SignInView} />
+
+      {/* TODO: Comes back for beta participants */}
       {/* <PublicRoute path="/register/:token" authRedirectTo="/dashboard" component={RegisterView} /> */}
       {/* <PublicRoute path="/register" authRedirectTo="/dashboard" component={RegisterView} /> */}
-      <PublicRoute path="/terms-of-service" component={TermsOfService} />
-      <PublicRoute path="/privacy-policy" component={PrivacyPolicy} />
       <ProtectedRoute path="/check-in" component={CheckIn} />
-      <ProtectedRoute path="/dashboard" component={DashboardView} />
+      <ProtectedRoute path="/dashboard" authRedirectTo="/" component={DashboardView} />
       <ProtectedRoute path="/daily-diary" component={CheckInsView} />
       <ProtectedRoute path="/data" component={DataView} />
-      <ProtectedRoute path="/sleep-trial-report/:id" component={SleepTrialReportView} />
       <ProtectedRoute path="/settings" component={AccountSettings} />
       <Route component={NotFound} />
     </Switch>

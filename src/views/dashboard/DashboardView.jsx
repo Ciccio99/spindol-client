@@ -8,7 +8,7 @@ import {
 // import clsx from 'clsx';
 import { Helmet } from 'react-helmet-async';
 import { useUserState } from 'context/userContext';
-import Section from 'components/organizers/Section';
+import Section from 'components/common/Section';
 import ConnectDeviceCTA from 'components/cta/ConnectDevice';
 import useMobile from 'hooks/useMobile';
 import WeekMoodModule from 'components/dashboard/WeekMoodModule';

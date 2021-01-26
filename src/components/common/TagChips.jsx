@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Chip, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import SleepGoalDetailsModal from 'components/modals/SleepGoalDetailsModal';
+import SleepGoalDetailsModal from 'components/common/modals/SleepGoalDetailsModal';
 import COLORS from 'constants/colors';
 
 const useChipStyles = makeStyles((theme) => ({

@@ -9,7 +9,7 @@ import { CancelIcon } from 'components/common/Icons';
 import useDailyDiary from 'hooks/useDailyDiary';
 import { updateDiaryJournal } from 'services/DailyDiaryServices';
 import { useQueryCache, useMutation } from 'react-query';
-import { useAlertSystemDispatch } from 'context/alertSystemContext';
+import { useAlertSystemDispatch } from 'components/common/modals/node_modules/context/alertSystemContext';
 import COLORS from 'constants/colors';
 
 const useStyles = makeStyles((theme) => ({

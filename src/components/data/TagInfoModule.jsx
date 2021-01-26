@@ -4,7 +4,7 @@ import {
   Grid,
   Typography
 } from '@material-ui/core';
-import PanelModule from 'components/organizers/PanelModule';
+import PanelModule from 'components/common/PanelModule';
 import { MOOD_VALUES, VALUES_MOOD, getMoodIcon } from 'constants/mood';
 
 const getTagInfo = (series, tag) => {

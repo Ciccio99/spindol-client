@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import moment from 'moment-timezone';
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
-import EditTagsModal from 'components/modals/EditTagsModal';
+import EditTagsModal from 'components/common/modals/EditTagsModal';
 import { DisplaySleepChip, DisplayActivityChip } from 'components/common/TagChips';
 import useMobile from 'hooks/useMobile';
 import { Event } from 'utils/Tracking';

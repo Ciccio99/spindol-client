@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { useAsync } from 'react-async';
 import moment from 'moment-timezone';
 import dateViews from 'constants/dateViews';
-import Section from 'components/organizers/Section';
+import Section from 'components/common/Section';
 import TagSleepDataModule from 'components/modules/TagSleepDataModule';
 import DateRangePicker from 'views/DataView/DateRangePicker';
 import TagComparisonSelectors from 'views/DataView/TagComparisonSelectors';

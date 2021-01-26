@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import {
   Box,
@@ -14,15 +14,10 @@ import {
 import { setUserId, Event } from 'utils/Tracking';
 import Header from './views/header/Header';
 import Footer from './views/footer/Footer';
-import SleepTrialTrackersContext from './context/sleepTrialTrackersContext';
-import sleepTrialTrackersReducer from './reducers/sleepTrialTrackersReducer';
 import LoadingCard from './components/loadingCard/LoadingCard';
 
 function App() {
   const dispatchUser = useUserDispatch();
-  const [sleepTrialTrackers, dispatchSleepTrialTrackers] = useReducer(
-    sleepTrialTrackersReducer, [],
-  );
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -50,18 +45,14 @@ function App() {
   }, [dispatchUser]);
 
   return (
-    <SleepTrialTrackersContext.Provider
-      value={{ sleepTrialTrackers, dispatchSleepTrialTrackers }}
-    >
-      <Box minHeight="100vh" display="flex" flexDirection="column" component="main">
-        <BrowserRouter>
-          <ScrollToTop />
-          <Header />
-          {loaded ? <AppRouter /> : <LoadingCard />}
-          <Footer />
-        </BrowserRouter>
-      </Box>
-    </SleepTrialTrackersContext.Provider>
+    <Box minHeight="100vh" display="flex" flexDirection="column" component="main">
+      <BrowserRouter>
+        <ScrollToTop />
+        <Header />
+        {loaded ? <AppRouter /> : <LoadingCard />}
+        <Footer />
+      </BrowserRouter>
+    </Box>
   );
 }
 

@@ -5,7 +5,7 @@ import { updateDiaryJournal } from 'services/DailyDiaryServices';
 import { useQueryCache, useMutation } from 'react-query';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import { Paper } from '@material-ui/core';
-import Section from 'components/organizers/Section';
+import Section from 'components/common/Section';
 import JournalPreview from 'components/common/JournalPreview';
 
 export default function Journal({ date = null }) {

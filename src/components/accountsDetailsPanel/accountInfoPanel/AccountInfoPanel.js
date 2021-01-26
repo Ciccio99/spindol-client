@@ -6,9 +6,7 @@ import {
   TextField,
   Button,
 } from '@material-ui/core';
-
 import { useUserState, useUserDispatch } from 'context/userContext';
-
 import UserServices from 'services/UserServices';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import { Event } from 'utils/Tracking';

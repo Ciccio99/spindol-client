@@ -7,7 +7,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
-import Copyright from 'components/copyright/Copyright';
+import Copyright from 'components/common/Copyright';
 import useMedium from 'hooks/useMedium';
 import useMobile from 'hooks/useMobile';
 import { useUserState } from 'context/userContext';

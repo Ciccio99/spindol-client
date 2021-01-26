@@ -6,7 +6,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Helmet } from 'react-helmet-async';
-import Section from 'components/organizers/Section';
+import Section from 'components/common/Section';
 
 const PrivacyPolicy = () => (
   <Container maxWidth="lg">

@@ -14,7 +14,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { Helmet } from 'react-helmet-async';
 import MomentUtils from '@date-io/moment';
 import moment from 'moment-timezone';
-import Section from 'components/organizers/Section';
+import Section from 'components/common/Section';
 import DailyDiaryDetailsPanel from 'components/dailyDiaryDetailsPanel/DailyDiaryDetailsPanel';
 import { Event } from 'utils/Tracking';
 import styles from './CheckInsView.module.css';

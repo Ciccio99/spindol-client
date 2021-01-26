@@ -9,7 +9,7 @@ import moment from 'moment-timezone';
 import { useAsync } from 'react-async';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import DailyDiaryServices from 'services/DailyDiaryServices';
-import PanelModule from 'components/organizers/PanelModule';
+import PanelModule from 'components/common/PanelModule';
 import MoodSubModule from 'components/subModules/MoodSubModule';
 import DayTagsSubModule from 'components/subModules/DayTagsSubModule';
 
