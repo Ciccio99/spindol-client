@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import moment from 'moment-timezone';
 import { useAsync } from 'react-async';
-import PanelModule from 'components/organizers/PanelModule';
+import PanelModule from 'components/common/PanelModule';
 import SleepSummaryServices from 'services/SleepSummaryServices';
 import { useUserState } from 'context/userContext';
 import SleepCard from 'components/common/SleepCard';

@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Divider,
 } from '@material-ui/core';
-import PanelModule from 'components/organizers/PanelModule';
+import PanelModule from 'components/common/PanelModule';
 import AccountInfoPanel from './accountInfoPanel/AccountInfoPanel';
 import AccountPasswordPanel from './accountPasswordPanel/AccountPasswordPanel';
 

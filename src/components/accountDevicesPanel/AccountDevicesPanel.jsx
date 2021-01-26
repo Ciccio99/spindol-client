@@ -4,7 +4,7 @@ import {
   Divider,
 } from '@material-ui/core';
 import { useUserState } from 'context/userContext';
-import PanelModule from 'components/organizers/PanelModule';
+import PanelModule from 'components/common/PanelModule';
 import DeviceSettingsItem from './deviceSettingsItem/DeviceSettingsItem';
 
 const TITLE = 'Your Sleep Trackers';

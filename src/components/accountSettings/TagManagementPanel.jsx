@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { useAsync } from 'react-async';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
-import PanelModule from 'components/organizers/PanelModule';
+import PanelModule from 'components/common/PanelModule';
 import {
   getAllUserTags,
   insertTag,

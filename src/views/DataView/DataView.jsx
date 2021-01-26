@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Helmet } from 'react-helmet-async';
-import Section from 'components/organizers/Section';
+import Section from 'components/common/Section';
 import TabPanel from 'components/tabPanel/TabPanel';
 import DataExploreTabPanel from 'components/data/DataExploreTabPanel';
 
@@ -24,7 +24,6 @@ const DataView = () => {
           content="Hypnos.ai helps you track and improve your sleep habits. Use the Data view to see information about your daily tags and sleep."
         />
       </Helmet>
-      {/* <ViewHeader label="Data" /> */}
       <Typography variant="subtitle2" align="center">* Data Page still in development *</Typography>
       <Box
         component={Tabs}

@@ -12,7 +12,7 @@ import AccountDevicesPanel from 'components/accountDevicesPanel/AccountDevicesPa
 import AccountDetailsPanel from 'components/accountsDetailsPanel/AccountDetailsPanel';
 import TagManagementPanel from 'components/accountSettings/TagManagementPanel';
 import NotificationSettingsModule from 'components/modules/NotifcationSettingsModule';
-import Section from 'components/organizers/Section';
+import Section from 'components/common/Section';
 import TabPanel from 'components/tabPanel/TabPanel';
 
 const AccountSettings = () => {

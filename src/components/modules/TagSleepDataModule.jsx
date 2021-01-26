@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Typography,
 } from '@material-ui/core';
-import PanelModule from 'components/organizers/PanelModule';
+import PanelModule from 'components/common/PanelModule';
 import TagSleepTable from 'components/chart/TagSleepTable';
 
 const TITLE = 'Tags Sleep Impact';

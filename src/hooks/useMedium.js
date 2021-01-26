@@ -1,19 +1,8 @@
-import { useEffect, useState } from 'react';
+import useMediaQuery from 'hooks/useMediaQuery';
+import BREAKPOINTS from 'constants/breakpoints';
 
 const useMedium = () => {
-  const [isMedium, setIsMedium] = useState(window.innerWidth <= 800);
-
-  useEffect(() => {
-    const handleWindowResize = () => {
-      if (window.innerWidth <= 800 && !isMedium) {
-        setIsMedium(true);
-      } else if (window.innerWidth > 800 && isMedium) {
-        setIsMedium(false);
-      }
-    };
-    window.addEventListener('resize', handleWindowResize);
-    return () => window.removeEventListener('resize', handleWindowResize);
-  });
+  const isMedium = useMediaQuery(BREAKPOINTS.md);
 
   return { isMedium };
 };

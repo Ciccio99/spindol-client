@@ -5,7 +5,7 @@ import HeroPanel from 'components/home/HeroPanel';
 import HowItWorksPanel from 'components/home/HowItWorksPanel';
 import ComboInfoPanel from 'components/home/ComboInfoPanel';
 import DetailsPanel from 'components/home/DetailsPanel';
-import EndBumperPanel from 'components/home/EndBumperPanel';
+import EndBumperPanel from 'components/common/EndBumperPanel';
 import HomeBadge from 'components/home/HomeBadge';
 
 const Home = () => (

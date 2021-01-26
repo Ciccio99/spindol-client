@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import PanelModule from 'components/organizers/PanelModule';
+import PanelModule from 'components/common/PanelModule';
 import CalendarChart from 'components/chart/CalendarChart';
 
 const getData = (series, tag) => {

@@ -5,7 +5,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
-import LinkText from '../../linkText/LinkText';
+import LinkText from '../../common/LinkText';
 import LinkOnClick from '../../linkOnClick/LinkOnClick';
 import DeviceServices from '../../../services/DeviceServices';
 import { Event } from 'utils/Tracking';
