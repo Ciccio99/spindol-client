@@ -11,7 +11,7 @@ import { Helmet } from 'react-helmet-async';
 import AccountDevicesPanel from 'components/accountDevicesPanel/AccountDevicesPanel';
 import AccountDetailsPanel from 'components/accountsDetailsPanel/AccountDetailsPanel';
 import TagManagementPanel from 'components/accountSettings/TagManagementPanel';
-import NotificationSettingsModule from 'components/modules/NotifcationSettingsModule';
+import NotificationSettingsModule from 'components/modules/NotificationSettingsModule';
 import Section from 'components/common/Section';
 import TabPanel from 'components/tabPanel/TabPanel';
 
