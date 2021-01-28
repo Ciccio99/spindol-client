@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  Typography,
-  Box,
-  Grid,
-} from '@material-ui/core';
+import { Typography, Box, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
@@ -11,8 +7,9 @@ import Copyright from 'components/common/Copyright';
 import useMedium from 'hooks/useMedium';
 import useMobile from 'hooks/useMobile';
 import { useUserState } from 'context/userContext';
-import { HypnosYellowIcon } from 'components/common/Icons';
+import { SpindolLogoIcon } from 'components/common/Icons';
 import COLORS from 'constants/colors';
+import ROUTES from 'constants/routes';
 
 const useStyles = makeStyles((theme) => ({
   footer: {
@@ -56,10 +53,10 @@ const Footer = () => {
   const { isMobile } = useMobile();
 
   if (isMobile) {
-    return (<FooterMobile />);
+    return <FooterMobile />;
   }
 
-  return (<FooterDesktop />);
+  return <FooterDesktop />;
 };
 
 const FooterDesktop = () => {
@@ -67,25 +64,55 @@ const FooterDesktop = () => {
   const { isMedium } = useMedium();
   const user = useUserState();
   return (
-    <footer className={clsx(classes.footer, { [classes.footerMedium]: (isMedium && user._id) })}>
+    <footer
+      className={clsx(classes.footer, {
+        [classes.footerMedium]: isMedium && user._id,
+      })}
+    >
       <div className={clsx(classes.footerInner)}>
-        <Box width="100%" display="flex" justifyContent="space-between" alignItems="center">
+        <Box
+          width="100%"
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
           <div className={classes.logoContainer}>
-            <HypnosYellowIcon />
+            <SpindolLogoIcon />
           </div>
           <div>
             <Grid container spacing={4} justify="center">
-
-              <Grid item xs={8} md="auto"><FooterLink to="/terms-of-service">Terms of Service</FooterLink></Grid>
-              <Grid item xs={8} md="auto"><FooterLink to="/privacy-policy">Privacy Policy</FooterLink></Grid>
+              <Grid item xs={8} md="auto">
+                <FooterLink to={ROUTES.termsOfService} external>
+                  Terms of Service
+                </FooterLink>
+              </Grid>
+              <Grid item xs={8} md="auto">
+                <FooterLink to={ROUTES.privacyPolicy} external>
+                  Privacy Policy
+                </FooterLink>
+              </Grid>
             </Grid>
           </div>
           <div>
             <Grid container spacing={4} justify="flex-end">
-              <Grid item xs={8} md="auto"><FooterLink to="https://twitter.com/hypnos_ai" external>Twitter</FooterLink></Grid>
-              <Grid item xs={8} md="auto"><FooterLink to="https://www.instagram.com/hypnos_ai/" external>Instagram</FooterLink></Grid>
-              <Grid item xs={8} md="auto"><FooterLink to="https://www.facebook.com/hypnosai/" external>Facebook</FooterLink></Grid>
-              <Grid item xs={8} md="auto"><Copyright /></Grid>
+              <Grid item xs={8} md="auto">
+                <FooterLink to="https://twitter.com/hypnos_ai" external>
+                  Twitter
+                </FooterLink>
+              </Grid>
+              <Grid item xs={8} md="auto">
+                <FooterLink to="https://www.instagram.com/hypnos_ai/" external>
+                  Instagram
+                </FooterLink>
+              </Grid>
+              <Grid item xs={8} md="auto">
+                <FooterLink to="https://www.facebook.com/hypnosai/" external>
+                  Facebook
+                </FooterLink>
+              </Grid>
+              <Grid item xs={8} md="auto">
+                <Copyright />
+              </Grid>
             </Grid>
           </div>
         </Box>
@@ -99,47 +126,82 @@ const FooterMobile = () => {
   const user = useUserState();
 
   return (
-    <footer className={clsx(classes.footer, { [classes.footerMedium]: (!!user._id) })}>
+    <footer
+      className={clsx(classes.footer, { [classes.footerMedium]: !!user._id })}
+    >
       <div className={clsx(classes.footerInner, classes.footerInnerMobile)}>
-        <HypnosYellowIcon />
+        <SpindolLogoIcon />
         <div>
-          <div style={{ margin: '12px 0' }}><FooterLink to="/terms-of-service" isMobile>Terms of Service</FooterLink></div>
-          <div style={{ margin: '12px 0' }}><FooterLink to="/privacy-policy" isMobile>Privacy Policy</FooterLink></div>
+          <div style={{ margin: '12px 0' }}>
+            <FooterLink to={ROUTES.termsOfService} external isMobile>
+              Terms of Service
+            </FooterLink>
+          </div>
+          <div style={{ margin: '12px 0' }}>
+            <FooterLink to={ROUTES.privacyPolicy} isMobile>
+              Privacy Policy
+            </FooterLink>
+          </div>
         </div>
-        <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
-
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          width="100%"
+        >
           <Box display="flex" justifyContent="flex-start" alignItems="center">
-            <div><FooterLink to="https://twitter.com/hypnos_ai" external isMobile>Twitter</FooterLink></div>
-            <div style={{ margin: '0 12px' }}><FooterLink to="https://www.instagram.com/hypnos_ai/" external isMobile>Instagram</FooterLink></div>
-            <div style={{ margin: '0 12px' }}><FooterLink to="https://www.facebook.com/hypnosai/" external isMobile>Facebook</FooterLink></div>
+            <div>
+              <FooterLink to="https://twitter.com/hypnos_ai" external isMobile>
+                Twitter
+              </FooterLink>
+            </div>
+            <div style={{ margin: '0 12px' }}>
+              <FooterLink
+                to="https://www.instagram.com/hypnos_ai/"
+                external
+                isMobile
+              >
+                Instagram
+              </FooterLink>
+            </div>
+            <div style={{ margin: '0 12px' }}>
+              <FooterLink
+                to="https://www.facebook.com/hypnosai/"
+                external
+                isMobile
+              >
+                Facebook
+              </FooterLink>
+            </div>
           </Box>
         </Box>
         <Copyright />
-
       </div>
     </footer>
   );
 };
 
-const FooterLink = ({
-  external, to, children, isMobile,
-}) => {
+const FooterLink = ({ external, to, children, isMobile }) => {
   const classes = useStyles();
 
   if (external) {
     return (
-      <a href={to} className={clsx(classes.navLink, { [classes.navLinkMobile]: isMobile })} target="_blank" rel="noopener noreferrer">
-        <Typography variant="body1">
-          {children}
-        </Typography>
+      <a
+        href={to}
+        className={clsx(classes.navLink, { [classes.navLinkMobile]: isMobile })}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Typography variant="body1">{children}</Typography>
       </a>
     );
   }
   return (
-    <NavLink to={to} className={clsx(classes.navLink, { [classes.navLinkMobile]: isMobile })}>
-      <Typography variant="body1">
-        {children}
-      </Typography>
+    <NavLink
+      to={to}
+      className={clsx(classes.navLink, { [classes.navLinkMobile]: isMobile })}
+    >
+      <Typography variant="body1">{children}</Typography>
     </NavLink>
   );
 };

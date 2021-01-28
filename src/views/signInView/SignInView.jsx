@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   formContainer: {
-    minWidth: "50vw",
+    minWidth: '50vw',
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -81,10 +81,10 @@ const SignInView = () => {
   return (
     <Container component="main" maxWidth="sm">
       <Helmet>
-        <title>Hypnos - Sign In</title>
+        <title>Spindol - Sign In</title>
         <meta
           name="description"
-          content="A sleep journal that helps you get better sleep. Sign in to Hypnos here."
+          content="A sleep journal that helps you get better sleep. Sign in to Spindol here."
         />
       </Helmet>
       <CssBaseline />
@@ -92,7 +92,9 @@ const SignInView = () => {
         <Typography variant="h3" className={classes.title}>
           Sign In
         </Typography>
-        {errorMessage ? <FormHelperText error>{errorMessage}</FormHelperText> : null}
+        {errorMessage ? (
+          <FormHelperText error>{errorMessage}</FormHelperText>
+        ) : null}
 
         <form className={classes.form} onSubmit={login}>
           <Paper elevation={24}>
@@ -126,23 +128,25 @@ const SignInView = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </Grid>
-                {loading ? <Grid item xs={12}><LinearProgress color="secondary" /></Grid> : null}
+                {loading ? (
+                  <Grid item xs={12}>
+                    <LinearProgress color="secondary" />
+                  </Grid>
+                ) : null}
               </Grid>
             </Box>
-        </Paper>
-      <Box display="flex" justifyContent='center'>
-        <Button
-          text="Sign In →"
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-        />
-      </Box>
-
-      </form>
-
+          </Paper>
+          <Box display="flex" justifyContent="center">
+            <Button
+              text="Sign In →"
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            />
+          </Box>
+        </form>
       </div>
     </Container>
   );
@@ -166,9 +170,7 @@ const useInputStyles = makeStyles((theme) => ({
 const HypnosInput = (props) => {
   const { className, ...otherProps } = props;
   const classes = useInputStyles();
-  return (
-    <InputBase classes={classes} className={className} {...otherProps} />
-  );
+  return <InputBase classes={classes} className={className} {...otherProps} />;
 };
 
 export default SignInView;

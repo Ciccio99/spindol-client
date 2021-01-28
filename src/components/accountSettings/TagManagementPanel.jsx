@@ -22,22 +22,20 @@ import TagCreateInput from './TagCreateInput';
 const TITLE = 'Manage Tags';
 
 const PanelWrapper = ({ children }) => (
-  <PanelModule title={TITLE}>
-    {children}
-  </PanelModule>
+  <PanelModule title={TITLE}>{children}</PanelModule>
 );
 
 const getAvailableTags = async () => {
   const userTags = await getAllUserTags();
-  userTags.sort((a, b) => (a.tag.toLowerCase() <= b.tag.toLowerCase() ? -1 : 1));
+  userTags.sort((a, b) =>
+    a.tag.toLowerCase() <= b.tag.toLowerCase() ? -1 : 1
+  );
 
   return userTags;
 };
 
 const TagManagementPanel = () => {
-  const {
-    data, isPending, error, setData,
-  } = useAsync(getAvailableTags);
+  const { data, isPending, error, setData } = useAsync(getAvailableTags);
   const dispatchAlert = useAlertSystemDispatch();
 
   const handleInsert = async (tag) => {
@@ -107,28 +105,40 @@ const TagManagementPanel = () => {
         </Box>
         <Divider />
         <Box mt={2} pb={2}>
-          <Typography variant="h6" gutterBottom>Sleep Tags</Typography>
+          <Typography variant="h6" gutterBottom>
+            Sleep Tags
+          </Typography>
           <Grid container spacing={2}>
-            {
-              data.filter((tag) => (tag.sleepTrial)).map((tag) => (
+            {data
+              .filter((tag) => tag.sleepTrial)
+              .map((tag) => (
                 <Grid key={tag._id} item xs={12} sm={6}>
-                  <TagInput tag={tag} handleUpdate={handleUpdate} handleDelete={handleDelete} />
+                  <TagInput
+                    tag={tag}
+                    handleUpdate={handleUpdate}
+                    handleDelete={handleDelete}
+                  />
                 </Grid>
-              ))
-            }
+              ))}
           </Grid>
         </Box>
         <Divider />
         <Box my={2}>
-          <Typography variant="h6" gutterBottom>Activity Tags</Typography>
+          <Typography variant="h6" gutterBottom>
+            Activity Tags
+          </Typography>
           <Grid container spacing={2}>
-            {
-              data.filter((tag) => (!tag.sleepTrial)).map((tag) => (
+            {data
+              .filter((tag) => !tag.sleepTrial)
+              .map((tag) => (
                 <Grid key={tag._id} item xs={12} sm={6}>
-                  <TagInput tag={tag} handleUpdate={handleUpdate} handleDelete={handleDelete} />
+                  <TagInput
+                    tag={tag}
+                    handleUpdate={handleUpdate}
+                    handleDelete={handleDelete}
+                  />
                 </Grid>
-              ))
-            }
+              ))}
           </Grid>
         </Box>
       </PanelWrapper>

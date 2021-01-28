@@ -1,13 +1,11 @@
 import React from 'react';
-import {
-  AppBar, Divider, Grid, Typography, Box,
-} from '@material-ui/core';
+import { AppBar, Divider, Grid, Typography, Box } from '@material-ui/core';
 import clsx from 'clsx';
 import { NavLink, useLocation } from 'react-router-dom';
 import useScrollY from 'hooks/useScrollY';
 import { makeStyles } from '@material-ui/core/styles';
 import SideMenu from 'components/common/SideMenu';
-import { HypnosYellowIcon } from 'components/common/Icons';
+import { SpindolLogoIcon } from 'components/common/Icons';
 import LogoutWrapper from 'components/common/LogoutWrapper';
 import COLORS from 'constants/colors';
 import ROUTES from 'constants/routes';
@@ -47,9 +45,16 @@ const useStyles = makeStyles((theme) => ({
 const NavItem = ({ to, label }) => {
   const classes = useStyles();
   return (
-    <NavLink to={to} exact className={classes.navLink} activeClassName={classes.activeLink}>
+    <NavLink
+      to={to}
+      exact
+      className={classes.navLink}
+      activeClassName={classes.activeLink}
+    >
       <div className={classes.linkDiv}>
-        <Typography variant="body1" noWrap>{label}</Typography>
+        <Typography variant="body1" noWrap>
+          {label}
+        </Typography>
       </div>
     </NavLink>
   );
@@ -72,8 +77,15 @@ const AuthList = () => {
         <Grid container direction="column" spacing={2}>
           <Grid item>
             <ListItemBase>
-              <NavLink to={ROUTES.account} exact className={classes.navLink} activeClassName={classes.activeLink}>
-                <Typography variant="body1" noWrap className={classes.navLink}>Account</Typography>
+              <NavLink
+                to={ROUTES.account}
+                exact
+                className={classes.navLink}
+                activeClassName={classes.activeLink}
+              >
+                <Typography variant="body1" noWrap className={classes.navLink}>
+                  Account
+                </Typography>
               </NavLink>
             </ListItemBase>
           </Grid>
@@ -93,13 +105,22 @@ const AuthList = () => {
   );
 };
 
-const NonAuthList = () => (
-  <>
+const NonAuthList = () => {
+  const classes = useStyles();
+
+  return (
     <Box display="flex" alignItems="center">
+      <a href={ROUTES.landingPage} target="_blank" rel="noopener noreferrer">
+        <div className={classes.linkDiv}>
+          <Typography variant="body1" className={classes.navLink} noWrap>
+            Learn More
+          </Typography>
+        </div>
+      </a>
       <NavItem to="/signin" label="Sign In" />
     </Box>
-  </>
-);
+  );
+};
 
 export default function DesktopNavigation({ isAuth = false }) {
   const classes = useStyles();
@@ -111,26 +132,27 @@ export default function DesktopNavigation({ isAuth = false }) {
     <AppBar
       className={clsx(classes.stickyHeader, {
         [classes.transparentHeader]:
-          !isScrolled
-          && transparentRoutes.some((route) => route === location.pathname),
+          !isScrolled &&
+          transparentRoutes.some((route) => route === location.pathname),
       })}
       position="sticky"
       elevation={0}
       color="inherit"
     >
-      <Box display="flex" alignItems="center" justifyContent="space-between" wrap="nowrap">
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        wrap="nowrap"
+      >
         <div>
           <NavLink className={classes.logoNav} exact to="/">
             <Box display="flex" alignItems="center">
-              <HypnosYellowIcon />
+              <SpindolLogoIcon />
             </Box>
           </NavLink>
         </div>
-        {
-          isAuth
-            ? <AuthList />
-            : <NonAuthList />
-        }
+        {isAuth ? <AuthList /> : <NonAuthList />}
       </Box>
     </AppBar>
   );

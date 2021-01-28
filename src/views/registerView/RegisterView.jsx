@@ -56,7 +56,13 @@ const RegisterView = () => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage('');
-    const { user, error } = await UserServices.signUp(email, name, password, confirmPassword, token);
+    const { user, error } = await UserServices.signUp(
+      email,
+      name,
+      password,
+      confirmPassword,
+      token
+    );
     if (error) {
       setErrorMessage(error.message);
       setLoading(false);
@@ -75,11 +81,7 @@ const RegisterView = () => {
   return (
     <Container component="main" maxWidth="xs">
       <Helmet>
-        <title>Hypnos - Register</title>
-        <meta
-          name="description"
-          content="Hypnos.ai helps you track and improve your sleep habits. Discover which sleep trial best improves your sleep and overall happiness. Register an account with Hypnos.ai today, and start improving your sleep."
-        />
+        <title>Spindol - Register</title>
       </Helmet>
       <CssBaseline />
       <div className={classes.paper}>
@@ -89,7 +91,9 @@ const RegisterView = () => {
         <Typography component="h1" variant="h5">
           Register
         </Typography>
-        {errorMessage ? <FormHelperText error>{errorMessage}</FormHelperText> : null}
+        {errorMessage ? (
+          <FormHelperText error>{errorMessage}</FormHelperText>
+        ) : null}
         <form className={classes.form} onSubmit={signUp}>
           <TextField
             variant="outlined"

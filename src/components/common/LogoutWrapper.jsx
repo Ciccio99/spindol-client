@@ -14,7 +14,7 @@ export default function LogoutWrapper({ children }) {
     if (!user._id) {
       dispatchAlert({
         type: 'WARNING',
-        message: 'You\'re not logged in.',
+        message: "You're not logged in.",
       });
       return;
     }
@@ -35,7 +35,7 @@ export default function LogoutWrapper({ children }) {
     })();
   };
 
-  return React.Children.map(children, (child) => React.cloneElement(
-    child, { onClick: (handleClick) },
-  ));
-};
+  return React.Children.map(children, (child) =>
+    React.cloneElement(child, { onClick: handleClick })
+  );
+}

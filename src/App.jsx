@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import {
-  Box,
-} from '@material-ui/core';
+import { Box } from '@material-ui/core';
+import { loadIntercom } from 'next-intercom';
 import DeviceServices from 'services/DeviceServices';
 import UserServices from 'services/UserServices';
 import AppRouter from 'routes/AppRouter';
 import ScrollToTop from 'routes/ScrollToTop';
 import devices from 'constants/devices';
-import {
-  useUserDispatch,
-} from 'context/userContext';
+import { useUserDispatch } from 'context/userContext';
 import { setUserId, Event } from 'utils/Tracking';
 import Header from './views/header/Header';
 import Footer from './views/footer/Footer';
@@ -19,6 +16,10 @@ import LoadingCard from './components/loadingCard/LoadingCard';
 function App() {
   const dispatchUser = useUserDispatch();
   const [loaded, setLoaded] = useState(false);
+  loadIntercom({
+    appId: 'jfn9k2mu',
+    initWindow: true,
+  });
 
   useEffect(() => {
     (async () => {
@@ -45,7 +46,12 @@ function App() {
   }, [dispatchUser]);
 
   return (
-    <Box minHeight="100vh" display="flex" flexDirection="column" component="main">
+    <Box
+      minHeight="100vh"
+      display="flex"
+      flexDirection="column"
+      component="main"
+    >
       <BrowserRouter>
         <ScrollToTop />
         <Header />

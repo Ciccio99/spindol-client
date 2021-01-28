@@ -1,4 +1,5 @@
 import React from 'react';
+import { updateIntercom, shutdownIntercom } from 'next-intercom';
 
 const UserStateContext = React.createContext();
 const UserDispatchContext = React.createContext();
@@ -6,14 +7,14 @@ const UserDispatchContext = React.createContext();
 const userReducer = (state, action) => {
   switch (action.type) {
     case 'USER_LOGIN':
-      window.Intercom('boot', {
-        app_id: 'jfn9k2mu',
+      updateIntercom(undefined, {
         name: action.user.name,
         email: action.user.email,
         user_id: action.user._id,
       });
       return action.user;
     case 'USER_LOGOUT':
+      shutdownIntercom();
       return {};
     case 'USER_UPDATE':
       return { ...state, ...action.user };
