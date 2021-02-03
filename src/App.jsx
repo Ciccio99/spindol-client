@@ -9,8 +9,8 @@ import ScrollToTop from 'routes/ScrollToTop';
 import devices from 'constants/devices';
 import { useUserDispatch } from 'context/userContext';
 import { setUserId, Event } from 'utils/Tracking';
-import Header from './views/header/Header';
-import Footer from './views/footer/Footer';
+import Header from './components/common/Header';
+import Footer from './components/common/Footer';
 import LoadingCard from './components/loadingCard/LoadingCard';
 
 function App() {

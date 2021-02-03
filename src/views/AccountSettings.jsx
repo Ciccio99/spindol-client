@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import {
-  Box,
-  Container,
-  Divider,
-  Tabs,
-  Tab,
-} from '@material-ui/core';
+import { Box, Container, Divider, Tabs, Tab } from '@material-ui/core';
 import { Helmet } from 'react-helmet-async';
 import AccountDevicesPanel from 'components/accountDevicesPanel/AccountDevicesPanel';
 import AccountDetailsPanel from 'components/accountsDetailsPanel/AccountDetailsPanel';
@@ -48,7 +42,9 @@ const AccountSettings = () => {
       <Box
         component={Tabs}
         value={tabValue}
-        onChange={(e, newValue) => { setTabValue(newValue); }}
+        onChange={(e, newValue) => {
+          setTabValue(newValue);
+        }}
         variant="scrollable"
         scrollButtons="off"
         indicatorColor="secondary"

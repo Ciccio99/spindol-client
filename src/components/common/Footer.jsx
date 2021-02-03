@@ -4,9 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 import Copyright from 'components/common/Copyright';
-import useMedium from 'hooks/useMedium';
 import useMobile from 'hooks/useMobile';
-import { useUserState } from 'context/userContext';
 import { SpindolLogoIcon } from 'components/common/Icons';
 import COLORS from 'constants/colors';
 import ROUTES from 'constants/routes';
@@ -17,9 +15,6 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     backgroundColor: COLORS.WHITE,
     zIndex: 1,
-  },
-  footerMedium: {
-    marginBottom: '78px',
   },
   footerInner: {
     backgroundColor: COLORS.WHITE,
@@ -61,14 +56,9 @@ const Footer = () => {
 
 const FooterDesktop = () => {
   const classes = useStyles();
-  const { isMedium } = useMedium();
-  const user = useUserState();
+
   return (
-    <footer
-      className={clsx(classes.footer, {
-        [classes.footerMedium]: isMedium && user._id,
-      })}
-    >
+    <footer className={classes.footer}>
       <div className={clsx(classes.footerInner)}>
         <Box
           width="100%"
@@ -123,12 +113,9 @@ const FooterDesktop = () => {
 
 const FooterMobile = () => {
   const classes = useStyles();
-  const user = useUserState();
 
   return (
-    <footer
-      className={clsx(classes.footer, { [classes.footerMedium]: !!user._id })}
-    >
+    <footer className={classes.footer}>
       <div className={clsx(classes.footerInner, classes.footerInnerMobile)}>
         <SpindolLogoIcon />
         <div>

@@ -9,3 +9,5 @@ export const getAllSleepTrials = async () => {
     throw new ErrorHandler(e);
   }
 };
+
+export default getAllSleepTrials;

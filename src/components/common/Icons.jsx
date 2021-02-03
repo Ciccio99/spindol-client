@@ -3,6 +3,8 @@ import { SvgIcon } from '@material-ui/core';
 import flame from 'assets/flame.svg';
 import crossCircle from 'assets/cross-circle.svg';
 import spindolLogoSvg from 'assets/spindol-logo.svg';
+import addButtonSvg from 'assets/btn_add.svg';
+import searchIconSvg from 'assets/search_icon.svg';
 import { ReactComponent as SleepingCat } from 'assets/icons/sleeping-cat.svg';
 
 const DEFAULT_SIZE = 50;
@@ -28,12 +30,32 @@ export const FlameIcon = ({ size, ...props }) => (
   />
 );
 
+export const AddButtonIcon = ({ size, ...props }) => (
+  <img
+    src={addButtonSvg}
+    width={size || DEFAULT_SIZE}
+    height={size || DEFAULT_SIZE}
+    alt="Add Button"
+    {...props}
+  />
+);
+
+export const SearchIcon = ({ size, ...props }) => (
+  <img
+    src={searchIconSvg}
+    width={size || DEFAULT_SIZE}
+    height={size || DEFAULT_SIZE}
+    alt="Search/Filter"
+    {...props}
+  />
+);
+
 export const CancelIcon = ({ size, ...props }) => (
   <img
     src={crossCircle}
     width={size || DEFAULT_SIZE}
     height={size || DEFAULT_SIZE}
-    alt="cancel icon"
+    alt="Cancel"
     {...props}
   />
 );
@@ -46,7 +68,7 @@ export const SleepingCatIcon = ({ size, ...props }) => (
   <SleepingCat
     width={size || DEFAULT_SIZE}
     height={size || DEFAULT_SIZE}
-    alt="Sleeping Cat Icon"
+    alt="Sleeping Cat"
     {...props}
   />
 );

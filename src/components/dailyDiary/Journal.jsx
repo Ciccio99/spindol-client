@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment-timezone';
-import useDailyDiary from 'hooks/useDailyDiary';
+import { useDailyDiary } from 'hooks/useDailyDiary';
 import { updateDiaryJournal } from 'services/DailyDiaryServices';
 import { useQueryCache, useMutation } from 'react-query';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
@@ -27,7 +27,8 @@ export default function Journal({ date = null }) {
           journalEntry: value,
         }));
 
-        return () => queryCache.setQueryData(['dailyDiary', dateString], oldDiary);
+        return () =>
+          queryCache.setQueryData(['dailyDiary', dateString], oldDiary);
       },
       onError: (error, values, rollback) => {
         dispatchAlert({
@@ -38,14 +39,14 @@ export default function Journal({ date = null }) {
           rollback();
         }
       },
-    },
+    }
   );
 
   return (
     <Section>
       <Paper elevation={24}>
         <JournalPreview
-          text={isLoading ? 'Loading...' : (data?.journalEntry || '')}
+          text={isLoading ? 'Loading...' : data?.journalEntry || ''}
           header={journalDate.format('MMM DD, YYYY')}
           onSave={saveJournalEntry}
           isEditable
@@ -53,4 +54,4 @@ export default function Journal({ date = null }) {
       </Paper>
     </Section>
   );
-};
+}

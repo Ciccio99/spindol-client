@@ -1,51 +1,403 @@
-import React, { useState } from 'react';
-import {
-  Box, Paper, Typography,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import COLORS from 'constants/colors';
-import eatFaceSvg from 'assets/emoticons/illus_eat.svg';
-import StepperButton from 'components/checkIn/StepperButton';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment-timezone';
+import { useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import useMobile from 'hooks/useMobile';
+import { useActivitiesObject, useCreateActivity } from 'hooks/useActivities';
+import { useDailyDiary, useUpdateDailyDiary } from 'hooks/useDailyDiary';
+import COLORS from 'constants/colors';
+import ROUTES from 'constants/routes';
+import { Box, Typography } from '@material-ui/core';
+import SidePanel from 'components/common/SidePanel';
+import StepperButton from 'components/checkIn/StepperButton';
+import SearchField from 'components/common/SearchField';
+import SuggestedActivitiesPanel from 'components/checkIn/SuggestedActivitiesPanel';
+import ActivityCard from 'components/checkIn/ActivityCard';
+import CreateActivityCard from 'components/checkIn/CreateActivityCard';
+import eatFaceSvg from 'assets/emoticons/illus_eat.svg';
 
 const useStyles = makeStyles(() => ({
   moodImg: {
     maxWidth: '28vw',
   },
-  activityCard: {
-    cursor: 'pointer',
-    '&:hover': {
-      background: COLORS.LIGHTEST_GRAY,
-    },
-  },
-  selectedActivity: {
-    background: COLORS.LIGHTEST_GRAY,
-  },
-  listContainer: {
-    minWidth: 375,
-    maxWidth: 375,
-  },
   accentText: {
     color: COLORS.RED,
   },
+  sidePanel: {
+    position: 'relative',
+  },
+  searchContainer: {
+    borderBottom: `1px solid ${COLORS.BORDER_GRAY}`,
+  },
+  showSuggestions: {
+    color: COLORS.DARK_BLUE,
+    textDecoration: 'underline dotted',
+    cursor: 'pointer',
+  },
+  desktopStepper: {
+    position: 'absolute',
+    right: 100,
+    bottom: 30,
+  },
+  desktopBackStepper: {
+    position: 'absolute',
+    right: 250,
+    bottom: 30,
+  },
+  mobileStepper: {
+    width: '35vw',
+  },
+  mobileContainer: {
+    background: COLORS.WHITE,
+  },
 }));
 
-const markPreSelectedActivities = (activities, selectedActivities) => {
-  const userActivities = activities;
+const markPreSelectedActivities = (activities, selectedActivities = []) => {
+  const userActivities = { ...activities };
   selectedActivities.forEach((activity) => {
     userActivities[activity._id].selected = true;
   });
   return userActivities;
 };
 
-const ActivitiesPanel = ({
-  initData, setData, userActivities, navigation,
+const ActivitiesPanelDesktop = ({
+  activities,
+  onSelect,
+  onRemove,
+  date,
+  onNext,
+  onPrevious,
+  isNextDisabled,
 }) => {
   const classes = useStyles();
+  const { createActivity } = useCreateActivity();
+  const [userActivities, setUserActivities] = useState(
+    Object.values(activities) || []
+  );
+  const [showSuggestionsPanel, setShowSuggestionsPanel] = useState(false);
+  const [filter, setFilter] = useState('');
+
+  const onFilterChangeHandle = (value) => setFilter(value);
+
+  const showSuggestionsHandle = () => setShowSuggestionsPanel(true);
+
+  const hideSuggestionsHandle = () => setShowSuggestionsPanel(false);
+
+  const addNewActivity = (activityName) => {
+    const data = {
+      tag: activityName,
+    };
+    createActivity(data);
+  };
+
+  useEffect(() => {
+    const regex = new RegExp(filter, 'i');
+    const filteredActivities = Object.values(activities).filter((activity) =>
+      regex.test(activity.tag)
+    );
+
+    setUserActivities(filteredActivities);
+  }, [filter, activities, setUserActivities]);
+
+  return (
+    <Box width="100%" height="100vh" mt="-48px" pt="48px" pr={2} display="flex">
+      <SidePanel className={classes.sidePanel}>
+        <Box
+          width="100%"
+          display="flex"
+          flexDirection="column"
+          pt={5}
+          pb={4}
+          px={2}
+        >
+          <div>
+            <Typography
+              className={classes.accentText}
+              variant="h4"
+              gutterBottom
+            >
+              {moment(date).format('MMM DD')}
+            </Typography>
+            <Typography variant="subtitle1" color="textPrimary">
+              Did you do any activities yesterday?
+            </Typography>
+          </div>
+          <Box width="100%" mt={2} className={classes.searchContainer}>
+            <SearchField
+              fullWidth
+              onChange={onFilterChangeHandle}
+              placeholder="Add / Filter Activities"
+              startIconSize={20}
+              endIconSize={20}
+            />
+          </Box>
+          <Box mt={3}>
+            <Typography
+              className={classes.showSuggestions}
+              onClick={showSuggestionsHandle}
+              variant="subtitle1"
+            >
+              Show Suggested Activities
+            </Typography>
+          </Box>
+        </Box>
+        <Box width="100%" pb={8} overflow="auto scroll">
+          {userActivities.map((activity) => (
+            <ActivityCard
+              key={activity._id}
+              activity={activity}
+              isSelected={activity.selected}
+              onClick={
+                activity.selected
+                  ? () => {
+                      onRemove(activity);
+                    }
+                  : () => {
+                      onSelect(activity);
+                    }
+              }
+            />
+          ))}
+          {filter ? (
+            <CreateActivityCard
+              activityName={filter}
+              onClick={() => addNewActivity(filter)}
+            />
+          ) : null}
+        </Box>
+        {showSuggestionsPanel ? (
+          <Box
+            position="absolute"
+            left={0}
+            right={0}
+            top={0}
+            bottom={0}
+            width="100%"
+            zIndex={9}
+          >
+            <SuggestedActivitiesPanel onClose={hideSuggestionsHandle} />
+          </Box>
+        ) : null}
+      </SidePanel>
+      <Box
+        width="100%"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        p={2}
+      >
+        <img
+          src={eatFaceSvg}
+          alt="Eating Happy Face"
+          className={classes.moodImg}
+          width="100%"
+          height="100%"
+        />
+      </Box>
+      <StepperButton
+        className={classes.desktopBackStepper}
+        back
+        onClick={onPrevious}
+      />
+      <StepperButton
+        className={classes.desktopStepper}
+        onClick={onNext}
+        isDisabled={isNextDisabled}
+      />
+    </Box>
+  );
+};
+
+const ActivitiesPanelMobile = ({
+  activities,
+  onSelect,
+  onRemove,
+  date,
+  onNext,
+  onPrevious,
+  isNextDisabled,
+}) => {
+  const classes = useStyles();
+  const { createActivity } = useCreateActivity();
+  const [userActivities, setUserActivities] = useState(
+    Object.values(activities) || []
+  );
+  const [showSuggestionsPanel, setShowSuggestionsPanel] = useState(false);
+  const [filter, setFilter] = useState('');
+
+  const onFilterChangeHandle = (value) => setFilter(value);
+
+  const showSuggestionsHandle = () => setShowSuggestionsPanel(true);
+
+  const hideSuggestionsHandle = () => setShowSuggestionsPanel(false);
+
+  const addNewActivity = (activityName) => {
+    const data = {
+      tag: activityName,
+    };
+    createActivity(data);
+  };
+
+  useEffect(() => {
+    const regex = new RegExp(filter, 'i');
+    const filteredActivities = Object.values(activities).filter((activity) =>
+      regex.test(activity.tag)
+    );
+
+    setUserActivities(filteredActivities);
+  }, [filter, activities, setUserActivities]);
+
+  return (
+    <Box
+      className={classes.mobileContainer}
+      display="flex"
+      flexDirection="column"
+      width="100%"
+      height="100vh"
+      mt="-48px"
+      pt="48px"
+      pb={3}
+    >
+      <Box
+        width="100%"
+        display="flex"
+        flexDirection="column"
+        mt={5}
+        pb={4}
+        px={2}
+      >
+        <div>
+          <Typography className={classes.accentText} variant="h4" gutterBottom>
+            {moment(date).format('MMM DD')}
+          </Typography>
+          <Typography variant="subtitle1" color="textPrimary">
+            Did you do any activities yesterday?
+          </Typography>
+        </div>
+        <Box width="100%" mt={2} className={classes.searchContainer}>
+          <SearchField
+            fullWidth
+            onChange={onFilterChangeHandle}
+            placeholder="Add / Filter Activities"
+            startIconSize={20}
+            endIconSize={20}
+          />
+        </Box>
+        <Box mt={3}>
+          <Typography
+            className={classes.showSuggestions}
+            onClick={showSuggestionsHandle}
+            variant="subtitle1"
+          >
+            Show Suggested Activities
+          </Typography>
+        </Box>
+      </Box>
+      <Box width="100%" pb={8} overflow="auto scroll">
+        {userActivities.map((activity) => (
+          <ActivityCard
+            key={activity._id}
+            activity={activity}
+            isSelected={activity.selected}
+            onClick={
+              activity.selected
+                ? () => {
+                    onRemove(activity);
+                  }
+                : () => {
+                    onSelect(activity);
+                  }
+            }
+          />
+        ))}
+        {filter ? (
+          <CreateActivityCard
+            activityName={filter}
+            onClick={() => addNewActivity(filter)}
+          />
+        ) : null}
+      </Box>
+      {showSuggestionsPanel ? (
+        <Box
+          position="absolute"
+          left={0}
+          right={0}
+          top={56}
+          bottom={0}
+          width="100%"
+          zIndex={9}
+        >
+          <SuggestedActivitiesPanel onClose={hideSuggestionsHandle} />
+        </Box>
+      ) : null}
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        px={2}
+        py={4}
+        mt="auto"
+      >
+        <StepperButton
+          className={classes.mobileStepper}
+          back
+          onClick={onPrevious}
+        />
+        <StepperButton
+          className={classes.mobileStepper}
+          onClick={onNext}
+          isDisabled={isNextDisabled}
+        />
+      </Box>
+    </Box>
+  );
+};
+
+export default function ActivitiesPanel({ navigation, date }) {
+  const { isMobile } = useMobile();
+  const history = useHistory();
   const { previous } = navigation;
-  const initActivities = markPreSelectedActivities(userActivities, initData.diaryTags);
-  const [activities, setActivities] = useState(initActivities);
+  const { updateDailyDiary } = useUpdateDailyDiary();
+  const { data: diary, isLoading: diaryIsLoading } = useDailyDiary(date);
+
+  const {
+    data: userActivities,
+    isLoading: userActivitiesIsLoading,
+  } = useActivitiesObject();
+  const [activities, setActivities] = useState(userActivities || {});
+  const isNextDisabled = diaryIsLoading || userActivitiesIsLoading;
+
+  useEffect(() => {
+    if (
+      !diaryIsLoading &&
+      !userActivitiesIsLoading &&
+      diary &&
+      userActivities
+    ) {
+      setActivities(markPreSelectedActivities(userActivities, diary.diaryTags));
+    }
+  }, [diary, userActivities, diaryIsLoading, userActivitiesIsLoading]);
+
+  const saveSelectedActivities = () => {
+    const activitiesIdList = Object.values(activities)
+      .filter((activity) => activity.selected)
+      .map((activity) => activity._id);
+    const data = {
+      _id: diary._id,
+      diaryTags: activitiesIdList,
+    };
+    updateDailyDiary({ data, date });
+  };
+
+  const onNextHandle = () => {
+    saveSelectedActivities();
+    history.push(ROUTES.home);
+  };
+
+  const onPreviousHandle = () => {
+    saveSelectedActivities();
+    previous();
+  };
+
   const onSelectHandle = (activity) => {
     setActivities((prevData) => ({
       ...prevData,
@@ -53,10 +405,6 @@ const ActivitiesPanel = ({
         ...activity,
         selected: true,
       },
-    }));
-    setData((prevData) => ({
-      ...prevData,
-      diaryTags: [...prevData.diaryTags, activity._id],
     }));
   };
 
@@ -68,92 +416,27 @@ const ActivitiesPanel = ({
         selected: false,
       },
     }));
-
-    setData((prevData) => ({
-      ...prevData,
-      diaryTags: prevData.diaryTags.filter((element) => element._id !== activity._id),
-    }));
   };
 
-
-  /*
-    Panel for all your tags
-    Panel for seeing and adding suggested sleep tags
-  */
-
-  return (
-    <>
-      <Box width="100%" height="100vh" mt="-48px" pt="48px" pr={2} display="flex">
-        <ActivitySidePanel
-          activities={activities}
-          onSelect={onSelectHandle}
-          onRemove={onRemoveHandle}
-          date={initData.date}
-        />
-        <Box width="100%" display="flex" justifyContent="center" alignItems="center" p={2}>
-          <img src={eatFaceSvg} alt="Eating Happy Face" className={classes.moodImg} width="100%" height="100%" />
-        </Box>
-      </Box>
-      <StepperButton back onClick={previous} />
-      <StepperButton />
-    </>
+  return isMobile ? (
+    <ActivitiesPanelMobile
+      activities={activities}
+      onSelect={onSelectHandle}
+      onRemove={onRemoveHandle}
+      date={date}
+      onNext={onNextHandle}
+      onPrevious={onPreviousHandle}
+      isNextDisabled={isNextDisabled}
+    />
+  ) : (
+    <ActivitiesPanelDesktop
+      activities={activities}
+      onSelect={onSelectHandle}
+      onRemove={onRemoveHandle}
+      date={date}
+      onNext={onNextHandle}
+      onPrevious={onPreviousHandle}
+      isNextDisabled={isNextDisabled}
+    />
   );
-};
-
-const ActivitySidePanel = ({
-  activities, onSelect, onRemove, date,
-}) => {
-  const classes = useStyles();
-
-  return (
-    <Paper elevation={24}>
-      <Box width="100%" pt={2} pb={2} px={2}>
-        <Box maxWidth={200}>
-          <Typography className={classes.accentText} variant="h4" gutterBottom>
-            {moment(date).format('MMM DD')}
-          </Typography>
-          <Typography variant="subtitle1" color="textPrimary">Did you do any activities yesterday?</Typography>
-        </Box>
-      </Box>
-      <Box height="100%" width={375} overflow="scroll">
-        {
-            Object.values(activities).map((activity) => (
-              <ActivityCard
-                activity={activity}
-                isSelected={activity.selected}
-                onClick={
-                  activity.selected
-                    ? () => { onRemove(activity); }
-                    : () => { onSelect(activity); }
-                }
-              />
-            ))
-          }
-      </Box>
-    </Paper>
-  );
-};
-
-const ActivityCard = ({ activity, onClick, isSelected = false }) => {
-  const classes = useStyles();
-  return (
-    <Box
-      px={2}
-      minHeight={56}
-      width="100%"
-      display="flex"
-      alignItems="center"
-      onClick={onClick}
-      className={clsx(classes.activityCard, { [classes.selectedActivity]: isSelected })}
-    >
-      {
-        isSelected
-          ? <img src={eatFaceSvg} width={40} height={40} alt="Activity Completed" />
-          : null
-      }
-      <Typography variant="subtitle1">{activity.tag}</Typography>
-    </Box>
-  );
-};
-
-export default ActivitiesPanel;
+}

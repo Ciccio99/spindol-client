@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Box, Typography, Container, InputBase,
-} from '@material-ui/core';
+import { Box, Typography, Container, InputBase } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import moment from 'moment-timezone';
@@ -103,7 +101,8 @@ export default function JournalModule() {
           journalEntry: value,
         }));
 
-        return () => queryCache.setQueryData(['dailyDiary', dateString], oldDiary);
+        return () =>
+          queryCache.setQueryData(['dailyDiary', dateString], oldDiary);
       },
       onError: (error, values, rollback) => {
         dispatchAlert({
@@ -114,7 +113,7 @@ export default function JournalModule() {
           rollback();
         }
       },
-    },
+    }
   );
 
   useEffect(() => {
@@ -136,7 +135,9 @@ export default function JournalModule() {
     saveJournalEntry(journalInput);
     setJournalFocus(false);
     setJournalExpanded(false);
-    setTimeout(() => { setEnableMultiline(false); }, 750);
+    setTimeout(() => {
+      setEnableMultiline(false);
+    }, 750);
   };
 
   const handleOnKeyDown = (event) => {
@@ -149,38 +150,58 @@ export default function JournalModule() {
 
   return (
     <>
-      <div className={clsx(classes.container, {
-        [classes.containerFullPage]: journalExpanded,
-      })}
+      <div
+        className={clsx(classes.container, {
+          [classes.containerFullPage]: journalExpanded,
+        })}
       >
-        <Container className={clsx({ [classes.innerTopPadding]: journalExpanded })}>
-          <div className={clsx(classes.cancelButton, { [classes.cancelButtonVisible]: journalExpanded })} onClick={handleCloseJournal} onKeyDown={handleOnKeyDown} role="button" tabIndex={0}>
+        <Container
+          className={clsx({ [classes.innerTopPadding]: journalExpanded })}
+        >
+          <div
+            className={clsx(classes.cancelButton, {
+              [classes.cancelButtonVisible]: journalExpanded,
+            })}
+            onClick={handleCloseJournal}
+            onKeyDown={handleOnKeyDown}
+            role="button"
+            tabIndex={0}
+          >
             <CancelIcon size={48} />
           </div>
           <Box pt={5} pb={2} height="100%">
-            <Typography variant="h4" className={classes.dateHeader} display="inline">{todayDate.format('MMM DD, YYYY')}</Typography>
+            <Typography
+              variant="h4"
+              className={classes.dateHeader}
+              display="inline"
+            >
+              {todayDate.format('MMM DD, YYYY')}
+            </Typography>
             {/* {
               isLoading
                 ? <Typography variant="h4" className={classes.loadingHeader} display="inline">Loading...</Typography>
                 : null
             } */}
-            {
-              isLoading
-                ? <LoadingInput />
-                : (
-                  <InputBase
-                    classes={{ root: classes.journalRoot, input: classes.journalInput }}
-                    multiline
-                    rows={enableMultiline ? null : 1}
-                    fullWidth
-                    placeholder="Last night, I dreamed..."
-                    value={journalInput || data?.journalEntry || ''}
-                    onChange={handleOnJournalInput}
-                    onFocus={() => { setJournalFocus(true); }}
-                    // onBlur={() => { console.log('losing focus')/*setJournalFocus(false);*/ }}
-                  />
-                )
-            }
+            {isLoading ? (
+              <LoadingInput />
+            ) : (
+              <InputBase
+                classes={{
+                  root: classes.journalRoot,
+                  input: classes.journalInput,
+                }}
+                multiline
+                rows={enableMultiline ? null : 1}
+                fullWidth
+                placeholder="Last night, I dreamed..."
+                value={journalInput || data?.journalEntry || ''}
+                onChange={handleOnJournalInput}
+                onFocus={() => {
+                  setJournalFocus(true);
+                }}
+                // onBlur={() => { console.log('losing focus')/*setJournalFocus(false);*/ }}
+              />
+            )}
           </Box>
         </Container>
       </div>

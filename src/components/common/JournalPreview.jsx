@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Box, Typography, Grid,
-} from '@material-ui/core';
+import { Box, Typography, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import useMobile from 'hooks/useMobile';
@@ -36,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
       bottom: 0,
       left: 0,
       pointerEvents: 'none',
-      backgroundImage: 'linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, .9) 90%)',
+      backgroundImage:
+        'linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, .9) 90%)',
       width: '100%',
       height: '1.5rem',
       transition: 'all 0.75s ease-in-out',
@@ -63,7 +62,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const JournalPreview = ({
-  text, header, onSave, isEditable = false, clickToEditor = false,
+  text,
+  header,
+  onSave,
+  isEditable = false,
+  clickToEditor = false,
 }) => {
   const classes = useStyles();
   const { isMobile } = useMobile();
@@ -74,7 +77,8 @@ const JournalPreview = ({
 
   useEffect(() => {
     if (previewRef.current) {
-      const isOverflow = previewRef.current.offsetHeight < previewRef.current.scrollHeight;
+      const isOverflow =
+        previewRef.current.offsetHeight < previewRef.current.scrollHeight;
       setJournalOverflow(isOverflow);
     }
   }, [text]);
@@ -91,11 +95,24 @@ const JournalPreview = ({
     setIsEditorOpen(true);
   };
 
-  const getReadButton = (isOpen) => (
-    isOpen
-      ? <HypnosButton text="Close" name="closeButton" onClick={closePreview} className={clsx(classes.button)} />
-      : <HypnosButton text="Read" name="readButton" onClick={() => { setReadMode(true); }} className={clsx(classes.button, classes.buttonMarginRight)} />
-  );
+  const getReadButton = (isOpen) =>
+    isOpen ? (
+      <HypnosButton
+        text="Close"
+        name="closeButton"
+        onClick={closePreview}
+        className={clsx(classes.button)}
+      />
+    ) : (
+      <HypnosButton
+        text="Read"
+        name="readButton"
+        onClick={() => {
+          setReadMode(true);
+        }}
+        className={clsx(classes.button, classes.buttonMarginRight)}
+      />
+    );
   return (
     <>
       <Box
@@ -106,7 +123,11 @@ const JournalPreview = ({
         justifyContent="space-between"
       >
         <div>
-          { header ? <Typography variant="h4" className={classes.dateHeader}>{header}</Typography> : null }
+          {header ? (
+            <Typography variant="h4" className={classes.dateHeader}>
+              {header}
+            </Typography>
+          ) : null}
           <Box
             height="100%"
             ref={previewRef}
@@ -117,58 +138,59 @@ const JournalPreview = ({
               [classes.pointerCursor]: clickToEditor,
             })}
           >
-            {
-                text.length
-                  ? (
-                    <Typography variant="h3" style={{ whiteSpace: 'pre-line', wordWrap: 'break-word' }}>
-                      {text}
-                    </Typography>
-                  )
-                  : (
-                    <ShiftingPrompt variant="h3" />
-                  )
-              }
-
+            {text.length ? (
+              <Typography
+                variant="h3"
+                style={{ whiteSpace: 'pre-line', wordWrap: 'break-word' }}
+              >
+                {text}
+              </Typography>
+            ) : (
+              <ShiftingPrompt variant="h3" />
+            )}
           </Box>
         </div>
         <Box pt={3} width="100%">
-          <Grid container justify={isMobile ? 'space-between' : 'flex-end'} spacing={2}>
-            {
-            journalOverflow
-              ? (
-                <Grid item xs={6} sm="auto">
-                  {getReadButton(readMode)}
-                </Grid>
-              )
-              : null
-          }
+          <Grid
+            container
+            justify={isMobile ? 'space-between' : 'flex-end'}
+            spacing={2}
+          >
+            {journalOverflow ? (
+              <Grid item xs={6} sm="auto">
+                {getReadButton(readMode)}
+              </Grid>
+            ) : null}
 
-            {
-            isEditable
-              ? (
-                <Grid item xs={6} sm="auto">
-                  <SecondaryButton
-                    onClick={openEditorHandle}
-                    className={classes.button}
-                    name="editButton"
-                    text={(
-                      <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <img src={pencilSvg} width={16} height={16} alt="pencil" style={{ marginRight: 8 }} />
-                        {' '}
-                        Edit
-                      </div>
-                    )}
-                  />
-                </Grid>
-              )
-              : null
-            }
+            {isEditable ? (
+              <Grid item xs={6} sm="auto">
+                <SecondaryButton
+                  onClick={openEditorHandle}
+                  className={classes.button}
+                  name="editButton"
+                  text={
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <img
+                        src={pencilSvg}
+                        width={16}
+                        height={16}
+                        alt="pencil"
+                        style={{ marginRight: 8 }}
+                      />{' '}
+                      Edit
+                    </div>
+                  }
+                />
+              </Grid>
+            ) : null}
           </Grid>
         </Box>
       </Box>
       <JournalEditModal
         isOpen={isEditorOpen}
-        onClose={() => { setIsEditorOpen(false); }}
+        onClose={() => {
+          setIsEditorOpen(false);
+        }}
         onSave={onSave}
         initText={text}
         header={header}

@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 
 export default function useMediaQuery(query) {
-  const [matches, setMatches] = useState(false);
+  const media = window.matchMedia(`(max-width: ${query}px)`);
+  const [matches, setMatches] = useState(media.matches);
 
-  useEffect(() => {
-    const media = window.matchMedia(`(max-width: ${query}px)`);
-
+  useLayoutEffect(() => {
     if (media.matches !== matches) {
       setMatches(media.matches);
     }
@@ -14,7 +13,7 @@ export default function useMediaQuery(query) {
     };
     media.addListener(listener);
     return () => media.removeListener(listener);
-  }, [matches, query]);
+  }, [matches, query, media]);
 
   return matches;
 }

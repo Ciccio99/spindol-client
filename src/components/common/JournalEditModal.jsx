@@ -55,9 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const JournalEditModal = ({
-  isOpen, onClose, initText, header, onSave,
-}) => {
+const JournalEditModal = ({ isOpen, onClose, initText, header, onSave }) => {
   const classes = useStyles();
   const { isMobile } = useMobile();
   const [journalInput, setJournalInput] = useState(initText);
@@ -83,7 +81,16 @@ const JournalEditModal = ({
       closeAfterTransition
     >
       <Fade in={isOpen} timeout={500}>
-        <Box position="relative" className={classes.container} pt={11} px={2} width="100%" height="100%" display="flex" justifyContent="center">
+        <Box
+          position="relative"
+          className={classes.container}
+          pt={11}
+          px={2}
+          width="100%"
+          height="100%"
+          display="flex"
+          justifyContent="center"
+        >
           <IconButton
             className={classes.cancelButton}
             onClick={onCloseHandle}
@@ -93,19 +100,29 @@ const JournalEditModal = ({
           >
             <CancelIcon size={48} />
           </IconButton>
-          <Box display="flex" flexDirection="column" maxWidth={960} justifyContent="flex-start" alignItems="center" overflow="auto scroll" width="100%" height="100%">
-            {
-            header
-              ? (
-                <div style={{ width: '100%' }}>
-                  <Typography variant="h4" className={classes.dateHeader}>{header}</Typography>
-                </div>
-              )
-              : null
-            }
+          <Box
+            display="flex"
+            flexDirection="column"
+            maxWidth={960}
+            justifyContent="flex-start"
+            alignItems="center"
+            overflow="auto scroll"
+            width="100%"
+            height="100%"
+          >
+            {header ? (
+              <div style={{ width: '100%' }}>
+                <Typography variant="h4" className={classes.dateHeader}>
+                  {header}
+                </Typography>
+              </div>
+            ) : null}
             <Box overflow="auto scroll" width="100%" height="100%">
               <InputBase
-                classes={{ root: classes.journalRoot, input: classes.journalInput }}
+                classes={{
+                  root: classes.journalRoot,
+                  input: classes.journalInput,
+                }}
                 className={clsx({ [classes.journalRootFontMobile]: isMobile })}
                 multiline
                 fullWidth

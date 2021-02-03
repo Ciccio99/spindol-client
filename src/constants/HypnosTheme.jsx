@@ -73,7 +73,7 @@ const customTheme = {
     button: {
       fontWeight: 400,
       fontSize: '0.875rem',
-      color: '#224887',
+      color: COLORS.DARK_BLUE,
       textTransform: 'none',
     },
   },
@@ -136,7 +136,9 @@ const fontSizesOptions = {
 };
 
 const HypnosTheme = ({ children }) => {
-  const [theme, setTheme] = useState(responsiveFontSizes(createMuiTheme(customTheme)));
+  const [theme, setTheme] = useState(
+    responsiveFontSizes(createMuiTheme(customTheme))
+  );
   const { isMobile } = useMobile();
 
   useEffect(() => {
@@ -153,14 +155,9 @@ const HypnosTheme = ({ children }) => {
     }
   }, [isMobile]);
 
-
   theme.shadows[24] = '6px 6px 0px rgba(0, 0, 0, 0.05);';
 
-  return (
-    <ThemeProvider theme={theme}>
-      {children}
-    </ThemeProvider>
-  );
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 
 export default HypnosTheme;

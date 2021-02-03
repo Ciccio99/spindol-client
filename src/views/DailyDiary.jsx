@@ -1,25 +1,31 @@
 import React, { useState } from 'react';
 import {
-  Box,
-  Container,
-  Divider,
-  Grid,
-} from '@material-ui/core';
-import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import { Helmet } from 'react-helmet-async';
 import MomentUtils from '@date-io/moment';
 import moment from 'moment-timezone';
-import Section from 'components/common/Section';
 import DailyDiaryDetailsPanel from 'components/dailyDiaryDetailsPanel/DailyDiaryDetailsPanel';
 import { Event } from 'utils/Tracking';
-import styles from './CheckInsView.module.css';
+import { makeStyles } from '@material-ui/core/styles';
+import { Helmet } from 'react-helmet-async';
+import { Box, Container, Divider, Grid } from '@material-ui/core';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import Section from 'components/common/Section';
 
-const CheckInsView = () => {
+const useStyles = makeStyles(() => ({
+  navArrow: {
+    cursor: 'pointer',
+    textAlign: 'center',
+    '&:hover': {
+      color: '#c1a1ed',
+    },
+  },
+}));
+
+export default function DailyDiary() {
+  const classes = useStyles();
   const [selectedDate, setSelectedDate] = useState(moment());
 
   const handleDateChange = (date) => {
@@ -51,7 +57,11 @@ const CheckInsView = () => {
       <Box mt={4} mb={4}>
         <Grid container spacing={2} alignItems="center" wrap="nowrap">
           <Grid item>
-            <ArrowBackIosIcon onClick={handleBackClick} color="action" className={styles.navArrow} />
+            <ArrowBackIosIcon
+              onClick={handleBackClick}
+              color="action"
+              className={classes.navArrow}
+            />
           </Grid>
           <Grid item>
             <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -69,7 +79,11 @@ const CheckInsView = () => {
             </MuiPickersUtilsProvider>
           </Grid>
           <Grid item>
-            <ArrowForwardIosIcon onClick={handleForwardClick} color="action" className={styles.navArrow} />
+            <ArrowForwardIosIcon
+              onClick={handleForwardClick}
+              color="action"
+              className={classes.navArrow}
+            />
           </Grid>
         </Grid>
       </Box>
@@ -80,5 +94,3 @@ const CheckInsView = () => {
     </Container>
   );
 };
-
-export default CheckInsView;

@@ -21,8 +21,8 @@ export const getTagById = async (id) => {
 
 export const insertTag = async (dto) => {
   try {
-    if (dto.tag.length > 30) {
-      throw new Error('Tag cannot be more than 30 characters long.');
+    if (dto.tag?.length > 40) {
+      throw new Error('Tag cannot be more than 40 characters long.');
     }
     const { data } = await axios.post('/tags', dto);
     return data;
@@ -37,7 +37,7 @@ export const updateTag = async (dto) => {
       throw new Error('Missing Tag Id in DTO');
     }
     if (dto.tag) {
-      if (dto.tag.length > 30) {
+      if (dto.tag.length > 40) {
         throw new Error('Tag cannot be more than 30 characters long.');
       }
     }
