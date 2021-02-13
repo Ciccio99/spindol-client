@@ -14,7 +14,6 @@ const useStyles = makeStyles(() => ({
 export default function SleepModule({ date }) {
   const classes = useStyles();
   const { data, isLoading } = useSleepSummary(date);
-  console.log(data);
 
   if (isLoading || !data) {
     return null;
