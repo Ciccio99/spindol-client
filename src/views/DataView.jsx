@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Container,
-  Divider,
-  Tabs,
-  Tab,
-  Typography,
-} from '@material-ui/core';
+import { Box, Container, Divider, Tabs, Tab } from '@material-ui/core';
 import { Helmet } from 'react-helmet-async';
 import Section from 'components/common/Section';
 import TabPanel from 'components/tabPanel/TabPanel';
@@ -20,11 +13,12 @@ const DataView = () => {
       <Helmet>
         <title>Spindol - Data</title>
       </Helmet>
-      <Typography variant="subtitle2" align="center">* Data Page still in development *</Typography>
       <Box
         component={Tabs}
         value={tabValue}
-        onChange={(e, newValue) => { setTabValue(newValue); }}
+        onChange={(e, newValue) => {
+          setTabValue(newValue);
+        }}
         variant="scrollable"
         scrollButtons="off"
         indicatorColor="primary"
@@ -47,7 +41,6 @@ const DataView = () => {
           Trends History
         </TabPanel> */}
       </Section>
-
     </Container>
   );
 };

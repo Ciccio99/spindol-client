@@ -31,7 +31,7 @@ const useStyles = makeStyles(() => ({
   },
   showSuggestions: {
     color: COLORS.DARK_BLUE,
-    textDecoration: 'underline dotted',
+    borderBottom: `1px dashed ${COLORS.DARK_BLUE}`,
     cursor: 'pointer',
   },
   desktopStepper: {
@@ -136,6 +136,7 @@ const ActivitiesPanelDesktop = ({
               className={classes.showSuggestions}
               onClick={showSuggestionsHandle}
               variant="subtitle1"
+              display="inline"
             >
               Show Suggested Activities
             </Typography>
@@ -288,6 +289,7 @@ const ActivitiesPanelMobile = ({
             className={classes.showSuggestions}
             onClick={showSuggestionsHandle}
             variant="subtitle1"
+            display="inline"
           >
             Show Suggested Activities
           </Typography>

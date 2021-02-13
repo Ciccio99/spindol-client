@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Grid, LinearProgress, Typography,
-} from '@material-ui/core';
+import { Grid, LinearProgress, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { useAsync } from 'react-async';
@@ -44,14 +42,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TopPanel = ({
-  handleDatesUpdate, handleRangeUpdate, handleTag1Change, handleTag2Change,
+  handleDatesUpdate,
+  handleRangeUpdate,
+  handleTag1Change,
+  handleTag2Change,
 }) => (
   <Grid container spacing={2} justify="space-between" alignItems="center">
     <Grid item xs={12} sm="auto">
-      <DateRangePicker handleDatesUpdate={handleDatesUpdate} handleRangeUpdate={handleRangeUpdate} />
+      <DateRangePicker
+        handleDatesUpdate={handleDatesUpdate}
+        handleRangeUpdate={handleRangeUpdate}
+      />
     </Grid>
     <Grid item xs={12} sm="auto">
-      <TagComparisonSelectors handleTag1Change={handleTag1Change} handleTag2Change={handleTag2Change} />
+      <TagComparisonSelectors
+        handleTag1Change={handleTag1Change}
+        handleTag2Change={handleTag2Change}
+      />
     </Grid>
   </Grid>
 );
@@ -67,7 +74,9 @@ const getData = async () => {
     const sStart = moment(sleeps[0].date);
     start = dStart.diff(sStart) < 0 ? dStart : sStart;
   } else {
-    throw new Error('Not enough data yet. Keep tagging your activities and using your sleep tracker and soon enough you will be able to see your activity/sleep metrics');
+    throw new Error(
+      'Not enough data yet. Keep tagging your activities and using your sleep tracker and soon enough you will be able to see your activity/sleep metrics'
+    );
   }
 
   const dateMap = new DateMap(start, end);
@@ -107,7 +116,7 @@ const DataExploreTabPanel = () => {
     }
     const series = data.dateMap.getRange(
       viewDates.startDate.format('YYYY-MM-DD'),
-      viewDates.endDate.format('YYYY-MM-DD'),
+      viewDates.endDate.format('YYYY-MM-DD')
     );
 
     let baselineSeries = getTagBaselineSeries(series, selectedTag1);
@@ -120,9 +129,16 @@ const DataExploreTabPanel = () => {
   if (error) {
     return (
       <>
-        <TopPanel handleDatesUpdate={setViewDates} handleRangeUpdate={setViewRange} handleTag1Change={setSelectedTag1} handleTag2Change={setSelectedTag2} />
+        <TopPanel
+          handleDatesUpdate={setViewDates}
+          handleRangeUpdate={setViewRange}
+          handleTag1Change={setSelectedTag1}
+          handleTag2Change={setSelectedTag2}
+        />
         <Section>
-          <Typography variant="subtitle2" color="error">{error.message}</Typography>
+          <Typography variant="subtitle2" color="error">
+            {error.message}
+          </Typography>
         </Section>
       </>
     );
@@ -131,7 +147,12 @@ const DataExploreTabPanel = () => {
   if (!data && isPending) {
     return (
       <>
-        <TopPanel handleDatesUpdate={setViewDates} handleRangeUpdate={setViewRange} handleTag1Change={setSelectedTag1} handleTag2Change={setSelectedTag2} />
+        <TopPanel
+          handleDatesUpdate={setViewDates}
+          handleRangeUpdate={setViewRange}
+          handleTag1Change={setSelectedTag1}
+          handleTag2Change={setSelectedTag2}
+        />
         <Section>
           <LinearProgress color="secondary" />
         </Section>
@@ -139,60 +160,88 @@ const DataExploreTabPanel = () => {
     );
   }
 
-  if (data && prunedData?.series && prunedData?.baselineSeries && selectedTag1) {
+  if (
+    data &&
+    prunedData?.series &&
+    prunedData?.baselineSeries &&
+    selectedTag1
+  ) {
     return (
       <>
-        <TopPanel handleDatesUpdate={setViewDates} handleRangeUpdate={setViewRange} handleTag1Change={setSelectedTag1} handleTag2Change={setSelectedTag2} />
-        {
-          (isPending && <LinearProgress color="secondary" />) || <div style={{ height: '4px' }} />
-        }
+        <TopPanel
+          handleDatesUpdate={setViewDates}
+          handleRangeUpdate={setViewRange}
+          handleTag1Change={setSelectedTag1}
+          handleTag2Change={setSelectedTag2}
+        />
+        {(isPending && <LinearProgress color="secondary" />) || (
+          <div style={{ height: '4px' }} />
+        )}
         <Section>
-          <TagSleepDataModule startDate={viewDates.startDate} endDate={viewDates.endDate} tag1={selectedTag1} tag2={selectedTag2} />
+          <TagSleepDataModule
+            startDate={viewDates.startDate}
+            endDate={viewDates.endDate}
+            tag1={selectedTag1}
+            tag2={selectedTag2}
+          />
         </Section>
-        {
-          (selectedTag1 || selectedTag2)
-          && (
-            <Section>
-              <Grid container spacing={4}>
-                <Grid item xs={12} sm={6}>
-                  {selectedTag1 && <TagInfoModule series={prunedData.series} tag={selectedTag1}/>}
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  {selectedTag2 && <TagInfoModule series={prunedData.series} tag={selectedTag2}/>}
-                </Grid>
+        {(selectedTag1 || selectedTag2) && (
+          <Section>
+            <Grid container spacing={4}>
+              <Grid item xs={12} sm={6}>
+                {selectedTag1 && (
+                  <TagInfoModule
+                    series={prunedData.series}
+                    tag={selectedTag1}
+                  />
+                )}
               </Grid>
-            </Section>
-          )
-        }
-        {
-          selectedTag1
-          && !isMobile
-          && (
-            <Section>
-              <TagCalendarModule series={data.dateMap.getAll()} tag={selectedTag1} />
-            </Section>
-          )
-        }
+              <Grid item xs={12} sm={6}>
+                {selectedTag2 && (
+                  <TagInfoModule
+                    series={prunedData.series}
+                    tag={selectedTag2}
+                  />
+                )}
+              </Grid>
+            </Grid>
+          </Section>
+        )}
+        {selectedTag1 && !isMobile && (
+          <Section>
+            <TagCalendarModule
+              series={data.dateMap.getAll()}
+              tag={selectedTag1}
+            />
+          </Section>
+        )}
 
-        {
-          selectedTag2
-          && !isMobile
-          && (
-            <Section>
-              <TagCalendarModule series={data.dateMap.getAll()} tag={selectedTag2} variant="secondary" />
-            </Section>
-          )
-        }
+        {selectedTag2 && !isMobile && (
+          <Section>
+            <TagCalendarModule
+              series={data.dateMap.getAll()}
+              tag={selectedTag2}
+              variant="secondary"
+            />
+          </Section>
+        )}
       </>
     );
   }
 
   return (
     <>
-      <TopPanel handleDatesUpdate={setViewDates} handleRangeUpdate={setViewRange} handleTag1Change={setSelectedTag1} handleTag2Change={setSelectedTag2} />
+      <TopPanel
+        handleDatesUpdate={setViewDates}
+        handleRangeUpdate={setViewRange}
+        handleTag1Change={setSelectedTag1}
+        handleTag2Change={setSelectedTag2}
+      />
       <Section>
         <div className={clsx(classes.bgImage)}>
-          <Typography variant={isMobile ? 'subtitle1' : 'h6'}>Select a tag to view your data...</Typography>
+          <Typography variant={isMobile ? 'subtitle1' : 'h6'}>
+            Select a tag to view your data...
+          </Typography>
         </div>
       </Section>
     </>

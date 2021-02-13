@@ -1,12 +1,8 @@
 import React from 'react';
-import {
-  Typography,
-  ButtonBase,
-} from '@material-ui/core';
+import { Typography, ButtonBase } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import COLORS from 'constants/colors';
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,11 +27,15 @@ const Button = ({ text, className, fullWidth, ...other }) => {
   const classes = useStyles();
   return (
     <ButtonBase
-      className={clsx(classes.root, className, { [classes.fullWidth]: fullWidth })}
+      className={clsx(classes.root, className, {
+        [classes.fullWidth]: fullWidth,
+      })}
       disableRipple
       {...other}
     >
-      <Typography className={classes.buttonText} variant="button">{text}</Typography>
+      <Typography className={classes.buttonText} variant="button">
+        {text}
+      </Typography>
     </ButtonBase>
   );
 };

@@ -20,6 +20,10 @@ const TagCalendarModule = ({ series, tag, variant }) => {
   const title = `${tag.tag} Tag Usage this Year`;
   const data = React.useMemo(() => getData(series, tag), [series, tag]);
 
+  if (!data || data.length === 0) {
+    return null;
+  }
+
   return (
     <PanelModule title={title}>
       <div style={{ height: '200px' }}>

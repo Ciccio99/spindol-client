@@ -1,11 +1,13 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import clsx from 'clsx';
 import moment from 'moment-timezone';
 import { makeStyles } from '@material-ui/core/styles';
 import COLORS from 'constants/colors';
 import { Typography } from '@material-ui/core';
-import emptyCircleSvg from 'assets/emoticons/empty-face.svg';
 import checkMarkSvg from 'assets/check-mark.svg';
+import { getShape } from 'utils/shape-utils';
 
 const useStyles = makeStyles((theme) => ({
   activityCard: {
@@ -36,11 +38,20 @@ const useStyles = makeStyles((theme) => ({
   },
   activityIcon: {
     width: 40,
+    maxWidth: 40,
     height: 40,
+    maxHeight: 40,
     position: 'absolute',
   },
   checkMark: {
     zIndex: 1,
+    width: 24,
+    maxWidth: 24,
+    height: 24,
+    maxHeight: 24,
+    position: 'absolute',
+    left: 8,
+    top: 8,
   },
   selectedActivity: {
     background: COLORS.LIGHTEST_GRAY,
@@ -55,6 +66,7 @@ export default function ActivityCard({
   isSelected = false,
 }) {
   const classes = useStyles();
+  const Shape = getShape(activity.shapeId);
   const isNew =
     moment.utc(activity.createdAt).diff(moment.utc(), 'hours') > -12;
 
@@ -68,29 +80,21 @@ export default function ActivityCard({
       <div className={classes.activityIconContainer}>
         {isSelected ? (
           <>
-            <img
-              src={emptyCircleSvg}
-              className={classes.activityIcon}
-              width={40}
-              height={40}
-              alt="Activity Completed"
-            />
+            <div className={classes.activityIcon}>
+              <Shape fill={activity.shapeColor} width={40} height={40} />
+            </div>
             <img
               src={checkMarkSvg}
-              className={clsx(classes.activityIcon, classes.checkMark)}
-              width={40}
-              height={40}
+              className={classes.checkMark}
+              width={24}
+              height={24}
               alt="Activity Completed"
             />
           </>
         ) : (
-          <img
-            className={classes.activityIcon}
-            src={emptyCircleSvg}
-            width={40}
-            height={40}
-            alt="Activity Not Completed"
-          />
+          <div className={classes.activityIcon}>
+            <Shape fill={activity.shapeColor} width={40} height={40} />
+          </div>
         )}
       </div>
       <div className={classes.cardTextContainer}>

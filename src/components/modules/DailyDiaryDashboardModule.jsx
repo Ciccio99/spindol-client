@@ -22,7 +22,6 @@ const PanelWrapper = ({ date, children }) => (
 
 const DailyDiaryDashboardModule = ({ date, enableStreak, tagsDate }) => {
   const dispatchAlertSystem = useAlertSystemDispatch();
-
   const {
     data,
     error,

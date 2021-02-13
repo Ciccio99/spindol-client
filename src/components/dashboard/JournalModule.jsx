@@ -141,7 +141,6 @@ export default function JournalModule() {
   };
 
   const handleOnKeyDown = (event) => {
-    // console.log(event);
     if (event.keyCode === 27) {
       event.preventDefault();
       handleCloseJournal();
@@ -177,11 +176,6 @@ export default function JournalModule() {
             >
               {todayDate.format('MMM DD, YYYY')}
             </Typography>
-            {/* {
-              isLoading
-                ? <Typography variant="h4" className={classes.loadingHeader} display="inline">Loading...</Typography>
-                : null
-            } */}
             {isLoading ? (
               <LoadingInput />
             ) : (
@@ -199,7 +193,6 @@ export default function JournalModule() {
                 onFocus={() => {
                   setJournalFocus(true);
                 }}
-                // onBlur={() => { console.log('losing focus')/*setJournalFocus(false);*/ }}
               />
             )}
           </Box>

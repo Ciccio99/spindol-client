@@ -6,8 +6,12 @@ import COLORS from 'constants/colors';
 const CustomToolTip = ({ day, value }) => (
   <span>
     {`${day}: `}
-    <span role="img" aria-label="Great Success">🙌</span>
-    <span style={{ color: COLORS.GREEN, fontWeight: 600 }}>{` ${value === 1 ? 'Great Success' : 'Nope'}`}</span>
+    <span role="img" aria-label="Great Success">
+      🙌
+    </span>
+    <span style={{ color: COLORS.GREEN, fontWeight: 600 }}>{` ${
+      value === 1 ? 'Great Success' : 'Nope'
+    }`}</span>
   </span>
 );
 
@@ -19,8 +23,9 @@ const CalendarChart = ({ data, variant }) => {
       default:
         return [COLORS.HYPNOS_PURPLE];
     }
-  }
-  )();
+  })();
+
+  console.log(data);
 
   return (
     <ResponsiveCalendar
@@ -31,7 +36,10 @@ const CalendarChart = ({ data, variant }) => {
       emptyColor={COLORS.LIGHTEST_GRAY}
       colors={color}
       margin={{
-        top: 0, right: 0, bottom: 0, left: 40,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 40,
       }}
       yearSpacing={40}
       monthBorderColor="#ffffff"

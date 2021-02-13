@@ -81,14 +81,14 @@ export const getByDate = async (searchDate) => {
   }
 };
 
-const getReportingStreak = async () => {
+export async function getCurrentStreak() {
   try {
-    const { data } = await axios.get('/dailyDiary/reportingStreak');
-    return data.streak;
+    const { data } = await axios.get('/dailyDiary/streak');
+    return data;
   } catch (error) {
     return 0;
   }
-};
+}
 
 const getAllDailyDiary = async () => {
   const query = {
@@ -225,7 +225,6 @@ export default {
   upsert,
   getAllDailyDiary,
   getByDate,
-  getReportingStreak,
   getDashboardData,
   getTagsHeatMapData,
   getDiariesByDateRange,

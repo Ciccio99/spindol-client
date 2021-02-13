@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Box,
-  Typography,
-  Paper,
-  LinearProgress,
-} from '@material-ui/core';
+import { Box, Typography, Paper, LinearProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { FlameIcon } from 'components/common/Icons';
@@ -53,20 +48,32 @@ const StreakModule = () => {
   if (data) {
     return (
       <Container>
-        <Box p={3} display="flex" alignItems="center" maxHeight={100} height="100%">
+        <Box
+          p={3}
+          display="flex"
+          alignItems="center"
+          maxHeight={100}
+          height="100%"
+        >
           <div className={clsx(classes.icon)}>
             <FlameIcon />
           </div>
           <Box marginTop={-1} display="flex" flexDirection="column">
             <div>
-              <Typography className={clsx(classes.streak)} variant="h1" display="inline">{data.currentStreak}</Typography>
+              <Typography
+                className={clsx(classes.streak)}
+                variant="h1"
+                display="inline"
+              >
+                {data.streak || 0}
+              </Typography>
               <Typography variant="subtitle1" display="inline">
                 day streak
               </Typography>
             </div>
             <div>
               <Typography variant="h4" color="textSecondary">
-                {`LONGEST: ${data.highScore} DAYS`}
+                {`LONGEST: ${data.longestStreak || 0} DAYS`}
               </Typography>
             </div>
           </Box>

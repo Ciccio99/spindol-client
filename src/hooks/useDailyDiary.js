@@ -3,7 +3,7 @@ import { getByDate, update } from 'services/DailyDiaryServices';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import moment from 'moment-timezone';
 
-export const useDailyDiary = (date = null) => {
+export const useDailyDiary = (date = undefined) => {
   const queryDate = moment(date).format('YYYY-MM-DD');
   return useQuery(['dailyDiary', queryDate], async () => getByDate(queryDate));
 };

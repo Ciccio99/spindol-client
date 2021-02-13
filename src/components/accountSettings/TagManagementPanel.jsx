@@ -19,7 +19,7 @@ import { Event } from 'utils/Tracking';
 import TagInput from './TagInput';
 import TagCreateInput from './TagCreateInput';
 
-const TITLE = 'Manage Tags';
+const TITLE = 'Manage Activities';
 
 const PanelWrapper = ({ children }) => (
   <PanelModule title={TITLE}>{children}</PanelModule>

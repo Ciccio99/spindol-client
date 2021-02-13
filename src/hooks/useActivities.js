@@ -1,5 +1,5 @@
 import { useQuery, useQueryCache, useMutation } from 'react-query';
-import { getAllUserTags, insertTag } from 'services/TagsServices';
+import { getAllUserTags, insertTag, updateTag } from 'services/TagsServices';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 
 const getActivitiesObject = (activitiesList) => {
@@ -60,4 +60,23 @@ export const useCreateActivity = () => {
   });
 
   return { createActivity };
+};
+
+export const useUpdateActivity = () => {
+  const dispatchAlert = useAlertSystemDispatch();
+  const queryCache = useQueryCache();
+
+  const [updateActivity] = useMutation((data) => updateTag(data), {
+    onSuccess: () => {
+      queryCache.invalidateQueries(['activities']);
+    },
+    onError: (error) => {
+      dispatchAlert({
+        type: 'ERROR',
+        message: error.message,
+      });
+    },
+  });
+
+  return { updateActivity };
 };

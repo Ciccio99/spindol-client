@@ -88,10 +88,10 @@ const customTheme = {
   },
   palette: {
     primary: {
-      light: '#c1a1ed',
-      main: '#9072ba',
-      dark: '#61468a',
-      contrastText: '#fff',
+      light: COLORS.PEACH_1,
+      main: COLORS.PEACH,
+      dark: COLORS.DARK_PEACH,
+      contrastText: COLORS.BLACK,
     },
     secondary: {
       light: '#ffae83',
@@ -126,6 +126,28 @@ const customTheme = {
       root: {
         borderRadius: '10px',
         border: 0,
+      },
+    },
+    MuiPickersToolbar: {
+      toolbar: {
+        backgroundColor: COLORS.PEACH,
+      },
+    },
+    MuiPickersToolbarText: {
+      toolbarTxt: {
+        color: COLORS.DARK_GRAY,
+      },
+      toolbarBtnSelected: {
+        color: COLORS.BLACK,
+      },
+    },
+    MuiPickersDay: {
+      daySelected: {
+        color: COLORS.BLACK,
+        backgroundColor: COLORS.PEACH,
+        '&:hover': {
+          backgroundColor: COLORS.LIGHT_GRAY,
+        },
       },
     },
   },

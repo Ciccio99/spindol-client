@@ -1,5 +1,6 @@
 import axios from 'loaders/axios';
 import ErrorHandler from 'utils/ErrorHandler';
+import { getRandomShapeId, getRandomShapeColor } from 'utils/shape-utils';
 
 export const getAllUserTags = async () => {
   try {
@@ -24,7 +25,14 @@ export const insertTag = async (dto) => {
     if (dto.tag?.length > 40) {
       throw new Error('Tag cannot be more than 40 characters long.');
     }
-    const { data } = await axios.post('/tags', dto);
+    const newDto = dto;
+    if (!newDto.shapeId) {
+      newDto.shapeId = getRandomShapeId();
+    }
+    if (!newDto.shapeColor) {
+      newDto.shapeColor = getRandomShapeColor();
+    }
+    const { data } = await axios.post('/tags', newDto);
     return data;
   } catch (e) {
     throw new ErrorHandler(e);
@@ -38,7 +46,7 @@ export const updateTag = async (dto) => {
     }
     if (dto.tag) {
       if (dto.tag.length > 40) {
-        throw new Error('Tag cannot be more than 30 characters long.');
+        throw new Error('Tag cannot be more than 40 characters long.');
       }
     }
     const { data } = await axios.patch(`/tags/${dto._id}`, dto);

@@ -54,7 +54,7 @@ const AccountSettings = () => {
         <Tab label="Account" disableRipple />
         <Tab label="Devices" disableRipple />
         <Tab label="Notifications" disableRipple />
-        <Tab label="Habit Tags" disableRipple />
+        <Tab label="Activities" disableRipple />
       </Box>
       <Divider />
       <Section>

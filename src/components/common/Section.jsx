@@ -4,8 +4,8 @@ import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   section: {
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(4),
+    marginTop: theme.spacing(6),
+    marginBottom: theme.spacing(6),
   },
 }));
 
