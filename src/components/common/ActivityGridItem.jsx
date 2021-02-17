@@ -11,12 +11,14 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   activityCard: {
-    position: 'relative',
     cursor: 'pointer',
     transition: 'all 0.15s ease-in-out',
     '&:hover': {
       background: COLORS.GRAY_BACKGROUND,
     },
+  },
+  iconContainer: {
+    position: 'relative',
   },
   selectedActivity: {
     background: COLORS.LIGHTEST_GRAY,
@@ -42,12 +44,12 @@ export default function ActivityGridItem({ activity, isSelected, onClick }) {
   return (
     <Paper elevation={24} className={classes.paper}>
       <Box
-        p={1}
+        p={2}
         display="flex"
         justifyContent="center"
         alignItems="center"
         onClick={onClick}
-        className={clsx({ [classes.selectedActivity]: isSelected })}
+        className={clsx(classes.activityCard, { [classes.selectedActivity]: isSelected })}
         height="100%"
       >
         <Box
@@ -56,7 +58,7 @@ export default function ActivityGridItem({ activity, isSelected, onClick }) {
           justifyContent="center"
           alignItems="center"
         >
-          <div className={classes.activityCard}>
+          <div className={classes.iconContainer}>
             <Shape fill={activity.shapeColor} width={40} height={40} />
             {isSelected ? (
               <CheckMark width={24} height={24} className={classes.checkMark} />

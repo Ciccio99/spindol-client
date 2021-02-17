@@ -18,6 +18,10 @@ const useStyles = makeStyles((theme) => ({
   editActivitiesContainer: {
     backgroundColor: COLORS.WHITE,
   },
+  searchContainer: {
+    backgroundColor: COLORS.WHITE,
+    borderBottom: `1px solid ${COLORS.BORDER_GRAY}`,
+  },
 }));
 
 const ModalWrapper = ({ open, onModalClose, children }) => (
@@ -100,13 +104,15 @@ const EditorPanel = ({ activities, onSelect, onRemove, date }) => {
             What activities did you do?
           </Typography>
         </div>
-        <SearchField
-          fullWidth
-          onChange={onFilterChangeHandle}
-          placeholder="Add / Filter Activities"
-          startIconSize={20}
-          endIconSize={20}
-        />
+        <Box width="100%" mt={2} p={2} className={classes.searchContainer}>
+          <SearchField
+            fullWidth
+            onChange={onFilterChangeHandle}
+            placeholder="Add / Filter Activities"
+            startIconSize={20}
+            endIconSize={20}
+          />
+        </Box>
       </Box>
       {filter ? (
         <CreateActivityCard
