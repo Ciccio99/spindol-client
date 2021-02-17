@@ -79,13 +79,25 @@ const getDashboardData = async (startDate, endDate, dateView = dateViews.M) => {
 
     const responses = await Promise.all([bedtimeReq, waketimeReq, sleepReq]);
     const bedtimeHabits = responses[0].data.length > 0 ? responses[0].data : [];
-    const waketimeHabits = responses[1].data.length > 0 ? responses[1].data : [];
-    const sleepSummaries = responses[2].data.length > 0 ? responses[2].data : [];
-    const heatmapData = HabitUtils
-      .getHeatmapData(sleepSummaries, bedtimeHabits, waketimeHabits, startDate, endDate, dateView);
+    const waketimeHabits =
+      responses[1].data.length > 0 ? responses[1].data : [];
+    const sleepSummaries =
+      responses[2].data.length > 0 ? responses[2].data : [];
+    const heatmapData = HabitUtils.getHeatmapData(
+      sleepSummaries,
+      bedtimeHabits,
+      waketimeHabits,
+      startDate,
+      endDate,
+      dateView
+    );
     const activeBedtimeHabit = bedtimeHabits.find((habit) => habit.active);
     const activeWaketimeHabit = waketimeHabits.find((habit) => habit.active);
-    const data = { bedtime: activeBedtimeHabit, waketime: activeWaketimeHabit, heatmapData };
+    const data = {
+      bedtime: activeBedtimeHabit,
+      waketime: activeWaketimeHabit,
+      heatmapData,
+    };
 
     return { data };
   } catch (error) {
@@ -95,7 +107,10 @@ const getDashboardData = async (startDate, endDate, dateView = dateViews.M) => {
 
 const upsert = async (name, dataType, startDate, targetValue) => {
   const dto = {
-    name, startDate, targetValue, dataType,
+    name,
+    startDate,
+    targetValue,
+    dataType,
   };
   try {
     const { data } = await axios.post('/habits/upsert', dto);

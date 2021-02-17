@@ -377,7 +377,7 @@ const HabitEditor = ({ habit }) => {
   );
 
   const handleOnChange = (newTarget) => {
-    if (habit.target === habit.targetValue) {
+    if (!habit.default && newTarget === habit.targetValue) {
       return;
     }
 
@@ -423,9 +423,7 @@ const TimePicker = ({ initTime, currentValue, popTitle, onChange }) => {
     if (isValidTime(input)) {
       const newTime = moment(`${input} ${period}`, 'hh:mm A');
       const targetVal = newTime.diff(moment().startOf('day'), 'minutes');
-      if (currentValue !== targetVal) {
-        onChange(targetVal);
-      }
+      onChange(targetVal);
     } else {
       setInput(originalTime);
     }
