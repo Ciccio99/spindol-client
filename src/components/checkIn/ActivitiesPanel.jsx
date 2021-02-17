@@ -7,6 +7,7 @@ import { useActivitiesObject, useCreateActivity } from 'hooks/useActivities';
 import { useDailyDiary, useUpdateDailyDiary } from 'hooks/useDailyDiary';
 import COLORS from 'constants/colors';
 import ROUTES from 'constants/routes';
+import { deepCopyObj } from 'utils/object-utils';
 import { Box, Typography } from '@material-ui/core';
 import SidePanel from 'components/common/SidePanel';
 import StepperButton from 'components/checkIn/StepperButton';
@@ -53,7 +54,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const markPreSelectedActivities = (activities, selectedActivities = []) => {
-  const userActivities = { ...activities };
+  const userActivities = deepCopyObj(activities);
   selectedActivities.forEach((activity) => {
     userActivities[activity._id].selected = true;
   });

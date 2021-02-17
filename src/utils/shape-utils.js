@@ -43,7 +43,6 @@ const SHAPE_COLORS = [
   '#A7C5C3',
   '#F4D8FE',
   '#FFD9D0',
-  '#FFF7F8',
 ];
 
 export const getShape = (shapeId) => {

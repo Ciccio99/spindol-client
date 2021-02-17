@@ -7,6 +7,7 @@ import COLORS from 'constants/colors';
 import { useActivitiesObject, useCreateActivity } from 'hooks/useActivities';
 import moment from 'moment-timezone';
 import React, { useEffect, useState } from 'react';
+import { deepCopyObj } from 'utils/object-utils';
 
 const useStyles = makeStyles((theme) => ({
   accentText: {
@@ -146,7 +147,7 @@ const EditorPanel = ({ activities, onSelect, onRemove, date }) => {
 };
 
 const markPreSelectedActivities = (activities, selectedActivities = []) => {
-  const userActivities = { ...activities };
+  const userActivities = deepCopyObj(activities);
   selectedActivities.forEach((activity) => {
     userActivities[activity._id].selected = true;
   });
