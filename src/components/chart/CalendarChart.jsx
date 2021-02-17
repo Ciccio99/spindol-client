@@ -25,8 +25,6 @@ const CalendarChart = ({ data, variant }) => {
     }
   })();
 
-  console.log(data);
-
   return (
     <ResponsiveCalendar
       data={data}

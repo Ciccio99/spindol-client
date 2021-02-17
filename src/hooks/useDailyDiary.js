@@ -1,5 +1,9 @@
 import { useQuery, useQueryCache, useMutation } from 'react-query';
-import { getByDate, update } from 'services/DailyDiaryServices';
+import {
+  getByDate,
+  update,
+  updateActivities,
+} from 'services/DailyDiaryServices';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import moment from 'moment-timezone';
 
@@ -48,6 +52,42 @@ export const useUpdateDailyDiary = () => {
   });
 
   return { updateDailyDiary };
+};
+
+export const useUpdateDailyDiaryActivities = () => {
+  const dispatchAlert = useAlertSystemDispatch();
+  const queryCache = useQueryCache();
+
+  const [updateDailyDiaryActivities] = useMutation(
+    ({ data }) => updateActivities(data),
+    {
+      onMutate: ({ data, date }) => {
+        queryCache.cancelQueries(['dailyDiary', date]);
+        const oldData = queryCache.getQueryData(['dailyDiary', date]);
+        queryCache.setQueryData(['dailyDiary', date], (prevData) => ({
+          ...prevData,
+          ...data,
+        }));
+
+        return () => queryCache.setQueryData(['dailyDiary', date], oldData);
+      },
+      onSuccess: (data, { date }) => {
+        queryCache.setQueryData(['dailyDiary', date], data);
+        queryCache.invalidateQueries(['dailyDiary', date]);
+      },
+      onError: (error, values, rollback) => {
+        dispatchAlert({
+          type: 'ERROR',
+          message: error.message,
+        });
+        if (rollback) {
+          rollback();
+        }
+      },
+    }
+  );
+
+  return { updateDailyDiaryActivities };
 };
 
 export default useDailyDiary;

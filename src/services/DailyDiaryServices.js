@@ -151,6 +151,20 @@ export const update = async (dto) => {
   }
 };
 
+export const updateActivities = async (dto) => {
+  const body = {
+    ...dto,
+    diaryTags: dto.diaryTags.map((activity) => activity._id),
+  };
+
+  try {
+    const { data } = await axios.patch(`/dailyDiary/${body._id}`, body);
+    return data;
+  } catch (error) {
+    throw new ErrorHandler(error);
+  }
+};
+
 export const updateDiaryJournal = async (id, journalEntry) => {
   const body = { _id: id, journalEntry };
   try {

@@ -13,7 +13,7 @@ import StepperButton from 'components/checkIn/StepperButton';
 import SearchField from 'components/common/SearchField';
 import SuggestedActivitiesPanel from 'components/checkIn/SuggestedActivitiesPanel';
 import ActivityCard from 'components/checkIn/ActivityCard';
-import CreateActivityCard from 'components/checkIn/CreateActivityCard';
+import CreateActivityCard from 'components/common/CreateActivityCard';
 import eatFaceSvg from 'assets/emoticons/illus_eat.svg';
 
 const useStyles = makeStyles(() => ({
@@ -360,7 +360,6 @@ export default function ActivitiesPanel({ navigation, date }) {
   const { previous } = navigation;
   const { updateDailyDiary } = useUpdateDailyDiary();
   const { data: diary, isLoading: diaryIsLoading } = useDailyDiary(date);
-
   const {
     data: userActivities,
     isLoading: userActivitiesIsLoading,
