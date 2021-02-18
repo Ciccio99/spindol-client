@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
-import { Link as RouterLink, useHistory, useParams } from 'react-router-dom';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-// import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
+import { Link as useHistory, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import { Helmet } from 'react-helmet-async';
 import UserServices from 'services/UserServices';
 import { useUserDispatch } from 'context/userContext';
 import { setUserId, Event } from 'utils/Tracking';
+import {
+  CssBaseline,
+  Paper,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  FormHelperText,
+  LinearProgress,
+  InputBase,
+} from '@material-ui/core';
+import Button from 'components/common/Button';
+import LinkText from 'components/common/LinkText';
+import COLORS from 'constants/colors';
+import ROUTES from 'constants/routes';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,7 +39,31 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  title: {
+    marginBottom: theme.spacing(4),
+  },
 }));
+
+const useInputStyles = makeStyles((theme) => ({
+  root: {
+    padding: `${theme.spacing(1)}px ${theme.spacing(3)}px`,
+    borderBottom: `1px solid ${COLORS.LIGHT_GRAY}`,
+    caretColor: COLORS.RED,
+  },
+  input: {
+    '&::placeholder': {
+      color: COLORS.BLACK,
+      opacity: 0.5,
+      fontSize: theme.typography.subtitle1.fontSize,
+    },
+  },
+}));
+
+const HypnosInput = (props) => {
+  const { className, ...otherProps } = props;
+  const classes = useInputStyles();
+  return <InputBase classes={classes} className={className} {...otherProps} />;
+};
 
 const RegisterView = () => {
   const history = useHistory();
@@ -79,78 +104,86 @@ const RegisterView = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
       <Helmet>
         <title>Spindol - Register</title>
       </Helmet>
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography variant="h3" className={classes.title}>
           Register
         </Typography>
         {errorMessage ? (
           <FormHelperText error>{errorMessage}</FormHelperText>
         ) : null}
         <form className={classes.form} onSubmit={signUp}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="Full Name"
-            name="name"
-            autoComplete="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="confirmPassword"
-            label="Confirm Password"
-            type="password"
-            id="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          {/* <FormControlLabel
+          <Paper elevation={24}>
+            <Box px={6} py={4} pb={6}>
+              <Grid container direction="column" spacing={3}>
+                <Grid item xs={12}>
+                  <HypnosInput
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    placeholder="Email"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <HypnosInput
+                    required
+                    fullWidth
+                    id="name"
+                    placeholder="Full Name"
+                    label="Full Name"
+                    name="name"
+                    autoComplete="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <HypnosInput
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    placeholder="Password"
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <HypnosInput
+                    required
+                    fullWidth
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    placeholder="Confirm Password"
+                    type="password"
+                    id="confirmPassword"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </Grid>
+              </Grid>
+              {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           /> */}
+            </Box>
+          </Paper>
           {loading ? <LinearProgress color="secondary" /> : null}
           <Button
             type="submit"
+            text="Sign Up"
             fullWidth
             variant="contained"
             color="primary"
@@ -165,9 +198,9 @@ const RegisterView = () => {
               </Link>
             </Grid> */}
             <Grid item>
-              <Link to="/signin" component={RouterLink} variant="body2">
-                Already have an account? Sign In
-              </Link>
+              <LinkText to={ROUTES.signIn}>
+                Already have an account? Sign In <span>→</span>
+              </LinkText>
             </Grid>
           </Grid>
         </form>

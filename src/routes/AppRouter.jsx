@@ -4,7 +4,7 @@ import { updateIntercom } from 'next-intercom';
 import ProtectedRoute from 'routes/ProtectedRoute';
 import PublicRoute from 'routes/PublicRoute';
 import SignInView from 'views/SignInView';
-// import RegisterView from 'views/registerView/RegisterView';
+import RegisterView from 'views/RegisterView';
 import DashboardView from 'views/DashboardView';
 import AccountSettings from 'views/AccountSettings';
 import DailyDiary from 'views/DailyDiary';
@@ -22,9 +22,16 @@ const AppRouter = () => {
       <ProtectedRoute exact path="/" component={DashboardView} />
       <PublicRoute path="/signin" authRedirectTo="/" component={SignInView} />
 
-      {/* TODO: Comes back for beta participants */}
-      {/* <PublicRoute path="/register/:token" authRedirectTo="/dashboard" component={RegisterView} /> */}
-      {/* <PublicRoute path="/register" authRedirectTo="/dashboard" component={RegisterView} /> */}
+      <PublicRoute
+        path="/register/:token"
+        authRedirectTo="/dashboard"
+        component={RegisterView}
+      />
+      <PublicRoute
+        path="/register"
+        authRedirectTo="/dashboard"
+        component={RegisterView}
+      />
       <ProtectedRoute path="/check-in" component={CheckIn} />
       <ProtectedRoute
         path="/dashboard"

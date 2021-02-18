@@ -117,6 +117,7 @@ const NonAuthList = () => {
           </Typography>
         </div>
       </a>
+      <NavItem to="/register" label="Register" />
       <NavItem to="/signin" label="Sign In" />
     </Box>
   );

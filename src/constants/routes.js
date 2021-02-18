@@ -5,6 +5,7 @@ export default {
   data: '/data',
   account: '/settings',
   signIn: '/signin',
+  register: '/register',
   checkIn: '/check-in',
   landingPage: process.env.REACT_APP_LANDING_URL || 'https://spindol.com',
   termsOfService: process.env.REACT_APP_LANDING_URL

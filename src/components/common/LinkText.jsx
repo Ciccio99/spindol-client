@@ -2,33 +2,39 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import COLORS from 'constants/colors';
 
 const useStyles = makeStyles(() => ({
-  navLink: {
+  a: {
     textDecoration: 'none',
-    color: '#9072BA',
+  },
+  navLink: {
+    color: COLORS.DARK_BLUE,
+    borderBottom: `1px dashed ${COLORS.DARK_BLUE}`,
+    cursor: 'pointer',
   },
 }));
 
 const LinkText = ({ external, to, children }) => {
   const classes = useStyles();
 
-  return (
-    external
-      ? (
-        <a href={to} className={classes.navLink} target="_blank" rel="noopener noreferrer">
-          <Typography variant="subtitle2">
-            {children}
-          </Typography>
-        </a>
-      )
-      : (
-        <NavLink to={to} className={classes.navLink}>
-          <Typography variant="subtitle2">
-            {children}
-          </Typography>
-        </NavLink>
-      )
+  return external ? (
+    <a
+      href={to}
+      className={classes.a}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Typography className={classes.navLink} variant="subtitle2">
+        {children}
+      </Typography>
+    </a>
+  ) : (
+    <NavLink to={to}>
+      <Typography className={classes.navLink} variant="subtitle2">
+        {children}
+      </Typography>
+    </NavLink>
   );
 };
 

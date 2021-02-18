@@ -82,10 +82,6 @@ const SignInView = () => {
     <Container component="main" maxWidth="sm">
       <Helmet>
         <title>Spindol - Sign In</title>
-        <meta
-          name="description"
-          content="A sleep journal that helps you get better sleep. Sign in to Spindol here."
-        />
       </Helmet>
       <CssBaseline />
       <div className={classes.paper}>
