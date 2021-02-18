@@ -8,6 +8,7 @@ import { useActivitiesObject, useCreateActivity } from 'hooks/useActivities';
 import moment from 'moment-timezone';
 import React, { useEffect, useState } from 'react';
 import { deepCopyObj } from 'utils/object-utils';
+import Button from 'components/common/Button';
 
 const useStyles = makeStyles((theme) => ({
   accentText: {
@@ -22,6 +23,11 @@ const useStyles = makeStyles((theme) => ({
   searchContainer: {
     backgroundColor: COLORS.WHITE,
     borderBottom: `1px solid ${COLORS.BORDER_GRAY}`,
+  },
+  saveButton: {
+    position: 'absolute',
+    right: 20,
+    top: 20,
   },
 }));
 
@@ -50,6 +56,7 @@ const ModalWrapper = ({ open, onModalClose, children }) => (
             minWidth: '100%',
             minHeight: '80vh',
             height: '100%',
+            position: 'relative',
           }}
         >
           {children}
@@ -161,6 +168,7 @@ export default function EditActivitiesModal({
   open,
   onModalClose,
 }) {
+  const classes = useStyles();
   const { data: activitiesObj, isLoading } = useActivitiesObject();
   const [activities, setActivities] = useState(activitiesObj || {});
 
@@ -199,6 +207,11 @@ export default function EditActivitiesModal({
 
   return (
     <ModalWrapper open={open} onModalClose={onCloseHandle}>
+      <Button
+        text="Save"
+        onClick={onCloseHandle}
+        className={classes.saveButton}
+      />
       <EditorPanel
         date={date}
         onSelect={onSelectHandle}
