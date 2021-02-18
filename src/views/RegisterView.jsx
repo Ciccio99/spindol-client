@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link as useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Helmet } from 'react-helmet-async';
 import UserServices from 'services/UserServices';
