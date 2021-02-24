@@ -7,6 +7,8 @@ export default {
   signIn: '/signin',
   register: '/register',
   checkIn: '/check-in',
+  plans: '/plans',
+  renew: '/renew',
   landingPage: process.env.REACT_APP_LANDING_URL || 'https://spindol.com',
   termsOfService: process.env.REACT_APP_LANDING_URL
     ? `${process.env.REACT_APP_LANDING_URL}/terms-of-service`

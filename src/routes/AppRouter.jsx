@@ -12,6 +12,9 @@ import NotFound from 'views/Custom404';
 import usePageTracker from 'hooks/usePageTracker';
 import DataView from 'views/DataView';
 import CheckIn from 'views/CheckIn';
+import Plans from 'views/Plans';
+import PlansSuccess from 'views/PlansSuccess';
+import Renew from 'views/Renew';
 
 const AppRouter = () => {
   usePageTracker();
@@ -19,9 +22,14 @@ const AppRouter = () => {
 
   return (
     <Switch>
-      <ProtectedRoute exact path="/" component={DashboardView} />
+      <ProtectedRoute exact path="/" isProvisioned component={DashboardView} />
       <PublicRoute path="/signin" authRedirectTo="/" component={SignInView} />
-
+      <ProtectedRoute path="/renew" component={Renew} />
+      <ProtectedRoute
+        path="/plans/success/:sessionId"
+        component={PlansSuccess}
+      />
+      <ProtectedRoute path="/plans" component={Plans} />
       <PublicRoute
         path="/register/:token"
         authRedirectTo="/dashboard"
@@ -32,14 +40,19 @@ const AppRouter = () => {
         authRedirectTo="/dashboard"
         component={RegisterView}
       />
-      <ProtectedRoute path="/check-in" component={CheckIn} />
+      <ProtectedRoute path="/check-in" isProvisioned component={CheckIn} />
       <ProtectedRoute
         path="/dashboard"
+        isProvisioned
         authRedirectTo="/"
         component={DashboardView}
       />
-      <ProtectedRoute path="/daily-diary" component={DailyDiary} />
-      <ProtectedRoute path="/data" component={DataView} />
+      <ProtectedRoute
+        path="/daily-diary"
+        isProvisioned
+        component={DailyDiary}
+      />
+      <ProtectedRoute path="/data" isProvisioned component={DataView} />
       <ProtectedRoute path="/settings" component={AccountSettings} />
       <Route component={NotFound} />
     </Switch>

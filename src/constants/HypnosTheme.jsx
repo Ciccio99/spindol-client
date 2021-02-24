@@ -117,6 +117,28 @@ const customTheme = {
     // borderRadiusSmall: 10,
   },
   overrides: {
+    MuiSwitch: {
+      switchBase: {
+        // Controls default (unchecked) color for the thumb
+        color: COLORS.LIGHT_BLUE,
+      },
+      colorSecondary: {
+        '&$checked': {
+          // Controls checked color for the thumb
+          color: COLORS.DARK_BLUE,
+        },
+      },
+      track: {
+        // Controls default (unchecked) color for the track
+        opacity: 0.3,
+        backgroundColor: COLORS.GRAY,
+        '$checked$checked + &': {
+          // Controls checked color for the track
+          opacity: 0.3,
+          backgroundColor: COLORS.GRAY,
+        },
+      },
+    },
     MuiPaper: {
       root: {
         border: `1px solid ${COLORS.BORDER_GRAY}`,

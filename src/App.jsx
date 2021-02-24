@@ -12,6 +12,7 @@ import { setUserId, Event } from 'utils/Tracking';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import LoadingCard from './components/loadingCard/LoadingCard';
+import '@stripe/stripe-js';
 
 function App() {
   const dispatchUser = useUserDispatch();

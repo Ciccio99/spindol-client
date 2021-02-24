@@ -99,7 +99,7 @@ const RegisterView = () => {
       setUserId(user._id);
       Event('User', 'Created Account', `UserId: ${user._id}`);
 
-      history.push('/dashboard');
+      history.push(ROUTES.plans);
     }
   };
 

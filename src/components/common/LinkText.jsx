@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const LinkText = ({ external, to, children }) => {
+const LinkText = ({ external, to, inline = false, children }) => {
   const classes = useStyles();
 
   return external ? (
@@ -25,13 +25,21 @@ const LinkText = ({ external, to, children }) => {
       target="_blank"
       rel="noopener noreferrer"
     >
-      <Typography className={classes.navLink} variant="subtitle2">
+      <Typography
+        className={classes.navLink}
+        variant="subtitle2"
+        display={inline ? 'inline' : 'block'}
+      >
         {children}
       </Typography>
     </a>
   ) : (
     <NavLink to={to}>
-      <Typography className={classes.navLink} variant="subtitle2">
+      <Typography
+        className={classes.navLink}
+        variant="subtitle2"
+        display={inline ? 'inline' : 'block'}
+      >
         {children}
       </Typography>
     </NavLink>
