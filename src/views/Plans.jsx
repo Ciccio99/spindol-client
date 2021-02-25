@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
       top: 0,
       marginLeft: theme.spacing(1),
       minWidth: 100,
-      color: COLORS.DARK_BLUE,
+      color: COLORS.RED,
       fontSize: theme.typography.subtitle2.fontSize,
       whiteSpace: 'nowrap',
     },
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
       top: '100%',
       left: 0,
       minWidth: 100,
-      color: COLORS.DARK_BLUE,
+      color: COLORS.RED,
       fontSize: theme.typography.subtitle2.fontSize,
       whiteSpace: 'nowrap',
     },
@@ -242,7 +242,7 @@ export default function Plans() {
                         </Typography>
                         <Typography variant="subtitle2" color="textSecondary">
                           For people that want to track their sleep and
-                          activities only.
+                          activities.
                         </Typography>
                       </Box>
                     </Grid>
