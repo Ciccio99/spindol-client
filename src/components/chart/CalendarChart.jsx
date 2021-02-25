@@ -19,9 +19,9 @@ const CalendarChart = ({ data, variant }) => {
   const color = (() => {
     switch (variant) {
       case 'secondary':
-        return [COLORS.HYPNOS_ORANGE];
+        return [COLORS.LIGHT_BLUE];
       default:
-        return [COLORS.HYPNOS_PURPLE];
+        return [COLORS.DARK_BLUE];
     }
   })();
 

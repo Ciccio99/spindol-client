@@ -1,26 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  Container,
-  Grid,
-  Paper,
-  Typography,
-  Switch,
-} from '@material-ui/core';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import { useUserState } from 'context/userContext';
-import useMobile from 'hooks/useMobile';
-import COLORS from 'constants/colors';
-import ROUTES from 'constants/routes';
-import { initiateCheckoutSession } from 'services/PlansServices';
+import { Box, Container, Grid, Paper, Typography } from '@material-ui/core';
 import Button from 'components/common/Button';
-import Section from 'components/common/Section';
-import { getShape } from 'utils/shape-utils';
-import { isSubscriptionActive } from 'utils/subscription-utils';
 import LinkText from 'components/common/LinkText';
+import Section from 'components/common/Section';
+import ROUTES from 'constants/routes';
+import { useUserState } from 'context/userContext';
+import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { useHistory } from 'react-router-dom';
+import { isSubscriptionActive } from 'utils/subscription-utils';
 
 export default function Renew() {
   const user = useUserState();
@@ -76,7 +63,7 @@ export default function Renew() {
                 </Box>
                 <div>
                   <Typography variant="subtitle1" display="inline">
-                    If this renewal request is an error, please contact us at {' '}
+                    If this renewal request is an error, please contact us at{' '}
                   </Typography>
                   <LinkText to="mailto:support@spindol.com" external inline>
                     support@spindol.com

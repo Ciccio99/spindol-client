@@ -6,9 +6,8 @@ import { getSleepHoursDuration } from 'services/SleepSummaryServices';
 const startDate = moment().subtract(15, 'days').format('YYYY-MM-DD');
 const endDate = moment().format('YYYY-MM-DD');
 
-const useSleepMoodCorrelation = () => useQuery(
-  ['sleepMoodCorrelation'],
-  async () => {
+const useSleepMoodCorrelation = () =>
+  useQuery(['sleepMoodCorrelation'], async () => {
     const data = await getDiariesByDateRange(startDate, endDate);
     const moodSleepMap = {};
     data.forEach((dd) => {
@@ -26,10 +25,10 @@ const useSleepMoodCorrelation = () => useQuery(
       }
     });
     Object.keys(moodSleepMap).forEach((key) => {
-      moodSleepMap[key].average = moodSleepMap[key].totalTime / moodSleepMap[key].count;
+      moodSleepMap[key].average =
+        moodSleepMap[key].totalTime / moodSleepMap[key].count;
     });
     return moodSleepMap;
-  },
-);
+  });
 
 export default useSleepMoodCorrelation;

@@ -17,7 +17,6 @@ import COLORS from 'constants/colors';
 import ROUTES from 'constants/routes';
 import { initiateCheckoutSession } from 'services/PlansServices';
 import Button from 'components/common/Button';
-import Section from 'components/common/Section';
 import { getShape } from 'utils/shape-utils';
 import { isSubscriptionActive } from 'utils/subscription-utils';
 
@@ -106,7 +105,9 @@ const BulletPointItem = ({ text, underline = false }) => {
   return (
     <Grid
       item
-      className={clsx(classes.gridItem, { [classes.gridItemUnderline]: underline })}
+      className={clsx(classes.gridItem, {
+        [classes.gridItemUnderline]: underline,
+      })}
     >
       <Shape fill={SHAPE_COLOR} className={classes.shapeBulletPoint} />
       <Typography variant="subtitle2">{text}</Typography>
@@ -117,6 +118,7 @@ const BulletPointItem = ({ text, underline = false }) => {
 export default function Plans() {
   const classes = useStyles();
   const user = useUserState();
+  const userTrialed = user?.stripe?.trialed;
   const history = useHistory();
   const { isMobile } = useMobile();
   const [error, setError] = useState(null);
@@ -151,64 +153,64 @@ export default function Plans() {
       </Helmet>
       <Container>
         <Box
+          className={classes.background}
+          py={8}
           display="flex"
           flexDirection="column"
           alignItems="center"
           justifyContent="center"
         >
-          <Box
-            className={classes.background}
-            py={8}
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Typography variant="overline" align="center">
-              Ready to start with Spindol?
-            </Typography>
+          <Typography variant="overline" align="center">
+            Ready to start with Spindol?
+          </Typography>
 
-            <Box mt={2}>
-              <Typography variant="subtitle1">
-                Choose the package that suits you.
-              </Typography>
-            </Box>
-            <Box mt={2} justifyContent="center">
-              <Typography
-                variant="subtitle1"
-                color={
-                  paymentRate === PAY_RATE.MONTHLY
-                    ? 'textPrimary'
-                    : 'textSecondary'
-                }
-                display="inline"
-              >
-                Pay Monthly
-              </Typography>
-              <Switch
-                checked={paymentRate === PAY_RATE.YEARLY}
-                onChange={onPayRateToggleHandle}
-                disableRipple
-                disableFocusRipple
-                disableTouchRipple
-              />
-              <Typography
-                className={clsx({
-                  [classes.discountedPrice]: !isMobile,
-                  [classes.discountedPriceMobile]: isMobile,
-                })}
-                variant="subtitle1"
-                color={
-                  paymentRate === PAY_RATE.YEARLY
-                    ? 'textPrimary'
-                    : 'textSecondary'
-                }
-                display="inline"
-              >
-                Pay Yearly
-              </Typography>
-            </Box>
+          <Box mt={2}>
+            <Typography variant="subtitle1">
+              Choose the package that suits you.
+            </Typography>
           </Box>
+          <Box mt={2} justifyContent="center">
+            <Typography
+              variant="subtitle1"
+              color={
+                paymentRate === PAY_RATE.MONTHLY
+                  ? 'textPrimary'
+                  : 'textSecondary'
+              }
+              display="inline"
+            >
+              Pay Monthly
+            </Typography>
+            <Switch
+              checked={paymentRate === PAY_RATE.YEARLY}
+              onChange={onPayRateToggleHandle}
+              disableRipple
+              disableFocusRipple
+              disableTouchRipple
+            />
+            <Typography
+              className={clsx({
+                [classes.discountedPrice]: !isMobile,
+                [classes.discountedPriceMobile]: isMobile,
+              })}
+              variant="subtitle1"
+              color={
+                paymentRate === PAY_RATE.YEARLY
+                  ? 'textPrimary'
+                  : 'textSecondary'
+              }
+              display="inline"
+            >
+              Pay Yearly
+            </Typography>
+          </Box>
+        </Box>
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+        >
           <Box mt={2} minHeight={5}>
             {error ? (
               <Typography variant="subtitle1" color="error">
@@ -253,7 +255,9 @@ export default function Plans() {
                     <Grid item>
                       <Box display="flex" justifyContent="center">
                         <Button
-                          text="Start 14 Day Trial"
+                          text={
+                            userTrialed ? 'Subscribe' : 'Start 14 Day Trial'
+                          }
                           onClick={() => {
                             onSubscribeHandle(
                               SUBS.standard[paymentRate].priceId
@@ -311,7 +315,9 @@ export default function Plans() {
                     <Grid item>
                       <Box display="flex" justifyContent="center">
                         <Button
-                          text="Start 14 Day Trial"
+                          text={
+                            userTrialed ? 'Subscribe' : 'Start 14 Day Trial'
+                          }
                           onClick={() => {
                             onSubscribeHandle(
                               SUBS.premium[paymentRate].priceId
@@ -333,7 +339,10 @@ export default function Plans() {
                         <BulletPointItem text="Mood & Activity Tracking" />
                         <BulletPointItem text="Sleep Tracker Integration" />
                         <BulletPointItem text="Sleep & Activities Analytics" />
-                        <BulletPointItem text="Sleep Coaching Access" underline />
+                        <BulletPointItem
+                          text="Sleep Coaching Access"
+                          underline
+                        />
                       </Grid>
                     </Grid>
                   </Grid>
