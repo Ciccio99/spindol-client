@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  LinearProgress,
-  Typography,
-  Switch,
-} from '@material-ui/core';
+import { Box, LinearProgress, Typography, Switch } from '@material-ui/core';
 import { useAsync } from 'react-async';
 import {
   getCurrentDailyReminder,
@@ -18,16 +13,12 @@ import { Event } from 'utils/Tracking';
 const TITLE = 'Manage Notifications';
 
 const PanelWrapper = ({ children }) => (
-  <PanelModule title={TITLE}>
-    {children}
-  </PanelModule>
+  <PanelModule title={TITLE}>{children}</PanelModule>
 );
 
 const NotificationSettingsModule = () => {
   const dispatchAlert = useAlertSystemDispatch();
-  const {
-    data, isPending, setData,
-  } = useAsync(getCurrentDailyReminder);
+  const { data, isPending, setData } = useAsync(getCurrentDailyReminder);
   const [dailyEmailReminder, setDailyEmailReminder] = useState(false);
   const [switchEnabled, setSwitchEnabled] = useState(true);
   useEffect(() => {
@@ -47,13 +38,15 @@ const NotificationSettingsModule = () => {
         } else {
           const dto = {
             enabled: e.target.checked,
-          }
+          };
           newData = await updateDailyEmailReminderById(data._id, dto);
         }
         setData(newData);
         dispatchAlert({
           type: 'SUCCESS',
-          message: `Daily email reminders are ${newData.enabled ? 'on': 'off'}`,
+          message: `Daily email reminders are ${
+            newData.enabled ? 'on' : 'off'
+          }`,
         });
       } catch (error) {
         setData(oldData);
@@ -75,17 +68,20 @@ const NotificationSettingsModule = () => {
     );
   }
 
-
   return (
     <PanelWrapper>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="subtitle1">Daily Email Reminders</Typography>
-        <Switch
-          checked={dailyEmailReminder}
-          name="dailyEmailReminder"
-          onChange={handleChange}
-          disabled={!switchEnabled}
-        />
+        <Box display="flex" alignItems="center">
+          <Typography variant="body1">Off</Typography>
+          <Switch
+            checked={dailyEmailReminder}
+            name="dailyEmailReminder"
+            onChange={handleChange}
+            disabled={!switchEnabled}
+          />
+          <Typography variant="body1">On</Typography>
+        </Box>
       </Box>
     </PanelWrapper>
   );
