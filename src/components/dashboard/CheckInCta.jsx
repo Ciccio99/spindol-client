@@ -34,7 +34,7 @@ const DesktopCheckInCta = () => {
           justifyContent="flex-end"
         >
           <Typography variant="h2" gutterBottom>
-            You're missing a
+            You're missing your
             <br />
             check-in for today.
           </Typography>
@@ -45,9 +45,9 @@ const DesktopCheckInCta = () => {
 
         <Box width="50%">
           <Typography varaint="body1" color="textSecondary">
-            Add how you felt waking up this morning and
+            Take note of how you felt waking up this morning and
             <br />
-            tag the activities you did the day before.
+            mark any activities you did the day before.
           </Typography>
           <Box mt={3}>
             <Button
@@ -79,7 +79,7 @@ const MobileCheckInCta = () => {
       >
         <Box display="flex" flexDirection="column" justifyContent="flex-end">
           <Typography variant="h2" gutterBottom>
-            You're missing a check-in
+            You're missing your check-in
             <br />
             for today.
           </Typography>

@@ -2,13 +2,15 @@ import axios from '../loaders/axios';
 
 const queryOne = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   const queryString = JSON.stringify({
-    match, sort, limit, skip,
+    match,
+    sort,
+    limit,
+    skip,
   });
   try {
-    const { data } = await axios.get('/devices',
-      {
-        params: { query: queryString },
-      });
+    const { data } = await axios.get('/devices', {
+      params: { query: queryString },
+    });
 
     return data;
   } catch (error) {

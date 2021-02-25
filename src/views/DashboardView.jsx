@@ -42,6 +42,7 @@ const DashboardView = () => {
         />
       </Helmet>
       <Container>
+        <Journal />
         {!user.accounts.oura.connected &&
           !user.accounts.withings.connected &&
           !user.accounts.fitbit.connected && (
@@ -49,7 +50,6 @@ const DashboardView = () => {
               <ConnectDeviceCTA />
             </Section>
           )}
-        <Journal />
         {isCheckedInDiary(data) ? null : (
           <Section>
             <CheckInCta />

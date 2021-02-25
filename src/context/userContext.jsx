@@ -11,13 +11,26 @@ const userReducer = (state, action) => {
         name: action.user.name,
         email: action.user.email,
         user_id: action.user._id,
+        subscription_id: action.user.stripe?.subscription?.id,
+        subscription_type: action.user.stripe?.subscription?.type,
+        subscription_status: action.user.stripe?.subscription?.status,
       });
       return action.user;
     case 'USER_LOGOUT':
       shutdownIntercom();
       return {};
-    case 'USER_UPDATE':
-      return { ...state, ...action.user };
+    case 'USER_UPDATE': {
+      const updatedUser = { ...state, ...action.user };
+      updateIntercom(undefined, {
+        name: updatedUser.name,
+        email: updatedUser.email,
+        user_id: updatedUser._id,
+        subscription_id: updatedUser.stripe?.subscription?.id,
+        subscription_type: updatedUser.stripe?.subscription?.type,
+        subscription_status: updatedUser.stripe?.subscription?.status,
+      });
+      return updatedUser;
+    }
     default:
       return state;
   }
@@ -50,8 +63,4 @@ const useUserDispatch = () => {
   return context;
 };
 
-export {
-  UserProvider,
-  useUserState,
-  useUserDispatch,
-};
+export { UserProvider, useUserState, useUserDispatch };
