@@ -9,6 +9,7 @@ export default {
   checkIn: '/check-in',
   plans: '/plans',
   renew: '/renew',
+  requestAccess: 'https://sleepwell.typeform.com/to/v2J1kw9E',
   landingPage: process.env.REACT_APP_LANDING_URL || 'https://spindol.com',
   termsOfService: process.env.REACT_APP_LANDING_URL
     ? `${process.env.REACT_APP_LANDING_URL}/terms-of-service`
