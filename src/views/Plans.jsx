@@ -19,6 +19,11 @@ import { initiateCheckoutSession } from 'services/PlansServices';
 import Button from 'components/common/Button';
 import { getShape } from 'utils/shape-utils';
 import { isSubscriptionActive } from 'utils/subscription-utils';
+import appleHealthIcon from 'assets/icons/apple-health.svg';
+import fitbitIcon from 'assets/icons/fitbit-icon.svg';
+import ouraIcon from 'assets/icons/oura-icon.svg';
+import withingsIcon from 'assets/icons/withings-icon.svg';
+import whoopIcon from 'assets/icons/whoop-icon.svg';
 
 const useStyles = makeStyles((theme) => ({
   discountedPrice: {
@@ -349,6 +354,113 @@ export default function Plans() {
                 </Box>
               </Paper>
             </Box>
+          </Box>
+          <Box mt={5} maxWidth={647} width="100%">
+            <Paper elevation={24} style={{ width: '100%' }}>
+              <Box p={3} width="100%">
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="subtitle1">
+                      Currently Supporting
+                    </Typography>
+                    <Box display="flex">
+                      <Box
+                        m={3}
+                        ml={0}
+                        mb={0}
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                      >
+                        <img
+                          src={ouraIcon}
+                          alt="Oura Icon"
+                          width="40"
+                          height="40"
+                        />
+                        <Typography variant="body1">Oura</Typography>
+                      </Box>
+                      <Box
+                        m={3}
+                        ml={0}
+                        mb={0}
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                      >
+                        <img
+                          src={withingsIcon}
+                          alt="Withings Icon"
+                          width="40"
+                          height="40"
+                        />
+                        <Typography variant="body1">Withings</Typography>
+                      </Box>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="subtitle1">Coming Soon</Typography>
+                    <Box display="flex">
+                      <Box
+                        m={3}
+                        ml={0}
+                        mb={0}
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                      >
+                        <img
+                          src={fitbitIcon}
+                          alt="Fitbit Icon"
+                          width="40"
+                          height="40"
+                        />
+                        <Typography variant="body1">Fitbit</Typography>
+                      </Box>
+                      <Box
+                        m={3}
+                        ml={0}
+                        mb={0}
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                      >
+                        <img
+                          src={whoopIcon}
+                          alt="Whoop Icon"
+                          width="40"
+                          height="40"
+                        />
+                        <Typography variant="body1">Whoop</Typography>
+                      </Box>
+                      <Box
+                        m={3}
+                        ml={0}
+                        mb={0}
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                      >
+                        <img
+                          src={appleHealthIcon}
+                          alt="Apple Health Icon"
+                          width="40"
+                          height="40"
+                        />
+                        <Typography variant="body1">Apple Health</Typography>
+                      </Box>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Paper>
+          </Box>
+          <Box my={3} maxWidth={700}>
+            <Typography variant="body1">
+              * Coaches are currently located in the USA. Be aware when
+              communicating with Coaches that there may be timezone differences
+              which effect response times.
+            </Typography>
           </Box>
         </Box>
       </Container>

@@ -39,13 +39,7 @@ const DesktopCTA = () => (
 const MobileCTA = () => (
   <Paper elevation={24}>
     <Box p={4}>
-      <Grid
-        container
-        direction="column"
-        justify="flex-stretch"
-        alignItems="stretch"
-        spacing={2}
-      >
+      <Grid container direction="column" alignItems="stretch" spacing={2}>
         <Grid item>
           <Box display="flex" flexDirection="column" alignItems="center">
             <ConnectSvg height="50" />
