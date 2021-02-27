@@ -17,4 +17,7 @@ export default {
   privacyPolicy: process.env.REACT_APP_LANDING_URL
     ? `${process.env.REACT_APP_LANDING_URL}/privacy-policy`
     : 'https://spindol.com/privacy-policy',
+  twitter: 'https://twitter.com/spindol_hq',
+  instagram: 'https://www.instagram.com/spindol_hq',
+  facebook: 'https://www.facebook.com/spindolhq',
 };

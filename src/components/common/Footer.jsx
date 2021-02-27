@@ -86,17 +86,17 @@ const FooterDesktop = () => {
           <div>
             <Grid container spacing={4} justify="flex-end">
               <Grid item xs={8} md="auto">
-                <FooterLink to="https://twitter.com/hypnos_ai" external>
+                <FooterLink to={ROUTES.twitter} external>
                   Twitter
                 </FooterLink>
               </Grid>
               <Grid item xs={8} md="auto">
-                <FooterLink to="https://www.instagram.com/hypnos_ai/" external>
+                <FooterLink to={ROUTES.twitter} external>
                   Instagram
                 </FooterLink>
               </Grid>
               <Grid item xs={8} md="auto">
-                <FooterLink to="https://www.facebook.com/hypnosai/" external>
+                <FooterLink to={ROUTES.facebook} external>
                   Facebook
                 </FooterLink>
               </Grid>
@@ -138,25 +138,17 @@ const FooterMobile = () => {
         >
           <Box display="flex" justifyContent="flex-start" alignItems="center">
             <div>
-              <FooterLink to="https://twitter.com/hypnos_ai" external isMobile>
+              <FooterLink to={ROUTES.twitter} external isMobile>
                 Twitter
               </FooterLink>
             </div>
             <div style={{ margin: '0 12px' }}>
-              <FooterLink
-                to="https://www.instagram.com/hypnos_ai/"
-                external
-                isMobile
-              >
+              <FooterLink to={ROUTES.instagram} external isMobile>
                 Instagram
               </FooterLink>
             </div>
             <div style={{ margin: '0 12px' }}>
-              <FooterLink
-                to="https://www.facebook.com/hypnosai/"
-                external
-                isMobile
-              >
+              <FooterLink to={ROUTES.facebook} external isMobile>
                 Facebook
               </FooterLink>
             </div>
