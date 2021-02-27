@@ -333,7 +333,7 @@ const getSleepSummaryAvgStats = (
           avgHr: {
             stat: avgHr.toFixed(0),
             units: 'bpm',
-            description: 'Resting HR',
+            description: 'Avg Resting HR',
           },
         }
       : {}),

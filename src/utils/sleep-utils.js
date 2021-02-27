@@ -109,7 +109,7 @@ const getAvgHeartRate = (ss) => {
     avHr: {
       stat: ss.hrAverage,
       units: 'bpm',
-      description: 'Avg HR',
+      description: 'Avg Resting HR',
     },
   };
 };
