@@ -234,7 +234,7 @@ export default function Plans() {
                 <Box
                   p={3}
                   pt={5}
-                  minHeight={510}
+                  minHeight={565}
                   width="100%"
                   display="flex"
                   flexDirection="column"
@@ -282,6 +282,7 @@ export default function Plans() {
                       </Typography>
                       <Grid container direction="column" spacing={2}>
                         <BulletPointItem text="Mood & Activity Tracking" />
+                        <BulletPointItem text="Daily Journal" />
                         <BulletPointItem text="Sleep Tracker Integration" />
                         <BulletPointItem text="Sleep & Activities Analytics" />
                       </Grid>
@@ -295,7 +296,7 @@ export default function Plans() {
                 <Box
                   p={3}
                   pt={5}
-                  minHeight={510}
+                  minHeight={565}
                   width="100%"
                   display="flex"
                   flexDirection="column"
@@ -342,10 +343,11 @@ export default function Plans() {
                       </Typography>
                       <Grid container direction="column" spacing={2}>
                         <BulletPointItem text="Mood & Activity Tracking" />
+                        <BulletPointItem text="Daily Journal" />
                         <BulletPointItem text="Sleep Tracker Integration" />
                         <BulletPointItem text="Sleep & Activities Analytics" />
                         <BulletPointItem
-                          text="Sleep Coaching Access"
+                          text="Sleep Coaching Access*"
                           underline
                         />
                       </Grid>
