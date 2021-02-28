@@ -36,7 +36,9 @@ const useStyles = makeStyles((theme) => ({
   activityIconContainer: {
     position: 'relative',
     width: 40,
+    minWidth: 40,
     height: 40,
+    minHeight: 40,
   },
   activityIcon: {
     width: 40,
@@ -47,13 +49,17 @@ const useStyles = makeStyles((theme) => ({
   },
   checkMark: {
     zIndex: 1,
-    width: 24,
-    maxWidth: 24,
-    height: 24,
-    maxHeight: 24,
+    width: 30,
+    maxWidth: 30,
+    height: 30,
+    maxHeight: 30,
     position: 'absolute',
-    left: 8,
-    top: 8,
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    margin: 'auto',
+    textAlign: 'center',
   },
   selectedActivity: {
     background: COLORS.LIGHTEST_GRAY,
@@ -62,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
     color: COLORS.RED,
   },
 }));
+
 export default function ActivityCard({
   activity,
   onClick,
@@ -85,20 +92,20 @@ export default function ActivityCard({
             <div className={classes.activityIcon}>
               <Shape fill={activity.shapeColor} width={40} height={40} />
             </div>
-            {tinyColor(activity.shapeColor).getBrightness() > 180 ? (
+            {tinyColor(activity.shapeColor).getBrightness() > 160 ? (
               <img
                 src={checkMarkDarkSvg}
                 className={classes.checkMark}
-                width={24}
-                height={24}
+                width={30}
+                height={30}
                 alt="Activity Completed"
               />
             ) : (
               <img
                 src={checkMarkSvg}
                 className={classes.checkMark}
-                width={24}
-                height={24}
+                width={30}
+                height={30}
                 alt="Activity Completed"
               />
             )}

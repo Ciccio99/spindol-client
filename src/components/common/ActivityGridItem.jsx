@@ -21,19 +21,25 @@ const useStyles = makeStyles((theme) => ({
   },
   iconContainer: {
     position: 'relative',
+    height: 40,
+    width: 40,
   },
   selectedActivity: {
     background: COLORS.LIGHTEST_GRAY,
   },
   checkMark: {
     zIndex: 1,
-    width: 24,
-    maxWidth: 24,
-    height: 24,
-    maxHeight: 24,
+    width: 30,
+    maxWidth: 30,
+    height: 30,
+    maxHeight: 30,
     position: 'absolute',
-    left: 8,
-    top: 8,
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    margin: 'auto',
+    textAlign: 'center',
   },
   paper: {
     height: '100%',
@@ -68,14 +74,14 @@ export default function ActivityGridItem({ activity, isSelected, onClick }) {
               <>
                 {tinyColor(activity.shapeColor).getBrightness() > 180 ? (
                   <CheckMarkDark
-                    width={24}
-                    height={24}
+                    width={30}
+                    height={30}
                     className={classes.checkMark}
                   />
                 ) : (
                   <CheckMark
-                    width={24}
-                    height={24}
+                    width={30}
+                    height={30}
                     className={classes.checkMark}
                   />
                 )}
