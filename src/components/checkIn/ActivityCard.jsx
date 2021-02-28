@@ -3,10 +3,12 @@
 import React from 'react';
 import clsx from 'clsx';
 import moment from 'moment-timezone';
+import tinyColor from 'tinycolor2';
 import { makeStyles } from '@material-ui/core/styles';
 import COLORS from 'constants/colors';
 import { Typography } from '@material-ui/core';
 import checkMarkSvg from 'assets/check-mark.svg';
+import checkMarkDarkSvg from 'assets/check-mark-dark.svg';
 import { getShape } from 'utils/shape-utils';
 
 const useStyles = makeStyles((theme) => ({
@@ -83,13 +85,23 @@ export default function ActivityCard({
             <div className={classes.activityIcon}>
               <Shape fill={activity.shapeColor} width={40} height={40} />
             </div>
-            <img
-              src={checkMarkSvg}
-              className={classes.checkMark}
-              width={24}
-              height={24}
-              alt="Activity Completed"
-            />
+            {tinyColor(activity.shapeColor).getBrightness() > 180 ? (
+              <img
+                src={checkMarkDarkSvg}
+                className={classes.checkMark}
+                width={24}
+                height={24}
+                alt="Activity Completed"
+              />
+            ) : (
+              <img
+                src={checkMarkSvg}
+                className={classes.checkMark}
+                width={24}
+                height={24}
+                alt="Activity Completed"
+              />
+            )}
           </>
         ) : (
           <div className={classes.activityIcon}>

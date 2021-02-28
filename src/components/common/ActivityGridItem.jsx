@@ -2,9 +2,11 @@ import React from 'react';
 import { Paper, Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import tinyColor from 'tinycolor2';
 import COLORS from 'constants/colors';
 import { getShape } from 'utils/shape-utils';
 import { ReactComponent as CheckMark } from 'assets/check-mark.svg';
+import { ReactComponent as CheckMarkDark } from 'assets/check-mark-dark.svg';
 
 const useStyles = makeStyles((theme) => ({
   activityName: {
@@ -49,7 +51,9 @@ export default function ActivityGridItem({ activity, isSelected, onClick }) {
         justifyContent="center"
         alignItems="center"
         onClick={onClick}
-        className={clsx(classes.activityCard, { [classes.selectedActivity]: isSelected })}
+        className={clsx(classes.activityCard, {
+          [classes.selectedActivity]: isSelected,
+        })}
         height="100%"
       >
         <Box
@@ -61,7 +65,21 @@ export default function ActivityGridItem({ activity, isSelected, onClick }) {
           <div className={classes.iconContainer}>
             <Shape fill={activity.shapeColor} width={40} height={40} />
             {isSelected ? (
-              <CheckMark width={24} height={24} className={classes.checkMark} />
+              <>
+                {tinyColor(activity.shapeColor).getBrightness() > 180 ? (
+                  <CheckMarkDark
+                    width={24}
+                    height={24}
+                    className={classes.checkMark}
+                  />
+                ) : (
+                  <CheckMark
+                    width={24}
+                    height={24}
+                    className={classes.checkMark}
+                  />
+                )}
+              </>
             ) : null}
           </div>
           <Typography
