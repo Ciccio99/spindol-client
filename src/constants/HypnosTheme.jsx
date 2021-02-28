@@ -94,9 +94,9 @@ const customTheme = {
       contrastText: COLORS.BLACK,
     },
     secondary: {
-      light: '#ffae83',
-      main: '#e67e56',
-      dark: '#af502b',
+      light: COLORS.LIGHTER_BLUE,
+      main: COLORS.LIGHT_BLUE,
+      dark: COLORS.BLUE,
       contrastText: '#fff',
     },
     tertiary: {
