@@ -18,7 +18,7 @@ import useMobile from 'hooks/useMobile';
 import rocketMoonSVG from 'assets/rocket-moon.svg';
 import { getTagBaselineSeries } from 'utils/sleep';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   bgImage: {
     width: '100%',
     minHeight: '50vh',
