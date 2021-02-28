@@ -124,6 +124,7 @@ export default function Plans() {
   const classes = useStyles();
   const user = useUserState();
   const userTrialed = user?.stripe?.trialed;
+  const isPowerUser = user?.settings?.powerUser;
   const history = useHistory();
   const { isMobile } = useMobile();
   const [error, setError] = useState(null);
@@ -261,7 +262,9 @@ export default function Plans() {
                       <Box display="flex" justifyContent="center">
                         <Button
                           text={
-                            userTrialed ? 'Subscribe' : 'Start 14 Day Trial'
+                            userTrialed
+                              ? 'Subscribe'
+                              : `Start ${isPowerUser ? 30 : 14} Day Trial`
                           }
                           onClick={() => {
                             onSubscribeHandle(
@@ -322,7 +325,9 @@ export default function Plans() {
                       <Box display="flex" justifyContent="center">
                         <Button
                           text={
-                            userTrialed ? 'Subscribe' : 'Start 14 Day Trial'
+                            userTrialed
+                              ? 'Subscribe'
+                              : `Start ${isPowerUser ? 30 : 14} Day Trial`
                           }
                           onClick={() => {
                             onSubscribeHandle(
