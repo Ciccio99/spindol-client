@@ -28,14 +28,9 @@ const signUp = async (
       Cookies.set('HypnosAuthJWT', data.token, { expires: 7 });
     }
 
-    return { user: data.user };
+    return data.user;
   } catch (e) {
-    const error = {};
-    error.message = e.message || 'Something went wrong... ';
-    if ([400, 402, 401, 403].indexOf(e?.response?.status) !== -1) {
-      error.message = e.response.data.message;
-    }
-    return { error };
+    throw new ErrorHandler(e);
   }
 };
 

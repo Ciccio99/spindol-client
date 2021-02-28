@@ -29,7 +29,7 @@ const TagCreateInput = ({ handleInsert }) => {
             variant="outlined"
             size="small"
             fullWidth
-            inputProps={{ maxLength: 30 }}
+            inputProps={{ maxLength: 40 }}
           />
         </Grid>
         <Grid item xs={12} sm={4}>

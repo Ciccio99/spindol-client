@@ -81,25 +81,28 @@ const RegisterView = () => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage('');
-    const { user, error } = await UserServices.signUp(
-      email,
-      name,
-      password,
-      confirmPassword,
-      token
-    );
-    if (error) {
-      setErrorMessage(error.message);
-      setLoading(false);
-    } else if (user) {
-      dispatchUser({
-        type: 'USER_LOGIN',
-        user,
-      });
-      setUserId(user._id);
-      Event('User', 'Created Account', `UserId: ${user._id}`);
+    try {
+      const user = await UserServices.signUp(
+        email,
+        name,
+        password,
+        confirmPassword,
+        token
+      );
+      if (user) {
+        dispatchUser({
+          type: 'USER_LOGIN',
+          user,
+        });
+        setUserId(user._id);
+        Event('User', 'Created Account', `UserId: ${user._id}`);
 
-      history.push(ROUTES.plans);
+        history.push(ROUTES.plans);
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
