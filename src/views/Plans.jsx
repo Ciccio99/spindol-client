@@ -24,6 +24,7 @@ import fitbitIcon from 'assets/icons/fitbit-icon.svg';
 import ouraIcon from 'assets/icons/oura-icon.svg';
 import withingsIcon from 'assets/icons/withings-icon.svg';
 import whoopIcon from 'assets/icons/whoop-icon.svg';
+import { SUBS } from 'constants/subscriptions';
 
 const useStyles = makeStyles((theme) => ({
   discountedPrice: {
@@ -76,29 +77,6 @@ const useStyles = makeStyles((theme) => ({
 const PAY_RATE = {
   MONTHLY: 'monthly',
   YEARLY: 'yearly',
-};
-
-const SUBS = {
-  standard: {
-    monthly: {
-      price: 9.99,
-      priceId: 'price_1INSIJHTjrDKdTifDV9OnFf4',
-    },
-    yearly: {
-      price: 7.99,
-      priceId: 'price_1INhW5HTjrDKdTifTVedZayE',
-    },
-  },
-  premium: {
-    monthly: {
-      price: 29.99,
-      priceId: 'price_1INSIcHTjrDKdTifa25zUBB2',
-    },
-    yearly: {
-      price: 23.99,
-      priceId: 'price_1INhV3HTjrDKdTifxiXiWciP',
-    },
-  },
 };
 
 const SHAPE_ID = 'HEXAGON_1';
