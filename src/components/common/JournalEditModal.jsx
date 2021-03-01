@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  Modal,
-  Typography,
-  InputBase,
-  IconButton,
-  Fade,
-} from '@material-ui/core';
+import { Box, Modal, Typography, InputBase, Fade } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import useMobile from 'hooks/useMobile';
-import { CancelIcon } from 'components/common/Icons';
 import COLORS from 'constants/colors';
 import clsx from 'clsx';
+import Button from 'components/common/Button';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -49,6 +42,13 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: 'transparent',
       filter: 'drop-shadow(6px 6px 0px rgba(0, 0, 0, 0.1))',
     },
+  },
+  saveButton: {
+    position: 'absolute',
+    top: '4vw',
+    right: '4vw',
+    transition: 'all 0.25s ease-in-out',
+    zIndex: 1,
   },
   backdrop: {
     backgroundColor: 'transparent',
@@ -91,15 +91,11 @@ const JournalEditModal = ({ isOpen, onClose, initText, header, onSave }) => {
           display="flex"
           justifyContent="center"
         >
-          <IconButton
-            className={classes.cancelButton}
+          <Button
+            text="Save"
             onClick={onCloseHandle}
-            aria-label="Close and Save Journal"
-            disableRipple
-            disableFocusRipple
-          >
-            <CancelIcon size={48} />
-          </IconButton>
+            className={classes.saveButton}
+          />
           <Box
             display="flex"
             flexDirection="column"
