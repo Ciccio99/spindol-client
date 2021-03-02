@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
       content: '"← 20% discount"',
       position: 'absolute',
       left: '100%',
-      top: 0,
+      top: '20%',
       marginLeft: theme.spacing(1),
       minWidth: 100,
       color: COLORS.RED,
@@ -153,9 +153,21 @@ export default function Plans() {
               Choose the package that suits you.
             </Typography>
           </Box>
-          <Box mt={2} justifyContent="center">
+        </Box>
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Box
+            mt={5}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
             <Typography
-              variant="subtitle1"
+              variant="h6"
               color={
                 paymentRate === PAY_RATE.MONTHLY
                   ? 'textPrimary'
@@ -177,7 +189,7 @@ export default function Plans() {
                 [classes.discountedPrice]: !isMobile,
                 [classes.discountedPriceMobile]: isMobile,
               })}
-              variant="subtitle1"
+              variant="h6"
               color={
                 paymentRate === PAY_RATE.YEARLY
                   ? 'textPrimary'
@@ -188,14 +200,7 @@ export default function Plans() {
               Pay Yearly
             </Typography>
           </Box>
-        </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Box mt={2} minHeight={5}>
+          <Box minHeight={5}>
             {error ? (
               <Typography variant="subtitle1" color="error">
                 {error}
@@ -203,7 +208,6 @@ export default function Plans() {
             ) : null}
           </Box>
           <Box
-            mt={2}
             display="flex"
             flexDirection={isMobile ? 'column' : 'revert'}
             justifyContent="center"
@@ -234,7 +238,12 @@ export default function Plans() {
                       <Typography variant="h1">
                         ${SUBS.standard[paymentRate].price}
                       </Typography>
-                      <Typography variant="subtitle1">per month</Typography>
+                      <Typography variant="subtitle1">
+                        per month{' '}
+                        {paymentRate === PAY_RATE.YEARLY
+                          ? ' (paid yearly)'
+                          : ''}
+                      </Typography>
                     </Grid>
                     <Grid item>
                       <Box display="flex" justifyContent="center">
@@ -297,7 +306,12 @@ export default function Plans() {
                       <Typography variant="h1">
                         ${SUBS.premium[paymentRate].price}
                       </Typography>
-                      <Typography variant="subtitle1">per month</Typography>
+                      <Typography variant="subtitle1">
+                        per month{' '}
+                        {paymentRate === PAY_RATE.YEARLY
+                          ? ' (paid yearly)'
+                          : ''}
+                      </Typography>
                     </Grid>
                     <Grid item>
                       <Box display="flex" justifyContent="center">
