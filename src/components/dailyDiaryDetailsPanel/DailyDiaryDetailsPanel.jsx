@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 import { useAlertSystemDispatch } from 'context/alertSystemContext';
 import DailyDiaryServices from 'services/DailyDiaryServices';
-import Section from 'components/organizers/Section';
+import Section from 'components/common/Section';
 import SleepComparisonModule from 'components/modules/SleepComparisonModule';
 import DailyDiaryDashboardModule from 'components/modules/DailyDiaryDashboardModule';
 import Journal from 'components/dailyDiary/Journal';

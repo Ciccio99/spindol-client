@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import PanelModule from 'components/organizers/PanelModule';
+import PanelModule from 'components/common/PanelModule';
 import CalendarChart from 'components/chart/CalendarChart';
 
 const getData = (series, tag) => {
@@ -19,6 +19,10 @@ const getData = (series, tag) => {
 const TagCalendarModule = ({ series, tag, variant }) => {
   const title = `${tag.tag} Tag Usage this Year`;
   const data = React.useMemo(() => getData(series, tag), [series, tag]);
+
+  if (!data || data.length === 0) {
+    return null;
+  }
 
   return (
     <PanelModule title={title}>

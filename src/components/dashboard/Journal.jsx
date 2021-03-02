@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(2),
     width: '100vw',
     marginLeft: 'calc(-50vw + 50%)',
-  }
+  },
 }));
 
 export default function Journal({ date = undefined }) {

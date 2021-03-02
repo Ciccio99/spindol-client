@@ -12,8 +12,8 @@ import {
 } from '@material-ui/core';
 import moment from 'moment-timezone';
 import { useAsync } from 'react-async';
-import PanelModule from 'components/organizers/PanelModule';
-import SleepSummaryServices from 'services/SleepSummaryServices';
+import PanelModule from 'components/common/PanelModule';
+import { getDashboardComparisonData } from 'services/SleepSummaryServices';
 import { useUserState } from 'context/userContext';
 import SleepCard from 'components/common/SleepCard';
 
@@ -25,7 +25,9 @@ const getSubtitle = (date) => (date ? `Last sync on ${date}` : undefined);
 
 const StatsDisplay = ({ date }) => {
   const user = useUserState();
-  const { data, error, isPending } = useAsync(SleepSummaryServices.getDashboardComparisonData, { searchDate: date });
+  const { data, error, isPending } = useAsync(getDashboardComparisonData, {
+    searchDate: date,
+  });
 
   if (isPending) {
     return (
@@ -48,60 +50,88 @@ const StatsDisplay = ({ date }) => {
   if (data.todayStats && data.baselineStats) {
     return (
       <Grid container spacing={2}>
-        {
-          data.keys.map((key) => (
-            <Grid item xs={3} key={key}>
-              <SleepCard
-                description={data.todayStats[key].description}
-                units={data.todayStats[key].units}
-                stat={data.todayStats[key].stat}
-                compareStat={data.baselineStats[key].stat}
-                diff={data.todayStats[key].diffPercent}
-                diffUnit={data.todayStats[key].units}
-              />
-            </Grid>
-          ))
-        }
+        {data.keys.map((key) => (
+          <Grid item xs={3} key={key}>
+            <SleepCard
+              description={data.todayStats[key].description}
+              units={data.todayStats[key].units}
+              stat={data.todayStats[key].stat}
+              compareStat={data.baselineStats[key].stat}
+              diff={data.todayStats[key].diffPercent}
+              diffUnit={data.todayStats[key].units}
+            />
+          </Grid>
+        ))}
       </Grid>
     );
   }
 
   if (data.todayStats && data.baselineStats) {
-    console.log('%j', data);
-    const enableCTA = moment().diff(moment(user.createdAt), 'days') < 3 && moment(data.lastSyncDate, 'MMM DD, YYYY').isSame(moment(), 'day');
+    const enableCTA =
+      moment().diff(moment(user.createdAt), 'days') < 3 &&
+      moment(data.lastSyncDate, 'MMM DD, YYYY').isSame(moment(), 'day');
     return (
-      <PanelModule title={TITLE} subtitle={getSubtitle(data.lastSyncDate)} enableCTA={enableCTA}>
+      <PanelModule
+        title={TITLE}
+        subtitle={getSubtitle(data.lastSyncDate)}
+        enableCTA={enableCTA}
+      >
         <Box>
           <Table style={{ tableLayout: 'fixed' }}>
             <TableHead>
               <TableRow>
-                <TableCell variant="body" padding="checkbox" align="left">Last Night</TableCell>
+                <TableCell variant="body" padding="checkbox" align="left">
+                  Last Night
+                </TableCell>
                 <TableCell variant="body" padding="checkbox" align="center" />
-                <TableCell variant="body" padding="checkbox" align="right">Average</TableCell>
+                <TableCell variant="body" padding="checkbox" align="right">
+                  Average
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {data.keys.map((key) => (
                 <TableRow key={key}>
                   <TableCell align="left" variant="head" padding="none">
-                    <Typography color="primary" variant="subtitle1" display="inline" noWrap>
+                    <Typography
+                      color="primary"
+                      variant="subtitle1"
+                      display="inline"
+                      noWrap
+                    >
                       <strong>
-                        {`${data.todayStats[key].stat}${data.todayStats[key].units ? ` ${data.todayStats[key].units}` : ''}`}
+                        {`${data.todayStats[key].stat}${
+                          data.todayStats[key].units
+                            ? ` ${data.todayStats[key].units}`
+                            : ''
+                        }`}
                       </strong>
                     </Typography>
-                    {
-                      data.todayStats[key].diffPercent
-                      && (
-                      <Typography variant="subtitle2" noWrap display="inline" style={data.todayStats[key].diffPercent >= 0 ? green : red}>
+                    {data.todayStats[key].diffPercent && (
+                      <Typography
+                        variant="subtitle2"
+                        noWrap
+                        display="inline"
+                        style={
+                          data.todayStats[key].diffPercent >= 0 ? green : red
+                        }
+                      >
                         {` (${data.todayStats[key].diffPercent}%)`}
                       </Typography>
-                      )
-                    }
+                    )}
                   </TableCell>
-                  <TableCell padding="none" align="center"><Typography variant="caption">{data.baselineStats[key].description}</Typography></TableCell>
+                  <TableCell padding="none" align="center">
+                    <Typography variant="caption">
+                      {data.baselineStats[key].description}
+                    </Typography>
+                  </TableCell>
                   <TableCell align="right" variant="head">
                     <Typography color="primary" variant="subtitle1">
-                      <strong>{`${data.baselineStats[key].stat}${data.baselineStats[key].units ? ` ${data.baselineStats[key].units}` : ''}`}</strong>
+                      <strong>{`${data.baselineStats[key].stat}${
+                        data.baselineStats[key].units
+                          ? ` ${data.baselineStats[key].units}`
+                          : ''
+                      }`}</strong>
                     </Typography>
                   </TableCell>
                 </TableRow>
@@ -121,16 +151,26 @@ const StatsDisplay = ({ date }) => {
             <TableHead>
               <TableRow>
                 <TableCell padding="checkbox" />
-                <TableCell padding="checkbox" align="right">Average</TableCell>
+                <TableCell padding="checkbox" align="right">
+                  Average
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {data.keys.map((key) => (
                 <TableRow key={data.baselineStats[key].description}>
-                  <TableCell align="left"><Typography variant="caption">{data.baselineStats[key].description}</Typography></TableCell>
+                  <TableCell align="left">
+                    <Typography variant="caption">
+                      {data.baselineStats[key].description}
+                    </Typography>
+                  </TableCell>
                   <TableCell align="right" variant="head">
                     <Typography color="primary" variant="subtitle1">
-                      <strong>{`${data.baselineStats[key].stat}${data.baselineStats[key].units ? ` ${data.baselineStats[key].units}` : ''}`}</strong>
+                      <strong>{`${data.baselineStats[key].stat}${
+                        data.baselineStats[key].units
+                          ? ` ${data.baselineStats[key].units}`
+                          : ''
+                      }`}</strong>
                     </Typography>
                   </TableCell>
                 </TableRow>
@@ -145,7 +185,10 @@ const StatsDisplay = ({ date }) => {
   return (
     <PanelModule title={TITLE} subtitle={getSubtitle(data.lastSyncDate)}>
       <Box>
-        <Typography variant="body1">No sleep data available yet. Connect your sleep tracker to start seeing your data!</Typography>
+        <Typography variant="body1">
+          No sleep data available yet. Connect your sleep tracker to start
+          seeing your data!
+        </Typography>
       </Box>
     </PanelModule>
   );

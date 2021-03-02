@@ -1,14 +1,18 @@
 import moment from 'moment-timezone';
-import axios from '../loaders/axios';
 import ErrorHandler from 'utils/ErrorHandler';
+import axios from '../loaders/axios';
 
 const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   const queryString = JSON.stringify({
-    match, sort, limit, skip,
+    match,
+    sort,
+    limit,
+    skip,
   });
   try {
-    const { data } = await axios.get('/dailyDiary',
-      { params: { query: queryString } });
+    const { data } = await axios.get('/dailyDiary', {
+      params: { query: queryString },
+    });
     return data;
   } catch (error) {
     console.log(error);
@@ -20,8 +24,9 @@ export const getTodayDiary = async () => {
   try {
     const searchDate = moment().format('YYYY-MM-DD');
     const queryString = JSON.stringify({ date: searchDate });
-    const { data } = await axios.get('/dailyDiary/getByDate',
-      { params: { query: queryString } });
+    const { data } = await axios.get('/dailyDiary/getByDate', {
+      params: { query: queryString },
+    });
     return data;
   } catch (error) {
     throw new ErrorHandler(error);
@@ -30,14 +35,17 @@ export const getTodayDiary = async () => {
 
 export const getDiariesByDateRange = async (startDate, endDate) => {
   try {
-
     const queryString = JSON.stringify({
       match: {
         date: { $gte: startDate, $lte: endDate },
-      }, sort: {date: 1}, limit: 0, skip: 0,
+      },
+      sort: { date: 1 },
+      limit: 0,
+      skip: 0,
     });
-    const { data } = await axios.get('/dailyDiary',
-      { params: { query: queryString } });
+    const { data } = await axios.get('/dailyDiary', {
+      params: { query: queryString },
+    });
     return data;
   } catch (e) {
     throw new ErrorHandler(e);
@@ -47,10 +55,14 @@ export const getDiariesByDateRange = async (startDate, endDate) => {
 export const getAllDiaries = async () => {
   try {
     const queryString = JSON.stringify({
-      match: {}, sort: {date: 1}, limit: 0, skip: 0,
+      match: {},
+      sort: { date: 1 },
+      limit: 0,
+      skip: 0,
     });
-    const { data } = await axios.get('/dailyDiary',
-      { params: { query: queryString } });
+    const { data } = await axios.get('/dailyDiary', {
+      params: { query: queryString },
+    });
     return data;
   } catch (e) {
     throw new ErrorHandler(e);
@@ -60,22 +72,23 @@ export const getByDate = async (searchDate) => {
   const date = moment(searchDate).format('YYYY-MM-DD');
   const queryString = JSON.stringify({ date });
   try {
-    const { data } = await axios.get('/dailyDiary/getByDate',
-      { params: { query: queryString } });
+    const { data } = await axios.get('/dailyDiary/getByDate', {
+      params: { query: queryString },
+    });
     return data;
   } catch (error) {
     return null;
   }
 };
 
-const getReportingStreak = async () => {
+export async function getCurrentStreak() {
   try {
-    const { data } = await axios.get('/dailyDiary/reportingStreak');
-    return data.streak;
+    const { data } = await axios.get('/dailyDiary/streak');
+    return data;
   } catch (error) {
     return 0;
   }
-};
+}
 
 const getAllDailyDiary = async () => {
   const query = {
@@ -88,8 +101,9 @@ const getAllDailyDiary = async () => {
   };
   const queryString = JSON.stringify(query);
   try {
-    const { data } = await axios.get('/dailyDiary',
-      { params: { query: queryString } });
+    const { data } = await axios.get('/dailyDiary', {
+      params: { query: queryString },
+    });
     return data;
   } catch (error) {
     return [];
@@ -105,7 +119,6 @@ const create = async (user, date, mood) => {
     const { data } = await axios.post('/dailyDiary/create', body);
     return data;
   } catch (error) {
-    console.log(error);
     return null;
   }
 };
@@ -123,13 +136,27 @@ const upsert = async (date, mood) => {
     error.message = e.message || 'Something went wrong... ';
     if ([400, 402, 401, 403].indexOf(e?.response?.status) !== -1) {
       error.message = e.response.data.message;
-    };
+    }
     return { error };
   }
 };
 
-const update = async (dto) => {
+export const update = async (dto) => {
   const body = dto;
+  try {
+    const { data } = await axios.patch(`/dailyDiary/${body._id}`, body);
+    return data;
+  } catch (error) {
+    throw new ErrorHandler(error);
+  }
+};
+
+export const updateActivities = async (dto) => {
+  const body = {
+    ...dto,
+    diaryTags: dto.diaryTags.map((activity) => activity._id),
+  };
+
   try {
     const { data } = await axios.patch(`/dailyDiary/${body._id}`, body);
     return data;
@@ -152,8 +179,9 @@ const getDashboardData = async ({ date = moment() }) => {
   try {
     const searchDate = moment(date).format('YYYY-MM-DD');
     const queryString = JSON.stringify({ date: searchDate });
-    const { data } = await axios.get('/dailyDiary/getByDate',
-      { params: { query: queryString } });
+    const { data } = await axios.get('/dailyDiary/getByDate', {
+      params: { query: queryString },
+    });
     return data;
   } catch (error) {
     throw new ErrorHandler(error);
@@ -176,7 +204,7 @@ const getTagsHeatMapData = async (startDate, endDate) => {
     });
     const tagKeys = Object.keys(tagMap);
     const dateIndex = moment.utc(startDate);
-    while(!dateIndex.isAfter(endDate)) {
+    while (!dateIndex.isAfter(endDate)) {
       const day = dateIndex.date();
       keys.push(`${day}`);
       if (ddMap[day]) {
@@ -186,7 +214,7 @@ const getTagsHeatMapData = async (startDate, endDate) => {
           } else {
             tagMap[tagId][day] = 0;
           }
-        })
+        });
       } else {
         tagKeys.forEach((tagId) => {
           tagMap[tagId][day] = 0;
@@ -194,8 +222,9 @@ const getTagsHeatMapData = async (startDate, endDate) => {
       }
       dateIndex.add(1, 'day');
     }
-    let heatMapData = Object.values(tagMap)
-      .sort((a, b) => (a.tag.toLowerCase() <= b.tag.toLowerCase() ? -1 : 1));
+    let heatMapData = Object.values(tagMap).sort((a, b) =>
+      a.tag.toLowerCase() <= b.tag.toLowerCase() ? -1 : 1
+    );
 
     return { data: heatMapData, keys };
   } catch (error) {
@@ -210,7 +239,6 @@ export default {
   upsert,
   getAllDailyDiary,
   getByDate,
-  getReportingStreak,
   getDashboardData,
   getTagsHeatMapData,
   getDiariesByDateRange,

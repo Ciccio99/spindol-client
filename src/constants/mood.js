@@ -14,6 +14,13 @@ import badFace from 'assets/emoticons/bad-face.svg';
 import awfulFace from 'assets/emoticons/awful-face.svg';
 import emptyFace from 'assets/emoticons/empty-face.svg';
 
+import { ReactComponent as AwesomeFaceComponent } from 'assets/emoticons/awesome-face.svg';
+import { ReactComponent as GoodFaceComponent } from 'assets/emoticons/good-face.svg';
+import { ReactComponent as MehFaceComponent } from 'assets/emoticons/meh-face.svg';
+import { ReactComponent as BadFaceComponent } from 'assets/emoticons/bad-face.svg';
+import { ReactComponent as AwfulFaceComponent } from 'assets/emoticons/awful-face.svg';
+import { ReactComponent as EmptyFaceComponent } from 'assets/emoticons/empty-face.svg';
+
 export const MOODS = {
   EXCELLENT: 'excellent',
   GOOD: 'good',
@@ -77,5 +84,22 @@ export const getMoodSvg = (mood) => {
       return awfulFace;
     default:
       return emptyFace;
+  }
+};
+
+export const getMoodComponent = (mood) => {
+  switch (mood) {
+    case 'excellent':
+      return AwesomeFaceComponent;
+    case 'good':
+      return GoodFaceComponent;
+    case 'meh':
+      return MehFaceComponent;
+    case 'bad':
+      return BadFaceComponent;
+    case 'awful':
+      return AwfulFaceComponent;
+    default:
+      return EmptyFaceComponent;
   }
 };

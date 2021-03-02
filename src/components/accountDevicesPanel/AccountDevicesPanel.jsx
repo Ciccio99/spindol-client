@@ -1,18 +1,19 @@
 import React from 'react';
-import {
-  Box,
-  Divider,
-} from '@material-ui/core';
+import { Box, Divider } from '@material-ui/core';
 import { useUserState } from 'context/userContext';
-import PanelModule from 'components/organizers/PanelModule';
+import PanelModule from 'components/common/PanelModule';
 import DeviceSettingsItem from './deviceSettingsItem/DeviceSettingsItem';
 
 const TITLE = 'Your Sleep Trackers';
-const SUBTITLE = 'Only one tracker can be connected at a time. If you connect a new tracker, any previously connected trackers will be disconnected.'
+const SUBTITLE =
+  'Only one tracker can be connected at a time. If you connect a new tracker, any previously connected trackers will be disconnected.';
 
 const AccountDevicesPanel = () => {
   const user = useUserState();
-  const userFirstName = React.useMemo(() => (user.name ? user.name.split(' ')[0] : ''), [user]);
+  const userFirstName = React.useMemo(
+    () => (user.name ? user.name.split(' ')[0] : ''),
+    [user]
+  );
   return (
     <PanelModule title={TITLE} subtitle={SUBTITLE}>
       <DeviceSettingsItem

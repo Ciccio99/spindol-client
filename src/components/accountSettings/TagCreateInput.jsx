@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Grid,
-  TextField,
-  Button,
-  Typography,
-} from '@material-ui/core';
+import { Box, Grid, TextField, Button, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { Event } from 'utils/Tracking';
 
@@ -29,21 +23,30 @@ const TagCreateInput = ({ handleInsert }) => {
             type="text"
             placeholder="New Tag"
             label="New Tag"
-            onChange={(e) => { setTagInput(e.target.value); }}
+            onChange={(e) => {
+              setTagInput(e.target.value);
+            }}
             variant="outlined"
             size="small"
             fullWidth
-            inputProps={{ maxLength: 30 }}
+            inputProps={{ maxLength: 40 }}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
-          <Button disabled={!tagInput} type="submit" color="secondary" variant="contained" disableElevation size="large" startIcon={<AddIcon />} fullWidth>
+          <Button
+            disabled={!tagInput}
+            type="submit"
+            color="secondary"
+            variant="contained"
+            disableElevation
+            size="large"
+            startIcon={<AddIcon />}
+            fullWidth
+          >
             <Typography variant="body2">Add Tag</Typography>
           </Button>
         </Grid>
       </Grid>
-
-
     </Box>
   );
 };

@@ -1,39 +1,58 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { updateIntercom } from 'next-intercom';
 import ProtectedRoute from 'routes/ProtectedRoute';
 import PublicRoute from 'routes/PublicRoute';
-import SignInView from 'views/signInView/SignInView';
-// import RegisterView from 'views/registerView/RegisterView';
-import DashboardView from 'views/dashboard/DashboardView';
-import AccountSettings from 'views/accountSettings/AccountSettings';
-import CheckInsView from 'views/checkins/CheckInsView';
-import SleepTrialReportView from 'views/sleepTrialReport/SleepTrialReportView';
-import NotFound from 'views/notFound/NotFound';
-import TermsOfService from 'views/legal/TermsOfService';
-import PrivacyPolicy from 'views/legal/PrivacyPolicy';
-import Home from 'views/home/Home';
+import SignInView from 'views/SignInView';
+import RegisterView from 'views/RegisterView';
+import DashboardView from 'views/DashboardView';
+import AccountSettings from 'views/AccountSettings';
+import DailyDiary from 'views/DailyDiary';
+import NotFound from 'views/Custom404';
 import usePageTracker from 'hooks/usePageTracker';
 import DataView from 'views/DataView';
-import AboutPage from 'views/AboutPage';
 import CheckIn from 'views/CheckIn';
+import Plans from 'views/Plans';
+import PlansSuccess from 'views/PlansSuccess';
+import Renew from 'views/Renew';
 
 const AppRouter = () => {
   usePageTracker();
+  updateIntercom(undefined, { hide_default_launcher: false });
 
   return (
     <Switch>
-      <PublicRoute exact path="/" component={Home} />
-      <PublicRoute path="/signin" authRedirectTo="/dashboard" component={SignInView} />
-      <PublicRoute path="/about" component={AboutPage} />
-      {/* <PublicRoute path="/register/:token" authRedirectTo="/dashboard" component={RegisterView} /> */}
-      {/* <PublicRoute path="/register" authRedirectTo="/dashboard" component={RegisterView} /> */}
-      <PublicRoute path="/terms-of-service" component={TermsOfService} />
-      <PublicRoute path="/privacy-policy" component={PrivacyPolicy} />
-      <ProtectedRoute path="/check-in" component={CheckIn} />
-      <ProtectedRoute path="/dashboard" component={DashboardView} />
-      <ProtectedRoute path="/daily-diary" component={CheckInsView} />
-      <ProtectedRoute path="/data" component={DataView} />
-      <ProtectedRoute path="/sleep-trial-report/:id" component={SleepTrialReportView} />
+      <ProtectedRoute exact path="/" isProvisioned component={DashboardView} />
+      <PublicRoute path="/signin" authRedirectTo="/" component={SignInView} />
+      <ProtectedRoute path="/renew" component={Renew} />
+      <ProtectedRoute
+        path="/plans/success/:sessionId"
+        component={PlansSuccess}
+      />
+      <ProtectedRoute path="/plans" component={Plans} />
+      <PublicRoute
+        path="/register/:token"
+        authRedirectTo="/dashboard"
+        component={RegisterView}
+      />
+      <PublicRoute
+        path="/register"
+        authRedirectTo="/dashboard"
+        component={RegisterView}
+      />
+      <ProtectedRoute path="/check-in" isProvisioned component={CheckIn} />
+      <ProtectedRoute
+        path="/dashboard"
+        isProvisioned
+        authRedirectTo="/"
+        component={DashboardView}
+      />
+      <ProtectedRoute
+        path="/daily-diary"
+        isProvisioned
+        component={DailyDiary}
+      />
+      <ProtectedRoute path="/data" isProvisioned component={DataView} />
       <ProtectedRoute path="/settings" component={AccountSettings} />
       <Route component={NotFound} />
     </Switch>

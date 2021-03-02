@@ -73,7 +73,7 @@ const customTheme = {
     button: {
       fontWeight: 400,
       fontSize: '0.875rem',
-      color: '#224887',
+      color: COLORS.DARK_BLUE,
       textTransform: 'none',
     },
   },
@@ -88,15 +88,15 @@ const customTheme = {
   },
   palette: {
     primary: {
-      light: '#c1a1ed',
-      main: '#9072ba',
-      dark: '#61468a',
-      contrastText: '#fff',
+      light: COLORS.PEACH_1,
+      main: COLORS.PEACH,
+      dark: COLORS.DARK_PEACH,
+      contrastText: COLORS.BLACK,
     },
     secondary: {
-      light: '#ffae83',
-      main: '#e67e56',
-      dark: '#af502b',
+      light: COLORS.LIGHTER_BLUE,
+      main: COLORS.LIGHT_BLUE,
+      dark: COLORS.BLUE,
       contrastText: '#fff',
     },
     tertiary: {
@@ -117,6 +117,28 @@ const customTheme = {
     // borderRadiusSmall: 10,
   },
   overrides: {
+    MuiSwitch: {
+      switchBase: {
+        // Controls default (unchecked) color for the thumb
+        color: COLORS.LIGHT_BLUE,
+      },
+      colorSecondary: {
+        '&$checked': {
+          // Controls checked color for the thumb
+          color: COLORS.DARK_BLUE,
+        },
+      },
+      track: {
+        // Controls default (unchecked) color for the track
+        opacity: 0.3,
+        backgroundColor: COLORS.GRAY,
+        '$checked$checked + &': {
+          // Controls checked color for the track
+          opacity: 0.3,
+          backgroundColor: COLORS.GRAY,
+        },
+      },
+    },
     MuiPaper: {
       root: {
         border: `1px solid ${COLORS.BORDER_GRAY}`,
@@ -128,6 +150,28 @@ const customTheme = {
         border: 0,
       },
     },
+    MuiPickersToolbar: {
+      toolbar: {
+        backgroundColor: COLORS.PEACH,
+      },
+    },
+    MuiPickersToolbarText: {
+      toolbarTxt: {
+        color: COLORS.DARK_GRAY,
+      },
+      toolbarBtnSelected: {
+        color: COLORS.BLACK,
+      },
+    },
+    MuiPickersDay: {
+      daySelected: {
+        color: COLORS.BLACK,
+        backgroundColor: COLORS.PEACH,
+        '&:hover': {
+          backgroundColor: COLORS.LIGHT_GRAY,
+        },
+      },
+    },
   },
 };
 
@@ -136,7 +180,9 @@ const fontSizesOptions = {
 };
 
 const HypnosTheme = ({ children }) => {
-  const [theme, setTheme] = useState(responsiveFontSizes(createMuiTheme(customTheme)));
+  const [theme, setTheme] = useState(
+    responsiveFontSizes(createMuiTheme(customTheme))
+  );
   const { isMobile } = useMobile();
 
   useEffect(() => {
@@ -153,14 +199,9 @@ const HypnosTheme = ({ children }) => {
     }
   }, [isMobile]);
 
-
   theme.shadows[24] = '6px 6px 0px rgba(0, 0, 0, 0.05);';
 
-  return (
-    <ThemeProvider theme={theme}>
-      {children}
-    </ThemeProvider>
-  );
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 
 export default HypnosTheme;

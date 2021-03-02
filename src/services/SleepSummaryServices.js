@@ -5,17 +5,46 @@ import axios from 'loaders/axios';
 
 const query = async (match = {}, sort = {}, limit = 0, skip = 0) => {
   const queryString = JSON.stringify({
-    match, sort, limit, skip,
+    match,
+    sort,
+    limit,
+    skip,
   });
 
   try {
-    const { data } = await axios.get('/sleepSummary',
-      {
-        params: { query: queryString },
-      });
+    const { data } = await axios.get('/sleepSummary', {
+      params: { query: queryString },
+    });
     return data;
   } catch (error) {
     return [];
+  }
+};
+
+export const getByDate = async (date) => {
+  try {
+    if (!date) {
+      throw new Error('Must provide date.');
+    }
+
+    const queryDate = moment(date).format('YYYY-MM-DD');
+    const queryString = JSON.stringify({
+      match: {
+        date: queryDate,
+      },
+      limit: 0,
+      skip: 0,
+    });
+    const { data } = await axios.get('/sleepSummary', {
+      params: { query: queryString },
+    });
+    if (data.length > 0) {
+      return data[0];
+    }
+
+    return {};
+  } catch (error) {
+    throw new ErrorHandler(error);
   }
 };
 
@@ -23,35 +52,39 @@ export const getSleepByDateRange = async (startDate, endDate) => {
   const queryString = JSON.stringify({
     match: {
       date: { $gte: startDate, $lte: endDate },
-    }, sort: {date: 1}, limit: 0, skip: 0,
+    },
+    sort: { date: 1 },
+    limit: 0,
+    skip: 0,
   });
 
   try {
-    const { data } = await axios.get('/sleepSummary',
-      {
-        params: { query: queryString },
-      });
+    const { data } = await axios.get('/sleepSummary', {
+      params: { query: queryString },
+    });
     return data;
   } catch (error) {
     throw new ErrorHandler(error);
   }
-}
+};
 
 export const getAllSleep = async () => {
   const queryString = JSON.stringify({
-    match: {}, sort: {date: 1}, limit: 0, skip: 0,
+    match: {},
+    sort: { date: 1 },
+    limit: 0,
+    skip: 0,
   });
 
   try {
-    const { data } = await axios.get('/sleepSummary',
-      {
-        params: { query: queryString },
-      });
+    const { data } = await axios.get('/sleepSummary', {
+      params: { query: queryString },
+    });
     return data;
   } catch (error) {
     throw new ErrorHandler(error);
   }
-}
+};
 
 export const getDashboardComparisonData = async ({ searchDate }) => {
   const todayDate = searchDate ? moment(searchDate) : moment();
@@ -81,16 +114,21 @@ export const getDashboardComparisonData = async ({ searchDate }) => {
     });
 
     const responses = await Promise.all([baselineReq, todayReq]);
-    const baselineSleepSummaries = responses[0].data.length > 0 ? responses[0].data : [];
-    const todaySleepSummaries = responses[1].data.length > 0 ? responses[1].data : [];
-    const baselineStats = baselineSleepSummaries.length ? getSleepSummaryAvgStats(baselineSleepSummaries) : undefined;
+
+    const baselineSleepSummaries =
+      responses[0].data.length > 0 ? responses[0].data : [];
+    const todaySleepSummaries =
+      responses[1].data.length > 0 ? responses[1].data : [];
+    const baselineStats = baselineSleepSummaries.length
+      ? getSleepSummaryAvgStats(baselineSleepSummaries)
+      : undefined;
     const todayStats = todaySleepSummaries.length
-      ? getSleepSummaryAvgStats(todaySleepSummaries, baselineSleepSummaries.length
-        ? baselineSleepSummaries
-        : undefined)
+      ? getSleepSummaryAvgStats(
+          todaySleepSummaries,
+          baselineSleepSummaries.length ? baselineSleepSummaries : undefined
+        )
       : undefined;
     let keys = [];
-
 
     if (baselineStats && todayStats) {
       const baselineKeys = Object.keys(baselineStats);
@@ -105,31 +143,36 @@ export const getDashboardComparisonData = async ({ searchDate }) => {
     }
     const series = todaySleepSummaries.concat(baselineSleepSummaries);
     // Calculate stats
-    const sleepStats = series.reduce((stats, sleepSummary, index) => {
-      const sleepDuration = getSleepHoursDuration(sleepSummary);
-      if (!sleepDuration) {
+    const sleepStats = series.reduce(
+      (stats, sleepSummary, index) => {
+        const sleepDuration = getSleepHoursDuration(sleepSummary);
+        if (!sleepDuration) {
+          return stats;
+        }
+        if (index === 0) {
+          stats.min = sleepDuration;
+          stats.max = sleepDuration;
+          return stats;
+        }
+        if (sleepDuration < stats.min) {
+          stats.min = sleepDuration;
+        }
+        if (sleepDuration > stats.max) {
+          stats.max = sleepDuration;
+        }
         return stats;
-      }
-      if (index === 0) {
-        stats.min = sleepDuration;
-        stats.max = sleepDuration;
-        return stats;
-      }
-      if (sleepDuration < stats.min) {
-        stats.min = sleepDuration;
-      }
-      if (sleepDuration > stats.max) {
-        stats.max = sleepDuration
-      }
-      return stats;
-    }, { min: 0, max: 0 });
+      },
+      { min: 0, max: 0 }
+    );
     const data = {
       baselineStats,
       todayStats,
       series,
       sleepStats,
       keys,
-      lastSyncDate: moment.utc(todaySleepSummaries[0]?.date || baselineSleepSummaries[0]?.date).format('MMM DD, YYYY'),
+      lastSyncDate: moment
+        .utc(todaySleepSummaries[0]?.date || baselineSleepSummaries[0]?.date)
+        .format('MMM DD, YYYY'),
     };
 
     return data;
@@ -155,7 +198,7 @@ export const getSleepHoursDuration = (sleepSummary) => {
   const diffTime = Math.abs(endDate - startDate);
   let diffHours = diffTime / (1000 * 3600);
   if (sleepSummary.efficiency) {
-    diffHours *= (sleepSummary.efficiency / 100);
+    diffHours *= sleepSummary.efficiency / 100;
   }
   return diffHours;
 };
@@ -173,7 +216,7 @@ const getAvgSleepHoursDuration = (sleepSummaries) => {
 const getAvgRemHoursDuration = (sleepSummaries) => {
   let totalHours = 0;
   sleepSummaries.forEach((ss) => {
-    totalHours += (ss.remSleepDuration / 3600);
+    totalHours += ss.remSleepDuration / 3600;
   });
   const avgRemHours = totalHours / sleepSummaries.length;
   return avgRemHours;
@@ -182,7 +225,7 @@ const getAvgRemHoursDuration = (sleepSummaries) => {
 const getAvgDeepHoursDuration = (sleepSummaries) => {
   let totalHours = 0;
   sleepSummaries.forEach((ss) => {
-    totalHours += (ss.deepSleepDuration / 3600);
+    totalHours += ss.deepSleepDuration / 3600;
   });
   const avgDeepHours = totalHours / sleepSummaries.length;
   return avgDeepHours;
@@ -218,12 +261,13 @@ const getAvgAvgHeartRate = (sleepSummaries) => {
     avgHr /= length;
   }
 
-
   return avgHr;
 };
 
 const toComparisonFormat = (newSleepData, baselineSleepData) => {
-  const newStats = newSleepData.length ? getSleepSummaryAvgStats(newSleepData, baselineSleepData) : undefined;
+  const newStats = newSleepData.length
+    ? getSleepSummaryAvgStats(newSleepData, baselineSleepData)
+    : undefined;
   const baselineStats = getSleepSummaryAvgStats(baselineSleepData);
 
   let keys = [];
@@ -235,7 +279,7 @@ const toComparisonFormat = (newSleepData, baselineSleepData) => {
       if (newKeys.includes(key)) {
         keys.push(key);
       }
-    })
+    });
   } else if (baselineStats) {
     keys = keys.concat(Object.keys(baselineStats));
   }
@@ -249,12 +293,18 @@ const toComparisonFormat = (newSleepData, baselineSleepData) => {
   return data;
 };
 
-const getSleepSummaryAvgStats = (sleepSummaries, oldSleepSummaries = undefined) => {
+const getSleepSummaryAvgStats = (
+  sleepSummaries,
+  oldSleepSummaries = undefined
+) => {
   const avgSleepDuration = getAvgSleepHoursDuration(sleepSummaries);
   const avgRemDuration = getAvgRemHoursDuration(sleepSummaries);
   const avgDeepDuration = getAvgDeepHoursDuration(sleepSummaries);
   const avgBedtimeMins = getAvgBedtime(sleepSummaries);
-  const avgBedtime = moment('2020-4-20', 'YYYY-MM-DD').add(avgBedtimeMins, 'minutes');
+  const avgBedtime = moment('2020-4-20', 'YYYY-MM-DD').add(
+    avgBedtimeMins,
+    'minutes'
+  );
   const avgHr = getAvgAvgHeartRate(sleepSummaries);
 
   const stats = {
@@ -278,13 +328,15 @@ const getSleepSummaryAvgStats = (sleepSummaries, oldSleepSummaries = undefined) 
       units: null,
       description: 'Bedtime',
     },
-    ...(avgHr ? {
-      avgHr: {
-        stat: avgHr.toFixed(0),
-        units: 'bpm',
-        description: 'Resting HR',
-      },
-    } : {}),
+    ...(avgHr
+      ? {
+          avgHr: {
+            stat: avgHr.toFixed(0),
+            units: 'bpm',
+            description: 'Avg Resting HR',
+          },
+        }
+      : {}),
   };
 
   if (oldSleepSummaries) {
@@ -296,11 +348,19 @@ const getSleepSummaryAvgStats = (sleepSummaries, oldSleepSummaries = undefined) 
 
     // stats.sleepDuration.diffPercent = Math.round(((avgSleepDuration - oldSleepDuration) * 100) / oldSleepDuration).toFixed(0);
 
-    stats.sleepDuration.diffPercent = (avgSleepDuration - oldSleepDuration).toFixed(1);
-    stats.remDuration.diffPercent = (avgRemDuration - oldRemDuration).toFixed(1);
-    stats.deepDuration.diffPercent = (avgDeepDuration - oldDeepDuration).toFixed(1);
+    stats.sleepDuration.diffPercent = (
+      avgSleepDuration - oldSleepDuration
+    ).toFixed(1);
+    stats.remDuration.diffPercent = (avgRemDuration - oldRemDuration).toFixed(
+      1
+    );
+    stats.deepDuration.diffPercent = (
+      avgDeepDuration - oldDeepDuration
+    ).toFixed(1);
     if (avgHr) {
-      stats.avgHr.diffPercent = Math.round(((oldAvgHr - avgHr) * 100) / oldAvgHr).toFixed(0);
+      stats.avgHr.diffPercent = Math.round(
+        ((oldAvgHr - avgHr) * 100) / oldAvgHr
+      ).toFixed(0);
     }
   }
 
@@ -308,20 +368,22 @@ const getSleepSummaryAvgStats = (sleepSummaries, oldSleepSummaries = undefined) 
 };
 
 const getTotalStats = (sleepSummaries) => {
-  const totals = sleepSummaries.reduce((totalsMap, sleepSummary) => {
-    totalsMap.sleepTime += getSleepHoursDuration(sleepSummary);
-    totalsMap.deep += sleepSummary.deepSleepDuration;
-    totalsMap.rem += sleepSummary.remSleepDuration;
-    return totalsMap;
-  }, {
-    sleepTime: 0,
-    deep: 0,
-    rem: 0,
-  });
+  const totals = sleepSummaries.reduce(
+    (totalsMap, sleepSummary) => {
+      totalsMap.sleepTime += getSleepHoursDuration(sleepSummary);
+      totalsMap.deep += sleepSummary.deepSleepDuration;
+      totalsMap.rem += sleepSummary.remSleepDuration;
+      return totalsMap;
+    },
+    {
+      sleepTime: 0,
+      deep: 0,
+      rem: 0,
+    }
+  );
 
   return totals;
 };
-
 
 const getSleepSummaryStats = (sleepSummary) => {
   if (!sleepSummary) {
@@ -332,31 +394,42 @@ const getSleepSummaryStats = (sleepSummary) => {
     units: 'hrs',
     description: 'Total Sleep',
   };
-  const remDuration = sleepSummary.remSleepDuration ? {
-    stat: (sleepSummary.remSleepDuration / 3600).toFixed(1),
-    units: 'hrs',
-    description: 'REM',
-  } : undefined;
-  const deepDuration = sleepSummary.deepSleepDuration ? {
-    stat: (sleepSummary.deepSleepDuration / 3600).toFixed(1),
-    units: 'hrs',
-    description: 'Deep',
-  } : undefined;
-  const avgHr = sleepSummary.hrAverage ? {
-    stat: sleepSummary.hrAverage.toFixed(0),
-    units: 'bpm',
-    description: 'Resting HR',
-  } : undefined;
+  const remDuration = sleepSummary.remSleepDuration
+    ? {
+        stat: (sleepSummary.remSleepDuration / 3600).toFixed(1),
+        units: 'hrs',
+        description: 'REM',
+      }
+    : undefined;
+  const deepDuration = sleepSummary.deepSleepDuration
+    ? {
+        stat: (sleepSummary.deepSleepDuration / 3600).toFixed(1),
+        units: 'hrs',
+        description: 'Deep',
+      }
+    : undefined;
+  const avgHr = sleepSummary.hrAverage
+    ? {
+        stat: sleepSummary.hrAverage.toFixed(0),
+        units: 'bpm',
+        description: 'Resting HR',
+      }
+    : undefined;
   const bedtime = {
-    stat: moment.utc(sleepSummary.startDateTime).utcOffset(sleepSummary.timezoneOffset).format('h:mm a'),
+    stat: moment
+      .utc(sleepSummary.startDateTime)
+      .utcOffset(sleepSummary.timezoneOffset)
+      .format('h:mm a'),
     units: null,
     description: 'Bedtime',
   };
-  const efficiency = sleepSummary.efficiency ? {
-    stat: sleepSummary.efficiency,
-    units: '%',
-    description: 'Sleep Efficiency',
-  } : undefined;
+  const efficiency = sleepSummary.efficiency
+    ? {
+        stat: sleepSummary.efficiency,
+        units: '%',
+        description: 'Sleep Efficiency',
+      }
+    : undefined;
 
   const stats = {
     sleepDuration,
@@ -367,7 +440,6 @@ const getSleepSummaryStats = (sleepSummary) => {
     ...(avgHr ? { avgHr } : {}),
   };
 
-
   return stats;
 };
 
@@ -377,10 +449,9 @@ const getFatigueScore = async (date) => {
     if (!searchDate) {
       throw new Error('Not a valid date');
     }
-    const { data } = await axios.get('/sleepSummary/fatigueScore',
-      {
-        params: { date: moment(date).format('YYYY-MM-DD') },
-      });
+    const { data } = await axios.get('/sleepSummary/fatigueScore', {
+      params: { date: moment(date).format('YYYY-MM-DD') },
+    });
     return { data };
   } catch (error) {
     return handleError(error);
@@ -400,17 +471,22 @@ const getTagSleepTableData = async (startDate, endDate, tag) => {
       throw new Error(`No sleep data available for your "${tag.tag}" tag!`);
     }
     if (!data.baselineSleepData?.length) {
-      throw new Error(`No baseline sleep data available for your "${tag.tag}" tag - you've performed "${tag.tag}" every day throughout this date range.`);
+      throw new Error(
+        `No baseline sleep data available for your "${tag.tag}" tag - you've performed "${tag.tag}" every day throughout this date range.`
+      );
     }
 
-    const comparisonData = toComparisonFormat(data.tagSleepData, data.baselineSleepData);
+    const comparisonData = toComparisonFormat(
+      data.tagSleepData,
+      data.baselineSleepData
+    );
     comparisonData.newStatsCount = data.tagSleepData?.length;
     comparisonData.baselineStatsCounts = data.baselineSleepData?.length;
     return comparisonData;
   } catch (error) {
     throw new ErrorHandler(error);
   }
-}
+};
 
 export default {
   query,

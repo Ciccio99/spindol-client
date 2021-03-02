@@ -1,11 +1,6 @@
 import { useQuery } from 'react-query';
-import { getUserMe } from 'services/UserServices';
+import { getCurrentStreak } from 'services/DailyDiaryServices';
 
-const useStreakStats = () => {
-  return useQuery('sessionStats', async () => {
-    const data = await getUserMe();
-    return data.user?.stats?.sessionStats || {};
-  });
-};
+const useStreakStats = () => useQuery('streakStats', getCurrentStreak);
 
 export default useStreakStats;

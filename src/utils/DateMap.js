@@ -89,7 +89,6 @@ class DateMap {
   join(date, data) {
     const i = this.dateMap.get(date);
     if (i === undefined) {
-      console.log(date);
       throw new Error('Date does not exist');
     }
     this.dateArr[i] = { ...this.dateArr[i], ...data };

@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Typography,
-  Paper,
-  Popover,
-} from '@material-ui/core';
+import { Box, Typography, Paper, Popover } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import moment from 'moment-timezone';
@@ -14,7 +9,10 @@ import useDashboardHabits from 'hooks/useDashboardHabits';
 import useActiveHabits from 'hooks/useActiveHabits';
 import useMobile from 'hooks/useMobile';
 import useMedium from 'hooks/useMedium';
-import { upsertBedtimeHabit, upsertWaketimeHabit } from 'services/HabitServices';
+import {
+  upsertBedtimeHabit,
+  upsertWaketimeHabit,
+} from 'services/HabitServices';
 import { isValidTime } from 'utils/time';
 import HABITS from 'constants/Habits';
 import COLORS from 'constants/colors';
@@ -94,51 +92,70 @@ const SleepGoalsModule = () => {
         </div>
         <Box mt={2}>
           <Paper elevation={24}>
-            <Box px={1} py={2} display="flex" justifyContent="center" alignItems="center">
+            <Box
+              px={1}
+              py={2}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
               <table className={classes.table}>
                 <thead>
                   <tr>
                     <th className={classes.cellHeaderPadding} />
-                    {
-                      habitData.map((data) => (
-                        <th key={data.date} className={classes.cellHeaderPadding}>
-                          <Typography variant="h4">{data.date}</Typography>
-                        </th>
-                      ))
-                    }
+                    {habitData.map((data) => (
+                      <th key={data.date} className={classes.cellHeaderPadding}>
+                        <Typography variant="h4">{data.date}</Typography>
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-
                     <td className={classes.cellPadding}>
-                      <Box p={1} display="flex" flexDirection="column" alignItems={isMobile ? 'start' : 'center'}>
-                        <img className={classes.habitIcon} src={bedtimeSvg} width={iconSize} alt="bedtime moon illustration" />
+                      <Box
+                        p={1}
+                        display="flex"
+                        flexDirection="column"
+                        alignItems={isMobile ? 'start' : 'center'}
+                      >
+                        <img
+                          className={classes.habitIcon}
+                          src={bedtimeSvg}
+                          width={iconSize}
+                          alt="bedtime moon illustration"
+                        />
                         <HabitEditor habit={activeHabits.bedtime} />
                       </Box>
                     </td>
-                    {
-                      habitData.map((data) => (
-                        <td key={data.date} className={classes.cellPadding}>
-                          <HabitCircle habit={data.bedtime} />
-                        </td>
-                      ))
-                    }
+                    {habitData.map((data) => (
+                      <td key={data.date} className={classes.cellPadding}>
+                        <HabitCircle habit={data.bedtime} />
+                      </td>
+                    ))}
                   </tr>
                   <tr>
                     <td className={classes.cellPadding}>
-                      <Box p={1} display="flex" flexDirection="column" alignItems={isMobile ? 'start' : 'center'}>
-                        <img className={classes.habitIcon} src={waketimeSvg} width={iconSize} alt="waketime sun illustration" />
+                      <Box
+                        p={1}
+                        display="flex"
+                        flexDirection="column"
+                        alignItems={isMobile ? 'start' : 'center'}
+                      >
+                        <img
+                          className={classes.habitIcon}
+                          src={waketimeSvg}
+                          width={iconSize}
+                          alt="waketime sun illustration"
+                        />
                         <HabitEditor habit={activeHabits.waketime} />
                       </Box>
                     </td>
-                    {
-                      habitData.map((data) => (
-                        <td key={data.date} className={classes.cellPadding}>
-                          <HabitCircle habit={data.waketime} />
-                        </td>
-                      ))
-                    }
+                    {habitData.map((data) => (
+                      <td key={data.date} className={classes.cellPadding}>
+                        <HabitCircle habit={data.waketime} />
+                      </td>
+                    ))}
                   </tr>
                 </tbody>
               </table>
@@ -217,43 +234,68 @@ const HabitCircle = ({ habit }) => {
       >
         <Box p={2} maxWidth={280}>
           <Box mb={1} display="flex" alignItems="center">
-            {
-              habit.bedtime
-                ? (<img src={bedtimeSvgSmol} width={24} alt="bedtime moon illustration" />)
-                : (<img src={waketimeSvgSmol} width={24} alt="waketime sun illustration" />)
-            }
+            {habit.bedtime ? (
+              <img
+                src={bedtimeSvgSmol}
+                width={24}
+                alt="bedtime moon illustration"
+              />
+            ) : (
+              <img
+                src={waketimeSvgSmol}
+                width={24}
+                alt="waketime sun illustration"
+              />
+            )}
 
-            <Typography variant="subtitle2" style={{ paddingLeft: '8px' }}>{habit.target}</Typography>
+            <Typography variant="subtitle2" style={{ paddingLeft: '8px' }}>
+              {habit.target}
+            </Typography>
           </Box>
-          {
-            habit.bedtime
-              ? (<Typography variant="body1">You went to bed <span className={classes.textHighlight}>{delta} minutes</span> {habit.delta < 0 ? 'before' : 'after'} your goal bedtime.</Typography>)
-              : (<Typography variant="body1">You woke up <span className={classes.textHighlight}>{delta} minutes</span> {habit.delta < 0 ? 'before' : 'after'} your goal waketime.</Typography>)
-          }
+          {habit.bedtime ? (
+            <Typography variant="body1">
+              You went to bed{' '}
+              <span className={classes.textHighlight}>{delta} minutes</span>{' '}
+              {habit.delta < 0 ? 'before' : 'after'} your goal bedtime.
+            </Typography>
+          ) : (
+            <Typography variant="body1">
+              You woke up{' '}
+              <span className={classes.textHighlight}>{delta} minutes</span>{' '}
+              {habit.delta < 0 ? 'before' : 'after'} your goal waketime.
+            </Typography>
+          )}
         </Box>
       </Popover>
     </>
   );
 };
 
-const CircleSvg = ({
-  radius, color, textColor, text, ...other
-}) => {
+const CircleSvg = ({ radius, color, textColor, text, ...other }) => {
   const classes = useStyles();
 
   return (
     <svg height={radius * 2} width={radius * 2} {...other}>
-      <circle cx={radius} cy={radius} r={radius} stroke={color} strokeWidth="0" fill={color} />
-      {
-        text
-          ? (
-            <text className={clsx(classes.svgText)} fill={textColor || COLORS.BLACK} x="50%" y="50%" textAnchor="middle" alignmentBaseline="central">
-              {text}
-            </text>
-          )
-          : null
-      }
-
+      <circle
+        cx={radius}
+        cy={radius}
+        r={radius}
+        stroke={color}
+        strokeWidth="0"
+        fill={color}
+      />
+      {text ? (
+        <text
+          className={clsx(classes.svgText)}
+          fill={textColor || COLORS.BLACK}
+          x="50%"
+          y="50%"
+          textAnchor="middle"
+          alignmentBaseline="central"
+        >
+          {text}
+        </text>
+      ) : null}
     </svg>
   );
 };
@@ -261,7 +303,9 @@ const CircleSvg = ({
 const HabitEditor = ({ habit }) => {
   const dispatchAlert = useAlertSystemDispatch();
   const queryCache = useQueryCache();
-  const goalTime = habit ? moment().startOf('day').add(habit.targetValue, 'minutes') : undefined;
+  const goalTime = habit
+    ? moment().startOf('day').add(habit.targetValue, 'minutes')
+    : undefined;
 
   const [saveBedtimeHabit] = useMutation(
     (newTarget) => upsertBedtimeHabit(newTarget),
@@ -295,7 +339,7 @@ const HabitEditor = ({ habit }) => {
       onSettled: () => {
         queryCache.invalidateQueries('activeHabits');
       },
-    },
+    }
   );
 
   const [saveWaketimeHabit] = useMutation(
@@ -329,11 +373,13 @@ const HabitEditor = ({ habit }) => {
       onSettled: () => {
         queryCache.invalidateQueries('activeHabits');
       },
-    },
+    }
   );
 
   const handleOnChange = (newTarget) => {
-    if (habit.target === habit.targetValue) { return; }
+    if (!habit.default && newTarget === habit.targetValue) {
+      return;
+    }
 
     switch (habit.dataType) {
       case HABITS.BEDTIME:
@@ -347,15 +393,22 @@ const HabitEditor = ({ habit }) => {
   };
 
   return (
-    <TimePicker initTime={goalTime} currentValue={habit.targetValue} popTitle={`Set ${habit.name}`} onChange={handleOnChange} />
+    <TimePicker
+      initTime={goalTime}
+      currentValue={habit.targetValue}
+      popTitle={`Set ${habit.name}`}
+      onChange={handleOnChange}
+    />
   );
 };
 
-const TimePicker = ({
-  initTime, currentValue, popTitle, onChange,
-}) => {
-  const originalTime = initTime ? moment(initTime).format('hh:mm') : moment().format('hh:mm');
-  const originalPeriod = initTime ? moment(initTime).format('A') : moment().format('A');
+const TimePicker = ({ initTime, currentValue, popTitle, onChange }) => {
+  const originalTime = initTime
+    ? moment(initTime).format('hh:mm')
+    : moment().format('hh:mm');
+  const originalPeriod = initTime
+    ? moment(initTime).format('A')
+    : moment().format('A');
   const classes = useStyles();
   const { isMobile } = useMobile();
   const [input, setInput] = useState(originalTime);
@@ -370,9 +423,7 @@ const TimePicker = ({
     if (isValidTime(input)) {
       const newTime = moment(`${input} ${period}`, 'hh:mm A');
       const targetVal = newTime.diff(moment().startOf('day'), 'minutes');
-      if (currentValue !== targetVal) {
-        onChange(targetVal);
-      }
+      onChange(targetVal);
     } else {
       setInput(originalTime);
     }
@@ -385,7 +436,11 @@ const TimePicker = ({
     if (regex.test(val)) {
       setInput((oldInput) => {
         let newInput = val;
-        if (newInput.length === 2 && oldInput.length !== 3 && newInput.indexOf(':') === -1) {
+        if (
+          newInput.length === 2 &&
+          oldInput.length !== 3 &&
+          newInput.indexOf(':') === -1
+        ) {
           newInput += ':';
         }
 
@@ -405,8 +460,20 @@ const TimePicker = ({
 
   return (
     <>
-      <Box display="flex" justifyContent="center" alignItems="center" onClick={handleOnClick}>
-        <Typography className={classes.timeDisplay} variant={isMobile ? 'h4' : 'subtitle1'} display="inline" noWrap>{moment(initTime).format('h:mm A')}</Typography>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        onClick={handleOnClick}
+      >
+        <Typography
+          className={classes.timeDisplay}
+          variant={isMobile ? 'h4' : 'subtitle1'}
+          display="inline"
+          noWrap
+        >
+          {moment(initTime).format('h:mm A')}
+        </Typography>
       </Box>
       <Popover
         open={Boolean(anchorEl)}
@@ -437,8 +504,20 @@ const TimePicker = ({
               </form>
             </div>
             <div>
-              <Period currentValue={period} value="AM" onClick={() => { setPeriod('AM'); }} />
-              <Period currentValue={period} value="PM" onClick={() => { setPeriod('PM'); }} />
+              <Period
+                currentValue={period}
+                value="AM"
+                onClick={() => {
+                  setPeriod('AM');
+                }}
+              />
+              <Period
+                currentValue={period}
+                value="PM"
+                onClick={() => {
+                  setPeriod('PM');
+                }}
+              />
             </div>
           </Box>
         </Box>
@@ -454,7 +533,7 @@ const Period = ({ currentValue, value, ...other }) => {
       <Typography
         variant="h2"
         className={clsx(classes.period, {
-          [classes.periodSelected]: (value === currentValue),
+          [classes.periodSelected]: value === currentValue,
         })}
       >
         {value}

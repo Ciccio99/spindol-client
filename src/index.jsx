@@ -14,7 +14,7 @@ import {
 import {
   AlertSystemProvider,
 } from 'context/alertSystemContext';
-import AlertSystemModule from 'components/alertSystem/AlertSystemModule';
+import AlertSystemModule from 'components/common/AlertSystemModule';
 import { initGA } from 'utils/Tracking';
 import { QueryCache, ReactQueryCacheProvider } from 'react-query'
 import { ReactQueryDevtools } from "react-query-devtools";

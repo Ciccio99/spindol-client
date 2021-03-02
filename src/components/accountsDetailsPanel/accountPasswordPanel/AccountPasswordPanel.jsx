@@ -14,7 +14,11 @@ import UserServices from 'services/UserServices';
 import { Event } from 'utils/Tracking';
 
 const AccountPasswordPanel = () => {
-  const initFormState = { password: '', confirmPassword: '', currentPassword: '' };
+  const initFormState = {
+    password: '',
+    confirmPassword: '',
+    currentPassword: '',
+  };
   const dispatchUser = useUserDispatch();
   const dispatchAlertSystem = useAlertSystemDispatch();
   const [formState, setFormState] = useState(initFormState);
@@ -22,7 +26,11 @@ const AccountPasswordPanel = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (formState.password && formState.confirmPassword && formState.currentPassword) {
+    if (
+      formState.password &&
+      formState.confirmPassword &&
+      formState.currentPassword
+    ) {
       setButtonDisabled(false);
     } else {
       setButtonDisabled(true);
@@ -121,9 +129,21 @@ const AccountPasswordPanel = () => {
               }}
             />
           </Grid>
-          {errorMessage ? <Grid item xs={12}><FormHelperText error>{errorMessage}</FormHelperText></Grid> : null}
+          {errorMessage ? (
+            <Grid item xs={12}>
+              <FormHelperText error>{errorMessage}</FormHelperText>
+            </Grid>
+          ) : null}
           <Grid item xs={8} sm={4}>
-            <Button disabled={buttonDisabled} type="submit" color="secondary" variant="contained" disableElevation size="large" fullWidth>
+            <Button
+              disabled={buttonDisabled}
+              type="submit"
+              color="secondary"
+              variant="contained"
+              disableElevation
+              size="large"
+              fullWidth
+            >
               <Typography variant="body2">Update Password</Typography>
             </Button>
           </Grid>

@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  Modal,
-  Typography,
-  InputBase,
-  IconButton,
-  Fade,
-} from '@material-ui/core';
+import { Box, Modal, Typography, InputBase, Fade } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import useMobile from 'hooks/useMobile';
-import { CancelIcon } from 'components/common/Icons';
 import COLORS from 'constants/colors';
 import clsx from 'clsx';
+import Button from 'components/common/Button';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -50,14 +43,19 @@ const useStyles = makeStyles((theme) => ({
       filter: 'drop-shadow(6px 6px 0px rgba(0, 0, 0, 0.1))',
     },
   },
+  saveButton: {
+    position: 'absolute',
+    top: '4vw',
+    right: '4vw',
+    transition: 'all 0.25s ease-in-out',
+    zIndex: 1,
+  },
   backdrop: {
     backgroundColor: 'transparent',
   },
 }));
 
-const JournalEditModal = ({
-  isOpen, onClose, initText, header, onSave,
-}) => {
+const JournalEditModal = ({ isOpen, onClose, initText, header, onSave }) => {
   const classes = useStyles();
   const { isMobile } = useMobile();
   const [journalInput, setJournalInput] = useState(initText);
@@ -83,29 +81,44 @@ const JournalEditModal = ({
       closeAfterTransition
     >
       <Fade in={isOpen} timeout={500}>
-        <Box position="relative" className={classes.container} pt={11} px={2} width="100%" height="100%" display="flex" justifyContent="center">
-          <IconButton
-            className={classes.cancelButton}
+        <Box
+          position="relative"
+          className={classes.container}
+          pt={11}
+          px={2}
+          width="100%"
+          height="100%"
+          display="flex"
+          justifyContent="center"
+        >
+          <Button
+            text="Save"
             onClick={onCloseHandle}
-            aria-label="Close and Save Journal"
-            disableRipple
-            disableFocusRipple
+            className={classes.saveButton}
+          />
+          <Box
+            display="flex"
+            flexDirection="column"
+            maxWidth={960}
+            justifyContent="flex-start"
+            alignItems="center"
+            overflow="auto scroll"
+            width="100%"
+            height="100%"
           >
-            <CancelIcon size={48} />
-          </IconButton>
-          <Box display="flex" flexDirection="column" maxWidth={960} justifyContent="flex-start" alignItems="center" overflow="auto scroll" width="100%" height="100%">
-            {
-            header
-              ? (
-                <div style={{ width: '100%' }}>
-                  <Typography variant="h4" className={classes.dateHeader}>{header}</Typography>
-                </div>
-              )
-              : null
-            }
+            {header ? (
+              <div style={{ width: '100%' }}>
+                <Typography variant="h4" className={classes.dateHeader}>
+                  {header}
+                </Typography>
+              </div>
+            ) : null}
             <Box overflow="auto scroll" width="100%" height="100%">
               <InputBase
-                classes={{ root: classes.journalRoot, input: classes.journalInput }}
+                classes={{
+                  root: classes.journalRoot,
+                  input: classes.journalInput,
+                }}
                 className={clsx({ [classes.journalRootFontMobile]: isMobile })}
                 multiline
                 fullWidth

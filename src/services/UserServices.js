@@ -1,9 +1,14 @@
 import Cookies from 'js-cookie';
-import axios from '../loaders/axios';
 import ErrorHandler from 'utils/ErrorHandler';
-import { insertDailyEmailReminder } from 'services/notification-service';
+import axios from '../loaders/axios';
 
-const signUp = async (email, name, password, confirmPassword, token = undefined) => {
+const signUp = async (
+  email,
+  name,
+  password,
+  confirmPassword,
+  token = undefined
+) => {
   try {
     if (password !== confirmPassword) {
       throw new Error('Passwords must match.');
@@ -20,22 +25,12 @@ const signUp = async (email, name, password, confirmPassword, token = undefined)
     let { data } = await axios.post(`/users/register`, body);
 
     if (data.user && data.token) {
-      Cookies.set('HypnosAuthJWT', data.token, { expires: 7 })
+      Cookies.set('HypnosAuthJWT', data.token, { expires: 7 });
     }
-    try {
-      await insertDailyEmailReminder();
-    } catch (error) {
-      // TODO: If something goes wrong setting up reminders, don't worry. We'll be changing the reminders
-      // Settings anyways.
-    }
-    return { user: data.user };
+
+    return data.user;
   } catch (e) {
-    const error = {};
-    error.message = e.message || 'Something went wrong... ';
-    if ([400, 402, 401, 403].indexOf(e?.response?.status) !== -1) {
-      error.message = e.response.data.message;
-    };
-    return { error };
+    throw new ErrorHandler(e);
   }
 };
 
@@ -51,7 +46,7 @@ const signIn = async (email, password) => {
     error.message = e.message || 'Something went wrong... ';
     if ([401, 403].indexOf(e?.response?.status) !== -1) {
       error.message = e.response.data.message;
-    };
+    }
     return { error };
   }
 };
@@ -72,7 +67,7 @@ const tokenSignIn = async () => {
     error.message = e.message || 'Something went wrong... ';
     if ([401, 403].indexOf(e?.response?.status) !== -1) {
       error.message = e.response.data.message;
-    };
+    }
     return { error };
   }
 };
@@ -84,7 +79,7 @@ export const getUserMe = async () => {
   } catch (error) {
     throw new ErrorHandler(error);
   }
-}
+};
 
 const logout = async () => {
   try {
@@ -104,13 +99,13 @@ const update = async (userDTO) => {
 const updateUserSessionProgress = async (sessionDTO) => {
   const { data } = await axios.patch('/users/me/session-stats', sessionDTO);
   return data;
-}
+};
 
 const insertUserTags = async (tags) => {
   try {
     const dto = { tags };
     const { data } = await axios.put('/users/me/tags', dto);
-    return data.tags
+    return data.tags;
   } catch (error) {
     throw new ErrorHandler(error);
   }
@@ -127,7 +122,7 @@ const getAdmins = async () => {
   } catch (error) {
     throw new ErrorHandler(error);
   }
-}
+};
 
 export default {
   signUp,
