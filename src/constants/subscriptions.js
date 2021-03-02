@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 export const SUBS =
-  process.env.VERCEL_ENV === 'production'
+  process.env.REACT_APP_ENV === 'production'
     ? {
         standard: {
           monthly: {
