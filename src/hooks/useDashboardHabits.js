@@ -83,7 +83,7 @@ const useDashboardHabits = () =>
             moment.utc(ss.date).format('YYYY-MM-DD') ===
             date.format('YYYY-MM-DD')
         );
-        if (sleep) {
+        if (sleep && habits.bedtime && habits.waketime) {
           const sleepDate = moment.utc(sleep.date);
           const bedtimeHabit = habits.bedtime.find((habit) =>
             sleepDate.isBetween(

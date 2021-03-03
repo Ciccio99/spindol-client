@@ -5,19 +5,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { hotjar } from 'react-hotjar';
 import { HelmetProvider } from 'react-helmet-async';
 import config from 'config';
-import HypnosTheme from './constants/HypnosTheme';
-import * as serviceWorker from './serviceWorker';
-import App from './App';
-import {
-  UserProvider,
-} from 'context/userContext';
-import {
-  AlertSystemProvider,
-} from 'context/alertSystemContext';
+import { UserProvider } from 'context/userContext';
+import { AlertSystemProvider } from 'context/alertSystemContext';
 import AlertSystemModule from 'components/common/AlertSystemModule';
 import { initGA } from 'utils/Tracking';
-import { QueryCache, ReactQueryCacheProvider } from 'react-query'
-import { ReactQueryDevtools } from "react-query-devtools";
+import { QueryCache, ReactQueryCacheProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query-devtools';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+import HypnosTheme from './constants/HypnosTheme';
 
 // Initialize Google analytics tracking
 initGA();
@@ -46,7 +42,7 @@ ReactDOM.render(
       </HypnosTheme>
     </HelmetProvider>
   </React.StrictMode>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
