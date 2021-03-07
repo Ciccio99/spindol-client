@@ -281,7 +281,7 @@ export default function Plans() {
                 </Box>
               </Paper>
             </Box>
-            <Box m={3}>
+            {/* <Box m={3}>
               <Paper elevation={24}>
                 <Box
                   p={3}
@@ -352,7 +352,7 @@ export default function Plans() {
                   </Grid>
                 </Box>
               </Paper>
-            </Box>
+            </Box> */}
           </Box>
           <Box mt={5} maxWidth={647} width="100%">
             <Paper elevation={24} style={{ width: '100%' }}>
@@ -454,13 +454,13 @@ export default function Plans() {
               </Box>
             </Paper>
           </Box>
-          <Box my={3} maxWidth={700}>
+          {/* <Box my={3} maxWidth={700}>
             <Typography variant="body1">
               * Coaches are currently located in the USA. Be aware when
               communicating with Coaches that there may be timezone differences
               which effect response times.
             </Typography>
-          </Box>
+          </Box> */}
         </Box>
       </Container>
     </Box>
