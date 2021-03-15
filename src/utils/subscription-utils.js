@@ -1,4 +1,4 @@
-const ACTIVE_SUB_STATUSES = ['active', 'trialing', 'past_due'];
+// const ACTIVE_SUB_STATUSES = ['active', 'trialing', 'past_due'];
 const SUB_TYPE = {
   PREMIUM: 'premium',
   STANDARD: 'standard',
