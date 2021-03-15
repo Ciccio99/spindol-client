@@ -9,17 +9,20 @@ export const isSubscriptionActive = (user) => {
     return false;
   }
 
-  const { id, status } = user?.stripe?.subscription || {};
+  // Short circuit to make service free
+  return true;
 
-  if (!id || !status) {
-    return false;
-  }
+  // const { id, status } = user?.stripe?.subscription || {};
 
-  if (ACTIVE_SUB_STATUSES.includes(status)) {
-    return true;
-  }
+  // if (!id || !status) {
+  //   return false;
+  // }
 
-  return false;
+  // if (ACTIVE_SUB_STATUSES.includes(status)) {
+  //   return true;
+  // }
+
+  // return false;
 };
 
 export const isSubscriptionPremium = (user) => {
