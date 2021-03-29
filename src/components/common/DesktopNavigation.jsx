@@ -117,13 +117,7 @@ const NonAuthList = () => {
           </Typography>
         </div>
       </a>
-      <a href={ROUTES.requestAccess} target="_blank" rel="noopener noreferrer">
-        <div className={classes.linkDiv}>
-          <Typography variant="body1" className={classes.navLink} noWrap>
-            Request Access
-          </Typography>
-        </div>
-      </a>
+      <NavItem to="/register" label="Register" />
       <NavItem to="/signin" label="Sign In" />
     </Box>
   );
