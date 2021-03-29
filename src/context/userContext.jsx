@@ -1,5 +1,5 @@
 import React from 'react';
-import { updateIntercom, shutdownIntercom } from 'next-intercom';
+// import { updateIntercom, shutdownIntercom } from 'next-intercom';
 
 const UserStateContext = React.createContext();
 const UserDispatchContext = React.createContext();
@@ -7,28 +7,28 @@ const UserDispatchContext = React.createContext();
 const userReducer = (state, action) => {
   switch (action.type) {
     case 'USER_LOGIN':
-      updateIntercom(undefined, {
-        name: action.user.name,
-        email: action.user.email,
-        user_id: action.user._id,
-        subscription_id: action.user.stripe?.subscription?.id,
-        subscription_type: action.user.stripe?.subscription?.type,
-        subscription_status: action.user.stripe?.subscription?.status,
-      });
+      // updateIntercom(undefined, {
+      //   name: action.user.name,
+      //   email: action.user.email,
+      //   user_id: action.user._id,
+      //   subscription_id: action.user.stripe?.subscription?.id,
+      //   subscription_type: action.user.stripe?.subscription?.type,
+      //   subscription_status: action.user.stripe?.subscription?.status,
+      // });
       return action.user;
     case 'USER_LOGOUT':
-      shutdownIntercom();
+      // shutdownIntercom();
       return {};
     case 'USER_UPDATE': {
       const updatedUser = { ...state, ...action.user };
-      updateIntercom(undefined, {
-        name: updatedUser.name,
-        email: updatedUser.email,
-        user_id: updatedUser._id,
-        subscription_id: updatedUser.stripe?.subscription?.id,
-        subscription_type: updatedUser.stripe?.subscription?.type,
-        subscription_status: updatedUser.stripe?.subscription?.status,
-      });
+      // updateIntercom(undefined, {
+      //   name: updatedUser.name,
+      //   email: updatedUser.email,
+      //   user_id: updatedUser._id,
+      //   subscription_id: updatedUser.stripe?.subscription?.id,
+      //   subscription_type: updatedUser.stripe?.subscription?.type,
+      //   subscription_status: updatedUser.stripe?.subscription?.status,
+      // });
       return updatedUser;
     }
     default:

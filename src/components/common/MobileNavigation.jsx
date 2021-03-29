@@ -56,6 +56,20 @@ const NonAuthList = () => {
         </Grid>
         <Grid item>
           <ListItemBase>
+            <NavLink
+              to={ROUTES.register}
+              exact
+              className={classes.navLink}
+              activeClassName={classes.activeLink}
+            >
+              <Typography variant="body1" noWrap className={classes.navLink}>
+                Register
+              </Typography>
+            </NavLink>
+          </ListItemBase>
+        </Grid>
+        <Grid item>
+          <ListItemBase>
             <a
               href={ROUTES.landingPage}
               target="_blank"
@@ -63,19 +77,6 @@ const NonAuthList = () => {
             >
               <Typography variant="body1" className={classes.navLink} noWrap>
                 Learn More
-              </Typography>
-            </a>
-          </ListItemBase>
-        </Grid>
-        <Grid item>
-          <ListItemBase>
-            <a
-              href={ROUTES.requestAccess}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Typography variant="body1" className={classes.navLink} noWrap>
-                Request Access
               </Typography>
             </a>
           </ListItemBase>

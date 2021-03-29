@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Box } from '@material-ui/core';
-import { loadIntercom } from 'next-intercom';
+// import { loadIntercom } from 'next-intercom';
 import DeviceServices from 'services/DeviceServices';
 import UserServices from 'services/UserServices';
 import AppRouter from 'routes/AppRouter';
@@ -17,10 +17,10 @@ import '@stripe/stripe-js';
 function App() {
   const dispatchUser = useUserDispatch();
   const [loaded, setLoaded] = useState(false);
-  loadIntercom({
-    appId: 'jfn9k2mu',
-    initWindow: true,
-  });
+  // loadIntercom({
+  //   appId: 'jfn9k2mu',
+  //   initWindow: true,
+  // });
 
   useEffect(() => {
     (async () => {

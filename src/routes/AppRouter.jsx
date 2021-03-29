@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { updateIntercom } from 'next-intercom';
+// import { updateIntercom } from 'next-intercom';
 import ProtectedRoute from 'routes/ProtectedRoute';
 import PublicRoute from 'routes/PublicRoute';
 import SignInView from 'views/SignInView';
@@ -18,7 +18,7 @@ import Renew from 'views/Renew';
 
 const AppRouter = () => {
   usePageTracker();
-  updateIntercom(undefined, { hide_default_launcher: false });
+  // updateIntercom(undefined, { hide_default_launcher: false });
 
   return (
     <Switch>
